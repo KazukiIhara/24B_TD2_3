@@ -1,0 +1,652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="engine">
+      <UniqueIdentifier>{d1efecd4-6b6e-43bb-aefb-703fa4bd53df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager">
+      <UniqueIdentifier>{14188dd6-7b50-4d13-a611-8846a089a86f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\window">
+      <UniqueIdentifier>{1b968b3b-d3a3-480d-a3c9-30320bb2b2e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\input">
+      <UniqueIdentifier>{8ee11141-85c1-43fb-8b48-e353d310d470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\input\direct">
+      <UniqueIdentifier>{f3af9f91-07bb-457b-a5ae-a45945a3912b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\include">
+      <UniqueIdentifier>{5067b81e-e75a-4897-949e-1c6067d3a8a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\imgui">
+      <UniqueIdentifier>{e006ef4f-8eae-4962-bb3d-bd31cdadacaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\directX">
+      <UniqueIdentifier>{22bbc639-552b-4393-955d-6d6ee1aca93f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\dxgi">
+      <UniqueIdentifier>{59fb8c8d-6a53-4f33-b45b-6d7f8c66c067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\srv">
+      <UniqueIdentifier>{e5b4c463-83ed-44ce-b1a3-d5372506d32a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\texture">
+      <UniqueIdentifier>{c0f0735c-2f77-40d6-a967-7586bd14473e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\2d">
+      <UniqueIdentifier>{b96d4cb6-ce87-4c05-b8b3-c453e7783210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\2d\sprite">
+      <UniqueIdentifier>{b9e8ff79-bbd4-48a3-ac6f-e791e0c9d3c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\debugTools">
+      <UniqueIdentifier>{c99f3694-e6da-4654-a03d-740d87a1a660}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{206d3e5b-d85a-42fb-b4de-9f32831b115a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\shaders">
+      <UniqueIdentifier>{95c22902-2fab-40c8-a086-d18cdcbb4f36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\shaders\objects">
+      <UniqueIdentifier>{4a876bf3-3fcf-413c-8815-182c87a2b821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\shaders\objects\2d">
+      <UniqueIdentifier>{ac78ab6e-0ab8-4d4b-8dd1-d2e3e83f1281}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application">
+      <UniqueIdentifier>{5ecc1898-96bf-4d14-80dd-7492d0aaad85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\myGame">
+      <UniqueIdentifier>{d2fa980a-8a83-454d-84d9-eb147874a685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\scene">
+      <UniqueIdentifier>{da95c943-0aaf-4ba5-9510-518a0fb831e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\scene\factory">
+      <UniqueIdentifier>{318b0b0e-6e16-452d-8c71-cd520516bf3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\scene\sample">
+      <UniqueIdentifier>{aba9d680-1b06-4ed0-9612-969e7f79182f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\structs">
+      <UniqueIdentifier>{2490f7b1-bdea-4920-8a62-afeee84e4cb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\enums">
+      <UniqueIdentifier>{f815de47-7d00-4493-a501-c48b97038784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\math">
+      <UniqueIdentifier>{5e004705-9e2b-4f3e-9327-7d473ae08d53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\math\types">
+      <UniqueIdentifier>{9be0f832-576d-471b-8fce-7458caed6efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\math\operator">
+      <UniqueIdentifier>{f60a7434-87cf-4526-ab2d-726f521622b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\math\function">
+      <UniqueIdentifier>{1379d7cd-0ee5-4720-b92f-6840a614fdbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\2d\system">
+      <UniqueIdentifier>{eedd8238-391d-4cb4-8354-1f1d86a7deab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\2d\graphicsPipeline">
+      <UniqueIdentifier>{42196ed1-0e5e-4c4b-8795-65cb95e8ff6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\worldTransform">
+      <UniqueIdentifier>{605445cb-abde-4a76-8812-3704796854d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\framework">
+      <UniqueIdentifier>{1729ef8a-babb-4eab-ab4f-57cf0102d4af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\iScene">
+      <UniqueIdentifier>{ced399fc-1713-4e74-9525-85df2d785b8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\iScene\abstractSceneFactory">
+      <UniqueIdentifier>{fe12ee4e-0a3f-47b3-9fda-2ba2aa451d26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\iScene\baseScene">
+      <UniqueIdentifier>{b3687b31-7271-46a2-9086-c0c961035e68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\pipeline">
+      <UniqueIdentifier>{f915daa7-705a-46f3-a4f4-15db886fd803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\pipeline\graphics">
+      <UniqueIdentifier>{8324064a-b44b-4f8c-983a-a31f7b751f90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\scene">
+      <UniqueIdentifier>{da2c1d87-b20a-419f-acaa-6e52f7e9cfa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\debugTools\logger">
+      <UniqueIdentifier>{1abde696-205c-4a1c-acda-8c8d10eea591}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\debugTools\leakCheker">
+      <UniqueIdentifier>{8f4906c6-ab92-4b19-bfaa-76108dab2164}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\debugTools\leakCheker\D3DResource">
+      <UniqueIdentifier>{ba26c6a3-060b-4a89-b1fd-b9a64b3136bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\directX">
+      <UniqueIdentifier>{e7c7aeee-28ab-49bd-87cc-1d42886fde15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\directX\command">
+      <UniqueIdentifier>{7d3fa0f0-231e-4f02-8b22-f4d9e8962f4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d">
+      <UniqueIdentifier>{302a484d-5c4a-49f6-a986-16c785425026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\FixFPS">
+      <UniqueIdentifier>{3cbfb5ed-805c-41a2-961f-86d15042b7ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\model">
+      <UniqueIdentifier>{15a61917-78dd-4105-a6bf-0eec5861ad4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\model">
+      <UniqueIdentifier>{2b2aa4e5-aa0d-46d2-9f5d-0abf464a4e04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\object">
+      <UniqueIdentifier>{ac52c79c-6482-4c6c-b650-98a74cfb8e88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\object\2d">
+      <UniqueIdentifier>{b20cefc4-67a5-411e-9d3a-eabbdf62b348}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\object\3d">
+      <UniqueIdentifier>{cb9dfece-c8fa-4f16-9513-8ea1a510efe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\object">
+      <UniqueIdentifier>{ea17c6bc-0639-4fb6-986e-1046e1729b63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\shaders\objects\3d">
+      <UniqueIdentifier>{59417151-6d60-4f65-910b-796291775797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources\shaders\particle">
+      <UniqueIdentifier>{72f7b803-a363-4fa6-baaa-d4a32f062830}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\controller">
+      <UniqueIdentifier>{a68576db-1cd2-48e1-883d-bb54afdb8c41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\controller\object3d">
+      <UniqueIdentifier>{8e7f6962-eb21-4202-881c-e68ba3a824c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\particle">
+      <UniqueIdentifier>{435c5b99-ed1c-4759-a37e-a5b6309b335b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\particle\3d">
+      <UniqueIdentifier>{6bef65cb-ba7b-4266-af8b-e183d019883b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\particle\system">
+      <UniqueIdentifier>{faa9558b-33d4-46b4-9d54-7c7bf735dbba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\graphicsPipeline">
+      <UniqueIdentifier>{0f6493f4-3d4d-49e0-8cc2-b2b4b7b6aaa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\particle">
+      <UniqueIdentifier>{958323b2-592c-4f08-81e9-4f61c42adb4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\system">
+      <UniqueIdentifier>{10dd2f57-d6b2-4123-a37b-ef2d626a705c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\particle\graphicsPipeline">
+      <UniqueIdentifier>{14de0632-5837-43b0-9e2d-501f965a3111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\lights">
+      <UniqueIdentifier>{6e6bab26-2ffd-4177-8d78-c9e37e4bfd5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\lights\punctualLight">
+      <UniqueIdentifier>{c1c0b092-c04b-41a8-ad37-111c1f473582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application\scene\ShootingCoaster">
+      <UniqueIdentifier>{570a47fa-6200-445c-a56a-05cea841d4fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\cameras">
+      <UniqueIdentifier>{5165f1a1-e150-42c0-90e1-081ef5570abf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\cameras\camera">
+      <UniqueIdentifier>{f8bc3d24-ef98-4982-981f-b26a95e1ec01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\3d\cameras\railCamera">
+      <UniqueIdentifier>{c098095c-1279-4260-9c5b-54b9cc10851d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\controller\object2d">
+      <UniqueIdentifier>{261100fa-9421-492e-985b-8bb8452026c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\particle\controller">
+      <UniqueIdentifier>{bb5676cc-c1b6-4610-925b-7975d63b80c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\data">
+      <UniqueIdentifier>{3bd826ce-22a8-41ca-84c2-af58328effcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\data\level">
+      <UniqueIdentifier>{62d1fe39-7b85-485e-b616-37c7b7876d28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\data\level\json">
+      <UniqueIdentifier>{1c4676d1-cafa-4438-bcb8-2e3602456e10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\data">
+      <UniqueIdentifier>{9e98e5fc-be96-4953-9557-df6d30fb23dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\data\level">
+      <UniqueIdentifier>{4a8e483d-c733-42d7-b9ff-0df7822dbae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\manager\data\level\json">
+      <UniqueIdentifier>{afb1e85d-7cc3-4dba-b028-1779c83c50cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\importer">
+      <UniqueIdentifier>{59a8baed-9906-4a63-ba27-f278405e3f3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\importer\level">
+      <UniqueIdentifier>{171a0d60-af8a-4767-97cd-c521d6885bd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\importer\level\json">
+      <UniqueIdentifier>{8b4abbd6-bf4a-4ac4-97dd-a63186648d22}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine\input\direct\DirectInput.cpp">
+      <Filter>engine\input\direct</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\imgui\ImGuiManager.cpp">
+      <Filter>engine\manager\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\window\WindowManager.cpp">
+      <Filter>engine\manager\window</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\directX\dxgi\DXGIManager.cpp">
+      <Filter>engine\manager\dxgi</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\srvUav\SRVUAVManager.cpp">
+      <Filter>engine\manager\srv</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\directX\command\DirectXCommand.cpp">
+      <Filter>engine\directX\command</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Engine\manager\texture\TextureManager.cpp">
+      <Filter>engine\manager\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2d\sprite\Sprite.cpp">
+      <Filter>engine\2d\sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="application\myGame\MyGame.cpp">
+      <Filter>application\myGame</Filter>
+    </ClCompile>
+    <ClCompile Include="application\scene\factory\SceneFactory.cpp">
+      <Filter>application\scene\factory</Filter>
+    </ClCompile>
+    <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp">
+      <Filter>application\scene\sample</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\math\operator\MathOperator.cpp">
+      <Filter>engine\math\operator</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\math\function\MathFunction.cpp">
+      <Filter>engine\math\function</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\system\object2d\Object2dSystem.cpp">
+      <Filter>engine\2d\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphicsPipeline\object2d\Object2dGraphicsPipeline.cpp">
+      <Filter>engine\2d\graphicsPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\worldTransform\WorldTransform.cpp">
+      <Filter>engine\worldTransform</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\framework\SUGER.cpp">
+      <Filter>engine\framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.cpp">
+      <Filter>engine\manager\pipeline\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\scene\SceneManager.cpp">
+      <Filter>engine\manager\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\debugTools\logger\Logger.cpp">
+      <Filter>engine\debugTools\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.cpp">
+      <Filter>engine\debugTools\leakCheker\D3DResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\iScene\base\BaseScene.cpp">
+      <Filter>engine\iScene\baseScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\FixFPS\FixFPS.cpp">
+      <Filter>engine\FixFPS</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\model\Model.cpp">
+      <Filter>engine\3d\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\model\ModelManager.cpp">
+      <Filter>engine\manager\model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\object\2d\Object2DManager.cpp">
+      <Filter>engine\manager\object\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\system\particle\ParticleSystem.cpp">
+      <Filter>engine\particle\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.cpp">
+      <Filter>engine\3d\graphicsPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\system\object3d\Object3dSystem.cpp">
+      <Filter>engine\3d\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphicsPipeline\particle\ParticleGraphicsPipeline.cpp">
+      <Filter>engine\particle\graphicsPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\lights\punctualLight\PunctualLight.cpp">
+      <Filter>engine\3d\lights\punctualLight</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\cameras\camera\Camera.cpp">
+      <Filter>engine\3d\cameras\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\cameras\railCamera\RailCamera.cpp">
+      <Filter>engine\3d\cameras\railCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\2d\controller\Object2dController.cpp">
+      <Filter>engine\controller\object2d</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\data\level\json\JsonLevelData.cpp">
+      <Filter>engine\data\level\json</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\manager\data\level\json\JsonLevelDataManager.cpp">
+      <Filter>engine\manager\data\level\json</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\importer\level\json\JsonLevelDataImporter.cpp">
+      <Filter>engine\importer\level\json</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\3d\empty\Empty.cpp" />
+    <ClCompile Include="Engine\3d\entity\Entity.cpp" />
+    <ClCompile Include="Engine\manager\emptyManager\EmptyManager.cpp" />
+    <ClCompile Include="Engine\manager\entityManager\EntityManager.cpp" />
+    <ClCompile Include="Engine\3d\entityController\EntityController.cpp" />
+    <ClCompile Include="Engine\3d\emptyController\EmptyController.cpp" />
+    <ClCompile Include="Engine\3d\skiningEntity\SkiningEntity.cpp" />
+    <ClCompile Include="Engine\manager\sound\SoundManager.cpp" />
+    <ClCompile Include="Engine\manager\data\grobal\GrobalDataManager.cpp" />
+    <ClCompile Include="Engine\VFX\particle\emitter\Emitter.cpp" />
+    <ClCompile Include="Engine\manager\emitter\EmitterManager.cpp" />
+    <ClCompile Include="Engine\manager\particle\ParticleManager.cpp" />
+    <ClCompile Include="Engine\VFX\particle\particle\Particle.cpp" />
+    <ClCompile Include="Engine\VFX\particle\emitterController\EmitterController.cpp" />
+    <ClCompile Include="Engine\random\Random.cpp" />
+    <ClCompile Include="Engine\transition\fade\Fade.cpp" />
+    <ClCompile Include="Engine\manager\collision\CollisionManager.cpp" />
+    <ClCompile Include="Engine\collider\Collider.cpp" />
+    <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
+    <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
+    <ClCompile Include="application\objects\teapot\Teapot.cpp" />
+    <ClCompile Include="Engine\3d\line\LineGroup.cpp" />
+    <ClCompile Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\system\line\LineSystem.cpp" />
+    <ClCompile Include="Engine\manager\line\LineGroupManager.cpp" />
+    <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
+    <ClCompile Include="Engine\VFX\explosion\Explosion.cpp" />
+    <ClCompile Include="Engine\manager\pipeline\compute\ComputePipelineManager.cpp" />
+    <ClCompile Include="Engine\computePipeline\skinning\SkinningComputePipeline.cpp" />
+    <ClCompile Include="Engine\manager\rtv\RTVManager.cpp" />
+    <ClCompile Include="Engine\directX\fence\Fence.cpp" />
+    <ClCompile Include="Engine\directX\swapChain\SwapChain.cpp" />
+    <ClCompile Include="Engine\directX\targetRenderPass\TargetRenderPass.cpp" />
+    <ClCompile Include="Engine\directX\barrier\Barrier.cpp" />
+    <ClCompile Include="Engine\directX\scissorRect\ScissorRect.cpp" />
+    <ClCompile Include="Engine\directX\viewport\ViewPort.cpp" />
+    <ClCompile Include="Engine\directX\depthStencil\DepthStencil.cpp" />
+    <ClCompile Include="Engine\manager\dsv\DSVManager.cpp" />
+    <ClCompile Include="Engine\directX\renderTexture\RenderTexture.cpp" />
+    <ClCompile Include="Engine\manager\pipeline\postEffect\PostEffectPipelineManager.cpp" />
+    <ClCompile Include="Engine\postEffectPipeline\none\NonePostEffectPipeline.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\input\direct\DirectInput.h">
+      <Filter>engine\input\direct</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\directX\includes\ComPtr.h">
+      <Filter>engine\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\imgui\ImGuiManager.h">
+      <Filter>engine\manager\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\window\WindowManager.h">
+      <Filter>engine\manager\window</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\directX\dxgi\DXGIManager.h">
+      <Filter>engine\manager\dxgi</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\srvUav\SRVUAVManager.h">
+      <Filter>engine\manager\srv</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\directX\command\DirectXCommand.h">
+      <Filter>engine\directX\command</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\texture\TextureManager.h">
+      <Filter>engine\manager\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2d\sprite\Sprite.h">
+      <Filter>engine\2d\sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="application\myGame\MyGame.h">
+      <Filter>application\myGame</Filter>
+    </ClInclude>
+    <ClInclude Include="application\scene\factory\SceneFactory.h">
+      <Filter>application\scene\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h">
+      <Filter>application\scene\sample</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\operator\MathOperator.h">
+      <Filter>engine\math\operator</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\function\MathFunction.h">
+      <Filter>engine\math\function</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\types\Matrix4x4.h">
+      <Filter>engine\math\types</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\types\Vector2.h">
+      <Filter>engine\math\types</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\types\Vector3.h">
+      <Filter>engine\math\types</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\types\Vector4.h">
+      <Filter>engine\math\types</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\enum\GraphicsPipelineEnum.h">
+      <Filter>engine\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\TextureStruct.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\system\object2d\Object2dSystem.h">
+      <Filter>engine\2d\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\graphicsPipeline\object2d\Object2dGraphicsPipeline.h">
+      <Filter>engine\2d\graphicsPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\worldTransform\WorldTransform.h">
+      <Filter>engine\worldTransform</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\framework\SUGER.h">
+      <Filter>engine\framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\iScene\abstractFactory\AbstractSceneFactory.h">
+      <Filter>engine\iScene\abstractSceneFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\iScene\base\BaseScene.h">
+      <Filter>engine\iScene\baseScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\ObjectStructs.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\pipeline\graphics\GraphicsPipelineManager.h">
+      <Filter>engine\manager\pipeline\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\scene\SceneManager.h">
+      <Filter>engine\manager\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\debugTools\logger\Logger.h">
+      <Filter>engine\debugTools\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\debugTools\leakChecker\d3dResource\D3DResourceLeakChecker.h">
+      <Filter>engine\debugTools\leakCheker\D3DResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\CameraStruct.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\FixFPS\FixFPS.h">
+      <Filter>engine\FixFPS</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\model\Model.h">
+      <Filter>engine\3d\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\model\ModelManager.h">
+      <Filter>engine\manager\model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\ModelStructs.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\object\2d\Object2DManager.h">
+      <Filter>engine\manager\object\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\system\particle\ParticleSystem.h">
+      <Filter>engine\particle\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\graphicsPipeline\ocject3d\Object3dGraphicsPipeline.h">
+      <Filter>engine\3d\graphicsPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\ParticleStruct.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\system\object3d\Object3dSystem.h">
+      <Filter>engine\3d\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\graphicsPipeline\particle\ParticleGraphicsPipeline.h">
+      <Filter>engine\particle\graphicsPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\lights\punctualLight\PunctualLight.h">
+      <Filter>engine\3d\lights\punctualLight</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\structs\PunctualLightStruct.h">
+      <Filter>engine\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\cameras\camera\Camera.h">
+      <Filter>engine\3d\cameras\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\cameras\railCamera\RailCamera.h">
+      <Filter>engine\3d\cameras\railCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\enum\ParticleEnum.h">
+      <Filter>engine\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\2d\controller\Object2dController.h">
+      <Filter>engine\controller\object2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\data\level\json\JsonLevelData.h">
+      <Filter>engine\data\level\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\manager\data\level\json\JsonLevelDataManager.h">
+      <Filter>engine\manager\data\level\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\importer\level\json\JsonLevelDataImporter.h">
+      <Filter>engine\importer\level\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\math\types\Quaternion.h" />
+    <ClInclude Include="Engine\graphicsPipeline\object3dSkinning\Object3dSkinningGraphicsPipeline.h" />
+    <ClInclude Include="Engine\enum\DirectInputEnum.h" />
+    <ClInclude Include="Engine\enum\ColliderEnum.h" />
+    <ClInclude Include="Engine\3d\empty\Empty.h" />
+    <ClInclude Include="Engine\3d\entity\Entity.h" />
+    <ClInclude Include="Engine\manager\emptyManager\EmptyManager.h" />
+    <ClInclude Include="Engine\manager\entityManager\EntityManager.h" />
+    <ClInclude Include="Engine\3d\entityController\EntityController.h" />
+    <ClInclude Include="Engine\3d\emptyController\EmptyController.h" />
+    <ClInclude Include="Engine\3d\skiningEntity\SkiningEntity.h" />
+    <ClInclude Include="Engine\manager\sound\SoundManager.h" />
+    <ClInclude Include="Engine\structs\SoundStruct.h" />
+    <ClInclude Include="Engine\manager\data\grobal\GrobalDataManager.h" />
+    <ClInclude Include="Engine\VFX\particle\emitter\Emitter.h" />
+    <ClInclude Include="Engine\manager\emitter\EmitterManager.h" />
+    <ClInclude Include="Engine\manager\particle\ParticleManager.h" />
+    <ClInclude Include="Engine\VFX\particle\particle\Particle.h" />
+    <ClInclude Include="Engine\VFX\particle\emitterController\EmitterController.h" />
+    <ClInclude Include="Engine\random\Random.h" />
+    <ClInclude Include="Engine\transition\fade\Fade.h" />
+    <ClInclude Include="Engine\enum\FadeEnum.h" />
+    <ClInclude Include="Engine\enum\SceneEnum.h" />
+    <ClInclude Include="Engine\manager\collision\CollisionManager.h" />
+    <ClInclude Include="Engine\collider\Collider.h" />
+    <ClInclude Include="application\colliderCategory\ColliderCategory.h" />
+    <ClInclude Include="application\objects\pronamaChan\PronamaChan.h" />
+    <ClInclude Include="application\scene\gameScenes\load\LoadScene.h" />
+    <ClInclude Include="application\objects\teapot\Teapot.h" />
+    <ClInclude Include="Engine\enum\EmitterEnum.h" />
+    <ClInclude Include="Engine\3d\line\LineGroup.h" />
+    <ClInclude Include="Engine\graphicsPipeline\line\LineGraphicsPipeline.h" />
+    <ClInclude Include="Engine\system\line\LineSystem.h" />
+    <ClInclude Include="Engine\manager\line\LineGroupManager.h" />
+    <ClInclude Include="Engine\3d\lineController\LineController.h" />
+    <ClInclude Include="Engine\VFX\explosion\Explosion.h" />
+    <ClInclude Include="Engine\manager\pipeline\compute\ComputePipelineManager.h" />
+    <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
+    <ClInclude Include="Engine\enum\ComputePipelineEnum.h" />
+    <ClInclude Include="Engine\manager\rtv\RTVManager.h" />
+    <ClInclude Include="Engine\directX\fence\Fence.h" />
+    <ClInclude Include="Engine\directX\swapChain\SwapChain.h" />
+    <ClInclude Include="Engine\directX\targetRenderPass\TargetRenderPass.h" />
+    <ClInclude Include="Engine\directX\barrier\Barrier.h" />
+    <ClInclude Include="Engine\directX\scissorRect\ScissorRect.h" />
+    <ClInclude Include="Engine\directX\viewport\ViewPort.h" />
+    <ClInclude Include="Engine\directX\depthStencil\DepthStencil.h" />
+    <ClInclude Include="Engine\manager\dsv\DSVManager.h" />
+    <ClInclude Include="Engine\directX\renderTexture\RenderTexture.h" />
+    <ClInclude Include="Engine\enum\RenderTargetEnum.h" />
+    <ClInclude Include="Engine\manager\pipeline\postEffect\PostEffectPipelineManager.h" />
+    <ClInclude Include="Engine\enum\PostEffectPipelineEnum.h" />
+    <ClInclude Include="Engine\postEffectPipeline\none\NonePostEffectPipeline.h" />
+    <ClInclude Include="Engine\enum\BlendModeEnum.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
+      <Filter>resources\shaders\objects\2d</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\objects\2d\object2d.VS.hlsl">
+      <Filter>resources\shaders\objects\2d</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\particle\particle.PS.hlsl">
+      <Filter>resources\shaders\particle</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\particle\particle.VS.hlsl">
+      <Filter>resources\shaders\particle</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\objects\3d\object3d.PS.hlsl">
+      <Filter>resources\shaders\objects\3d</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\objects\3d\object3d.VS.hlsl">
+      <Filter>resources\shaders\objects\3d</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\objects\3dSkinning\object3dSkinning.PS.hlsl" />
+    <FxCompile Include="resources\shaders\objects\3dSkinning\object3dSkinning.VS.hlsl" />
+    <FxCompile Include="resources\shaders\line\line.PS.hlsl" />
+    <FxCompile Include="resources\shaders\line\line.VS.hlsl" />
+    <FxCompile Include="resources\shaders\skinning\skinning.CS.hlsl" />
+    <FxCompile Include="resources\shaders\postEffects\none\nonePostEffect.VS.hlsl" />
+    <FxCompile Include="resources\shaders\postEffects\none\nonePostEffect.PS.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\shaders\objects\2d\object2d.hlsli">
+      <Filter>resources\shaders\objects\2d</Filter>
+    </None>
+    <None Include="resources\shaders\particle\particle.hlsli">
+      <Filter>resources\shaders\particle</Filter>
+    </None>
+    <None Include="resources\shaders\objects\3d\object3d.hlsli">
+      <Filter>resources\shaders\objects\3d</Filter>
+    </None>
+    <None Include="resources\shaders\objects\3dSkinning\object3dSkinning.hlsli" />
+    <None Include="resources\shaders\line\line.hlsli" />
+    <None Include="resources\shaders\skinning\skinning.hlsli" />
+    <None Include="resources\shaders\postEffects\none\nonePostEffect.hlsli" />
+  </ItemGroup>
+</Project>
