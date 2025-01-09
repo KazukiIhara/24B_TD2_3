@@ -34,7 +34,7 @@ void LoadScene::SceneStateFadeOutUpdate() {
 	fade_->Update();
 
 	if (fade_->IsFinished()) {
-		ChangeScene("SAMPLE");
+		ChangeScene("GAME");
 		fade_->Stop();
 	}
 }
@@ -99,8 +99,6 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	SUGER::LoadTexture(textureDirectoryPath + "pronama_chan.png");
 
 	// モデル読み込み
-	SUGER::LoadModel("walk");
-	SUGER::LoadModel("pronama_chan");
 	SUGER::LoadModel("teapot");
 
 	// レベルデータ読み込み
