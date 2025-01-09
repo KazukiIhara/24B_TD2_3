@@ -7,6 +7,9 @@
 #include "VFX/particle/emitterController/EmitterController.h"
 #include "3d/lineController/LineController.h"
 
+// GameScene
+#include "objects/player/Player.h"
+
 class GameScene :public BaseScene {
 public:
 	GameScene() = default;
@@ -23,5 +26,8 @@ public:
 	void SceneStatePlayUpdate()override;
 
 private:
+
+	// プレイヤー
+	std::unique_ptr<Player> player_ = nullptr;
 
 };

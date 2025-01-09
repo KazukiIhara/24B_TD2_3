@@ -3,4 +3,5 @@
 // コライダーのカテゴリ
 enum ColliderCategory {
 	kNone,
+	kPlayer,
 };

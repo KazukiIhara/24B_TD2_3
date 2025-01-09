@@ -398,6 +398,7 @@
     <ClCompile Include="Engine\manager\pipeline\postEffect\PostEffectPipelineManager.cpp" />
     <ClCompile Include="Engine\postEffectPipeline\none\NonePostEffectPipeline.cpp" />
     <ClCompile Include="application\scene\gameScenes\gameScene\GameScene.cpp" />
+    <ClCompile Include="application\objects\player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -608,6 +609,7 @@
     <ClInclude Include="Engine\postEffectPipeline\none\NonePostEffectPipeline.h" />
     <ClInclude Include="Engine\enum\BlendModeEnum.h" />
     <ClInclude Include="application\scene\gameScenes\gameScene\GameScene.h" />
+    <ClInclude Include="application\objects\player\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
