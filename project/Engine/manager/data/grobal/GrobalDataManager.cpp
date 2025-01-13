@@ -45,17 +45,17 @@ void GrobalDataManager::Update() {
 			// int32_t型の値を保持していれば
 			if (std::holds_alternative<int32_t>(item.value)) {
 				int32_t* ptr = std::get_if<int32_t>(&item.value);
-				ImGui::SliderInt(itemName.c_str(), ptr, 0, 100);
+				ImGui::DragInt(itemName.c_str(), ptr, 0, 1);
 			}
 			// float型の値を保持していれば
 			else if (std::holds_alternative<float>(item.value)) {
 				float* ptr = std::get_if<float>(&item.value);
-				ImGui::SliderFloat(itemName.c_str(), ptr, 0, 100);
+				ImGui::DragFloat(itemName.c_str(), ptr, 0, 0.01f);
 			}
 			// Vector3型の値を保持していれば
 			else if (std::holds_alternative<Vector3>(item.value)) {
 				Vector3* ptr = std::get_if<Vector3>(&item.value);
-				ImGui::DragFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), 0.001f);
+				ImGui::DragFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), 0.01f);
 			}
 			// Bool型の値を保持していれば
 			else if (std::holds_alternative<bool>(item.value)) {
