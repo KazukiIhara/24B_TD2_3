@@ -111,6 +111,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\myGame\MyGame.cpp" />
     <ClCompile Include="application\objects\bump\Bump.cpp" />
     <ClCompile Include="application\objects\Earth\Earth.cpp" />
+    <ClCompile Include="application\objects\Fragment\Fragment.cpp" />
     <ClCompile Include="application\objects\Meteorite\Meteorite.cpp" />
     <ClCompile Include="application\objects\player\Player.cpp" />
     <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
@@ -201,6 +202,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\myGame\MyGame.h" />
     <ClInclude Include="application\objects\bump\Bump.h" />
     <ClInclude Include="application\objects\Earth\Earth.h" />
+    <ClInclude Include="application\objects\Fragment\Fragment.h" />
     <ClInclude Include="application\objects\Meteorite\Meteorite.h" />
     <ClInclude Include="application\objects\player\Player.h" />
     <ClInclude Include="application\objects\pronamaChan\PronamaChan.h" />
