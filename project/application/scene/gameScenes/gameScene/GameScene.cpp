@@ -7,7 +7,7 @@ void GameScene::Initialize() {
 	BaseScene::Initialize();
 
 	// レベルデータをシーンにインポート
-	levelDataImporter_.Import("baseScene");
+	levelDataImporter_.Import("GameScene");
 
 	//
 	// Playerの初期化処理
@@ -16,7 +16,7 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	player_->Initialize(SUGER::CreateEntity("Player", "Player"));
 	// プレイヤーのコライダーを作成
-	player_->CreateCollider(kPlayer, kSphere, 2.0f);
+	player_->CreateCollider(kPlayer, kSphere, 1.0f);
 
 
 }
@@ -43,6 +43,10 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// コライダーコンテナをリセット
 	SUGER::ClearColliderContainer();
+
+	// 
+	// コライダーリスト追加処理
+	// 
 
 	SUGER::AddColliderList(player_.get());
 

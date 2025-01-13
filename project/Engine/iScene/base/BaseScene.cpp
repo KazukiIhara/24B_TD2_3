@@ -110,6 +110,7 @@ void BaseScene::DebugCameraOperation() {
 		// マウスホイールの値を取得してズーム操作
 		int64_t wheelDelta = SUGER::GetMouseWheelDelta();
 
+
 		// カメラ回転処理
 		HandleCameraRotation(cameraRotate, delta);
 		// カメラ移動処理

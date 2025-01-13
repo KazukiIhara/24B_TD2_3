@@ -102,7 +102,7 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	SUGER::LoadModel("teapot");
 
 	// レベルデータ読み込み
-	SUGER::LoadJsonLevelData("baseScene");
+	SUGER::LoadJsonLevelData("GameScene");
 
 	// ロードによる待機時間を考慮して、FIXFPSの処理をリセットする
 	SUGER::InitializeFixFPS();

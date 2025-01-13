@@ -12,9 +12,9 @@
 #pragma comment(lib,"winmm.lib")
 
 #pragma comment(lib,"dinput8.lib")
-#pragma comment(lib,"dxguid.lib")
 
 #pragma comment(lib,"xaudio2.lib")
+#pragma comment(lib, "xinput.lib")
 
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {

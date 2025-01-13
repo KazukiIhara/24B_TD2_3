@@ -6,8 +6,6 @@
 #include "directX/includes/ComPtr.h"
 #include "enum/DirectInputEnum.h"
 
-#pragma comment(lib, "xinput.lib")
-
 class WindowManager;
 
 class DirectInput {
