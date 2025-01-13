@@ -33,8 +33,6 @@ private:
 	// 最大速度(std::clampで利用しているため、-の値にならないように注意)
 	float kMaxSpeed_ = 0.2f;
 
-	// 衝突フラグ
-	bool hitFlag_ = false;
 	// 移動ベクトル
 	Vector3 moveVector_{};
 	// 加速量
