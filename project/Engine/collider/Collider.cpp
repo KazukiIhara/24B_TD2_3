@@ -18,7 +18,9 @@ void Collider::Initialize(WorldTransform* worldTransform, const ColliderCategory
 }
 
 void Collider::Draw() {
+#ifdef _DEBUG
 	DrawSphere(ExtractionWorldPos(worldTransform_.worldMatrix_), size_, 8);
+#endif // _DEBUG
 }
 
 void Collider::DrawSphere(const Vector3& center, float radius, uint32_t segments) {
