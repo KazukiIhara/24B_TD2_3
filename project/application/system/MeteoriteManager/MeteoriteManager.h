@@ -6,11 +6,12 @@
 
 // 前方宣言
 class Earth;
+class FragmentManager;
 
 // 隕石マネージャ
 class MeteoriteManager {
 public:
-	void Initialize();
+	void Initialize(Earth* earth,FragmentManager* fragmentManager);
 
 	void Update();
 
@@ -42,4 +43,10 @@ private:
 		{0.0f,0.0f,0.0f}, // R
 		{0.0f,0.0f,0.0f}  // T
 	};
+
+private:
+	// 地球クラスのインスタンスを受け取る
+	Earth* earth_ = nullptr;
+	// かけらマネージャのインスタンスを受け取る
+	FragmentManager* fragmentManager_ = nullptr;
 };

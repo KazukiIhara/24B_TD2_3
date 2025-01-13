@@ -39,5 +39,5 @@ private:
 	// 隕石マネージャ
 	std::unique_ptr<MeteoriteManager> meteoriteManager_ = nullptr;
 	// かけらマネージャ
-	std::unique_ptr<FragmentManager> fragMentManager_ = nullptr;
+	std::unique_ptr<FragmentManager> fragmentManager_ = nullptr;
 };

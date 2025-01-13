@@ -2,7 +2,12 @@
 
 #include "framework/SUGER.h"
 
-void MeteoriteManager::Initialize() {
+void MeteoriteManager::Initialize(Earth* earth,FragmentManager* fragmentManager) {
+	assert(earth);
+	assert(fragmentManager);
+	earth_ = earth;
+	fragmentManager_ = fragmentManager;
+	
 	// コンテナをクリア
 	meteorites_.clear();
 
@@ -34,6 +39,7 @@ void MeteoriteManager::AddMeteorite() {
 	// 新しい隕石を作成
 	std::unique_ptr<Meteorite> newMeteorite = std::make_unique<Meteorite>();
 	newMeteorite->Initialize(SUGER::CreateEntity("Meteorite", "Meteorite", meteoritePopTransform_));
+	newMeteorite->SetEarth(earth_);
 	// 追加
 	meteorites_.push_back(std::move(newMeteorite));
 }

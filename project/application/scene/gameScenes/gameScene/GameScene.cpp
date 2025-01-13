@@ -29,14 +29,20 @@ void GameScene::Initialize() {
 
 
 	// 
+	// かけらマネージャの初期化処理
+	// 
+
+	fragmentManager_ = std::make_unique<FragmentManager>();
+	fragmentManager_->Initialize();
+
+	// 
 	// 隕石マネージャの初期化処理
 	// 
 
 	meteoriteManager_ = std::make_unique<MeteoriteManager>();
-	meteoriteManager_->Initialize();
+	meteoriteManager_->Initialize(earth_.get(), fragmentManager_.get());
 
 	meteoriteManager_->AddMeteorite();
-
 
 
 }
@@ -70,6 +76,9 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// 隕石マネージャの更新
 	meteoriteManager_->Update();
+
+	// かけらマネージャの更新
+	fragmentManager_->Update();
 
 	//
 	// コライダーの処理ここから
