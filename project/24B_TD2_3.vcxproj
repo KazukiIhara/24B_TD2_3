@@ -109,6 +109,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application\myGame\MyGame.cpp" />
+    <ClCompile Include="application\objects\Meteorite\Meteorite.cpp" />
     <ClCompile Include="application\objects\player\Player.cpp" />
     <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
     <ClCompile Include="application\objects\teapot\Teapot.cpp" />
@@ -116,6 +117,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\scene\gameScenes\gameScene\GameScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp" />
+    <ClCompile Include="application\system\MeteoriteManager\MeteoriteManager.cpp" />
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
     <ClCompile Include="Engine\computePipeline\skinning\SkinningComputePipeline.cpp" />
     <ClCompile Include="Engine\directX\barrier\Barrier.cpp" />
@@ -194,6 +196,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClInclude Include="application\colliderCategory\ColliderCategory.h" />
     <ClInclude Include="application\myGame\MyGame.h" />
+    <ClInclude Include="application\objects\Meteorite\Meteorite.h" />
     <ClInclude Include="application\objects\player\Player.h" />
     <ClInclude Include="application\objects\pronamaChan\PronamaChan.h" />
     <ClInclude Include="application\objects\teapot\Teapot.h" />
@@ -201,6 +204,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\scene\gameScenes\gameScene\GameScene.h" />
     <ClInclude Include="application\scene\gameScenes\load\LoadScene.h" />
     <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h" />
+    <ClInclude Include="application\system\MeteoriteManager\MeteoriteManager.h" />
     <ClInclude Include="Engine\3d\lineController\LineController.h" />
     <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
     <ClInclude Include="Engine\directX\barrier\Barrier.h" />
