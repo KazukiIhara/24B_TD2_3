@@ -27,6 +27,7 @@ void GameScene::Initialize() {
 	// プレイヤーのコライダーを作成
 	player_->CreateCollider(kPlayer, kSphere, 1.0f);
 
+
 	// 
 	// 隕石マネージャの初期化処理
 	// 
