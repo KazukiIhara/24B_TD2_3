@@ -100,6 +100,9 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 
 	// モデル読み込み
 	SUGER::LoadModel("teapot");
+	SUGER::LoadModel("Player");
+	SUGER::LoadModel("Earth");
+	SUGER::LoadModel("Meteorite");
 
 	// レベルデータ読み込み
 	SUGER::LoadJsonLevelData("GameScene");
