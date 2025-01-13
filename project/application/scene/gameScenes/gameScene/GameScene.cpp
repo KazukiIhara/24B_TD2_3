@@ -9,6 +9,15 @@ void GameScene::Initialize() {
 	// レベルデータをシーンにインポート
 	levelDataImporter_.Import("GameScene");
 
+
+	// 
+	// 地球の初期化処理
+	// 
+
+	earth_ = std::make_unique<Earth>();
+	earth_->Initialize(SUGER::CreateEntity("Earth", "Earth"));
+
+
 	//
 	// Playerの初期化処理
 	//
@@ -26,6 +35,8 @@ void GameScene::Initialize() {
 	meteoriteManager_->Initialize();
 
 	meteoriteManager_->AddMeteorite();
+
+
 
 }
 

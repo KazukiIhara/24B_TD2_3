@@ -402,6 +402,8 @@
     <ClCompile Include="application\objects\Meteorite\Meteorite.cpp" />
     <ClCompile Include="application\system\MeteoriteManager\MeteoriteManager.cpp" />
     <ClCompile Include="application\objects\Earth\Earth.cpp" />
+    <ClCompile Include="application\objects\bump\Bump.cpp" />
+    <ClCompile Include="application\system\BumpManager\BumpManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -616,6 +618,8 @@
     <ClInclude Include="application\objects\Meteorite\Meteorite.h" />
     <ClInclude Include="application\system\MeteoriteManager\MeteoriteManager.h" />
     <ClInclude Include="application\objects\Earth\Earth.h" />
+    <ClInclude Include="application\objects\bump\Bump.h" />
+    <ClInclude Include="application\system\BumpManager\BumpManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

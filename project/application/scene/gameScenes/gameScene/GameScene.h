@@ -10,8 +10,9 @@
 // GameScene
 #include "objects/player/Player.h"
 #include "system/MeteoriteManager/MeteoriteManager.h"
+#include "objects/Earth/Earth.h"
 
-class GameScene :public BaseScene {
+class GameScene:public BaseScene {
 public:
 	GameScene() = default;
 	~GameScene() = default;
@@ -31,5 +32,6 @@ private:
 	std::unique_ptr<Player> player_ = nullptr;
 	// 隕石マネージャ
 	std::unique_ptr<MeteoriteManager> meteoriteManager_ = nullptr;
-
+	// 地球
+	std::unique_ptr<Earth> earth_ = nullptr;
 };
