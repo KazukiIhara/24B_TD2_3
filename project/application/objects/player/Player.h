@@ -28,6 +28,10 @@ private:
 	const std::string kParamaterString = "PlayerParamater";
 
 	// パラメータ
+
+	// 初期化位置
+	Vector3 initializePosition_{};
+
 	// 速度定数
 	float kSpeed_ = 0.01f;
 	// 最大速度(std::clampで利用しているため、-の値にならないように注意)

@@ -1,5 +1,10 @@
 {
     "PlayerParamater": {
+        "InitializePosition": [
+            6.0,
+            0.0,
+            0.0
+        ],
         "MaxSpeed": 0.5,
         "Speed": 0.009999999776482582
     }
