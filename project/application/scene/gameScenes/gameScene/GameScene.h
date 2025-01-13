@@ -9,6 +9,7 @@
 
 // GameScene
 #include "objects/player/Player.h"
+#include "system/MeteoriteManager/MeteoriteManager.h"
 
 class GameScene :public BaseScene {
 public:
@@ -26,8 +27,9 @@ public:
 	void SceneStatePlayUpdate()override;
 
 private:
-
 	// プレイヤー
 	std::unique_ptr<Player> player_ = nullptr;
+	// 隕石マネージャ
+	std::unique_ptr<MeteoriteManager> meteoriteManager_ = nullptr;
 
 };

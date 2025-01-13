@@ -18,6 +18,14 @@ void GameScene::Initialize() {
 	// プレイヤーのコライダーを作成
 	player_->CreateCollider(kPlayer, kSphere, 1.0f);
 
+	// 
+	// 隕石マネージャの初期化処理
+	// 
+
+	meteoriteManager_ = std::make_unique<MeteoriteManager>();
+	meteoriteManager_->Initialize();
+
+	meteoriteManager_->AddMeteorite();
 
 }
 
@@ -31,11 +39,11 @@ void GameScene::SceneStatePlayInitialize() {
 
 void GameScene::SceneStatePlayUpdate() {
 
-
 	// プレイヤーの更新処理
-
 	player_->Update();
 
+	// 隕石マネージャの更新
+	meteoriteManager_->Update();
 
 	//
 	// コライダーの処理ここから
