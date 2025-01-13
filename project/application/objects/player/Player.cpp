@@ -10,9 +10,14 @@ void Player::Initialize(const std::string& name) {
 	// 各パラメータをリストに登録
 	SUGER::AddGrobalDataItem(kParamaterString, "Speed", kSpeed_);
 	SUGER::AddGrobalDataItem(kParamaterString, "MaxSpeed", kMaxSpeed_);
+	SUGER::AddGrobalDataItem(kParamaterString, "InitializePosition", initializePosition_);
 
 	// グローバルデータからパラメータを取得
 	SetParamaters();
+	
+	// 座標を初期化
+	SetTranslate(initializePosition_);
+
 }
 
 void Player::Update() {
@@ -24,6 +29,7 @@ void Player::Update() {
 void Player::SetParamaters() {
 	kSpeed_ = SUGER::GetGrobalDataValueFloat(kParamaterString, "Speed");
 	kMaxSpeed_ = SUGER::GetGrobalDataValueFloat(kParamaterString, "MaxSpeed");
+	initializePosition_ = SUGER::GetGrobalDataValueVector3(kParamaterString, "InitializePosition");
 }
 
 void Player::Operation() {

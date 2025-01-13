@@ -50,6 +50,20 @@ void GameScene::SceneStatePlayInitialize() {
 
 void GameScene::SceneStatePlayUpdate() {
 
+#ifdef _DEBUG
+	ImGui::Begin("GameScene");
+	ImGui::Text("Restart :R");
+	ImGui::Text("Move :WASD");
+
+	ImGui::End();
+
+	if (SUGER::TriggerKey(DIK_R)) {
+		ChangeScene("GAME");
+	}
+
+#endif // DEBUG
+
+
 	// プレイヤーの更新処理
 	player_->Update();
 

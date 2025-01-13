@@ -2,6 +2,8 @@
 
 #include "3d/entityController/EntityController.h"
 
+class Earth;
+
 class Meteorite: public EntityController {
 public:
 	Meteorite() = default;

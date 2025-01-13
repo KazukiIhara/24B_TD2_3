@@ -121,6 +121,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp" />
     <ClCompile Include="application\system\BumpManager\BumpManager.cpp" />
+    <ClCompile Include="application\system\FragmentManager\FragmentManager.cpp" />
     <ClCompile Include="application\system\MeteoriteManager\MeteoriteManager.cpp" />
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
     <ClCompile Include="Engine\computePipeline\skinning\SkinningComputePipeline.cpp" />
@@ -212,6 +213,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\scene\gameScenes\load\LoadScene.h" />
     <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h" />
     <ClInclude Include="application\system\BumpManager\BumpManager.h" />
+    <ClInclude Include="application\system\FragmentManager\FragmentManager.h" />
     <ClInclude Include="application\system\MeteoriteManager\MeteoriteManager.h" />
     <ClInclude Include="Engine\3d\lineController\LineController.h" />
     <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
