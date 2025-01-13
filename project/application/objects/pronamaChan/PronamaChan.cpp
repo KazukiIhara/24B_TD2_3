@@ -14,7 +14,7 @@ void PronamaChan::OnCollision([[maybe_unused]] Collider* other) {
 	// 衝突相手のカテゴリーを取得
 	ColliderCategory category = other->GetColliderCategory();
 	switch (category) {
-	case kNone:
+	case ColliderCategory::None:
 		hitFlag_ = true;
 		break;
 	}

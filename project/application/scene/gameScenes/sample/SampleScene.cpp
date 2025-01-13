@@ -23,7 +23,7 @@ void SampleScene::Initialize() {
 	// プロ生ちゃん
 	pronamaChan_ = std::make_unique<PronamaChan>();
 	pronamaChan_->Initialize(SUGER::CreateEntity("pronamaChan", "walk"));
-	pronamaChan_->CreateCollider(kNone, kSphere, 1.0f);
+	pronamaChan_->CreateCollider(ColliderCategory::None, kSphere, 1.0f);
 	pronamaChan_->SetColliderTranslate(Vector3(0.0f, 1.0f, 0.0f));
 	pronamaChan_->SetRotate(Vector3(0.0f, std::numbers::pi_v<float>, 0.0f));
 	// ライトを無効化
@@ -38,7 +38,7 @@ void SampleScene::Initialize() {
 	// teapot作成
 	teapot_ = std::make_unique<Teapot>();
 	teapot_->Initialize(SUGER::CreateEntity("teapot", "teapot", teapotDefaultTransform));
-	teapot_->CreateCollider(kNone, kSphere, 1.0f);
+	teapot_->CreateCollider(ColliderCategory::None, kSphere, 1.0f);
 
 	// オブジェクト2Dの作成とコントローラの初期化
 	pronamaChanTex.Initialize(SUGER::Create2DObject("0_pronama_chan", "pronama_chan.png"));

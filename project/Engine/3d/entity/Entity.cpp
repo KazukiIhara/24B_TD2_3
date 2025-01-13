@@ -25,6 +25,7 @@ void Entity::Initialize() {
 void Entity::Update() {
 	// モデルの更新
 	model_->Update();
+
 	// 基底クラスの更新処理
 	Empty::Update();
 

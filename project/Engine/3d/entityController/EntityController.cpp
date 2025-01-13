@@ -18,8 +18,8 @@ void EntityController::OnCollision(Collider* other) {
 	ColliderCategory category = other->GetColliderCategory();
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
-	case kNone:
-		break;
+		case ColliderCategory::None:
+			break;
 	}
 }
 

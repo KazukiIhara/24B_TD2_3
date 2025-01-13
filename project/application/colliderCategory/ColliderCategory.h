@@ -1,7 +1,9 @@
 #pragma once
 
 // コライダーのカテゴリ
-enum ColliderCategory {
-	kNone,
-	kPlayer,
+enum class ColliderCategory {
+	None,
+	Player,
+	Earth,
+	Fragment,
 };

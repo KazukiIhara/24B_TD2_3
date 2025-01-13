@@ -52,7 +52,7 @@ private:
 	// コライダータイプ
 	ColliderType colliderType_ = ColliderType::kSphere;
 	// コライダーカテゴリ
-	ColliderCategory colliderCategory_ = ColliderCategory::kNone;
+	ColliderCategory colliderCategory_ = ColliderCategory::None;
 	// ライン描画コントローラ
 	LineController* line_;
 };
