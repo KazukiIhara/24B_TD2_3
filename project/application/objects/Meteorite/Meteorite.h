@@ -5,6 +5,7 @@
 #include <optional>
 
 class Earth;
+class FragmentManager;
 
 class Meteorite: public EntityController {
 public:
@@ -18,6 +19,8 @@ public:
 	void Initialize(const std::string& name)override;
 
 	void SetEarth(Earth* earth);
+
+	void SetFragmentManager(FragmentManager* fragmentManager);
 
 	// 更新
 	void Update()override;
@@ -43,6 +46,11 @@ private:
 	// 次のふるまいリクエスト
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
+	// 欠片出現時間
+	float emitTime_ = 0;
+
 private:
 	Earth* earth_ = nullptr;
+
+	FragmentManager* fragmentManager_ = nullptr;
 };

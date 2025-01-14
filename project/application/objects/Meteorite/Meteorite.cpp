@@ -4,6 +4,8 @@
 
 #include "objects/Earth/Earth.h"
 
+#include "system/FragmentManager/FragmentManager.h"
+
 void Meteorite::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 
@@ -14,6 +16,11 @@ void Meteorite::Initialize(const std::string& name) {
 void Meteorite::SetEarth(Earth* earth) {
 	assert(earth);
 	earth_ = earth;
+}
+
+void Meteorite::SetFragmentManager(FragmentManager* fragmentManager){
+	assert(fragmentManager);
+	fragmentManager_ = fragmentManager;
 }
 
 void Meteorite::Update() {
@@ -62,6 +69,18 @@ void Meteorite::RootUpdate() {
 	SetRotate(GetRotate() + Vector3(speed_, speed_, speed_ * SUGER::kDeltaTime_));
 
 	GetCollider()->SetVelocity(velocity);
+
+
+	emitTime_++;
+
+	if (emitTime_ >= 300) {
+		Vector3 popPos = GetTranslate();
+		popPos.x += rand() % 21 + -10;
+		popPos.y += rand() % 21 + -10;
+		fragmentManager_->AddFragment(popPos,earth_);
+		emitTime_ = 0;
+	}
+
 
 }
 
