@@ -7,7 +7,7 @@
 class Earth;
 
 // 隕石のかけら
-class Fragment: public EntityController {
+class Fragment : public EntityController {
 public:
 	enum class Behavior {
 		kRoot,
@@ -26,9 +26,15 @@ public:
 	// 衝突コールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
 
+	void HitTimerUpdate();
 
+	void BehaviorChange();
+	void BehaviorUpdate();
+	
 	void RootInitialize();
 	void RootUpdate();
+
+	void Move();
 
 	void SetSpeed(float speed);
 private:
@@ -44,6 +50,12 @@ private:
 	Behavior behavior_ = Behavior::kRoot;
 	// 次のふるまいリクエスト
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
+
+
+	int32_t kNoneHitTime_ = 2;
+	int32_t playerHitTimer_ = 0;
+
+	Vector3 velocity_{};
 
 private:
 	Earth* earth_ = nullptr;

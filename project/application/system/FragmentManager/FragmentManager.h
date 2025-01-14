@@ -15,6 +15,8 @@ public:
 
 	void AddFragment(const Vector3& popTranslate, Earth* earth);
 
+	void AddColliderList();
+
 private:
 
 	// かけらのリスト
