@@ -10,7 +10,6 @@ void Meteorite::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 
 
-
 }
 
 void Meteorite::SetEarth(Earth* earth) {
