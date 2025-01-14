@@ -28,3 +28,9 @@ void FragmentManager::AddFragment(const Vector3& popTranslate, Earth* earth) {
 	// 追加
 	fragments_.push_back(std::move(newFragment));
 }
+
+void FragmentManager::AddColliderList() {
+	for (auto& fragment : fragments_) {
+		SUGER::AddColliderList(fragment.get());
+	}
+}

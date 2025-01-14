@@ -27,8 +27,6 @@ void Player::Update() {
 	SetParamaters();
 	Operation();
 	Move();
-	// 現在の移動量をセット
-	GetCollider()->SetVelocity(velocity_);
 }
 
 void Player::SetParamaters() {
@@ -76,6 +74,8 @@ void Player::Move() {
 	velocity_.z = std::clamp(velocity_.z, -kMaxSpeed_, kMaxSpeed_);
 	// 移動量を足す
 	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
+	// 現在の移動量をセット
+	GetCollider()->SetVelocity(velocity_);
 }
 
 void Player::OnCollision(Collider* other) {
