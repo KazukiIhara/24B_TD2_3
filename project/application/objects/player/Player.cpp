@@ -14,7 +14,7 @@ void Player::Initialize(const std::string& name) {
 
 	// グローバルデータからパラメータを取得
 	SetParamaters();
-	
+
 	// 座標を初期化
 	SetTranslate(initializePosition_);
 

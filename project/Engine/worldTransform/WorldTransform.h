@@ -30,7 +30,7 @@ public: // メンバ変数
 	Vector3 translate_ = { 0.0f,0.0f,0.0f };// 移動量
 
 	// 親
-	WorldTransform* parent_{};
+	WorldTransform* parent_ = nullptr;
 
 	// ワールド行列
 	Matrix4x4 worldMatrix_{};
