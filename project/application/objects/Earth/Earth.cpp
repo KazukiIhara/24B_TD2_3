@@ -4,12 +4,12 @@
 
 void Earth::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
-	hitTimer_ = 0;
+	earthHitTimer_ = 0;
 }
 
 void Earth::Update() {
-	if (hitTimer_ > 0) {
-		hitTimer_--;
+	if (earthHitTimer_ > 0) {
+		earthHitTimer_--;
 	}
 
 	// 移動量を足す
@@ -24,17 +24,17 @@ void Earth::OnCollision(Collider* other) {
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
 	case ColliderCategory::Player:
-		if (hitTimer_ > 0) {
+		if (earthHitTimer_ > 0) {
 			break;
 		}
 		float earthMass = GetCollider()->GetMass();
 		Vector3 earthVelocity = GetCollider()->GetVelocity();
 		float playerMass = other->GetMass();
 		Vector3 playerVelocity = other->GetVelocity();
-		Vector3 normal = GetCollider()->GetWorldPosition() - other->GetWorldPosition();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
 		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
 		velocity_ = velocity;
-		hitTimer_ = kNoneHitTime_;
+		earthHitTimer_ = kNoneHitTime_;
 		break;
 	}
 }

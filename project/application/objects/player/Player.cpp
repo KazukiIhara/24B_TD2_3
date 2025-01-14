@@ -18,13 +18,12 @@ void Player::Initialize(const std::string& name) {
 	// 座標を初期化
 	SetTranslate(initializePosition_);
 
-	hitTimer_ = 0;
+	earthHitTimer_ = 0;
+	meteoriteHitTimer_ = 0;
 }
 
 void Player::Update() {
-	if (hitTimer_ > 0) {
-		hitTimer_--;
-	}
+	HitTimersUpdate();
 	SetParamaters();
 	Operation();
 	Move();
@@ -36,6 +35,15 @@ void Player::SetParamaters() {
 	kSpeed_ = SUGER::GetGrobalDataValueFloat(kParamaterString, "Speed");
 	kMaxSpeed_ = SUGER::GetGrobalDataValueFloat(kParamaterString, "MaxSpeed");
 	initializePosition_ = SUGER::GetGrobalDataValueVector3(kParamaterString, "InitializePosition");
+}
+
+void Player::HitTimersUpdate() {
+	if (earthHitTimer_ > 0) {
+		earthHitTimer_--;
+	}
+	if (meteoriteHitTimer_ > 0) {
+		meteoriteHitTimer_--;
+	}
 }
 
 void Player::Operation() {
@@ -76,17 +84,35 @@ void Player::OnCollision(Collider* other) {
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
 	case ColliderCategory::Earth:
-		if (hitTimer_ > 0) {
+		if (earthHitTimer_ > 0) {
 			break;
 		}
-		float earthMass = GetCollider()->GetMass();
-		Vector3 earthVelocity = GetCollider()->GetVelocity();
-		float playerMass = other->GetMass();
-		Vector3 playerVelocity = other->GetVelocity();
-		Vector3 normal = GetCollider()->GetWorldPosition() - other->GetWorldPosition();
-		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
-		velocity_ = velocity;
-		hitTimer_ = kNoneHitTime_;
+		{
+			float playerMass = GetCollider()->GetMass();
+			Vector3 playerVelocity = GetCollider()->GetVelocity();
+			float  earthMass = other->GetMass();
+			Vector3 earthVelocity = other->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+			Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, earthMass, earthVelocity, 1.0f, normal);
+			velocity_ = velocity;
+			earthHitTimer_ = kNoneHitTime_;
+		}
+		break;
+
+	case::ColliderCategory::Meteorite:
+		if (meteoriteHitTimer_ > 0) {
+			break;
+		}
+		{
+			float playerMass = GetCollider()->GetMass();
+			Vector3 playerVelocity = GetCollider()->GetVelocity();
+			float meteoriteMass = other->GetMass();
+			Vector3 meteoriteVelocity = other->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+			Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, meteoriteMass, meteoriteVelocity, 1.0f, normal);
+			velocity_ = velocity;
+			meteoriteHitTimer_ = kNoneHitTime_;
+		}
 		break;
 	}
 }

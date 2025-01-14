@@ -53,6 +53,14 @@ void MeteoriteManager::AddMeteorite() {
 	newMeteorite->SetFragmentManager(fragmentManager_);
 	newMeteorite->CreateCollider(ColliderCategory::Meteorite, kSphere, 4.0f);
 
+	newMeteorite->GetCollider()->SetMass(20000.0f);
+
 	// 追加
 	meteorites_.push_back(std::move(newMeteorite));
+}
+
+void MeteoriteManager::AddColliderList() {
+	for (auto& meteorite : meteorites_) {
+		SUGER::AddColliderList(meteorite.get());
+	}
 }

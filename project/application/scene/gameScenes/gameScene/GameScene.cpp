@@ -96,6 +96,6 @@ void GameScene::SceneStatePlayUpdate() {
 
 	SUGER::AddColliderList(player_.get());
 	SUGER::AddColliderList(earth_.get());
-
+	meteoriteManager_->AddColliderList();
 
 }

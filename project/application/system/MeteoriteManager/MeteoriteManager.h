@@ -16,6 +16,9 @@ public:
 	void Update();
 
 	void AddMeteorite();
+
+	void AddColliderList();
+
 private:
 
 	// 
