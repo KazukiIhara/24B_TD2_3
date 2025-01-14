@@ -21,9 +21,9 @@ void FragmentManager::AddFragment(const Vector3& popTranslate, Earth* earth) {
 
 	// 新しいかけらを作成
 	std::unique_ptr<Fragment> newFragment = std::make_unique<Fragment>();
-	newFragment->Initialize(SUGER::CreateEntity("Meteorite", "Meteorite", popTransform));
+	newFragment->Initialize(SUGER::CreateEntity("Fragment", "Fragment", popTransform));
 	newFragment->SetEarth(earth);
-	newFragment->CreateCollider(ColliderCategory::Fragment, kSphere, 2.0f);
+	newFragment->CreateCollider(ColliderCategory::Fragment, kSphere, 0.2f);
 
 	// 追加
 	fragments_.push_back(std::move(newFragment));

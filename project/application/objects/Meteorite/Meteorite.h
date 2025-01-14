@@ -46,6 +46,7 @@ private:
 	// 次のふるまいリクエスト
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
+	// 欠片出現時間
 	float emitTime_ = 0;
 
 private:
