@@ -41,6 +41,7 @@ void MeteoriteManager::AddMeteorite() {
 	std::unique_ptr<Meteorite> newMeteorite = std::make_unique<Meteorite>();
 	newMeteorite->Initialize(SUGER::CreateEntity("Meteorite", "Meteorite", meteoritePopTransform_));
 	newMeteorite->SetEarth(earth_);
+	newMeteorite->CreateCollider(ColliderCategory::Meteorite, kSphere, 4.0f);
 	// 追加
 	meteorites_.push_back(std::move(newMeteorite));
 }

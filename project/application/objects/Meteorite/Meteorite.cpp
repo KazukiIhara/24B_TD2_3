@@ -44,6 +44,7 @@ void Meteorite::OnCollision(Collider* other) {
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
 	case ColliderCategory::None:
+
 		break;
 	}
 
