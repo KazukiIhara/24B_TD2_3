@@ -15,6 +15,9 @@ public:
 	// グローバルデータから値を取得
 	void SetParamaters();
 
+	// タイマー処理
+	void HitTimersUpdate();
+
 	// 操作
 	void Operation();
 	// 移動処理
@@ -36,6 +39,9 @@ private:
 	float kSpeed_ = 0.01f;
 	// 最大速度(std::clampで利用しているため、-の値にならないように注意)
 	float kMaxSpeed_ = 0.2f;
+	// 大きさ
+	float scale_ = 1.0f;
+
 
 
 
@@ -46,6 +52,10 @@ private:
 	// 移動量
 	Vector3 velocity_{};
 
+	// 一度当たった後に当たらない時間
 	int32_t kNoneHitTime_ = 2;
-	int32_t hitTimer_ = 0;
+	// 対地球ヒットタイマー
+	int32_t earthHitTimer_ = 0;
+	// 対隕石ヒットタイマー
+	int32_t meteoriteHitTimer_ = 0;
 };
