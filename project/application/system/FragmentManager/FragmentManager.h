@@ -4,6 +4,8 @@
 
 #include <vector>
 
+class Earth;
+
 // かけらマネージャ
 class FragmentManager {
 public:
@@ -11,7 +13,7 @@ public:
 
 	void Update();
 
-	void AddFragment(const Vector3& popTranslate);
+	void AddFragment(const Vector3& popTranslate, Earth* earth);
 
 private:
 
