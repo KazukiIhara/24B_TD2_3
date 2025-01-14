@@ -25,10 +25,17 @@ public:
 	// 衝突コールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
 
-
 	void RootInitialize();
 	void RootUpdate();
 
+	void SetSpeed(float speed);
+private:
+	// 
+	// パラメータ
+	// 
+
+	// 速度
+	float speed_ = 0.001f;
 
 	// ふるまい管理変数
 	// 現在のふるまい

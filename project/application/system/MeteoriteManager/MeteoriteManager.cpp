@@ -17,6 +17,7 @@ void MeteoriteManager::Initialize(Earth* earth,FragmentManager* fragmentManager)
 	SUGER::AddGrobalDataItem(kParamaterString_, "PopScale", kMeteritePopScale_);
 	SUGER::AddGrobalDataItem(kParamaterString_, "PopRotate", kMeteritePopRotate_);
 	SUGER::AddGrobalDataItem(kParamaterString_, "PopPosition", kMeteritePopTranslate_);
+	
 
 	kMeteritePopScale_ = SUGER::GetGrobalDataValueVector3(kParamaterString_, "PopScale");
 	kMeteritePopRotate_ = SUGER::GetGrobalDataValueVector3(kParamaterString_, "PopRotate");
@@ -40,6 +41,7 @@ void MeteoriteManager::AddMeteorite() {
 	std::unique_ptr<Meteorite> newMeteorite = std::make_unique<Meteorite>();
 	newMeteorite->Initialize(SUGER::CreateEntity("Meteorite", "Meteorite", meteoritePopTransform_));
 	newMeteorite->SetEarth(earth_);
+	newMeteorite->CreateCollider(ColliderCategory::Meteorite, kSphere, 4.0f);
 	// 追加
 	meteorites_.push_back(std::move(newMeteorite));
 }

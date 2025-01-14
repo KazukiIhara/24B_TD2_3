@@ -6,4 +6,5 @@ enum class ColliderCategory {
 	Player,
 	Earth,
 	Fragment,
+	Meteorite,
 };

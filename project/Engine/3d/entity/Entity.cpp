@@ -32,6 +32,7 @@ void Entity::Update() {
 	// コライダーが有効ならコライダーの更新
 	if (collider_) {
 		collider_->Update();
+		collider_->Draw();
 	}
 
 	// WVPマトリックス作成
@@ -61,10 +62,7 @@ void Entity::Draw() {
 	camera_->TransferCamera(3);
 	// 3Dモデル描画
 	model_->Draw();
-	// コライダーがあれば描画
-	if (collider_) {
-		collider_->Draw();
-	}
+	
 }
 
 void Entity::CreateCollider(const ColliderCategory& colliderCategory, const ColliderType& colliderType, const float& size) {
