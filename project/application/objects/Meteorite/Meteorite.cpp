@@ -57,8 +57,8 @@ void Meteorite::RootInitialize() {
 void Meteorite::RootUpdate() {
 	Vector3 target = ExtractionWorldPos(earth_->GetWorldTransformPtr()->worldMatrix_);
 	// 目標に対して保管移動
-	SetTranslate(Lerp(GetTranslate(), target, speed_));
-	SetRotate(GetRotate() + Vector3(speed_, speed_, speed_));
+	SetTranslate(Lerp(GetTranslate(), target, speed_ * SUGER::kDeltaTime_));
+	SetRotate(GetRotate() + Vector3(speed_, speed_, speed_ * SUGER::kDeltaTime_));
 }
 
 void Meteorite::SetSpeed(float speed) {

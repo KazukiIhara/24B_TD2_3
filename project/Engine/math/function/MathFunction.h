@@ -42,6 +42,9 @@ Vector3 DegreesToRadians(const Vector3& degrees);
 // ベクトルの向きを取得
 Vector3 Forward(const Vector3& rotate);
 
+// 投影
+Vector3 Project(const Vector3& a, const Vector3& b);
+
 // ワールド行列からワールド座標取得
 Vector3 ExtractionWorldPos(const Matrix4x4& m);
 
@@ -133,3 +136,7 @@ Quaternion QuaternionLookRotation(const Vector3& forward, const Vector3& up);
 
 // クォータニオンをオイラー角に変換する関数
 Vector3 QuaternionToEulerAngles(const Quaternion& q);
+
+std::pair<Vector3, Vector3> ComputeCollisionVelocities(float mass1, const Vector3& velocity1, float mass2, const Vector3& velocity2, float coefficientOfRestitution, const Vector3& normal);
+
+Vector3 ComputeCollisionVelocity(float mass1, const Vector3& velocity1, float mass2, const Vector3& velocity2, float coefficientOfRestitution, const Vector3& normal);

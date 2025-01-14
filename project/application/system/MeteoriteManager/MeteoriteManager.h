@@ -34,6 +34,8 @@ private:
 	// 隕石生成トランスレート
 	Vector3 kMeteritePopTranslate_ = { 3.0f,3.0f,0.0f };
 
+	float speed_ = 0.0f;
+
 	// 隕石リスト
 	std::vector<std::unique_ptr<Meteorite>> meteorites_;
 

@@ -2,12 +2,12 @@
 
 #include "framework/SUGER.h"
 
-void MeteoriteManager::Initialize(Earth* earth,FragmentManager* fragmentManager) {
+void MeteoriteManager::Initialize(Earth* earth, FragmentManager* fragmentManager) {
 	assert(earth);
 	assert(fragmentManager);
 	earth_ = earth;
 	fragmentManager_ = fragmentManager;
-	
+
 	// コンテナをクリア
 	meteorites_.clear();
 
@@ -17,11 +17,13 @@ void MeteoriteManager::Initialize(Earth* earth,FragmentManager* fragmentManager)
 	SUGER::AddGrobalDataItem(kParamaterString_, "PopScale", kMeteritePopScale_);
 	SUGER::AddGrobalDataItem(kParamaterString_, "PopRotate", kMeteritePopRotate_);
 	SUGER::AddGrobalDataItem(kParamaterString_, "PopPosition", kMeteritePopTranslate_);
-	
+	SUGER::AddGrobalDataItem(kParamaterString_, "Speed", speed_);
+
 
 	kMeteritePopScale_ = SUGER::GetGrobalDataValueVector3(kParamaterString_, "PopScale");
 	kMeteritePopRotate_ = SUGER::GetGrobalDataValueVector3(kParamaterString_, "PopRotate");
 	kMeteritePopTranslate_ = SUGER::GetGrobalDataValueVector3(kParamaterString_, "PopPosition");
+	speed_ = SUGER::GetGrobalDataValueFloat(kParamaterString_, "Speed");
 
 	// 受け取ったグローバルデータを挿入
 	meteoritePopTransform_.scale = kMeteritePopScale_;
@@ -30,9 +32,12 @@ void MeteoriteManager::Initialize(Earth* earth,FragmentManager* fragmentManager)
 }
 
 void MeteoriteManager::Update() {
+	// グローバルデータクラスからデータを取得
+	speed_ = SUGER::GetGrobalDataValueFloat(kParamaterString_, "Speed");
 	// コンテナ内の隕石をすべて更新
 	for (auto& meteorite : meteorites_) {
 		meteorite->Update();
+		meteorite->SetSpeed(speed_);
 	}
 }
 

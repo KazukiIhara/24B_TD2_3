@@ -17,5 +17,7 @@ public:
 
 
 private:
-
+	Vector3 velocity_{};
+	int32_t kNoneHitTime_ = 2;
+	int32_t hitTimer_ = 0;
 };
