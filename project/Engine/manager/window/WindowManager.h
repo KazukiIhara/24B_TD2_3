@@ -35,7 +35,7 @@ public: // 公開メンバ関数
 
 private:
 	// ゲームウィンドウの作成
-	void CreateGameWindow(const wchar_t* title = L"SUGER with DirectX12", UINT windowStyle = WS_OVERLAPPEDWINDOW,
+	void CreateGameWindow(const wchar_t* title = L"2301_TankoMoon", UINT windowStyle = WS_OVERLAPPEDWINDOW,
 		int32_t clientWidth = kClientWidth, int32_t clientHeight = kClientHeight);
 	// ゲームウィンドウの破棄
 	void TerminateGameWindow();
