@@ -83,6 +83,14 @@ void Collider::SetSize(const float& size) {
 	size_ = size;
 }
 
+void Collider::SetVelocity(const Vector3& velocity) {
+	velocity_ = velocity;
+}
+
+void Collider::SetMass(float mass) {
+	mass_ = mass;
+}
+
 Vector3 Collider::GetWorldPosition() const {
 	return ExtractionWorldPos(worldTransform_.worldMatrix_);
 }
@@ -97,6 +105,14 @@ ColliderCategory Collider::GetColliderCategory() const {
 
 float Collider::GetSize() const {
 	return size_;
+}
+
+Vector3 Collider::GetVelocity() const {
+	return velocity_;
+}
+
+float Collider::GetMass() const {
+	return mass_;
 }
 
 void Collider::SetLineController(LineController* lineController) {

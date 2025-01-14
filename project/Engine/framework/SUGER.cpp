@@ -53,6 +53,9 @@ std::unique_ptr<Object3DSystem> SUGER::object3dSystem_ = nullptr;
 std::unique_ptr<ParticleSystem> SUGER::particleSystem_ = nullptr;
 std::unique_ptr<LineSystem> SUGER::lineSystem_ = nullptr;
 
+// デルタタイム
+const float SUGER::kDeltaTime_ = 1.0f / 60.0f;
+
 void SUGER::Initialize() {
 	// フレームワーク初期化ログ
 	Logger::Log("SUGER,Initialize\n");
@@ -162,7 +165,7 @@ void SUGER::Initialize() {
 	swapChain_->Initialize(windowManager_.get(), dxgiManager_.get(), command_.get(), rtvManager_.get());
 	// RenderTextureの初期化
 	renderTexture_ = std::make_unique<RenderTexture>();
-	renderTexture_->Initialize(dxgiManager_.get(), command_.get(), rtvManager_.get(), srvUavManager_.get(),postEffectPipelineManager_.get());
+	renderTexture_->Initialize(dxgiManager_.get(), command_.get(), rtvManager_.get(), srvUavManager_.get(), postEffectPipelineManager_.get());
 	// DepthStencilの初期化
 	depthStencil_ = std::make_unique<DepthStencil>();
 	depthStencil_->Initialize(dxgiManager_.get(), command_.get(), dsvmanager_.get());

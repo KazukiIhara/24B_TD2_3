@@ -17,7 +17,7 @@ void GameScene::Initialize() {
 	earth_ = std::make_unique<Earth>();
 	earth_->Initialize(SUGER::CreateEntity("Earth", "Earth"));
 	earth_->CreateCollider(ColliderCategory::Earth, kSphere, 2.0f);
-
+	earth_->GetCollider()->SetMass(200.0f);
 	//
 	// Playerの初期化処理
 	//
@@ -71,6 +71,8 @@ void GameScene::SceneStatePlayUpdate() {
 
 #endif // DEBUG
 
+	// 地球の更新
+	earth_->Update();
 
 	// プレイヤーの更新処理
 	player_->Update();

@@ -417,6 +417,10 @@ public: // クラスメソッド
 private: // メンバ変数
 	// 終了リクエスト
 	bool endRequest_ = false;
+
+public:
+	static const float kDeltaTime_;
+	
 private: // クラスのポインタ
 #ifdef _DEBUG
 	static std::unique_ptr<D3DResourceLeakChecker> leakCheck_;

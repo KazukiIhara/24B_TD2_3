@@ -2,7 +2,7 @@
 
 #include "3d/entityController/EntityController.h"
 
-class Player: public EntityController {
+class Player : public EntityController {
 public:
 	Player() = default;
 	~Player() = default;
@@ -37,10 +37,15 @@ private:
 	// 最大速度(std::clampで利用しているため、-の値にならないように注意)
 	float kMaxSpeed_ = 0.2f;
 
+
+
 	// 移動ベクトル
 	Vector3 moveVector_{};
 	// 加速量
 	Vector3	acceralation_{};
 	// 移動量
 	Vector3 velocity_{};
+
+	int32_t kNoneHitTime_ = 2;
+	int32_t hitTimer_ = 0;
 };

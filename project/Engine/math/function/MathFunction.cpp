@@ -70,6 +70,20 @@ Vector3 Forward(const Vector3& rotate) {
 	return Normalize(forward);
 }
 
+Vector3 Project(const Vector3& a, const Vector3& b) {
+	Vector3 projection{};
+	float dotProduct = a.x * b.x + a.y * b.y + a.z * b.z;
+	float bMagnitudeSquared = b.x * b.x + b.y * b.y + b.z * b.z;
+
+	float scalarProjection = dotProduct / bMagnitudeSquared;
+
+	projection.x = scalarProjection * b.x;
+	projection.y = scalarProjection * b.y;
+	projection.z = scalarProjection * b.z;
+
+	return projection;
+}
+
 Vector3 ExtractionWorldPos(const Matrix4x4& m) {
 	Vector3 worldPos{};
 	worldPos.x = m.m[3][0];
@@ -492,4 +506,45 @@ Vector3 QuaternionToEulerAngles(const Quaternion& q) {
 	angles.z = std::atan2(siny_cosp, cosy_cosp);
 
 	return angles;
+}
+
+std::pair<Vector3, Vector3> ComputeCollisionVelocities(float mass1, const Vector3& velocity1, float mass2, const Vector3& velocity2,
+	float coefficientOfRestitution, const Vector3& normal) {
+	// 衝突面法線方向の速度成分を射影
+	Vector3 project1 = Project(velocity1, normal); // 質点1の法線方向成分
+	Vector3 project2 = Project(velocity2, normal); // 質点2の法線方向成分
+	Vector3 sub1 = velocity1 - project1;           // 質点1の接線方向成分
+	Vector3 sub2 = velocity2 - project2;           // 質点2の接線方向成分
+
+	// 衝突後の法線方向速度を計算 (反発係数と運動量保存則に基づく)
+	Vector3 relativeVelocity = project1 - project2; // 衝突前の相対速度（法線方向）
+	float impulse = (-(1 + coefficientOfRestitution) * Dot(relativeVelocity, normal)) /
+		(1.0f / mass1 + 1.0f / mass2); // 衝撃量の計算
+	Vector3 impulseVector = normal * impulse;       // 衝撃量ベクトル
+
+	// 衝突後の法線方向速度を更新
+	Vector3 velocityAfter1 = project1 + impulseVector / mass1;
+	Vector3 velocityAfter2 = project2 - impulseVector / mass2;
+
+	// 接線成分を加算して最終的な速度を計算
+	return std::make_pair(velocityAfter1 + sub1, velocityAfter2 + sub2);
+}
+
+Vector3 ComputeCollisionVelocity(float mass1, const Vector3& velocity1, float mass2, const Vector3& velocity2, float coefficientOfRestitution, const Vector3& normal) {
+	// 衝突面法線方向の速度成分を射影
+	Vector3 project1 = Project(velocity1, normal); // 質点1の法線方向成分
+	Vector3 project2 = Project(velocity2, normal); // 質点2の法線方向成分
+	Vector3 sub1 = velocity1 - project1;           // 質点1の接線方向成分
+
+	// 衝突後の法線方向速度を計算 (反発係数と運動量保存則に基づく)
+	Vector3 relativeVelocity = project1 - project2; // 衝突前の相対速度（法線方向）
+	float impulse = (-(1 + coefficientOfRestitution) * Dot(relativeVelocity, normal)) /
+		(1.0f / mass1 + 1.0f / mass2); // 衝撃量の計算
+	Vector3 impulseVector = normal * impulse;       // 衝撃量ベクトル
+
+	// 衝突後の法線方向速度を更新
+	Vector3 velocityAfter1 = project1 + impulseVector / mass1;
+
+	// 接線成分を加算して最終的な速度を計算
+	return velocityAfter1 + sub1;
 }

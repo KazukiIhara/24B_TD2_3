@@ -18,12 +18,18 @@ void Player::Initialize(const std::string& name) {
 	// 座標を初期化
 	SetTranslate(initializePosition_);
 
+	hitTimer_ = 0;
 }
 
 void Player::Update() {
+	if (hitTimer_ > 0) {
+		hitTimer_--;
+	}
 	SetParamaters();
 	Operation();
 	Move();
+	// 現在の移動量をセット
+	GetCollider()->SetVelocity(velocity_);
 }
 
 void Player::SetParamaters() {
@@ -61,9 +67,26 @@ void Player::Move() {
 	velocity_.y = std::clamp(velocity_.y, -kMaxSpeed_, kMaxSpeed_);
 	velocity_.z = std::clamp(velocity_.z, -kMaxSpeed_, kMaxSpeed_);
 	// 移動量を足す
-	SetTranslate(GetTranslate() + velocity_);
+	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 }
 
 void Player::OnCollision(Collider* other) {
-
+	// 衝突相手のカテゴリーを取得
+	ColliderCategory category = other->GetColliderCategory();
+	// カテゴリごとに衝突判定を書く
+	switch (category) {
+	case ColliderCategory::Earth:
+		if (hitTimer_ > 0) {
+			break;
+		}
+		float earthMass = GetCollider()->GetMass();
+		Vector3 earthVelocity = GetCollider()->GetVelocity();
+		float playerMass = other->GetMass();
+		Vector3 playerVelocity = other->GetVelocity();
+		Vector3 normal = GetCollider()->GetWorldPosition() - other->GetWorldPosition();
+		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+		velocity_ = velocity;
+		hitTimer_ = kNoneHitTime_;
+		break;
+	}
 }
