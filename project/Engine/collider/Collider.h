@@ -31,6 +31,12 @@ public:
 	// サイズのセット
 	void SetSize(const float& size);
 
+	// 移動量のセット
+	void SetVelocity(const Vector3& velocity);
+
+	// 質量のセット
+	void SetMass(float mass);
+
 	// ワールド座標のゲッター
 	Vector3 GetWorldPosition()const;
 
@@ -42,6 +48,13 @@ public:
 
 	// サイズの取得
 	float GetSize()const;
+
+	// 移動量の取得
+	Vector3 GetVelocity()const;
+
+	// 質量の取得
+	float GetMass()const;
+
 private:
 	// ラインコントローラのセット
 	void SetLineController(LineController* lineController);
@@ -55,4 +68,15 @@ private:
 	ColliderCategory colliderCategory_ = ColliderCategory::None;
 	// ライン描画コントローラ
 	LineController* line_;
+
+
+	// 
+	// 物理挙動用変数
+	// 
+
+	// 移動量
+	Vector3 velocity_{};
+	// 質量
+	float mass_ = 2.0f;
+
 };
