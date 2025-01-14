@@ -65,11 +65,11 @@ void GameScene::SceneStatePlayUpdate() {
 
 	ImGui::End();
 
+#endif // DEBUG
+
 	if (SUGER::TriggerKey(DIK_R)) {
 		ChangeScene("GAME");
 	}
-
-#endif // DEBUG
 
 	// 地球の更新
 	earth_->Update();
