@@ -16,7 +16,7 @@ void GameScene::Initialize() {
 
 	earth_ = std::make_unique<Earth>();
 	earth_->Initialize(SUGER::CreateEntity("Earth", "Earth"));
-
+	earth_->CreateCollider(ColliderCategory::Earth, kSphere, 2.0f);
 
 	//
 	// Playerの初期化処理
@@ -25,7 +25,7 @@ void GameScene::Initialize() {
 	player_ = std::make_unique<Player>();
 	player_->Initialize(SUGER::CreateEntity("Player", "Player"));
 	// プレイヤーのコライダーを作成
-	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.2f);
+	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.0f);
 
 
 	// 
@@ -42,6 +42,7 @@ void GameScene::Initialize() {
 	meteoriteManager_ = std::make_unique<MeteoriteManager>();
 	meteoriteManager_->Initialize(earth_.get(), fragmentManager_.get());
 
+	// とりあえず一つ追加
 	meteoriteManager_->AddMeteorite();
 
 
@@ -92,5 +93,7 @@ void GameScene::SceneStatePlayUpdate() {
 	// 
 
 	SUGER::AddColliderList(player_.get());
+	SUGER::AddColliderList(earth_.get());
+
 
 }

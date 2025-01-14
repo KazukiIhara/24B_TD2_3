@@ -17,6 +17,7 @@ void MeteoriteManager::Initialize(Earth* earth,FragmentManager* fragmentManager)
 	SUGER::AddGrobalDataItem(kParamaterString_, "PopScale", kMeteritePopScale_);
 	SUGER::AddGrobalDataItem(kParamaterString_, "PopRotate", kMeteritePopRotate_);
 	SUGER::AddGrobalDataItem(kParamaterString_, "PopPosition", kMeteritePopTranslate_);
+	
 
 	kMeteritePopScale_ = SUGER::GetGrobalDataValueVector3(kParamaterString_, "PopScale");
 	kMeteritePopRotate_ = SUGER::GetGrobalDataValueVector3(kParamaterString_, "PopRotate");
