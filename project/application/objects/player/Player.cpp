@@ -19,6 +19,7 @@ void Player::Initialize(const std::string& name) {
 	SetTranslate(initializePosition_);
 
 	earthHitTimer_ = 0;
+	meteoriteHitTimer_ = 0;
 }
 
 void Player::Update() {
@@ -110,7 +111,7 @@ void Player::OnCollision(Collider* other) {
 			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
 			Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, meteoriteMass, meteoriteVelocity, 1.0f, normal);
 			velocity_ = velocity;
-			earthHitTimer_ = kNoneHitTime_;
+			meteoriteHitTimer_ = kNoneHitTime_;
 		}
 		break;
 	}
