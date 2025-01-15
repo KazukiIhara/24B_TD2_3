@@ -5,17 +5,25 @@
 void Earth::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 	earthHitTimer_ = 0;
+	returnMoveTimer_ = 0;
 }
 
 void Earth::Update() {
 	if (earthHitTimer_ > 0) {
 		earthHitTimer_--;
 	}
+	if (returnMoveTimer_ > 0) {
+		returnMoveTimer_ -= SUGER::kDeltaTime_;
+	}
 
 	// 移動量を足す
 	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 	// コライダーに移動量をセット
 	GetCollider()->SetVelocity(velocity_);
+
+	ReturnPosition();
+
+	MoveLimit();
 }
 
 void Earth::OnCollision(Collider* other) {
@@ -35,6 +43,27 @@ void Earth::OnCollision(Collider* other) {
 		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
 		velocity_ = velocity;
 		earthHitTimer_ = kNoneHitTime_;
+		returnMoveTimer_ = kReturnMoveTime_;
 		break;
+	}
+}
+
+void Earth::MoveLimit()
+{
+	Vector3 translate_ = GetTranslate();
+	translate_.x = std::clamp(translate_.x, -stageWidth_, stageWidth_);
+	translate_.y = std::clamp(translate_.y, -stageHeight_, stageHeight_);
+	SetTranslate(translate_);
+}
+
+void Earth::ReturnPosition()
+{
+	Vector3 translate_ = GetTranslate();
+	if (returnMoveTimer_ <= 0) {
+		if (translate_ != Vector3{ 0,0,0 }) {
+			Vector3 normal = Normalize(Vector3{ 0, 0, 0 } - translate_);
+			velocity_ = normal * returnSpeed_;
+			
+		}
 	}
 }
