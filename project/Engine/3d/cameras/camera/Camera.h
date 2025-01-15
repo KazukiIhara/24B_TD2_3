@@ -18,6 +18,8 @@ public:
 	// 更新
 	virtual void Update();
 
+	void Shake(int32_t duration, float intensity);
+
 	// 定数バッファに転送
 	void TransferCamera(const uint32_t& index);
 
@@ -58,6 +60,8 @@ private:
 	// カメラのデータを更新
 	void UpdateCameraData();
 
+	void ApplyShake();
+
 protected:
 	// カメラのトランスフォームを受け取る箱
 	WorldTransform transform_{};
@@ -88,5 +92,9 @@ protected:
 	ComPtr<ID3D12Resource> cameraResource_ = nullptr;
 	// Camera用データ
 	CameraForGPU* cameraData_ = nullptr;
+
+	// カメラシェイク
+	int32_t shakeDuration_ = 0;
+	float shakeIntensity_ = 0.0f;
 
 };

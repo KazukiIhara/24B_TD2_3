@@ -10,6 +10,8 @@
 // MyHedder
 #include "framework/SUGER.h"
 
+#include "random/Random.h"
+
 void Camera::Initialize() {
 
 	transform_.Initialize();
@@ -40,7 +42,14 @@ void Camera::Update() {
 	billboardMatrix_.m[3][1] = 0.0f;
 	billboardMatrix_.m[3][2] = 0.0f;
 
+	ApplyShake();
+
 	UpdateCameraData();
+}
+
+void Camera::Shake(int32_t duration, float intensity) {
+	shakeDuration_ = duration;
+	shakeIntensity_ = intensity;
 }
 
 void Camera::CreateCameraResource() {
@@ -63,6 +72,23 @@ void Camera::UpdateCameraData() {
 	cameraData_->worldPosition.x = worldPos_.x;
 	cameraData_->worldPosition.y = worldPos_.y;
 	cameraData_->worldPosition.z = worldPos_.z;
+}
+
+void Camera::ApplyShake() {
+	if (shakeDuration_ > 0) {
+		// ランダムなシェイクオフセットを生成
+		Vector3 shakeOffset = Random::GenerateVector3(-shakeIntensity_, shakeIntensity_);
+		transform_.translate_ += shakeOffset;
+
+		// シェイクの時間を減らす
+		shakeDuration_--;
+
+		// シェイクが終了した場合リセット
+		if (shakeDuration_ <= 0) {
+			shakeDuration_ = 0;
+		}
+	}
+
 }
 
 void Camera::TransferCamera(const uint32_t& index) {
