@@ -2,7 +2,7 @@
 
 #include "3d/entityController/EntityController.h"
 
-class Player : public EntityController {
+class Player: public EntityController {
 public:
 	Player() = default;
 	~Player() = default;
@@ -23,6 +23,9 @@ public:
 	// 移動処理
 	void Move();
 
+	// 移動制限
+	void MoveLimit();
+
 	// 衝突コールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
 
@@ -42,7 +45,9 @@ private:
 	// 大きさ
 	float scale_ = 1.0f;
 
-
+	// 移動できる範囲
+	float stageWidth_ = 21.0f;
+	float stageHeight_ = 12.0f;
 
 
 	// 移動ベクトル
