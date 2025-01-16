@@ -7,10 +7,13 @@ void Earth::Initialize(const std::string& name) {
 	earthHitTimer_ = 0;
 	returnMoveTimer_ = 0;
 	isAlive_ = true;
+
+	inclinationRadian_ = DegreesToRadians(inclination_);
+	SetRotate(Vector3(0.0f, 0.0f, -inclinationRadian_));
 }
 
 void Earth::Update() {
-	
+
 	if (earthHitTimer_ > 0) {
 		earthHitTimer_--;
 	}
@@ -20,6 +23,7 @@ void Earth::Update() {
 
 	// 移動量を足す
 	if (isAlive_) {
+		SetRotateY(GetRotate().y + 0.01f);
 		SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 		// コライダーに移動量をセット
 		GetCollider()->SetVelocity(velocity_);
@@ -62,24 +66,21 @@ void Earth::OnCollision(Collider* other) {
 	}
 }
 
-void Earth::MoveLimit()
-{
+void Earth::MoveLimit() {
 	Vector3 translate_ = GetTranslate();
 	translate_.x = std::clamp(translate_.x, -stageWidth_, stageWidth_);
 	translate_.y = std::clamp(translate_.y, -stageHeight_, stageHeight_);
 	SetTranslate(translate_);
 }
 
-void Earth::UpdateLifeState()
-{
+void Earth::UpdateLifeState() {
 	if (HP_ <= 0) {
 		isAlive_ = false;
-		
+
 	}
 }
 
-void Earth::ReturnPosition()
-{
+void Earth::ReturnPosition() {
 	Vector3 translate_ = GetTranslate();
 	if (returnMoveTimer_ <= 0) {
 		if (translate_ != Vector3{ 0,0,0 }) {

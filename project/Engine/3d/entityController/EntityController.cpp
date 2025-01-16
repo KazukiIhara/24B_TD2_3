@@ -36,6 +36,10 @@ void EntityController::SetRotate(const Vector3& rotate) {
 	entity_->SetRotate(rotate);
 }
 
+void EntityController::SetRotateY(float rotateY) {
+	entity_->SetRotateY(rotateY);
+}
+
 void EntityController::SetTranslate(const Vector3& translate) {
 	entity_->SetTranslate(translate);
 }

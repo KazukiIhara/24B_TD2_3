@@ -30,6 +30,7 @@ public:
 	void SetScale(const Vector3& scale);
 	// 回転のセット
 	void SetRotate(const Vector3& rotate);
+	void SetRotateY(float rotateY);
 	// 移動量のセット
 	void SetTranslate(const Vector3& translate);
 
