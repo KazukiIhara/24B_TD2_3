@@ -22,6 +22,10 @@ void Meteorite::SetFragmentManager(FragmentManager* fragmentManager) {
 	fragmentManager_ = fragmentManager;
 }
 
+bool Meteorite::GetIsAllive() const {
+	return isAllive_;
+}
+
 void Meteorite::Update() {
 
 	// ふるまい変更
@@ -69,10 +73,16 @@ void Meteorite::OnCollision(Collider* other) {
 }
 
 void Meteorite::RootInitialize() {
-
+	// 通常色
+	SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
 void Meteorite::RootUpdate() {
+
+	if (SUGER::TriggerKey(DIK_SPACE)) {
+		behaviorRequest_ = Meteorite::Behavior::kDagame;
+	}
+
 	Vector3 target = ExtractionWorldPos(earth_->GetWorldTransformPtr()->worldMatrix_);
 	// 目標に対して保管移動
 	Vector3 velocity = Lerp(GetTranslate(), target, speed_) - GetTranslate();
@@ -92,27 +102,37 @@ void Meteorite::RootUpdate() {
 		emitTime_ = 0;
 	}
 
-
 }
 
 void Meteorite::DamageInitialize() {
 	hp_--;
+	damageTimer_ = kDamageTime_;
+	SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void Meteorite::DamageUpdate() {
 	if (hp_ <= 0) {
 		behaviorRequest_ = Meteorite::Behavior::kBreak;
 	}
+
+	damageTimer_--;
+	if (damageTimer_ == 0) {
+		behaviorRequest_ = Meteorite::Behavior::kRoot;
+	}
 }
 
 void Meteorite::BreakInitialize() {
-	SetIsDelete(true);
-	isAllive_ = false;
+	// 破壊時色
+	SetColor(Vector4(0.0f, 1.0f, 1.0f, 1.0f));
+	breakTimer_ = kBreakTime_;
 }
 
 void Meteorite::BreakUpdate() {
-
-
+	breakTimer_--;
+	if (breakTimer_ == 0) {
+		SetIsDelete(true);
+		isAllive_ = false;
+	}
 }
 
 void Meteorite::SetSpeed(float speed) {

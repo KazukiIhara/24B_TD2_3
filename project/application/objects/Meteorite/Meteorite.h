@@ -7,7 +7,7 @@
 class Earth;
 class FragmentManager;
 
-class Meteorite: public EntityController {
+class Meteorite : public EntityController {
 public:
 	enum class Behavior {
 		kRoot,
@@ -23,6 +23,8 @@ public:
 	void SetEarth(Earth* earth);
 
 	void SetFragmentManager(FragmentManager* fragmentManager);
+
+	bool GetIsAllive()const;
 
 	// 更新
 	void Update()override;
@@ -59,7 +61,18 @@ private:
 
 	// HP
 	uint32_t hp_ = 3;
-	
+
+
+	// ダメージ時間定数
+	const int32_t kDamageTime_ = 10;
+	// ダメージタイマー
+	int32_t damageTimer_ = 0;
+
+	// 破壊時間定数
+	const int32_t kBreakTime_ = 30;
+	// 破壊タイマー
+	int32_t breakTimer_ = 0;
+
 	// 生存フラグ
 	bool isAllive_ = true;
 
