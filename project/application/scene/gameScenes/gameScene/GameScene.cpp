@@ -13,7 +13,7 @@ void GameScene::Initialize() {
 	// 天球の初期化処理
 	//
 
-	skydome_ = std::make_unique<EntityController>();
+	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(SUGER::CreateEntity("Skydome" , "Skydome"));
 	skydome_->SetEnableLight(false);
 
@@ -97,7 +97,7 @@ void GameScene::SceneStatePlayUpdate() {
 	fragmentManager_->Update();
 
 	// 天球の更新
-	UpdateSkydome();
+	skydome_->Update();
 
 	//
 	// コライダーの処理ここから
@@ -114,8 +114,4 @@ void GameScene::SceneStatePlayUpdate() {
 	SUGER::AddColliderList(earth_.get());
 	meteoriteManager_->AddColliderList();
 	fragmentManager_->AddColliderList();
-}
-
-void GameScene::UpdateSkydome() {
-	skydome_->SetRotateY(skydome_->GetRotate().y + 0.0001f);
 }

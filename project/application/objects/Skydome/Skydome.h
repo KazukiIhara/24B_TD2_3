@@ -16,7 +16,7 @@ public:
 	void OnCollision([[maybe_unused]] Collider* other)override;
 
 private:
-
+	// スピード
 	float speed_ = 0.0001f;
 
 };
