@@ -30,6 +30,9 @@ public:
 	// プレイフェーズ更新
 	void SceneStatePlayUpdate()override;
 
+	// 天球の更新
+	void UpdateSkydome();
+
 private:
 	// プレイヤー
 	std::unique_ptr<Player> player_ = nullptr;
