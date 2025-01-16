@@ -100,7 +100,7 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 
 	// モデル読み込み
 	SUGER::LoadModel("teapot");
-	SUGER::LoadModel("Player");
+	SUGER::LoadModel("Moon");
 	SUGER::LoadModel("Earth");
 	SUGER::LoadModel("Meteorite");
 	SUGER::LoadModel("Fragment");
