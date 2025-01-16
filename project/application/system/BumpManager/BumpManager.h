@@ -2,6 +2,8 @@
 
 #include "objects/bump/Bump.h"
 
+#include "list"
+
 class Player;
 
 // たんこぶマネージャ
@@ -11,6 +13,16 @@ public:
 	~BumpManager() = default;
 
 	void Initialize();
-private:
 
+	void Update();
+
+	void AddBump(const Vector3& popTranslate);
+
+	void AddColliderList();
+private:
+	// たんこぶのリスト
+	std::list<std::unique_ptr<Bump>> bumps_;
+
+
+	uint32_t currentSerialNumber_ = 0;
 };
