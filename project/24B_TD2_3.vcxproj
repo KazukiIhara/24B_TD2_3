@@ -119,7 +119,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
     <ClCompile Include="application\scene\gameScenes\gameScene\GameScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
+    <ClCompile Include="application\scene\gameScenes\resultScene\ResultScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp" />
+    <ClCompile Include="application\scene\gameScenes\titleScene\TitleScene.cpp" />
     <ClCompile Include="application\system\BumpManager\BumpManager.cpp" />
     <ClCompile Include="application\system\FragmentManager\FragmentManager.cpp" />
     <ClCompile Include="application\system\MeteoriteManager\MeteoriteManager.cpp" />
@@ -212,7 +214,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\scene\factory\SceneFactory.h" />
     <ClInclude Include="application\scene\gameScenes\gameScene\GameScene.h" />
     <ClInclude Include="application\scene\gameScenes\load\LoadScene.h" />
+    <ClInclude Include="application\scene\gameScenes\resultScene\ResultScene.h" />
     <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h" />
+    <ClInclude Include="application\scene\gameScenes\titleScene\TitleScene.h" />
     <ClInclude Include="application\system\BumpManager\BumpManager.h" />
     <ClInclude Include="application\system\FragmentManager\FragmentManager.h" />
     <ClInclude Include="application\system\MeteoriteManager\MeteoriteManager.h" />

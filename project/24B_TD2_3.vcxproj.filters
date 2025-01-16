@@ -407,6 +407,8 @@
     <ClCompile Include="application\objects\Fragment\Fragment.cpp" />
     <ClCompile Include="application\system\FragmentManager\FragmentManager.cpp" />
     <ClCompile Include="Engine\contactRecord\ContactRecord.cpp" />
+    <ClCompile Include="application\scene\gameScenes\resultScene\ResultScene.cpp" />
+    <ClCompile Include="application\scene\gameScenes\titleScene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -626,6 +628,8 @@
     <ClInclude Include="application\objects\Fragment\Fragment.h" />
     <ClInclude Include="application\system\FragmentManager\FragmentManager.h" />
     <ClInclude Include="Engine\contactRecord\ContactRecord.h" />
+    <ClInclude Include="application\scene\gameScenes\resultScene\ResultScene.h" />
+    <ClInclude Include="application\scene\gameScenes\titleScene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
