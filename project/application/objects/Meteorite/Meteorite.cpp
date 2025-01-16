@@ -17,7 +17,7 @@ void Meteorite::SetEarth(Earth* earth) {
 	earth_ = earth;
 }
 
-void Meteorite::SetFragmentManager(FragmentManager* fragmentManager){
+void Meteorite::SetFragmentManager(FragmentManager* fragmentManager) {
 	assert(fragmentManager);
 	fragmentManager_ = fragmentManager;
 }
@@ -31,6 +31,12 @@ void Meteorite::Update() {
 		case Meteorite::Behavior::kRoot:
 			RootInitialize();
 			break;
+		case Meteorite::Behavior::kDagame:
+			DamageInitialize();
+			break;
+		case Meteorite::Behavior::kBreak:
+			BreakInitialize();
+			break;
 		}
 		behaviorRequest_ = std::nullopt;
 	}
@@ -39,6 +45,12 @@ void Meteorite::Update() {
 	switch (behavior_) {
 	case Meteorite::Behavior::kRoot:
 		RootUpdate();
+		break;
+	case Meteorite::Behavior::kDagame:
+		DamageUpdate();
+		break;
+	case Meteorite::Behavior::kBreak:
+		BreakUpdate();
 		break;
 	}
 
@@ -76,9 +88,29 @@ void Meteorite::RootUpdate() {
 		Vector3 popPos = GetTranslate();
 		popPos.x += rand() % 21 + -10;
 		popPos.y += rand() % 21 + -10;
-		fragmentManager_->AddFragment(popPos,earth_);
+		fragmentManager_->AddFragment(popPos, earth_);
 		emitTime_ = 0;
 	}
+
+
+}
+
+void Meteorite::DamageInitialize() {
+	hp_--;
+}
+
+void Meteorite::DamageUpdate() {
+	if (hp_ <= 0) {
+		behaviorRequest_ = Meteorite::Behavior::kBreak;
+	}
+}
+
+void Meteorite::BreakInitialize() {
+
+
+}
+
+void Meteorite::BreakUpdate() {
 
 
 }

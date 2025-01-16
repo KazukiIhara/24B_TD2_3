@@ -11,6 +11,8 @@ class Meteorite: public EntityController {
 public:
 	enum class Behavior {
 		kRoot,
+		kDagame,
+		kBreak,
 	};
 public:
 	Meteorite() = default;
@@ -31,6 +33,12 @@ public:
 	void RootInitialize();
 	void RootUpdate();
 
+	void DamageInitialize();
+	void DamageUpdate();
+
+	void BreakInitialize();
+	void BreakUpdate();
+
 	void SetSpeed(float speed);
 private:
 	// 
@@ -48,6 +56,9 @@ private:
 
 	// 欠片出現時間
 	float emitTime_ = 0;
+
+	// HP
+	uint32_t hp_ = 3;
 
 private:
 	Earth* earth_ = nullptr;
