@@ -52,6 +52,16 @@ void GameScene::Initialize() {
 	// とりあえず一つ追加
 	meteoriteManager_->AddMeteorite();
 
+	//
+	// たんこぶマネージャーの初期化処理
+	//
+	
+	bumpManager_ = std::make_unique<BumpManager>();
+	bumpManager_->Initialize();
+	bumpManager_->SetPlayer(player_.get());
+	// 
+	player_->SetBumpManager(bumpManager_.get());
+
 
 }
 
@@ -83,6 +93,9 @@ void GameScene::SceneStatePlayUpdate() {
 		sceneCamera_->Shake(15, 0.1f);
 	}
 
+	// たんこぶマネージャーの更新
+	bumpManager_->Update();
+
 	// 地球の更新
 	earth_->Update();
 
@@ -94,6 +107,8 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// かけらマネージャの更新
 	fragmentManager_->Update();
+
+	
 
 	//
 	// コライダーの処理ここから
@@ -110,4 +125,5 @@ void GameScene::SceneStatePlayUpdate() {
 	SUGER::AddColliderList(earth_.get());
 	meteoriteManager_->AddColliderList();
 	fragmentManager_->AddColliderList();
+	bumpManager_->AddColliderList();
 }

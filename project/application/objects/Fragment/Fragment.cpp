@@ -58,6 +58,15 @@ void Fragment::OnCollision(Collider* other) {
 	case ColliderCategory::Earth:
 		HP_ -= 3;
 		break;
+	case ColliderCategory::Bump:
+		float fragmentMass = GetCollider()->GetMass();
+		Vector3 fragmentVelocity = GetCollider()->GetVelocity();
+		float playerMass = other->GetMass();
+		Vector3 playerVelocity = other->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+		Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f, normal);
+		velocity_ = velocity;
+		break;
 	}
 }
 

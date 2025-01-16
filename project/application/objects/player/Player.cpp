@@ -2,6 +2,8 @@
 
 #include "framework/SUGER.h"
 
+#include "application/system/BumpManager/BumpManager.h"
+
 void Player::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 	// プレイヤーのパラメータをグローバルデータグループに登録
@@ -28,6 +30,8 @@ void Player::Update() {
 	Operation();
 	Move();
 	MoveLimit();
+
+	
 }
 
 void Player::SetParamaters() {
@@ -91,36 +95,45 @@ void Player::OnCollision(Collider* other) {
 	ColliderCategory category = other->GetColliderCategory();
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
-		case ColliderCategory::Earth:
-			if (earthHitTimer_ > 0) {
-				break;
-			}
-			{
-				float playerMass = GetCollider()->GetMass();
-				Vector3 playerVelocity = GetCollider()->GetVelocity();
-				float  earthMass = other->GetMass();
-				Vector3 earthVelocity = other->GetVelocity();
-				Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-				Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, earthMass, earthVelocity, 1.0f, normal);
-				velocity_ = velocity;
-				earthHitTimer_ = kNoneHitTime_;
-			}
+	case ColliderCategory::Earth:
+		if (earthHitTimer_ > 0) {
 			break;
+		}
+		{
+			float playerMass = GetCollider()->GetMass();
+			Vector3 playerVelocity = GetCollider()->GetVelocity();
+			float  earthMass = other->GetMass();
+			Vector3 earthVelocity = other->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+			Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, earthMass, earthVelocity, 1.0f, normal);
+			velocity_ = velocity;
+			earthHitTimer_ = kNoneHitTime_;
+		}
+		break;
 
-		case::ColliderCategory::Meteorite:
-			if (meteoriteHitTimer_ > 0) {
-				break;
-			}
-			{
-				float playerMass = GetCollider()->GetMass();
-				Vector3 playerVelocity = GetCollider()->GetVelocity();
-				float meteoriteMass = other->GetMass();
-				Vector3 meteoriteVelocity = other->GetVelocity();
-				Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-				Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, meteoriteMass, meteoriteVelocity, 1.0f, normal);
-				velocity_ = velocity;
-				meteoriteHitTimer_ = kNoneHitTime_;
-			}
+	case ColliderCategory::Meteorite:
+		if (meteoriteHitTimer_ > 0) {
 			break;
+		}
+		{
+			float playerMass = GetCollider()->GetMass();
+			Vector3 playerVelocity = GetCollider()->GetVelocity();
+			float meteoriteMass = other->GetMass();
+			Vector3 meteoriteVelocity = other->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+			Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, meteoriteMass, meteoriteVelocity, 1.0f, normal);
+			velocity_ = velocity;
+			meteoriteHitTimer_ = kNoneHitTime_;
+
+			bumpManager_->AddBump(-normal);
+			
+		}
+		break;
+	case ColliderCategory::Fragment:
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+
+		bumpManager_->AddBump(-normal);
+		break;
 	}
+
 }
