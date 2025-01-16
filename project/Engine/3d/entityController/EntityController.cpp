@@ -48,6 +48,10 @@ void EntityController::SetColor(const Vector4& color) {
 	entity_->SetColor(color);
 }
 
+void EntityController::SetSerialNumber(uint32_t serialNumber) {
+	entity_->GetCollider()->SetSerialNumber(serialNumber);
+}
+
 void EntityController::SetIsDelete(bool isDelete) {
 	entity_->SetIsDelete(isDelete);
 }

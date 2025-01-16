@@ -19,7 +19,9 @@ public:
 	void AddColliderList();
 
 private:
-
 	// かけらのリスト
 	std::list<std::unique_ptr<Fragment>> fragments_;
+
+	uint32_t currentSerialNumber_ = 0;
+
 };

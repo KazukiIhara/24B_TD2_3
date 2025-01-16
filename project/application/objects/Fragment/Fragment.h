@@ -14,7 +14,7 @@ public:
 		kRoot,
 	};
 public:
-	Fragment() = default;
+	Fragment();
 	~Fragment() = default;
 
 	void Initialize(const std::string& name)override;
@@ -69,6 +69,9 @@ private:
 	// 移動できる範囲
 	float stageWidth_ = 21.0f;
 	float stageHeight_ = 12.0f;
+
+	// シリアルナンバー
+	uint32_t serialNumber_ = 0;
 
 	// HP
 	float HP_ = 3;

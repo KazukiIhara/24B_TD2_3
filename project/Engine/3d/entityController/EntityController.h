@@ -37,6 +37,9 @@ public:
 	// 色のセット
 	void SetColor(const Vector4& color);
 
+	// シリアルナンバーのセット
+	void SetSerialNumber(uint32_t serialNumber);
+
 	// 削除フラグのセット
 	void SetIsDelete(bool isDelete);
 
