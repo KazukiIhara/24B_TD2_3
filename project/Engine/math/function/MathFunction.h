@@ -7,6 +7,8 @@
 // MyHedder
 #include "math/operator/MathOperator.h"
 
+class Collider;
+
 // 
 // float
 // 
@@ -140,3 +142,5 @@ Vector3 QuaternionToEulerAngles(const Quaternion& q);
 std::pair<Vector3, Vector3> ComputeCollisionVelocities(float mass1, const Vector3& velocity1, float mass2, const Vector3& velocity2, float coefficientOfRestitution, const Vector3& normal);
 
 Vector3 ComputeCollisionVelocity(float mass1, const Vector3& velocity1, float mass2, const Vector3& velocity2, float coefficientOfRestitution, const Vector3& normal);
+
+void SphereCollisionPushBack(Collider* collider1, Collider* collider2);
