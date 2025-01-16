@@ -7,4 +7,5 @@ enum class ColliderCategory {
 	Earth,
 	Fragment,
 	Meteorite,
+	Bump,
 };
