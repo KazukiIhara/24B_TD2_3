@@ -9,6 +9,12 @@ void GameScene::Initialize() {
 	// レベルデータをシーンにインポート
 	levelDataImporter_.Import("GameScene");
 
+	//
+	// 天球の初期化処理
+	//
+
+	skydome_ = std::make_unique<EntityController>();
+	skydome_->Initialize(SUGER::CreateEntity("Skydome" , "Skydome"));
 
 	// 
 	// 地球の初期化処理
