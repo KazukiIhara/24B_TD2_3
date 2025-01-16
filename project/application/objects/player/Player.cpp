@@ -125,8 +125,7 @@ void Player::OnCollision(Collider* other) {
 			velocity_ = velocity;
 			meteoriteHitTimer_ = kNoneHitTime_;
 
-			bumpManager_->AddBump(-normal);
-			
+			bumpManager_->AddBump(-normal);	
 		}
 		break;
 	case ColliderCategory::Fragment:
