@@ -3,6 +3,8 @@
 #include "3d/entityController/EntityController.h"
 
 // たんこぶクラス
+class Player;
+
 class Bump:public EntityController {
 public:
 	Bump() = default;
@@ -22,11 +24,20 @@ public:
 	void MoveLimit();
 	// レベル関係
 	void LevelScaling();
+	// 生死処理
+	void UpdateLifeState();
+
 
 public: // ゲッター
-	bool GetAlive() const { return isAlive_; };
+	bool GetAlive() const { return isAlive_; }; // 生死
+
+	float GetDamageMultiplier() const { return damageMultiplier_;} // ダメージ倍率
+
+	float GetBounceFactor() const { return bounceFactor_; } // 反発倍率;
 
 	// 
+public: // セッター
+	void SetPlayer(Player* player) { player_ = player; };
 
 private:
 	// シリアルナンバー
@@ -37,17 +48,26 @@ private:
 	// Alive_
 	bool isAlive_ = true;
 
-	// 吸着しているか
-	bool isAttachment_ = false;
-
 	// たんこぶレベル
 	int  level_ = 1;
+	
 	const int MaxLevel = 3;
+
+	// 経験値
+	float experiencePoints_; 
 	
 	// ダメージ倍率
 	float damageMultiplier_ = 1.0f;
 
 	// 反発倍率
 	float bounceFactor_ = 1.0f;
+
+	// プレイヤ
+	Player* player_ = nullptr; 
+
+	// 無敵時間
+	float maxInvincibilityTime_ = 2.0f;
+	float invincibilityTimer_ = 0.0f;
+
 
 };

@@ -1,12 +1,20 @@
 #include "Bump.h"
 
-void Bump::Initialize(const std::string& name) {
+#include "objects/player/Player.h"
+#include "framework/SUGER.h"
 
+void Bump::Initialize(const std::string& name) {
+	EntityController::Initialize(name);
+	SetParent(player_->GetWorldTransformPtr());
+	invincibilityTimer_ = maxInvincibilityTime_;
 }
 
 void Bump::Update() {
+	if (invincibilityTimer_ > 0) {
+		invincibilityTimer_ -= SUGER::kDeltaTime_;
+	}
 
-
+	UpdateLifeState();
 
 	LevelScaling();
 
@@ -19,9 +27,15 @@ void Bump::OnCollision(Collider* other) {
 	switch (category) {
 		case ColliderCategory::None:
 			break;
-		case ColliderCategory::Player:
+		case ColliderCategory::Fragment:
+			if (invincibilityTimer_ <= 0) {
+				isAlive_ = false;
+			}
 			break;
-		case ColliderCategory::Bump:
+		case ColliderCategory::Meteorite:
+			if (invincibilityTimer_ <= 0) {
+				isAlive_ = false;
+			}
 			break;
 	}
 }
@@ -67,4 +81,11 @@ void Bump::LevelScaling()
 	}
 
 
+}
+
+void Bump::UpdateLifeState()
+{
+	if (!isAlive_) {
+		SetIsDelete(true);
+	}
 }

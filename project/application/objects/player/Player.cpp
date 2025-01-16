@@ -2,6 +2,8 @@
 
 #include "framework/SUGER.h"
 
+#include "application/system/BumpManager/BumpManager.h"
+
 void Player::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 	// プレイヤーのパラメータをグローバルデータグループに登録
@@ -28,6 +30,8 @@ void Player::Update() {
 	Operation();
 	Move();
 	MoveLimit();
+
+	
 }
 
 void Player::SetParamaters() {
@@ -92,6 +96,7 @@ void Player::OnCollision(Collider* other) {
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
 	case ColliderCategory::Earth:
+
 	{
 		// 位置ベクトルを取得
 		Vector3 posA = GetCollider()->GetWorldPosition();
@@ -149,5 +154,7 @@ void Player::OnCollision(Collider* other) {
 		meteoriteHitTimer_ = kNoneHitTime_;
 	}
 	break;
+
 	}
+
 }
