@@ -13,8 +13,9 @@ void GameScene::Initialize() {
 	// 天球の初期化処理
 	//
 
-	skydome_ = std::make_unique<EntityController>();
+	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(SUGER::CreateEntity("Skydome" , "Skydome"));
+	skydome_->SetEnableLight(false);
 
 	// 
 	// 地球の初期化処理
@@ -94,6 +95,9 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// かけらマネージャの更新
 	fragmentManager_->Update();
+
+	// 天球の更新
+	skydome_->Update();
 
 	//
 	// コライダーの処理ここから
