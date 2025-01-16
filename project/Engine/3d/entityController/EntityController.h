@@ -28,6 +28,7 @@ public:
 	void SetScale(const float& scale);
 	// 回転のセット
 	void SetRotate(const Vector3& rotate);
+	void SetRotateY(float rotateY);
 	// トランスレートのセット
 	void SetTranslate(const Vector3& translate);
 

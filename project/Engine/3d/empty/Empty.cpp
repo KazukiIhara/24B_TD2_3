@@ -24,6 +24,10 @@ void Empty::SetRotate(const Vector3& rotate) {
 	worldTransform_.rotate_ = rotate;
 }
 
+void Empty::SetRotateY(float rotateY) {
+	worldTransform_.rotate_.y = rotateY;
+}
+
 void Empty::SetTranslate(const Vector3& translate) {
 	worldTransform_.translate_ = translate;
 }

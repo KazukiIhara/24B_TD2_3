@@ -2,7 +2,7 @@
 
 #include "3d/entityController/EntityController.h"
 
-class Earth: public EntityController {
+class Earth : public EntityController {
 public:
 	Earth() = default;
 	~Earth() = default;
@@ -18,7 +18,7 @@ public:
 
 	// 移動制限
 	void MoveLimit();
-	
+
 
 	// 初期位置に戻る
 	void ReturnPosition();
@@ -26,7 +26,7 @@ public:
 	// 生死処理
 	void UpdateLifeState();
 public:
-	
+
 private:
 	Vector3 velocity_{};
 	int32_t kNoneHitTime_ = 2;
@@ -37,12 +37,14 @@ private:
 	float stageHeight_ = 9.0f;
 
 	// 初期位置に戻ろうとする行動に入る時間
-	float kReturnMoveTime_ = 5.0f;
+	float kReturnMoveTime_ = 3.0f;
 	float returnMoveTimer_ = 0.0f;
-	float returnSpeed_ = 0.25f;
+	float returnSpeed_ = 0.9f;
 
 	float HP_ = 10;
 
 	bool isAlive_ = true;
 
+	float inclination_ = 23.4f;
+	float inclinationRadian_ = 0.0f;
 };
