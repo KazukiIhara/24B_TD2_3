@@ -83,6 +83,10 @@ void Collider::SetSize(const float& size) {
 	size_ = size;
 }
 
+void Collider::SetSerialNumber(uint32_t serialNumber) {
+	serialNumber_ = serialNumber;
+}
+
 void Collider::SetVelocity(const Vector3& velocity) {
 	velocity_ = velocity;
 }
@@ -113,6 +117,10 @@ Vector3 Collider::GetVelocity() const {
 
 float Collider::GetMass() const {
 	return mass_;
+}
+
+uint32_t Collider::GetSerialNumber() const {
+	return serialNumber_;
 }
 
 void Collider::SetLineController(LineController* lineController) {

@@ -30,10 +30,12 @@ void FragmentManager::AddFragment(const Vector3& popTranslate, Earth* earth) {
 	newFragment->Initialize(SUGER::CreateEntity("Fragment", "Fragment", popTransform));
 	newFragment->SetEarth(earth);
 	newFragment->CreateCollider(ColliderCategory::Fragment, kSphere, 0.2f);
-
+	newFragment->SetSerialNumber(currentSerialNumber_);
 	// 追加
 	fragments_.push_back(std::move(newFragment));
 
+	// シリアルナンバーをインクリメント
+	currentSerialNumber_++;
 
 }
 

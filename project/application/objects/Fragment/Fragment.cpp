@@ -4,9 +4,9 @@
 
 #include "objects/Earth/Earth.h"
 
+
 void Fragment::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
-
 
 	playerHitTimer_ = 0;
 	isAlive_ = true;

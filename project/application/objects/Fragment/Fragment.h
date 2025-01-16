@@ -31,7 +31,7 @@ public:
 
 	void BehaviorChange();
 	void BehaviorUpdate();
-	
+
 	void RootInitialize();
 	void RootUpdate();
 
@@ -70,11 +70,14 @@ private:
 	float stageWidth_ = 21.0f;
 	float stageHeight_ = 12.0f;
 
+	// シリアルナンバー
+	uint32_t serialNumber_ = 0;
+
 	// HP
 	float HP_ = 3;
 	// Alive_
 	bool isAlive_ = true;
-	
+
 
 private:
 	Earth* earth_ = nullptr;
