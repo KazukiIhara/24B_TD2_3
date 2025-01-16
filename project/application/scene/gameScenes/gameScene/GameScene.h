@@ -10,12 +10,13 @@
 // GameScene
 #include "objects/player/Player.h"
 #include "objects/Earth/Earth.h"
+#include "objects/Skydome/Skydome.h"
 
 #include "system/MeteoriteManager/MeteoriteManager.h"
 #include "system/FragmentManager/FragmentManager.h"
 #include "system/BumpManager/BumpManager.h"
 
-class GameScene:public BaseScene {
+class GameScene :public BaseScene {
 public:
 	GameScene() = default;
 	~GameScene() = default;
@@ -37,7 +38,7 @@ private:
 	std::unique_ptr<Earth> earth_ = nullptr;
 
 	// 天球
-	std::unique_ptr<EntityController> skydome_ = nullptr;
+	std::unique_ptr<Skydome> skydome_ = nullptr;
 
 	// 隕石マネージャ
 	std::unique_ptr<MeteoriteManager> meteoriteManager_ = nullptr;

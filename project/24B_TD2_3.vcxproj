@@ -115,6 +115,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\objects\Meteorite\Meteorite.cpp" />
     <ClCompile Include="application\objects\player\Player.cpp" />
     <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
+    <ClCompile Include="application\objects\Skydome\Skydome.cpp" />
     <ClCompile Include="application\objects\teapot\Teapot.cpp" />
     <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
     <ClCompile Include="application\scene\gameScenes\gameScene\GameScene.cpp" />
@@ -210,6 +211,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\objects\Meteorite\Meteorite.h" />
     <ClInclude Include="application\objects\player\Player.h" />
     <ClInclude Include="application\objects\pronamaChan\PronamaChan.h" />
+    <ClInclude Include="application\objects\Skydome\Skydome.h" />
     <ClInclude Include="application\objects\teapot\Teapot.h" />
     <ClInclude Include="application\scene\factory\SceneFactory.h" />
     <ClInclude Include="application\scene\gameScenes\gameScene\GameScene.h" />

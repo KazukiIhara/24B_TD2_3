@@ -86,7 +86,7 @@ protected:
 
 	// カメラの初期トランスフォーム
 	const Vector3 kDefaultCameraRotate_ = { 0.0f,0.0f,0.0f };
-	const Vector3 kDefaultCameraTranslate_ = { 0.0f,0.0f,-25.0f };
+	const Vector3 kDefaultCameraTranslate_ = { 0.0f,0.0f,-35.0f };
 
 	// Camera用リソース
 	ComPtr<ID3D12Resource> cameraResource_ = nullptr;
