@@ -22,8 +22,8 @@ void Meteorite::SetFragmentManager(FragmentManager* fragmentManager) {
 	fragmentManager_ = fragmentManager;
 }
 
-bool Meteorite::GetIsAllive() const {
-	return isAllive_;
+bool Meteorite::GetIsAlive() const {
+	return isAlive_;
 }
 
 void Meteorite::Update() {
@@ -131,7 +131,7 @@ void Meteorite::BreakUpdate() {
 	breakTimer_--;
 	if (breakTimer_ == 0) {
 		SetIsDelete(true);
-		isAllive_ = false;
+		isAlive_ = false;
 	}
 }
 
