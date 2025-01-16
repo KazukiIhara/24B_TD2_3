@@ -14,7 +14,7 @@ public:
 		kRoot,
 	};
 public:
-	Fragment();
+	Fragment() = default;
 	~Fragment() = default;
 
 	void Initialize(const std::string& name)override;
@@ -31,7 +31,7 @@ public:
 
 	void BehaviorChange();
 	void BehaviorUpdate();
-	
+
 	void RootInitialize();
 	void RootUpdate();
 
@@ -77,7 +77,7 @@ private:
 	float HP_ = 3;
 	// Alive_
 	bool isAlive_ = true;
-	
+
 
 private:
 	Earth* earth_ = nullptr;
