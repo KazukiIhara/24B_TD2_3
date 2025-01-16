@@ -66,6 +66,13 @@ void Meteorite::OnCollision(Collider* other) {
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
 	case ColliderCategory::None:
+		
+		break;
+	case ColliderCategory::Fragment:
+		//other->GetSerialNumber();
+		//other->
+
+		hp_--;
 
 		break;
 	}

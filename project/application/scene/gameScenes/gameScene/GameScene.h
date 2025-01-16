@@ -44,4 +44,7 @@ private:
 	std::unique_ptr<MeteoriteManager> meteoriteManager_ = nullptr;
 	// かけらマネージャ
 	std::unique_ptr<FragmentManager> fragmentManager_ = nullptr;
+	// たんこぶマネージャー
+	std::unique_ptr<BumpManager> bumpManager_ = nullptr;
+
 };

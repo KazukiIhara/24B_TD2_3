@@ -2,6 +2,10 @@
 
 #include "3d/entityController/EntityController.h"
 
+//#include "system/BumpManager/BumpManager.h
+
+class BumpManager;
+
 class Player: public EntityController {
 public:
 	Player() = default;
@@ -28,6 +32,9 @@ public:
 
 	// 衝突コールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
+public:
+
+	void SetBumpManager(BumpManager* bumpManager) { bumpManager_ = bumpManager;};
 
 private:
 	// 定数
@@ -63,4 +70,6 @@ private:
 	int32_t earthHitTimer_ = 0;
 	// 対隕石ヒットタイマー
 	int32_t meteoriteHitTimer_ = 0;
+
+	BumpManager* bumpManager_ = nullptr;
 };
