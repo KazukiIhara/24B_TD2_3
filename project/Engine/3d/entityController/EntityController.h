@@ -37,11 +37,15 @@ public:
 	// 色のセット
 	void SetColor(const Vector4& color);
 
+	// 削除フラグのセット
+	void SetIsDelete(bool isDelete);
+
 	// ライトのオンオフ
 	void SetEnableLight(const bool& enbleLight);
 
 	// コライダーのトランスレートセット
 	void SetColliderTranslate(const Vector3& colliderTranslate);
+
 
 	//
 	// Getter

@@ -48,6 +48,10 @@ void EntityController::SetColor(const Vector4& color) {
 	entity_->SetColor(color);
 }
 
+void EntityController::SetIsDelete(bool isDelete) {
+	entity_->SetIsDelete(isDelete);
+}
+
 void EntityController::SetEnableLight(const bool& enbleLight) {
 	entity_->SetEnableLight(enbleLight);
 }
