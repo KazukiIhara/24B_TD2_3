@@ -19,6 +19,8 @@ void Fragment::SetEarth(Earth* earth) {
 
 void Fragment::Update() {
 
+	
+	
 	HitTimerUpdate();
 
 	BehaviorChange();
@@ -125,6 +127,7 @@ void Fragment::UpdateLifeState()
 {
 	if (HP_ <= 0) {
 		isAlive_ = false;
+		SetIsDelete(true);
 	}
 }
 
