@@ -34,7 +34,9 @@ public:
 	void OnCollision([[maybe_unused]] Collider* other)override;
 public:
 
-	void SetBumpManager(BumpManager* bumpManager) { bumpManager_ = bumpManager;};
+	void SetBumpManager(BumpManager* bumpManager) {
+		bumpManager_ = bumpManager;
+	};
 
 private:
 	// 定数
@@ -49,6 +51,8 @@ private:
 	float kSpeed_ = 0.01f;
 	// 最大速度(std::clampで利用しているため、-の値にならないように注意)
 	float kMaxSpeed_ = 0.2f;
+	// 回転速度
+	float rotationSpeed_ = 0.1f;
 	// 大きさ
 	float scale_ = 1.0f;
 
@@ -56,13 +60,15 @@ private:
 	float stageWidth_ = 21.0f;
 	float stageHeight_ = 12.0f;
 
-
 	// 移動ベクトル
 	Vector3 moveVector_{};
 	// 加速量
 	Vector3	acceralation_{};
 	// 移動量
 	Vector3 velocity_{};
+
+	// 回転方向
+	float rotateDirection_ = 0;
 
 	// 一度当たった後に当たらない時間
 	int32_t kNoneHitTime_ = 2;

@@ -31,6 +31,7 @@ public:
 	// 回転のセット
 	void SetRotate(const Vector3& rotate);
 	void SetRotateY(float rotateY);
+	void SetRotateZ(float rotateZ);
 	// 移動量のセット
 	void SetTranslate(const Vector3& translate);
 
