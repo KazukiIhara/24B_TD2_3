@@ -59,6 +59,9 @@ private:
 
 	// HP
 	uint32_t hp_ = 3;
+	
+	// 生存フラグ
+	bool isAllive_ = true;
 
 private:
 	Earth* earth_ = nullptr;

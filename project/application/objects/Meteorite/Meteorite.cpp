@@ -106,8 +106,8 @@ void Meteorite::DamageUpdate() {
 }
 
 void Meteorite::BreakInitialize() {
-
-
+	SetIsDelete(true);
+	isAllive_ = false;
 }
 
 void Meteorite::BreakUpdate() {

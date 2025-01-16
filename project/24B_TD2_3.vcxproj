@@ -125,6 +125,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\system\MeteoriteManager\MeteoriteManager.cpp" />
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
     <ClCompile Include="Engine\computePipeline\skinning\SkinningComputePipeline.cpp" />
+    <ClCompile Include="Engine\contactRecord\ContactRecord.cpp" />
     <ClCompile Include="Engine\directX\barrier\Barrier.cpp" />
     <ClCompile Include="Engine\directX\depthStencil\DepthStencil.cpp" />
     <ClCompile Include="Engine\directX\fence\Fence.cpp" />
@@ -217,6 +218,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\system\MeteoriteManager\MeteoriteManager.h" />
     <ClInclude Include="Engine\3d\lineController\LineController.h" />
     <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
+    <ClInclude Include="Engine\contactRecord\ContactRecord.h" />
     <ClInclude Include="Engine\directX\barrier\Barrier.h" />
     <ClInclude Include="Engine\directX\depthStencil\DepthStencil.h" />
     <ClInclude Include="Engine\directX\fence\Fence.h" />

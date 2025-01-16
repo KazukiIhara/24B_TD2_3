@@ -406,6 +406,7 @@
     <ClCompile Include="application\system\BumpManager\BumpManager.cpp" />
     <ClCompile Include="application\objects\Fragment\Fragment.cpp" />
     <ClCompile Include="application\system\FragmentManager\FragmentManager.cpp" />
+    <ClCompile Include="Engine\contactRecord\ContactRecord.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -624,6 +625,7 @@
     <ClInclude Include="application\system\BumpManager\BumpManager.h" />
     <ClInclude Include="application\objects\Fragment\Fragment.h" />
     <ClInclude Include="application\system\FragmentManager\FragmentManager.h" />
+    <ClInclude Include="Engine\contactRecord\ContactRecord.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

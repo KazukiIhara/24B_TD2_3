@@ -6,7 +6,7 @@
 #include "3d/empty/empty.h"
 #include "3d/lineController/LineController.h"
 
-class Collider:public Empty {
+class Collider :public Empty {
 public:
 	Collider() = default;
 	~Collider() = default;
@@ -30,6 +30,9 @@ public:
 
 	// サイズのセット
 	void SetSize(const float& size);
+
+	// シリアルナンバーのセット
+	void SetSerialNumber(uint32_t serialNumber);
 
 	// 移動量のセット
 	void SetVelocity(const Vector3& velocity);
@@ -55,6 +58,9 @@ public:
 	// 質量の取得
 	float GetMass()const;
 
+	// シリアルナンバーの取得
+	uint32_t GetSerialNumber()const;
+
 private:
 	// ラインコントローラのセット
 	void SetLineController(LineController* lineController);
@@ -69,6 +75,8 @@ private:
 	// ライン描画コントローラ
 	LineController* line_;
 
+	// シリアルナンバー
+	uint32_t serialNumber_ = 0;
 
 	// 
 	// 物理挙動用変数
