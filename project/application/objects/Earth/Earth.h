@@ -18,10 +18,15 @@ public:
 
 	// 移動制限
 	void MoveLimit();
+	
 
 	// 初期位置に戻る
 	void ReturnPosition();
 
+	// 生死処理
+	void UpdateLifeState();
+public:
+	
 private:
 	Vector3 velocity_{};
 	int32_t kNoneHitTime_ = 2;
@@ -35,5 +40,9 @@ private:
 	float kReturnMoveTime_ = 5.0f;
 	float returnMoveTimer_ = 0.0f;
 	float returnSpeed_ = 0.25f;
+
+	float HP_ = 10;
+
+	bool isAlive_ = true;
 
 };

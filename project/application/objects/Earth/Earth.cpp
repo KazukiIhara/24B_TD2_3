@@ -6,9 +6,11 @@ void Earth::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 	earthHitTimer_ = 0;
 	returnMoveTimer_ = 0;
+	isAlive_ = true;
 }
 
 void Earth::Update() {
+	
 	if (earthHitTimer_ > 0) {
 		earthHitTimer_--;
 	}
@@ -17,33 +19,45 @@ void Earth::Update() {
 	}
 
 	// 移動量を足す
-	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
-	// コライダーに移動量をセット
-	GetCollider()->SetVelocity(velocity_);
+	if (isAlive_) {
+		SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
+		// コライダーに移動量をセット
+		GetCollider()->SetVelocity(velocity_);
 
-	ReturnPosition();
+		ReturnPosition();
+	}
 
 	MoveLimit();
+
+	UpdateLifeState();
 }
 
 void Earth::OnCollision(Collider* other) {
 	// 衝突相手のカテゴリーを取得
 	ColliderCategory category = other->GetColliderCategory();
 	// カテゴリごとに衝突判定を書く
+	float earthMass{};
+	float playerMass{};
 	switch (category) {
 	case ColliderCategory::Player:
 		if (earthHitTimer_ > 0) {
 			break;
 		}
-		float earthMass = GetCollider()->GetMass();
+		earthMass = GetCollider()->GetMass();
 		Vector3 earthVelocity = GetCollider()->GetVelocity();
-		float playerMass = other->GetMass();
+		playerMass = other->GetMass();
 		Vector3 playerVelocity = other->GetVelocity();
 		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
 		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
 		velocity_ = velocity;
 		earthHitTimer_ = kNoneHitTime_;
 		returnMoveTimer_ = kReturnMoveTime_;
+		break;
+	case ColliderCategory::Fragment:
+		HP_ -= 1;
+		break;
+	case ColliderCategory::Meteorite:
+		HP_ -= 10;
 		break;
 	}
 }
@@ -56,6 +70,14 @@ void Earth::MoveLimit()
 	SetTranslate(translate_);
 }
 
+void Earth::UpdateLifeState()
+{
+	if (HP_ <= 0) {
+		isAlive_ = false;
+		
+	}
+}
+
 void Earth::ReturnPosition()
 {
 	Vector3 translate_ = GetTranslate();
@@ -63,7 +85,7 @@ void Earth::ReturnPosition()
 		if (translate_ != Vector3{ 0,0,0 }) {
 			Vector3 normal = Normalize(Vector3{ 0, 0, 0 } - translate_);
 			velocity_ = normal * returnSpeed_;
-			
+
 		}
 	}
 }

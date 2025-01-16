@@ -55,6 +55,9 @@ void Fragment::OnCollision(Collider* other) {
 
 		//HP_ -= 3;
 		break;
+	case ColliderCategory::Earth:
+		HP_ -= 3;
+		break;
 	}
 }
 
