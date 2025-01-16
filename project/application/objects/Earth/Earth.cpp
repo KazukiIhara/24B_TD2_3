@@ -14,11 +14,21 @@ void Earth::Initialize(const std::string& name) {
 
 void Earth::Update() {
 
+#ifdef _DEBUG
+	ImGui::Begin("EarthVelo");
+	ImGui::DragFloat3("Velocity", &velocity_.x, 0.0f);
+	ImGui::End();
+#endif // _DEBUG
+
+
 	if (earthHitTimer_ > 0) {
 		earthHitTimer_--;
 	}
 	if (returnMoveTimer_ > 0) {
 		returnMoveTimer_ -= SUGER::kDeltaTime_;
+		if (returnMoveTimer_ < 0.1f) {
+			returnMoveTimer_ = 0;
+		}
 	}
 
 	// 移動量を足す
@@ -82,11 +92,15 @@ void Earth::UpdateLifeState() {
 
 void Earth::ReturnPosition() {
 	Vector3 translate_ = GetTranslate();
-	if (returnMoveTimer_ <= 0) {
+	if (returnMoveTimer_ == 0) {
 		if (translate_ != Vector3{ 0,0,0 }) {
 			Vector3 normal = Normalize(Vector3{ 0, 0, 0 } - translate_);
 			velocity_ = normal * returnSpeed_;
 
+		}
+		if (Length(translate_ - Vector3(0.0f, 0.0f, 0.0f)) < 0.01f) {
+			velocity_ = { 0.0f,0.0f,0.0f };
+			translate_ = { 0.0f,0.0f,0.0f };
 		}
 	}
 }
