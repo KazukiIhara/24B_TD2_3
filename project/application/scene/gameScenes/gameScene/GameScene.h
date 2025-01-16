@@ -36,6 +36,9 @@ private:
 	// 地球
 	std::unique_ptr<Earth> earth_ = nullptr;
 
+	// 天球
+	std::unique_ptr<EntityController> skydome_ = nullptr;
+
 	// 隕石マネージャ
 	std::unique_ptr<MeteoriteManager> meteoriteManager_ = nullptr;
 	// かけらマネージャ
