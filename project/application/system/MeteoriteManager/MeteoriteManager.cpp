@@ -10,7 +10,7 @@ void MeteoriteManager::Initialize(Earth* earth, FragmentManager* fragmentManager
 	earth_ = earth;
 	fragmentManager_ = fragmentManager;
 
-	
+
 	// コンテナをクリア
 	meteorites_.clear();
 
@@ -37,6 +37,12 @@ void MeteoriteManager::Initialize(Earth* earth, FragmentManager* fragmentManager
 void MeteoriteManager::Update() {
 	// グローバルデータクラスからデータを取得
 	speed_ = SUGER::GetGrobalDataValueFloat(kParamaterString_, "Speed");
+
+	// 削除フラグの立った隕石を削除
+	meteorites_.remove_if([](const std::unique_ptr<Meteorite>& meteorite) {
+		return !meteorite->GetIsAllive();
+		});
+
 	// コンテナ内の隕石をすべて更新
 	for (auto& meteorite : meteorites_) {
 		meteorite->Update();
