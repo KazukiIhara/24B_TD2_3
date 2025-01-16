@@ -24,7 +24,7 @@ public:
 
 	void SetFragmentManager(FragmentManager* fragmentManager);
 
-	bool GetIsAllive()const;
+	bool GetIsAlive()const;
 
 	// 更新
 	void Update()override;
@@ -74,7 +74,7 @@ private:
 	int32_t breakTimer_ = 0;
 
 	// 生存フラグ
-	bool isAllive_ = true;
+	bool isAlive_ = true;
 
 private:
 	Earth* earth_ = nullptr;

@@ -40,7 +40,7 @@ void MeteoriteManager::Update() {
 
 	// 削除フラグの立った隕石を削除
 	meteorites_.remove_if([](const std::unique_ptr<Meteorite>& meteorite) {
-		return !meteorite->GetIsAllive();
+		return !meteorite->GetIsAlive();
 		});
 
 	// コンテナ内の隕石をすべて更新
