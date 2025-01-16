@@ -67,6 +67,8 @@ void MeteoriteManager::AddMeteorite() {
 
 void MeteoriteManager::AddColliderList() {
 	for (auto& meteorite : meteorites_) {
-		SUGER::AddColliderList(meteorite.get());
+		if (meteorite->GetIsAlive()) {
+			SUGER::AddColliderList(meteorite.get());
+		}
 	}
 }
