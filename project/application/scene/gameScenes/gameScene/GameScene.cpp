@@ -17,13 +17,14 @@ void GameScene::Initialize() {
 	earth_ = std::make_unique<Earth>();
 	earth_->Initialize(SUGER::CreateEntity("Earth", "Earth"));
 	earth_->CreateCollider(ColliderCategory::Earth, kSphere, 2.0f);
+	earth_->SetScale(2.0f);
 	earth_->GetCollider()->SetMass(200.0f);
 	//
 	// Playerの初期化処理
 	//
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize(SUGER::CreateEntity("Player", "Player"));
+	player_->Initialize(SUGER::CreateEntity("Player", "Moon"));
 	// プレイヤーのコライダーを作成
 	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.0f);
 

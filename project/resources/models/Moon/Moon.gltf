@@ -15,12 +15,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"\u7acb\u65b9\u4f53",
-			"scale":[
-				0.5310149192810059,
-				0.5310149192810059,
-				0.5310149192810059
-			]
+			"name":"\u7403"
 		}
 	],
 	"materials":[
@@ -38,7 +33,7 @@
 	],
 	"meshes":[
 		{
-			"name":"\u7acb\u65b9\u4f53.001",
+			"name":"\u7403",
 			"primitives":[
 				{
 					"attributes":{
@@ -61,69 +56,69 @@
 	"images":[
 		{
 			"mimeType":"image/png",
-			"name":"Meteorite",
-			"uri":"Meteorite.png"
+			"name":"Moon",
+			"uri":"Moon.png"
 		}
 	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":276,
+			"count":4886,
 			"max":[
-				1.998857021331787,
-				1.9975749254226685,
-				2.0023176670074463
+				0.9999997019767761,
+				1,
+				0.9999993443489075
 			],
 			"min":[
-				-1.9970028400421143,
-				-2.003297805786133,
-				-1.9911338090896606
+				-0.9999990463256836,
+				-1,
+				-1
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":276,
+			"count":4886,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":276,
+			"count":4886,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":636,
+			"count":11520,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":3312,
+			"byteLength":58632,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":3312,
-			"byteOffset":3312,
+			"byteLength":58632,
+			"byteOffset":58632,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":2208,
-			"byteOffset":6624,
+			"byteLength":39088,
+			"byteOffset":117264,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1272,
-			"byteOffset":8832,
+			"byteLength":23040,
+			"byteOffset":156352,
 			"target":34963
 		}
 	],
@@ -135,8 +130,8 @@
 	],
 	"buffers":[
 		{
-			"byteLength":10104,
-			"uri":"Meteorite.bin"
+			"byteLength":179392,
+			"uri":"Moon.bin"
 		}
 	]
 }
