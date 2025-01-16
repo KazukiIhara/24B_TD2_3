@@ -3,6 +3,7 @@
 #include "objects/Fragment/Fragment.h"
 
 #include <vector>
+#include <list>
 
 class Earth;
 
@@ -20,5 +21,5 @@ public:
 private:
 
 	// かけらのリスト
-	std::vector<std::unique_ptr<Fragment>> fragments_;
+	std::list<std::unique_ptr<Fragment>> fragments_;
 };

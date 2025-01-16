@@ -4,6 +4,7 @@
 
 #include <optional>
 
+
 class Earth;
 
 // 隕石のかけら
@@ -35,8 +36,16 @@ public:
 	void RootUpdate();
 
 	void Move();
+	// 移動制限と反射処理
+	void MoveLimit();
+	// 生死処理
+	void UpdateLifeState();
+
 
 	void SetSpeed(float speed);
+public: // ゲッター
+	bool GetAlive() const { return isAlive_; };
+
 private:
 	// 
 	// パラメータ
@@ -56,6 +65,16 @@ private:
 	int32_t playerHitTimer_ = 0;
 
 	Vector3 velocity_{};
+
+	// 移動できる範囲
+	float stageWidth_ = 21.0f;
+	float stageHeight_ = 12.0f;
+
+	// HP
+	float HP_ = 3;
+	// Alive_
+	bool isAlive_ = true;
+	
 
 private:
 	Earth* earth_ = nullptr;
