@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MathFunction.h"
+#include "collider/Collider.h"
 #include <algorithm>
 
 
@@ -547,4 +548,29 @@ Vector3 ComputeCollisionVelocity(float mass1, const Vector3& velocity1, float ma
 
 	// 接線成分を加算して最終的な速度を計算
 	return velocityAfter1 + sub1;
+}
+
+void SphereCollisionPushBack(Collider* collider1, Collider* collider2) {
+	Vector3 diff = collider1->GetWorldPosition() - collider2->GetWorldPosition();
+	float dist = Length(diff);
+	float sumRadius = collider1->GetSize() + collider2->GetSize();
+
+	if (dist < sumRadius) {
+		// 1-1. 法線ベクトルを計算 (重ならない場合にも使うので一応dist > 0.0fで安全対策)
+		Vector3 normal = (dist > 0.0f) ? diff / dist : Vector3(0, 1, 0);
+
+		// 2. めり込み距離を計算し、位置を補正
+		float overlap = sumRadius - dist;
+		if (overlap > 0.0f) {
+			// 質量比を使って押し戻す
+			float totalMass = collider1->GetMass() + collider2->GetMass();
+			float ratio1 = collider2->GetMass() / totalMass;
+			float ratio2 = collider1->GetMass() / totalMass;
+
+
+
+
+		}
+
+	}
 }

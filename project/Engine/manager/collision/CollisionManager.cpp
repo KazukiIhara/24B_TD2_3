@@ -52,7 +52,7 @@ void CollisionManager::CheckCollisionPair(EntityController* controllerA, EntityC
 	// 座標AとBの距離を求める
 	float distance = Length(subtract);
 	// 球と球の交差判定
-	if (distance < colliderA->GetSize() + colliderB->GetSize()) {
+	if (distance <= colliderA->GetSize() + colliderB->GetSize()) {
 		// コライダーAの衝突時コールバックを呼び出す
 		controllerA->OnCollision(colliderB);
 		// コライダーBの衝突時コールバックを呼び出す
