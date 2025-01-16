@@ -4,6 +4,8 @@
 
 #include <vector>
 
+#include <list>
+
 // 前方宣言
 class Earth;
 class FragmentManager;
@@ -40,7 +42,7 @@ private:
 	float speed_ = 0.0f;
 
 	// 隕石リスト
-	std::vector<std::unique_ptr<Meteorite>> meteorites_;
+	std::list<std::unique_ptr<Meteorite>> meteorites_;
 
 	// ひとまず隕石生成地点
 	EulerTransform3D meteoritePopTransform_{

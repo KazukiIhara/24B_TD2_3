@@ -12,6 +12,12 @@ void FragmentManager::Update() {
 	for (auto& fragment : fragments_) {
 		fragment->Update();
 	}
+
+	fragments_.remove_if([](const std::unique_ptr<Fragment>& fragment) { 
+		return !fragment->GetAlive(); 
+		});
+
+	
 }
 
 void FragmentManager::AddFragment(const Vector3& popTranslate, Earth* earth) {
@@ -27,6 +33,8 @@ void FragmentManager::AddFragment(const Vector3& popTranslate, Earth* earth) {
 
 	// 追加
 	fragments_.push_back(std::move(newFragment));
+
+
 }
 
 void FragmentManager::AddColliderList() {

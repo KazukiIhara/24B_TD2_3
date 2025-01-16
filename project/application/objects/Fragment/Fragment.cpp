@@ -9,6 +9,7 @@ void Fragment::Initialize(const std::string& name) {
 
 
 	playerHitTimer_ = 0;
+	isAlive_ = true;
 }
 
 void Fragment::SetEarth(Earth* earth) {
@@ -22,6 +23,10 @@ void Fragment::Update() {
 
 	BehaviorChange();
 	BehaviorUpdate();
+
+	MoveLimit(); // 移動制限と反射の処理
+
+	UpdateLifeState(); // 生死処理
 }
 
 void Fragment::OnCollision(Collider* other) {
@@ -43,6 +48,10 @@ void Fragment::OnCollision(Collider* other) {
 			velocity_ = velocity;
 			playerHitTimer_ = kNoneHitTime_;
 		}
+		break;
+	case ColliderCategory::Meteorite:
+
+		//HP_ -= 3;
 		break;
 	}
 }
@@ -92,6 +101,31 @@ void Fragment::Move() {
 	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 	// 現在の移動量をセット
 	GetCollider()->SetVelocity(velocity_);
+}
+
+void Fragment::MoveLimit()
+{
+	Vector3 translate_ = GetTranslate();
+	translate_.x = std::clamp(translate_.x, -stageWidth_, stageWidth_);
+	translate_.y = std::clamp(translate_.y, -stageHeight_, stageHeight_);
+	SetTranslate(translate_);
+
+	if (translate_.x <= -stageWidth_ || translate_.x >= stageWidth_) {
+		velocity_.x *= -1;
+		HP_--;
+	}
+	if (translate_.y <= -stageHeight_ || translate_.y >= stageHeight_) {
+		velocity_.y *= -1;
+		HP_--;
+	}
+
+}
+
+void Fragment::UpdateLifeState()
+{
+	if (HP_ <= 0) {
+		isAlive_ = false;
+	}
 }
 
 void Fragment::SetSpeed(float speed) {
