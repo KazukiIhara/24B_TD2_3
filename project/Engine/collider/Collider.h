@@ -40,6 +40,15 @@ public:
 	// 質量のセット
 	void SetMass(float mass);
 
+	// ダメージ倍率のセット
+	void SetDamageMultiplier(float damageMultiplier);
+	
+	// ダメージのセット
+	void SetDamage(float damage);
+
+	// 反射倍率のセット
+	void SetBounceFactor(float bounceFactor);
+
 	// ワールド座標のゲッター
 	Vector3 GetWorldPosition()const;
 
@@ -57,6 +66,15 @@ public:
 
 	// 質量の取得
 	float GetMass()const;
+
+	// ダメージ倍率の取得
+	float GetDamageMultiplier()const;
+	
+	// ダメージ倍率の取得
+	float GetDamage()const;
+
+	// 反射倍率の取得
+	float GetBounceFactor()const;
 
 	// シリアルナンバーの取得
 	uint32_t GetSerialNumber()const;
@@ -86,7 +104,12 @@ private:
 	Vector3 velocity_{};
 	// 質量
 	float mass_ = 2.0f;
-
+	// ダメージ倍率
+	float damageMultiplier__ = 1.0f;
+	// ダメージ
+	float damage_ = 0.0f;
+	// 反射倍率
+	float  bounceFactor__ = 1.0f;
 
 
 };

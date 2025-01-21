@@ -76,4 +76,6 @@ public:
 private:
 	// コントロールするエンティティ
 	Entity* entity_ = nullptr;
+
+
 };

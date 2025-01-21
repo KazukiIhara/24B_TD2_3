@@ -3,6 +3,7 @@
 #include "framework/SUGER.h"
 
 #include"application/objects/player/Player.h"
+#include "application/objects/Earth/Earth.h"
 
 void BumpManager::Initialize() 
 {
@@ -12,8 +13,11 @@ void BumpManager::Initialize()
 void BumpManager::Update()
 {
 	// コンテナ内のかけらすべてを更新
-	for (auto& fragment : bumps_) {
-		fragment->Update();
+	for (auto& bump : bumps_) {
+		bump->Update();
+		if (10 >= Distance(earth_->GetTranslate(), player_->GetTranslate())) {
+			bump->GrowthBump();
+		}
 	}
 
 	bumps_.remove_if([](const std::unique_ptr<Bump>& bump) {
@@ -34,7 +38,6 @@ void BumpManager::AddBump(const Vector3& popTranslate)
 	newBump->CreateCollider(ColliderCategory::Bump, kSphere, 0.2f);
 	newBump->SetSerialNumber(currentSerialNumber_);
 	
-
 	// 追加
 	bumps_.push_back(std::move(newBump));
 
@@ -50,3 +53,5 @@ void BumpManager::AddColliderList()
 		SUGER::AddColliderList(bump.get());
 	}
 }
+
+

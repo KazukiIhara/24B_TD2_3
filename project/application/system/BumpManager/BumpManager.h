@@ -5,6 +5,7 @@
 #include "list"
 
 class Player;
+class Earth;
 
 // たんこぶマネージャ
 class BumpManager {
@@ -22,15 +23,16 @@ public:
 
 	void SetPlayer(Player* player) { player_ = player; };
 
-	//std::list<std::unique_ptr<Bump>> GetBump() {return bumps_;};
+	void SetEarth(Earth* earth) { earth_ = earth; }
 
+	
 private:
 	// たんこぶのリスト
 	std::list<std::unique_ptr<Bump>> bumps_;
 
 	// プレイヤー
 	Player* player_ = nullptr;
-
+	Earth* earth_ = nullptr;
 
 	uint32_t currentSerialNumber_ = 0;
 };

@@ -5,10 +5,12 @@
 #include "system/FragmentManager/FragmentManager.h"
 #include "objects/Earth/Earth.h"
 
-void MeteoriteManager::Initialize(Earth* earth, FragmentManager* fragmentManager) {
+void MeteoriteManager::Initialize(Earth* earth,Player* player ,FragmentManager* fragmentManager) {
 	assert(earth);
+	assert(player);
 	assert(fragmentManager);
 	earth_ = earth;
+	player_ = player;
 	fragmentManager_ = fragmentManager;
 
 
@@ -56,6 +58,7 @@ void MeteoriteManager::AddMeteorite() {
 	std::unique_ptr<Meteorite> newMeteorite = std::make_unique<Meteorite>();
 	newMeteorite->Initialize(SUGER::CreateEntity("Meteorite", "Meteorite", meteoritePopTransform_));
 	newMeteorite->SetEarth(earth_);
+	newMeteorite->SetPlayer(player_);
 	newMeteorite->SetFragmentManager(fragmentManager_);
 	newMeteorite->CreateCollider(ColliderCategory::Meteorite, kSphere, 4.0f);
 

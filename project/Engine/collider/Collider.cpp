@@ -95,6 +95,19 @@ void Collider::SetMass(float mass) {
 	mass_ = mass;
 }
 
+void Collider::SetDamageMultiplier(float damageMultiplier){
+	damageMultiplier__ = damageMultiplier;
+}
+
+void Collider::SetDamage(float damage)
+{
+	damage_ = damage;
+}
+
+void Collider::SetBounceFactor(float bounceFactor){
+	bounceFactor__ = bounceFactor;
+}
+
 Vector3 Collider::GetWorldPosition() const {
 	return ExtractionWorldPos(worldTransform_.worldMatrix_);
 }
@@ -117,6 +130,21 @@ Vector3 Collider::GetVelocity() const {
 
 float Collider::GetMass() const {
 	return mass_;
+}
+
+float Collider::GetDamageMultiplier() const
+{
+	return damageMultiplier__;
+}
+
+float Collider::GetDamage() const
+{
+	return damage_;
+}
+
+float Collider::GetBounceFactor() const
+{
+	return bounceFactor__;
 }
 
 uint32_t Collider::GetSerialNumber() const {

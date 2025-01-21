@@ -3,6 +3,8 @@
 #include "framework/SUGER.h"
 
 #include "objects/Earth/Earth.h"
+#include "objects/player/Player.h"
+
 
 
 void Fragment::Initialize(const std::string& name) {
@@ -49,11 +51,12 @@ void Fragment::OnCollision(Collider* other) {
 			Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f, normal);
 			velocity_ = velocity;
 			playerHitTimer_ = kNoneHitTime_;
+			GetCollider()->SetDamage(1.0f);
 		}
 		break;
 	case ColliderCategory::Meteorite:
 
-		//HP_ -= 3;
+		HP_ -= 3;
 		break;
 	case ColliderCategory::Earth:
 		HP_ -= 3;
@@ -61,10 +64,15 @@ void Fragment::OnCollision(Collider* other) {
 	case ColliderCategory::Bump:
 		float fragmentMass = GetCollider()->GetMass();
 		Vector3 fragmentVelocity = GetCollider()->GetVelocity();
-		float playerMass = other->GetMass();
-		Vector3 playerVelocity = other->GetVelocity();
-		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-		Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f, normal);
+		float playerMass = player_->GetCollider()->GetMass();
+		Vector3 playerVelocity = player_->GetCollider()->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition());
+
+		float bounceFactor = other->GetBounceFactor();
+
+		GetCollider()->SetDamage(1.0f*other->GetDamageMultiplier());
+
+		Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity,10.0f * bounceFactor, normal);
 		velocity_ = velocity;
 		break;
 	}

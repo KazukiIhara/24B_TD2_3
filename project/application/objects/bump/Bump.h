@@ -26,14 +26,17 @@ public:
 	void LevelScaling();
 	// 生死処理
 	void UpdateLifeState();
-
+	
 
 public: // ゲッター
 	bool GetAlive() const { return isAlive_; }; // 生死
 
-	float GetDamageMultiplier() const { return damageMultiplier_;} // ダメージ倍率
+	//float GetDamageMultiplier() const { return damageMultiplier_;} // ダメージ倍率
 
-	float GetBounceFactor() const { return bounceFactor_; } // 反発倍率;
+	//float GetBounceFactor() const { return bounceFactor_; } // 反発倍率;
+
+	//
+	void GrowthBump() { experiencePoints_++; };
 
 	// 
 public: // セッター

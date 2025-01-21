@@ -7,14 +7,16 @@
 
 class Earth;
 
+class Player;
+
 // かけらマネージャ
 class FragmentManager {
 public:
 	void Initialize();
 
 	void Update();
-
-	void AddFragment(const Vector3& popTranslate);
+  
+	void AddFragment(const Vector3& popTranslate, Player* player);
 
 	void AddColliderList();
 

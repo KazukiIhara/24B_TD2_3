@@ -3,6 +3,8 @@
 #include "framework/SUGER.h"
 
 #include "objects/Earth/Earth.h"
+#include "objects/player/Player.h"
+
 
 #include "system/FragmentManager/FragmentManager.h"
 
@@ -15,6 +17,11 @@ void Meteorite::Initialize(const std::string& name) {
 void Meteorite::SetEarth(Earth* earth) {
 	assert(earth);
 	earth_ = earth;
+}
+
+void Meteorite::SetPlayer(Player* player){
+	assert(player);
+	player_ = player;
 }
 
 void Meteorite::SetFragmentManager(FragmentManager* fragmentManager) {
@@ -36,7 +43,7 @@ void Meteorite::Update() {
 			RootInitialize();
 			break;
 		case Meteorite::Behavior::kDagame:
-			DamageInitialize();
+			DamageInitialize(damege_);
 			break;
 		case Meteorite::Behavior::kBreak:
 			BreakInitialize();
@@ -71,9 +78,16 @@ void Meteorite::OnCollision(Collider* other) {
 	case ColliderCategory::Fragment:
 
 		if (behavior_ == Behavior::kRoot) {
-			behaviorRequest_ = Behavior::kDagame;
-		}
+			damege_ = other->GetDamage();
 
+			if (damege_ == 0) {
+				return;
+			}
+
+			behaviorRequest_ = Behavior::kDagame;
+
+			
+		}
 		break;
 	}
 
@@ -94,11 +108,10 @@ void Meteorite::RootUpdate() {
 
 	GetCollider()->SetVelocity(velocity);
 
-
 }
 
-void Meteorite::DamageInitialize() {
-	hp_--;
+void Meteorite::DamageInitialize(float damage) {
+	hp_ -= damage;
 	damageTimer_ = kDamageTime_;
 	SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 }
