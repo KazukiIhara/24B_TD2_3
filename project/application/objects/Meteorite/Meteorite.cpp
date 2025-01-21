@@ -66,13 +66,10 @@ void Meteorite::OnCollision(Collider* other) {
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
 	case ColliderCategory::None:
-		
+
 		break;
 	case ColliderCategory::Fragment:
-		//other->GetSerialNumber();
-		//other->
-
-		hp_--;
+		behaviorRequest_ = Behavior::kDagame;
 
 		break;
 	}
@@ -85,10 +82,6 @@ void Meteorite::RootInitialize() {
 }
 
 void Meteorite::RootUpdate() {
-
-	if (SUGER::TriggerKey(DIK_SPACE)) {
-		behaviorRequest_ = Meteorite::Behavior::kDagame;
-	}
 
 	Vector3 target = ExtractionWorldPos(earth_->GetWorldTransformPtr()->worldMatrix_);
 	// 目標に対して保管移動
