@@ -5,22 +5,48 @@
 #include "objects/Earth/Earth.h"
 #include "objects/player/Player.h"
 
+#include "random/Random.h"
+
 void FragmentManager::Initialize() {
 	// コンテナをクリア
 	fragments_.clear();
 
+
+	float screenWidth = 32.0f;
+	float screenHeight = 18.0f;
+	popPosition_[Top] = { 0.0f,screenHeight,0.0f };
+	popPosition_[LeftTop] = { -screenWidth,screenHeight,0.0f };
+	popPosition_[Left] = { -screenWidth, 0.0f, 0.0f };
+	popPosition_[LeftBottom] = { -screenWidth, -screenHeight, 0.0f };
+	popPosition_[Bottom] = { 0.0f, -screenHeight, 0.0f };
+	popPosition_[RightBottom] = { screenWidth, -screenHeight, 0.0f };
+	popPosition_[Right] = { screenWidth, 0.0f, 0.0f };
+	popPosition_[RightTop] = { screenWidth, screenHeight, 0.0f };
+
+
+	popTimer_ = popIntervalTime_;
+
 }
 void FragmentManager::Update() {
+
+#ifdef _DEBUG
+	ImGui::Begin("FragmentManager");
+	ImGui::Text("curentNum %d", currentSerialNumber_);
+	ImGui::End();
+#endif // _DEBUG
+
+
 	// コンテナ内のかけらすべてを更新
 	for (auto& fragment : fragments_) {
 		fragment->Update();
 	}
 
-	fragments_.remove_if([](const std::unique_ptr<Fragment>& fragment) { 
-		return !fragment->GetAlive(); 
+	fragments_.remove_if([](const std::unique_ptr<Fragment>& fragment) {
+		return !fragment->GetAlive();
 		});
 
-	
+
+	PopFragments();
 }
 
 
@@ -43,7 +69,6 @@ void FragmentManager::AddFragment(const Vector3& popTranslate) {
 
 	// シリアルナンバーをインクリメント
 	currentSerialNumber_++;
-
 }
 
 void FragmentManager::AddColliderList() {
@@ -63,7 +88,17 @@ void FragmentManager::SetPlayer(Player* player) {
 }
 
 void FragmentManager::PopFragments() {
-	for (uint32_t i = 0; i < popNum_; i++) {
-		AddFragment(Vector3(0.0f, 0.0f, 0.0f));
+	if (popTimer_ > 0) {
+		popTimer_--;
+	} else {
+		for (int32_t i = 0; i < popNum_; i++) {
+			Vector3 popPosition = {
+				popPosition_[popPlace_].x + Random::GenerateFloat(-2.0f,2.0f),
+				popPosition_[popPlace_].y + Random::GenerateFloat(-2.0f,2.0f),
+				0.0f
+			};
+			AddFragment(popPosition);
+			popTimer_ = popIntervalTime_;
+		}
 	}
 }
