@@ -25,6 +25,13 @@ void Player::Initialize(const std::string& name) {
 }
 
 void Player::Update() {
+#ifdef _DEBUG
+	ImGui::Begin("PlayerOperation");
+	ImGui::Text("MOVE: WASD");
+	ImGui::Text("ROTATE: JK");
+	ImGui::End();
+#endif // =DEBUG
+
 	HitTimersUpdate();
 	SetParamaters();
 	Operation();

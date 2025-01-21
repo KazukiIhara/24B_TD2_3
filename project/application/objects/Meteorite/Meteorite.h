@@ -65,6 +65,7 @@ private:
 	float hp_ = 3;
 
 
+
 	// ダメージ時間定数
 	const int32_t kDamageTime_ = 10;
 	// ダメージタイマー
