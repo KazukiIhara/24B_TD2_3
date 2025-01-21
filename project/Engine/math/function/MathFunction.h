@@ -31,6 +31,14 @@ float DegreesToRadians(const float& degrees);
 ///
 /// Vector3
 /// 
+static float Distance(const Vector3& point1, const Vector3& point2)
+{
+	float dx = point1.x - point2.x;
+	float dy = point1.y - point2.y;
+	float dz = point1.z - point2.z;
+	return std::sqrt(dx * dx + dy * dy + dz * dz);
+}
+
 
 // ベクトルの長さ
 float Length(const Vector3& a);

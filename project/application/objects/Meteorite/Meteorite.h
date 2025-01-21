@@ -6,6 +6,7 @@
 
 class Earth;
 class FragmentManager;
+class Player;
 
 class Meteorite : public EntityController {
 public:
@@ -21,6 +22,7 @@ public:
 	void Initialize(const std::string& name)override;
 
 	void SetEarth(Earth* earth);
+	void SetPlayer(Player* earth);
 
 	void SetFragmentManager(FragmentManager* fragmentManager);
 
@@ -60,7 +62,8 @@ private:
 	float emitTime_ = 0;
 
 	// HP
-	int32_t hp_ = 3;
+	float hp_ = 3;
+
 
 
 	// ダメージ時間定数
@@ -78,6 +81,8 @@ private:
 
 private:
 	Earth* earth_ = nullptr;
+
+	Player* player_ = nullptr;
 
 	FragmentManager* fragmentManager_ = nullptr;
 };

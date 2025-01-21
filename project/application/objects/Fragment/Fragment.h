@@ -6,6 +6,7 @@
 
 
 class Earth;
+class Player;
 
 // 隕石のかけら
 class Fragment : public EntityController {
@@ -43,6 +44,8 @@ public:
 
 
 	void SetSpeed(float speed);
+
+	void SetPlayer(Player* player) { player_ = player; };
 public: // ゲッター
 	bool GetAlive() const { return isAlive_; };
 
@@ -77,8 +80,10 @@ private:
 	float HP_ = 3;
 	// Alive_
 	bool isAlive_ = true;
-
+	float damage = 0.0f;
 
 private:
 	Earth* earth_ = nullptr;
+
+	Player* player_ = nullptr;
 };

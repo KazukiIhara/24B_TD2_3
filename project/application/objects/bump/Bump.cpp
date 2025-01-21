@@ -1,6 +1,8 @@
 #include "Bump.h"
 
 #include "objects/player/Player.h"
+
+
 #include "framework/SUGER.h"
 
 void Bump::Initialize(const std::string& name) {
@@ -51,6 +53,14 @@ void Bump::MoveLimit()
 
 void Bump::LevelScaling()
 {
+	// 
+	if (experiencePoints_ >= 300) {
+		experiencePoints_ = 0;
+		level_++;
+	}
+	
+	
+	
 	// レベル上限
 	if (level_ > MaxLevel) {
 		level_ = MaxLevel;
@@ -63,24 +73,30 @@ void Bump::LevelScaling()
 		damageMultiplier_ = 1.0f;
 
 		bounceFactor_ = 1.0f;
+
+		scale_ = 0.5f;
 		break;
 	case 2:
 		damageMultiplier_ = 2.0f;
 
-		bounceFactor_ = 1.5f;
+		bounceFactor_ = 10.5f;
 
+		scale_ = 1.0f;
 		break;
 	case 3:
 		damageMultiplier_ = 2.0f;
 
-		bounceFactor_ = 2.0f;
+		bounceFactor_ = 20.0f;
 
+		scale_ = 1.5f;
 		break;
 	default:
 		break;
 	}
 
-
+	GetCollider()->SetSize(scale_);
+	GetCollider()->SetBounceFactor(bounceFactor_);
+	GetCollider()->SetDamageMultiplier(damageMultiplier_);
 }
 
 void Bump::UpdateLifeState()
