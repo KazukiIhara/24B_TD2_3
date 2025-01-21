@@ -6,7 +6,6 @@
 #include <list>
 
 class Earth;
-
 class Player;
 
 // かけらマネージャ
@@ -16,13 +15,19 @@ public:
 
 	void Update();
   
-	void AddFragment(const Vector3& popTranslate, Player* player);
+	void AddFragment(const Vector3& popTranslate);
 
 	void AddColliderList();
 
 	void SetEarth(Earth* earth);
+	void SetPlayer(Player* player);
+
+	void PopFragments();
 
 private:
+	// 一度に沸く数
+	int32_t popNum_ = 4;
+
 	// かけらのリスト
 	std::list<std::unique_ptr<Fragment>> fragments_;
 
@@ -32,8 +37,8 @@ private:
 
 	uint32_t currentSerialNumber_ = 0;
 
-
 private:
 	Earth* earth_ = nullptr;
+	Player* player_ = nullptr;
 
 };
