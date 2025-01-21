@@ -63,7 +63,7 @@ void FragmentManager::SetPlayer(Player* player) {
 }
 
 void FragmentManager::PopFragments() {
-	for (uint32_t i = 0; i < popNum_; i++) {
+	for (int32_t i = 0; i < popNum_; i++) {
 		AddFragment(Vector3(0.0f, 0.0f, 0.0f));
 	}
 }
