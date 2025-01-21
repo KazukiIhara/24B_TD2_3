@@ -108,17 +108,6 @@ void Meteorite::RootUpdate() {
 
 	GetCollider()->SetVelocity(velocity);
 
-
-	emitTime_++;
-
-	if (emitTime_ >= 300) {
-		Vector3 popPos = GetTranslate();
-		popPos.x += rand() % 21 + -10;
-		popPos.y += rand() % 21 + -10;
-		fragmentManager_->AddFragment(popPos, earth_,player_);
-		emitTime_ = 0;
-	}
-
 }
 
 void Meteorite::DamageInitialize(float damage) {

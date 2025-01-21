@@ -3,6 +3,7 @@
 #include "framework/SUGER.h"
 
 #include "system/FragmentManager/FragmentManager.h"
+#include "objects/Earth/Earth.h"
 
 void MeteoriteManager::Initialize(Earth* earth,Player* player ,FragmentManager* fragmentManager) {
 	assert(earth);
@@ -49,7 +50,6 @@ void MeteoriteManager::Update() {
 	for (auto& meteorite : meteorites_) {
 		meteorite->Update();
 		meteorite->SetSpeed(speed_);
-
 	}
 }
 

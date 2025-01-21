@@ -20,7 +20,8 @@ void FragmentManager::Update() {
 	
 }
 
-void FragmentManager::AddFragment(const Vector3& popTranslate, Earth* earth, Player* player) {
+
+void FragmentManager::AddFragment(const Vector3& popTranslate, Player* player) {
 
 	EulerTransform3D popTransform{};
 	popTransform.translate = popTranslate;
@@ -28,10 +29,12 @@ void FragmentManager::AddFragment(const Vector3& popTranslate, Earth* earth, Pla
 	// 新しいかけらを作成
 	std::unique_ptr<Fragment> newFragment = std::make_unique<Fragment>();
 	newFragment->Initialize(SUGER::CreateEntity("Fragment", "Fragment", popTransform));
-	newFragment->SetEarth(earth);
+
 	newFragment->SetPlayer(player);
+
 	newFragment->CreateCollider(ColliderCategory::Fragment, kSphere, 0.2f);
 	newFragment->SetSerialNumber(currentSerialNumber_);
+	newFragment->GetCollider()->SetMass(20.0f);
 	// 追加
 	fragments_.push_back(std::move(newFragment));
 
@@ -44,4 +47,9 @@ void FragmentManager::AddColliderList() {
 	for (auto& fragment : fragments_) {
 		SUGER::AddColliderList(fragment.get());
 	}
+}
+
+void FragmentManager::SetEarth(Earth* earth) {
+	assert(earth);
+	earth_ = earth;
 }
