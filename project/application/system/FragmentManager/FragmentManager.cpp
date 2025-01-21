@@ -100,5 +100,6 @@ void FragmentManager::PopFragments() {
 			AddFragment(popPosition);
 			popTimer_ = popIntervalTime_;
 		}
+
 	}
 }

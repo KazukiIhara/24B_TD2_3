@@ -55,6 +55,9 @@ void Player::HitTimersUpdate() {
 	if (meteoriteHitTimer_ > 0) {
 		meteoriteHitTimer_--;
 	}
+	if (meteoriteBumpPopHitTimer_ > 0) {
+		meteoriteBumpPopHitTimer_ -= SUGER::kDeltaTime_;
+	}
 }
 
 void Player::Operation() {
@@ -180,9 +183,12 @@ void Player::OnCollision(Collider* other) {
 			Vector3 meteoriteVelocity = other->GetVelocity();
 			Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, meteoriteMass, meteoriteVelocity, 1.0f, normal);
 			velocity_ = velocity;
+			
+			if (meteoriteBumpPopHitTimer_ <= 0.0f) {
+				bumpManager_->AddBump(Normalize(-velocity));
+			}
 			meteoriteHitTimer_ = kNoneHitTime_;
-
-			bumpManager_->AddBump(Normalize(-velocity));
+			meteoriteBumpPopHitTimer_ = float(kNoneHitTime_);
 		}
 		break;
 
