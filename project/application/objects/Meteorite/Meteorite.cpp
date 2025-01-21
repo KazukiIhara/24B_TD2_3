@@ -3,6 +3,8 @@
 #include "framework/SUGER.h"
 
 #include "objects/Earth/Earth.h"
+#include "objects/player/Player.h"
+
 
 #include "system/FragmentManager/FragmentManager.h"
 
@@ -15,6 +17,11 @@ void Meteorite::Initialize(const std::string& name) {
 void Meteorite::SetEarth(Earth* earth) {
 	assert(earth);
 	earth_ = earth;
+}
+
+void Meteorite::SetPlayer(Player* player){
+	assert(player);
+	player_ = player;
 }
 
 void Meteorite::SetFragmentManager(FragmentManager* fragmentManager) {
@@ -72,7 +79,7 @@ void Meteorite::OnCollision(Collider* other) {
 		//other->GetSerialNumber();
 		//other->
 
-		hp_--;
+		hp_ -= other->GetDamage();
 
 		break;
 	}
@@ -105,7 +112,7 @@ void Meteorite::RootUpdate() {
 		Vector3 popPos = GetTranslate();
 		popPos.x += rand() % 21 + -10;
 		popPos.y += rand() % 21 + -10;
-		fragmentManager_->AddFragment(popPos, earth_);
+		fragmentManager_->AddFragment(popPos, earth_,player_);
 		emitTime_ = 0;
 	}
 

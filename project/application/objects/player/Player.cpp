@@ -31,6 +31,7 @@ void Player::Update() {
 	Move();
 	MoveLimit();
 
+	
 
 }
 
@@ -173,6 +174,8 @@ void Player::OnCollision(Collider* other) {
 			Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, meteoriteMass, meteoriteVelocity, 1.0f, normal);
 			velocity_ = velocity;
 			meteoriteHitTimer_ = kNoneHitTime_;
+
+			bumpManager_->AddBump(Normalize(-velocity));
 		}
 		break;
 

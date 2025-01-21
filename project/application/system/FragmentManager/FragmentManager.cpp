@@ -20,7 +20,7 @@ void FragmentManager::Update() {
 	
 }
 
-void FragmentManager::AddFragment(const Vector3& popTranslate, Earth* earth) {
+void FragmentManager::AddFragment(const Vector3& popTranslate, Earth* earth, Player* player) {
 
 	EulerTransform3D popTransform{};
 	popTransform.translate = popTranslate;
@@ -29,6 +29,7 @@ void FragmentManager::AddFragment(const Vector3& popTranslate, Earth* earth) {
 	std::unique_ptr<Fragment> newFragment = std::make_unique<Fragment>();
 	newFragment->Initialize(SUGER::CreateEntity("Fragment", "Fragment", popTransform));
 	newFragment->SetEarth(earth);
+	newFragment->SetPlayer(player);
 	newFragment->CreateCollider(ColliderCategory::Fragment, kSphere, 0.2f);
 	newFragment->SetSerialNumber(currentSerialNumber_);
 	// 追加

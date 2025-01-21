@@ -48,7 +48,7 @@ void GameScene::Initialize() {
 	// 
 
 	meteoriteManager_ = std::make_unique<MeteoriteManager>();
-	meteoriteManager_->Initialize(earth_.get(), fragmentManager_.get());
+	meteoriteManager_->Initialize(earth_.get(),player_.get(), fragmentManager_.get());
 
 	// とりあえず一つ追加
 	meteoriteManager_->AddMeteorite();
@@ -60,6 +60,7 @@ void GameScene::Initialize() {
 	bumpManager_ = std::make_unique<BumpManager>();
 	bumpManager_->Initialize();
 	bumpManager_->SetPlayer(player_.get());
+	bumpManager_->SetEarth(earth_.get());
 	// 
 	player_->SetBumpManager(bumpManager_.get());
 
