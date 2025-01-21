@@ -56,7 +56,7 @@ void Fragment::OnCollision(Collider* other) {
 		break;
 	case ColliderCategory::Meteorite:
 
-		//HP_ -= 3;
+		HP_ -= 3;
 		break;
 	case ColliderCategory::Earth:
 		HP_ -= 3;

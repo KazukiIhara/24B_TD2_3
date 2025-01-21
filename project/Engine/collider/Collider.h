@@ -107,7 +107,7 @@ private:
 	// ダメージ倍率
 	float damageMultiplier__ = 1.0f;
 	// ダメージ
-	float damage_ = 1.0f;
+	float damage_ = 0.0f;
 	// 反射倍率
 	float  bounceFactor__ = 1.0f;
 

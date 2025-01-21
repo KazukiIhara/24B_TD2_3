@@ -79,14 +79,14 @@ void Bump::LevelScaling()
 	case 2:
 		damageMultiplier_ = 2.0f;
 
-		bounceFactor_ = 10.5f;
+		bounceFactor_ = 1.5f;
 
 		scale_ = 1.0f;
 		break;
 	case 3:
 		damageMultiplier_ = 2.0f;
 
-		bounceFactor_ = 20.0f;
+		bounceFactor_ = 2.0f;
 
 		scale_ = 1.5f;
 		break;
