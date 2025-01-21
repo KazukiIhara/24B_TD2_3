@@ -50,7 +50,7 @@ void GameScene::Initialize() {
 
 	meteoriteManager_ = std::make_unique<MeteoriteManager>();
 	meteoriteManager_->Initialize(earth_.get(),player_.get(), fragmentManager_.get());
-
+	meteoriteManager_->AddMeteorite();
 
 	//
 	// たんこぶマネージャーの初期化処理

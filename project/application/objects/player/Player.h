@@ -77,5 +77,8 @@ private:
 	// 対隕石ヒットタイマー
 	int32_t meteoriteHitTimer_ = 0;
 
+	// 対隕石たんこぶ生成ヒットタイマー
+	float meteoriteBumpPopHitTimer_ = 0;
+
 	BumpManager* bumpManager_ = nullptr;
 };
