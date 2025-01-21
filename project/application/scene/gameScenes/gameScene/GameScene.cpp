@@ -79,8 +79,6 @@ void GameScene::SceneStatePlayUpdate() {
 #ifdef _DEBUG
 	ImGui::Begin("GameScene");
 	ImGui::Text("Restart :R");
-	ImGui::Text("Move :WASD");
-
 	ImGui::End();
 
 #endif // DEBUG
