@@ -43,7 +43,7 @@ void Meteorite::Update() {
 			RootInitialize();
 			break;
 		case Meteorite::Behavior::kDagame:
-			DamageInitialize();
+			DamageInitialize(damege_);
 			break;
 		case Meteorite::Behavior::kBreak:
 			BreakInitialize();
@@ -79,7 +79,7 @@ void Meteorite::OnCollision(Collider* other) {
 
 		behaviorRequest_ = Behavior::kDagame;
 
-
+		damege_ = other->GetDamage();
 		break;
 	}
 
@@ -113,8 +113,8 @@ void Meteorite::RootUpdate() {
 
 }
 
-void Meteorite::DamageInitialize() {
-	hp_ -= other->GetDamage();
+void Meteorite::DamageInitialize(float damage) {
+	hp_ -= damage;
 	damageTimer_ = kDamageTime_;
 	SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 }

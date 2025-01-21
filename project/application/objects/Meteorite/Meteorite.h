@@ -37,7 +37,7 @@ public:
 	void RootInitialize();
 	void RootUpdate();
 
-	void DamageInitialize();
+	void DamageInitialize(float damage);
 	void DamageUpdate();
 
 	void BreakInitialize();
@@ -78,6 +78,9 @@ private:
 
 	// 生存フラグ
 	bool isAlive_ = true;
+
+	//
+	float damege_;
 
 private:
 	Earth* earth_ = nullptr;
