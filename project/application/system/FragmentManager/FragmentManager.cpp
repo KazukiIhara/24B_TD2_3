@@ -31,6 +31,7 @@ void FragmentManager::AddFragment(const Vector3& popTranslate, Earth* earth) {
 	newFragment->SetEarth(earth);
 	newFragment->CreateCollider(ColliderCategory::Fragment, kSphere, 0.2f);
 	newFragment->SetSerialNumber(currentSerialNumber_);
+	newFragment->GetCollider()->SetMass(20.0f);
 	// 追加
 	fragments_.push_back(std::move(newFragment));
 

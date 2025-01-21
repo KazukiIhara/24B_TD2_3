@@ -69,7 +69,10 @@ void Meteorite::OnCollision(Collider* other) {
 
 		break;
 	case ColliderCategory::Fragment:
-		behaviorRequest_ = Behavior::kDagame;
+
+		if (behavior_ == Behavior::kRoot) {
+			behaviorRequest_ = Behavior::kDagame;
+		}
 
 		break;
 	}

@@ -34,7 +34,7 @@ void GameScene::Initialize() {
 	player_->Initialize(SUGER::CreateEntity("Player", "Moon"));
 	// プレイヤーのコライダーを作成
 	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.0f);
-
+	player_->GetCollider()->SetMass(20.0f);
 
 	// 
 	// かけらマネージャの初期化処理
