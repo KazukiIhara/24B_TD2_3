@@ -8,13 +8,24 @@
 class Earth;
 class Player;
 
+enum PopPlace {
+	Top,
+	LeftTop,
+	Left,
+	LeftBottom,
+	Bottom,
+	RightBottom,
+	Right,
+	RightTop,
+};
+
 // かけらマネージャ
 class FragmentManager {
 public:
 	void Initialize();
 
 	void Update();
-  
+
 	void AddFragment(const Vector3& popTranslate);
 
 	void AddColliderList();
@@ -25,6 +36,12 @@ public:
 	void PopFragments();
 
 private:
+	// 沸く場所の種類
+	PopPlace popPlace_ = PopPlace::Top;
+
+	// 沸く場所
+	std::array<Vector3, 8> popPosition_;
+
 	// 一度に沸く数
 	int32_t popNum_ = 4;
 

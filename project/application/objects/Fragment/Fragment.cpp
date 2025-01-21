@@ -127,19 +127,19 @@ void Fragment::Move() {
 
 void Fragment::MoveLimit()
 {
-	Vector3 translate_ = GetTranslate();
-	translate_.x = std::clamp(translate_.x, -stageWidth_, stageWidth_);
-	translate_.y = std::clamp(translate_.y, -stageHeight_, stageHeight_);
-	SetTranslate(translate_);
+	//Vector3 translate_ = GetTranslate();
+	//translate_.x = std::clamp(translate_.x, -stageWidth_, stageWidth_);
+	//translate_.y = std::clamp(translate_.y, -stageHeight_, stageHeight_);
+	//SetTranslate(translate_);
 
-	if (translate_.x <= -stageWidth_ || translate_.x >= stageWidth_) {
-		velocity_.x *= -1;
-		HP_--;
-	}
-	if (translate_.y <= -stageHeight_ || translate_.y >= stageHeight_) {
-		velocity_.y *= -1;
-		HP_--;
-	}
+	//if (translate_.x <= -stageWidth_ || translate_.x >= stageWidth_) {
+	//	velocity_.x *= -1;
+	//	HP_--;
+	//}
+	//if (translate_.y <= -stageHeight_ || translate_.y >= stageHeight_) {
+	//	velocity_.y *= -1;
+	//	HP_--;
+	//}
 
 }
 
