@@ -33,8 +33,8 @@ private:
 	int32_t earthHitTimer_ = 0;
 
 	// 移動できる範囲
-	float stageWidth_ = 18.0f;
-	float stageHeight_ = 9.0f;
+	float stageWidth_ = 31.0f;
+	float stageHeight_ = 17.0f;
 
 	// 初期位置に戻ろうとする行動に入る時間
 	float kReturnMoveTime_ = 3.0f;

@@ -14,7 +14,7 @@ void GameScene::Initialize() {
 	//
 
 	skydome_ = std::make_unique<Skydome>();
-	skydome_->Initialize(SUGER::CreateEntity("Skydome" , "Skydome"));
+	skydome_->Initialize(SUGER::CreateEntity("Skydome", "Skydome"));
 	skydome_->SetEnableLight(false);
 
 	// 
@@ -42,6 +42,7 @@ void GameScene::Initialize() {
 
 	fragmentManager_ = std::make_unique<FragmentManager>();
 	fragmentManager_->Initialize();
+	fragmentManager_->SetEarth(earth_.get());
 
 	// 
 	// 隕石マネージャの初期化処理
@@ -50,13 +51,11 @@ void GameScene::Initialize() {
 	meteoriteManager_ = std::make_unique<MeteoriteManager>();
 	meteoriteManager_->Initialize(earth_.get(), fragmentManager_.get());
 
-	// とりあえず一つ追加
-	meteoriteManager_->AddMeteorite();
 
 	//
 	// たんこぶマネージャーの初期化処理
 	//
-	
+
 	bumpManager_ = std::make_unique<BumpManager>();
 	bumpManager_->Initialize();
 	bumpManager_->SetPlayer(player_.get());

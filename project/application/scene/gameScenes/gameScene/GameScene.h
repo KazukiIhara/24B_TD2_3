@@ -25,7 +25,6 @@ public:
 	// 終了
 	void Finalize()override;
 
-
 	// プレイフェーズ初期化
 	void SceneStatePlayInitialize()override;
 	// プレイフェーズ更新

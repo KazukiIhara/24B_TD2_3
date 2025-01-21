@@ -57,8 +57,8 @@ private:
 	float scale_ = 1.0f;
 
 	// 移動できる範囲
-	float stageWidth_ = 21.0f;
-	float stageHeight_ = 12.0f;
+	float stageWidth_ = 32.0f;
+	float stageHeight_ = 18.0f;
 
 	// 移動ベクトル
 	Vector3 moveVector_{};
