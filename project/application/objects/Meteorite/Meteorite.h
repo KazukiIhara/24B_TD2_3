@@ -60,7 +60,7 @@ private:
 	float emitTime_ = 0;
 
 	// HP
-	uint32_t hp_ = 3;
+	int32_t hp_ = 3;
 
 
 	// ダメージ時間定数
