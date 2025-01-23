@@ -70,8 +70,8 @@ private:
 	Vector3 velocity_{};
 
 	// 移動できる範囲
-	float stageWidth_ = 21.0f;
-	float stageHeight_ = 12.0f;
+	float stageWidth_ = 40.0f;
+	float stageHeight_ = 22.5f;
 
 	// シリアルナンバー
 	uint32_t serialNumber_ = 0;

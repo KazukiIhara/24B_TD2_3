@@ -26,6 +26,16 @@ void FragmentManager::Initialize() {
 
 	popTimer_ = popIntervalTime_;
 
+	for (int32_t i = 0; i < popNum_; i++) {
+		Vector3 popPosition = {
+			popPosition_[popPlace_].x + Random::GenerateFloat(-2.0f,2.0f),
+			popPosition_[popPlace_].y + Random::GenerateFloat(-2.0f,2.0f),
+			0.0f
+		};
+		AddFragment(popPosition);
+		popTimer_ = popIntervalTime_;
+	}
+
 }
 void FragmentManager::Update() {
 
@@ -46,7 +56,6 @@ void FragmentManager::Update() {
 		});
 
 
-	// PopFragments();
 }
 
 

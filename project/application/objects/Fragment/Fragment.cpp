@@ -21,14 +21,14 @@ void Fragment::SetEarth(Earth* earth) {
 
 void Fragment::Update() {
 
-	
-	
+
+
 	HitTimerUpdate();
 
 	BehaviorChange();
 	BehaviorUpdate();
 
-	MoveLimit(); // 移動制限と反射の処理
+	MoveLimit(); // 移動制限の処理
 
 	UpdateLifeState(); // 生死処理
 }
@@ -70,9 +70,9 @@ void Fragment::OnCollision(Collider* other) {
 
 		float bounceFactor = other->GetBounceFactor();
 
-		GetCollider()->SetDamage(1.0f*other->GetDamageMultiplier());
+		GetCollider()->SetDamage(1.0f * other->GetDamageMultiplier());
 
-		Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity,10.0f * bounceFactor, normal);
+		Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f * bounceFactor, normal);
 		velocity_ = velocity;
 		break;
 	}
@@ -110,11 +110,6 @@ void Fragment::RootInitialize() {
 }
 
 void Fragment::RootUpdate() {
-	//Vector3 target = ExtractionWorldPos(earth_->GetWorldTransformPtr()->worldMatrix_);
-	//// 目標に対して保管移動
-	//SetTranslate(Lerp(GetTranslate(), target, speed_ * SUGER::kDeltaTime_));
-	//SetRotate(GetRotate() + Vector3(speed_, speed_, speed_ * SUGER::kDeltaTime_));
-
 	Move();
 }
 
@@ -125,26 +120,15 @@ void Fragment::Move() {
 	GetCollider()->SetVelocity(velocity_);
 }
 
-void Fragment::MoveLimit()
-{
-	//Vector3 translate_ = GetTranslate();
-	//translate_.x = std::clamp(translate_.x, -stageWidth_, stageWidth_);
-	//translate_.y = std::clamp(translate_.y, -stageHeight_, stageHeight_);
-	//SetTranslate(translate_);
-
-	//if (translate_.x <= -stageWidth_ || translate_.x >= stageWidth_) {
-	//	velocity_.x *= -1;
-	//	HP_--;
-	//}
-	//if (translate_.y <= -stageHeight_ || translate_.y >= stageHeight_) {
-	//	velocity_.y *= -1;
-	//	HP_--;
-	//}
+void Fragment::MoveLimit() {
+	if (GetTranslate().x > stageWidth_ || GetTranslate().x < -stageWidth_
+		|| GetTranslate().y > stageHeight_ || GetTranslate().y < -stageHeight_) {
+		HP_ = 0;
+	}
 
 }
 
-void Fragment::UpdateLifeState()
-{
+void Fragment::UpdateLifeState() {
 	if (HP_ <= 0) {
 		isAlive_ = false;
 		SetIsDelete(true);
