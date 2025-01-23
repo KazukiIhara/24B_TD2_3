@@ -63,7 +63,6 @@ void GameScene::Initialize() {
 	// 
 	player_->SetBumpManager(bumpManager_.get());
 
-
 }
 
 void GameScene::Finalize() {
