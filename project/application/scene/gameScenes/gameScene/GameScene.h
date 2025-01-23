@@ -30,6 +30,8 @@ public:
 	// プレイフェーズ更新
 	void SceneStatePlayUpdate()override;
 
+	std::array<int32_t, 3> SplitDigits(int32_t number);
+
 private:
 
 	//
@@ -58,6 +60,12 @@ private:
 	// 地球のHPUI
 	std::array<std::unique_ptr<Object2DController>, 4> earthHPUI_;
 	Vector2 earthUIPosition_ = { 0.0f,0.0f };
+
+	std::array<std::unique_ptr<Object2DController>, 3> earthHpNumUI_;
+	std::array<int32_t, 3> earthHpNum_;
+	Vector2 earthHpNumUIPosition_ = { 0.0f,0.0f };
+	Vector2 numberTextureSize_ = { 32.0f,48.0f };
+
 
 };
 

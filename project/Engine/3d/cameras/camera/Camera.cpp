@@ -47,9 +47,11 @@ void Camera::Update() {
 	UpdateCameraData();
 }
 
-void Camera::Shake(int32_t duration, float intensity) {
+void Camera::Shake(float duration, float intensity) {
+	shakeTime_ = duration;
 	shakeDuration_ = duration;
 	shakeIntensity_ = intensity;
+	shakeStartTranslate_ = transform_.translate_;
 }
 
 void Camera::CreateCameraResource() {
@@ -76,9 +78,10 @@ void Camera::UpdateCameraData() {
 
 void Camera::ApplyShake() {
 	if (shakeDuration_ > 0) {
+		float multiplyer = shakeDuration_ / shakeTime_;
 		// ランダムなシェイクオフセットを生成
-		Vector3 shakeOffset = Random::GenerateVector3(-shakeIntensity_, shakeIntensity_);
-		transform_.translate_ += shakeOffset;
+		Vector3 shakeOffset = Random::GenerateVector3(-shakeIntensity_ * multiplyer, shakeIntensity_ * multiplyer);
+		transform_.translate_ = shakeStartTranslate_ + shakeOffset;
 
 		// シェイクの時間を減らす
 		shakeDuration_--;
@@ -86,6 +89,7 @@ void Camera::ApplyShake() {
 		// シェイクが終了した場合リセット
 		if (shakeDuration_ <= 0) {
 			shakeDuration_ = 0;
+			transform_.translate_ = kDefaultCameraTranslate_;
 		}
 	}
 
