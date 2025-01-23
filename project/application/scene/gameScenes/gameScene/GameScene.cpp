@@ -69,6 +69,10 @@ void GameScene::Initialize() {
 
 
 
+	// 板ポリパーティクルの作成
+	SUGER::CreateParticle("dustParticle", ParticleType::kPlane, "circle.png");
+	
+
 	//
 	// スプライトの初期化処理
 	//

@@ -56,6 +56,8 @@ private:
 
 	uint32_t currentSerialNumber_ = 0;
 
+	int count = 0;
+
 private:
 	Earth* earth_ = nullptr;
 	Player* player_ = nullptr;

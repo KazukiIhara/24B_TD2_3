@@ -7,6 +7,8 @@
 
 #include "random/Random.h"
 
+
+
 void Fragment::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 
@@ -14,6 +16,8 @@ void Fragment::Initialize(const std::string& name) {
 
 	playerHitTimer_ = 0;
 	isAlive_ = true;
+
+
 }
 
 void Fragment::SetEarth(Earth* earth) {
@@ -29,6 +33,8 @@ void Fragment::Update() {
 	BehaviorUpdate();
 
 	MoveLimit(); // 移動制限の処理
+
+	Atmosphere(); // 大気圏内処理
 
 	UpdateLifeState(); // 生死処理
 }
@@ -137,6 +143,36 @@ void Fragment::UpdateLifeState() {
 	}
 }
 
+void Fragment::Atmosphere()
+{
+	float color = 1.0f; // 初期カラー値
+
+	if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - earth_->GetCollider()->GetWorldPosition())) {
+		// 対象が地球の大気圏内にいる場合、カラーを変化させます
+		color = (Length(GetCollider()->GetWorldPosition() - earth_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
+		
+		Vector3 min = -(velocity_ * 0.85f);
+		Vector3 max = -(velocity_ * 1.15f);
+
+		Vector3 maxVelo = ElementWiseMax(min, max);
+		Vector3 minVelo = ElementWiseMin(min, max);
+
+		  
+
+		emitter_->SetMaxVelocity(maxVelo);
+		emitter_->SetMinVelocity(minVelo);
+		emitterDust_->SetMaxVelocity(maxVelo);
+		emitterDust_->SetMinVelocity(minVelo);
+		
+		emitter_->Emit();
+		emitterDust_->Emit();
+	}
+
+	color = (std::clamp)(color, 0.0f, 1.0f);
+	// カラーを設定します（1.0 - 赤色, 0.0 - 黒色）
+	SetColor({ 1, color, color, 1 });
+}
+
 void Fragment::SetSpeed(float speed) {
 	speed_ = speed;
 }
@@ -162,3 +198,54 @@ Vector3 Fragment::CalculateDirection(const Vector3& startPosition, const Vector3
 	finalDirection = Normalize(finalDirection);
 	return finalDirection;
 }
+
+void Fragment::SetPraticle(int count)
+{
+	particleNumber_ = count;
+
+	emitter_ = std::make_unique<EmitterController>();
+	emitterDust_ = std::make_unique<EmitterController>();
+	CreateEmit("dustParticle", "dustEmitter", 1,0.8f ,{ 1,1,0 },emitter_.get());
+	CreateEmit("dustParticle", "dustFire", 1,1.0f,{ 1,0,0 },emitterDust_.get());
+}
+
+void Fragment::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size,Vector3 color, EmitterController* emit)
+{
+	std::string name_ = emitName + std::to_string(particleNumber_);
+	// エミッターの作成
+	SUGER::CreateEmitter(name_);
+	emit->Initialize(name_);
+	emit->SetParent(GetCollider()->GetWorldTransformPtr());
+
+	// エミッターにパーティクルをセット
+	emit->SetParticle(praticleName);
+	// エミッターの発生個数を変更
+	emit->SetCount(count);
+	// エミッターの発生タイプを設定
+	emit->SetEmitType(kRandom);
+	// 繰り返し発生オフ
+	emit->SetIsRepeat(false);
+	// 
+	emit->SetFrequency(0.01f);
+
+	// 速度
+	emit->SetMaxVelocity(Vector3(2.0f, 2.0f, 2.0f));
+	emit->SetMinVelocity(Vector3(-2.0f, -2.0f, -2.0f));
+
+	// サイズ
+	emit->SetMaxSize(size);
+	emit->SetMinSize(size);
+
+
+	// カラー
+	emit->SetMaxColor(color);
+	emit->SetMinColor(color);
+}
+
+void Fragment::DustEmit()
+{
+
+}
+
+
+
