@@ -195,7 +195,7 @@ void Player::OnCollision(Collider* other) {
 			bumpManager_->AddBump(Normalize(worldDirection));
 
 			// バンプタイマーをリセットします
-			meteoriteBumpPopHitTimer_ = float(kNoneHitTime_);
+			meteoriteBumpPopHitTimer_ = float(0.1f);
 		}
 
 
