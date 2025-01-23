@@ -43,7 +43,7 @@ void GameScene::Initialize() {
 	fragmentManager_ = std::make_unique<FragmentManager>();
 	fragmentManager_->Initialize();
 	fragmentManager_->SetEarth(earth_.get());
-
+	fragmentManager_->SetPlayer(player_.get());
 	// 
 	// 隕石マネージャの初期化処理
 	// 
@@ -92,14 +92,16 @@ void GameScene::SceneStatePlayUpdate() {
 		sceneCamera_->Shake(15, 0.1f);
 	}
 
-	// たんこぶマネージャーの更新
-	bumpManager_->Update();
-
+	
 	// 地球の更新
 	earth_->Update();
 
 	// プレイヤーの更新処理
 	player_->Update();
+
+	// たんこぶマネージャーの更新
+	bumpManager_->Update();
+
 
 	// 隕石マネージャの更新
 	meteoriteManager_->Update();

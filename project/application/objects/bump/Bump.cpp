@@ -7,7 +7,7 @@
 
 void Bump::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
-	SetParent(player_->GetWorldTransformPtr());
+	//SetParent(player_->GetWorldTransformPtr());
 	invincibilityTimer_ = maxInvincibilityTime_;
 }
 

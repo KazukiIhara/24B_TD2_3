@@ -34,10 +34,11 @@ void BumpManager::AddBump(const Vector3& popTranslate)
 	// 新しいかけらを作成
 	std::unique_ptr<Bump> newBump = std::make_unique<Bump>();
 	newBump->SetPlayer(player_);
-	newBump->Initialize(SUGER::CreateEntity("Fragment", "Fragment", popTransform));
+	newBump->Initialize(SUGER::CreateEntity("Bump", "Bump", popTransform));
 	newBump->CreateCollider(ColliderCategory::Bump, kSphere, 0.2f);
 	newBump->SetSerialNumber(currentSerialNumber_);
-	
+	newBump->SetScale(0.5f);
+	newBump->SetParent(player_->GetWorldTransformPtr());
 	// 追加
 	bumps_.push_back(std::move(newBump));
 
