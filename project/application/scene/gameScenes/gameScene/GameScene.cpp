@@ -67,6 +67,34 @@ void GameScene::Initialize() {
 	// 
 	player_->SetBumpManager(bumpManager_.get());
 
+
+
+	//
+	// スプライトの初期化処理
+	//
+
+	for (uint32_t i = 0; i < 4; i++) {
+		earthHPUI_[i] = std::make_unique<Object2DController>();
+	}
+
+	std::string earthHpUiString = "Earth_HP_UI/Earth_HP_UI";
+
+	earthHPUI_[0]->Initialize(SUGER::Create2DObject("3_earthHPUI", earthHpUiString + "_100%.png"));
+	earthHPUI_[1]->Initialize(SUGER::Create2DObject("2_earthHPUI", earthHpUiString + "_75%.png"));
+	earthHPUI_[2]->Initialize(SUGER::Create2DObject("1_earthHPUI", earthHpUiString + "_50%.png"));
+	earthHPUI_[3]->Initialize(SUGER::Create2DObject("0_earthHPUI", earthHpUiString + "_25%.png"));
+
+	SUGER::AddGrobalDataGroup("UI");
+	SUGER::AddGrobalDataItem("UI", "EarthUIPosX", earthUIPosition_.x);
+	SUGER::AddGrobalDataItem("UI", "EarthUIPosY", earthUIPosition_.y);
+
+	earthUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosX");
+	earthUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosY");
+
+	for (uint32_t i = 0; i < 4; i++) {
+		earthHPUI_[i]->SetPosition(earthUIPosition_);
+	}
+
 }
 
 void GameScene::Finalize() {
@@ -84,6 +112,9 @@ void GameScene::SceneStatePlayUpdate() {
 	ImGui::Text("Restart :R");
 	ImGui::End();
 
+	earthUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosX");
+	earthUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosY");
+
 #endif // DEBUG
 
 	if (SUGER::TriggerKey(DIK_R)) {
@@ -94,7 +125,6 @@ void GameScene::SceneStatePlayUpdate() {
 	if (SUGER::TriggerKey(DIK_SPACE)) {
 		sceneCamera_->Shake(15, 0.1f);
 	}
-
 
 	// 地球の更新
 	earth_->Update();
@@ -116,6 +146,20 @@ void GameScene::SceneStatePlayUpdate() {
 	// 天球の更新
 	skydome_->Update();
 
+
+	for (uint32_t i = 0; i < 4; i++) {
+		earthHPUI_[i]->SetPosition(earthUIPosition_);
+	}
+
+	if (earth_->GetHp() <= 75.0f) {
+		earthHPUI_[0]->SetIsActive(false);
+	}
+	if (earth_->GetHp() <= 50.0f) {
+		earthHPUI_[1]->SetIsActive(false);
+	}
+	if (earth_->GetHp() <= 25.0f) {
+		earthHPUI_[2]->SetIsActive(false);
+	}
 
 	//
 	// コライダーの処理ここから

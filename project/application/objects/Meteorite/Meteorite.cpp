@@ -89,6 +89,11 @@ void Meteorite::OnCollision(Collider* other) {
 
 		}
 		break;
+	case ColliderCategory::Earth:
+		if (behavior_ != Behavior::kBreak) {
+			behaviorRequest_ = Behavior::kBreak;
+		}
+		break;
 	}
 
 }

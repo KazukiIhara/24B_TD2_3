@@ -4,7 +4,6 @@
 
 void Earth::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
-	earthHitTimer_ = 0;
 	returnMoveTimer_ = 0;
 	isAlive_ = true;
 
@@ -21,9 +20,6 @@ void Earth::Update() {
 #endif // _DEBUG
 
 
-	if (earthHitTimer_ > 0) {
-		earthHitTimer_--;
-	}
 	if (returnMoveTimer_ > 0) {
 		returnMoveTimer_ -= SUGER::kDeltaTime_;
 		if (returnMoveTimer_ < 0.1f) {
@@ -54,9 +50,7 @@ void Earth::OnCollision(Collider* other) {
 	float playerMass{};
 	switch (category) {
 	case ColliderCategory::Player:
-		if (earthHitTimer_ > 0) {
-			break;
-		}
+	{
 		earthMass = GetCollider()->GetMass();
 		Vector3 earthVelocity = GetCollider()->GetVelocity();
 		playerMass = other->GetMass();
@@ -64,23 +58,37 @@ void Earth::OnCollision(Collider* other) {
 		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
 		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
 		velocity_ = velocity;
-		earthHitTimer_ = kNoneHitTime_;
 		returnMoveTimer_ = kReturnMoveTime_;
-		break;
+	}
+	break;
 	case ColliderCategory::Fragment:
 		HP_ -= 1;
 		break;
 	case ColliderCategory::Meteorite:
-		HP_ -= 10;
-		break;
+	{
+		earthMass = GetCollider()->GetMass();
+		Vector3 earthVelocity = GetCollider()->GetVelocity();
+		playerMass = other->GetMass();
+		Vector3 playerVelocity = other->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+		velocity_ = velocity;
+		returnMoveTimer_ = kReturnMoveTime_;
+	}
+	HP_ -= 25;
+	break;
 	}
 }
 
 void Earth::MoveLimit() {
 	Vector3 translate_ = GetTranslate();
-	translate_.x = std::clamp(translate_.x, -stageWidth_, stageWidth_);
-	translate_.y = std::clamp(translate_.y, -stageHeight_, stageHeight_);
-	SetTranslate(translate_);
+	if (translate_.x > stageWidth_ || translate_.x < -stageWidth_ ||
+		translate_.y < -stageHeight_ || translate_.y > stageHeight_) {
+		translate_.x = std::clamp(translate_.x, -stageWidth_, stageWidth_);
+		translate_.y = std::clamp(translate_.y, -stageHeight_, stageHeight_);
+		SetTranslate(translate_);
+		velocity_ = { 0.0f,0.0f,0.0f };
+	}
 }
 
 void Earth::UpdateLifeState() {
@@ -88,6 +96,10 @@ void Earth::UpdateLifeState() {
 		isAlive_ = false;
 
 	}
+}
+
+float& Earth::GetHp() {
+	return HP_;
 }
 
 void Earth::ReturnPosition() {

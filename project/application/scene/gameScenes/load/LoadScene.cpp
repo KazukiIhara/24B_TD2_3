@@ -97,6 +97,10 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	SUGER::LoadTexture(textureDirectoryPath + "myUvChecker.png");
 	SUGER::LoadTexture(textureDirectoryPath + "circle.png");
 	SUGER::LoadTexture(textureDirectoryPath + "pronama_chan.png");
+	SUGER::LoadTexture(textureDirectoryPath + "Earth_HP_UI/Earth_HP_UI_25%.png");
+	SUGER::LoadTexture(textureDirectoryPath + "Earth_HP_UI/Earth_HP_UI_50%.png");
+	SUGER::LoadTexture(textureDirectoryPath + "Earth_HP_UI/Earth_HP_UI_75%.png");
+	SUGER::LoadTexture(textureDirectoryPath + "Earth_HP_UI/Earth_HP_UI_100%.png");
 
 	// モデル読み込み
 	SUGER::LoadModel("teapot");
