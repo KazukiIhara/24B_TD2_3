@@ -46,6 +46,8 @@ public:
 	// 光沢のセット
 	void SetShininess(const float& shininess);
 
+	UVTransform& GetUVTransform();
+
 private:
 	// WVP用のリソース作成
 	void CreateWVPResource();
@@ -64,6 +66,9 @@ protected:
 
 	// ブレンドモード
 	BlendMode blendMode_ = kBlendModeNormal;
+
+	// Uvトランスフォーム
+	UVTransform uvTransform_{};
 
 	// WVP用のリソース
 	ComPtr<ID3D12Resource> transformationResource_ = nullptr;

@@ -18,6 +18,8 @@ void GameScene::Initialize() {
 	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize(SUGER::CreateEntity("Skydome", "Skydome"));
 	skydome_->SetEnableLight(false);
+	skydome_->SetScale(100.0f);
+	skydome_->GetUVTransform().scale = { 10.0f,10.0f };
 
 	// 
 	// 地球の初期化処理

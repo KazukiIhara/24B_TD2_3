@@ -35,6 +35,8 @@ public:
 
 	void PopFragments();
 
+	void SwitchPopPosition();
+
 private:
 	// 沸く場所の種類
 	PopPlace popPlace_ = PopPlace::Top;

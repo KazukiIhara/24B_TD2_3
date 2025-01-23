@@ -64,6 +64,8 @@ public:
 	// 移動量の取得
 	const Vector3& GetTranslate()const;
 
+	UVTransform& GetUVTransform();
+
 	// ワールドトランスフォームのポインタの取得
 	WorldTransform* GetWorldTransformPtr();
 

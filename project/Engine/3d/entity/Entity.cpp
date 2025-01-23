@@ -12,6 +12,8 @@ void Entity::Initialize() {
 	material_.shininess = 40.0f;
 	material_.uvTransformMatrix = MakeIdentityMatrix4x4();
 
+	uvTransform_ = {};
+
 	// WVP用のリソース作成
 	CreateWVPResource();
 	// データを書きこむ
@@ -28,6 +30,8 @@ void Entity::Update() {
 
 	// 基底クラスの更新処理
 	Empty::Update();
+
+	material_.uvTransformMatrix = MakeUVMatrix(uvTransform_.scale, uvTransform_.rotateZ, uvTransform_.translate);
 
 	// コライダーが有効ならコライダーの更新
 	if (collider_) {
@@ -107,6 +111,10 @@ void Entity::SetEnableLight(const bool& enableLight) {
 
 void Entity::SetShininess(const float& shininess) {
 	material_.shininess = shininess;
+}
+
+UVTransform& Entity::GetUVTransform() {
+	return uvTransform_;
 }
 
 void Entity::CreateWVPResource() {
