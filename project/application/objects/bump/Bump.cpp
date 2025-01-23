@@ -75,26 +75,28 @@ void Bump::LevelScaling()
 		bounceFactor_ = 1.0f;
 
 		scale_ = 0.5f;
+		
 		break;
 	case 2:
 		damageMultiplier_ = 2.0f;
 
 		bounceFactor_ = 1.5f;
 
-		scale_ = 1.0f;
+		scale_ = 0.7f;
 		break;
 	case 3:
 		damageMultiplier_ = 2.0f;
 
 		bounceFactor_ = 2.0f;
 
-		scale_ = 1.5f;
+		scale_ = 1.0f;
 		break;
 	default:
 		break;
 	}
 
 	GetCollider()->SetSize(scale_);
+	SetScale((scale_));
 	GetCollider()->SetBounceFactor(bounceFactor_);
 	GetCollider()->SetDamageMultiplier(damageMultiplier_);
 }
