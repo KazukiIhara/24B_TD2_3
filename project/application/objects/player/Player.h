@@ -32,6 +32,9 @@ public:
 
 	// 衝突コールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
+
+	Vector3 RotatePosition(const Vector3& position, float angle);
+
 public:
 
 	void SetBumpManager(BumpManager* bumpManager) {
@@ -79,6 +82,8 @@ private:
 
 	// 対隕石たんこぶ生成ヒットタイマー
 	float meteoriteBumpPopHitTimer_ = 0;
+	// たんこぶのできる位置
+	Vector3 bumpDirection_{};
 
 	BumpManager* bumpManager_ = nullptr;
 };

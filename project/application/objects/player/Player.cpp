@@ -38,7 +38,7 @@ void Player::Update() {
 	Move();
 	MoveLimit();
 
-	
+
 
 }
 
@@ -119,79 +119,105 @@ void Player::OnCollision(Collider* other) {
 	ColliderCategory category = other->GetColliderCategory();
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
-		case ColliderCategory::Earth:
+	case ColliderCategory::Earth:
 
-		{
-			//
-			// 押し戻し処理(強引)
-			// 
+	{
+		//
+		// 押し戻し処理(強引)
+		// 
 
-			// 位置ベクトルを取得
-			Vector3 posA = GetCollider()->GetWorldPosition();
-			Vector3 posB = other->GetWorldPosition();
-			// 各オブジェクトの「半径」相当の値を取得 (球体などの場合)
-			float radiusA = GetCollider()->GetSize();
-			float radiusB = other->GetSize();
-			// 合計半径
-			float sumRadius = radiusA + radiusB;
-			// ２つのオブジェクト間の距離
-			Vector3 diff = posA - posB;
-			float distance = Length(diff);
+		// 位置ベクトルを取得
+		Vector3 posA = GetCollider()->GetWorldPosition();
+		Vector3 posB = other->GetWorldPosition();
+		// 各オブジェクトの「半径」相当の値を取得 (球体などの場合)
+		float radiusA = GetCollider()->GetSize();
+		float radiusB = other->GetSize();
+		// 合計半径
+		float sumRadius = radiusA + radiusB;
+		// ２つのオブジェクト間の距離
+		Vector3 diff = posA - posB;
+		float distance = Length(diff);
 
-			Vector3 normal = Normalize(posA - posB);
-			if (distance < sumRadius) {
-				SetTranslate(other->GetWorldPosition() + normal * (sumRadius + 0.1f));
-			}
-
-
-			float playerMass = GetCollider()->GetMass();
-			Vector3 playerVelocity = GetCollider()->GetVelocity();
-			float  earthMass = other->GetMass();
-			Vector3 earthVelocity = other->GetVelocity();
-			Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, earthMass, earthVelocity, 1.0f, normal);
-			velocity_ = velocity;
-			earthHitTimer_ = kNoneHitTime_;
+		Vector3 normal = Normalize(posA - posB);
+		if (distance < sumRadius) {
+			SetTranslate(other->GetWorldPosition() + normal * (sumRadius + 0.1f));
 		}
-		break;
-		case::ColliderCategory::Meteorite:
-		{
 
-			//
-			// 押し戻し処理(強引)
-			// 
 
-			// 位置ベクトルを取得
-			Vector3 posA = GetCollider()->GetWorldPosition();
-			Vector3 posB = other->GetWorldPosition();
-			// 各オブジェクトの「半径」相当の値を取得 (球体などの場合)
-			float radiusA = GetCollider()->GetSize();
-			float radiusB = other->GetSize();
-			// 合計半径
-			float sumRadius = radiusA + radiusB;
-			// ２つのオブジェクト間の距離
-			Vector3 diff = posA - posB;
-			float distance = Length(diff);
+		float playerMass = GetCollider()->GetMass();
+		Vector3 playerVelocity = GetCollider()->GetVelocity();
+		float  earthMass = other->GetMass();
+		Vector3 earthVelocity = other->GetVelocity();
+		Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, earthMass, earthVelocity, 1.0f, normal);
+		velocity_ = velocity;
+		earthHitTimer_ = kNoneHitTime_;
+	}
+	break;
+	case::ColliderCategory::Meteorite:
+	{
 
-			Vector3 normal = Normalize(posA - posB);
-			if (distance < sumRadius) {
-				SetTranslate(other->GetWorldPosition() + normal * (sumRadius + 0.1f));
-			}
+		//
+		// 押し戻し処理(強引)
+		// 
 
-			float playerMass = GetCollider()->GetMass();
-			Vector3 playerVelocity = GetCollider()->GetVelocity();
-			float meteoriteMass = other->GetMass();
-			Vector3 meteoriteVelocity = other->GetVelocity();
-			Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, meteoriteMass, meteoriteVelocity, 1.0f, normal);
-			velocity_ = velocity;
-			
-			if (meteoriteBumpPopHitTimer_ <= 0.0f) {
-				bumpManager_->AddBump(Normalize(-velocity));
-			}
-			meteoriteHitTimer_ = kNoneHitTime_;
+		// 位置ベクトルを取得
+		Vector3 posA = GetCollider()->GetWorldPosition();
+		Vector3 posB = other->GetWorldPosition();
+		// 各オブジェクトの「半径」相当の値を取得 (球体などの場合)
+		float radiusA = GetCollider()->GetSize();
+		float radiusB = other->GetSize();
+		// 合計半径
+		float sumRadius = radiusA + radiusB;
+		// ２つのオブジェクト間の距離
+		Vector3 diff = posA - posB;
+		float distance = Length(diff);
+
+		Vector3 normal = Normalize(posA - posB);
+		if (distance < sumRadius) {
+			SetTranslate(other->GetWorldPosition() + normal * (sumRadius + 0.1f));
+		}
+
+		float playerMass = GetCollider()->GetMass();
+		Vector3 playerVelocity = GetCollider()->GetVelocity();
+		float meteoriteMass = other->GetMass();
+		Vector3 meteoriteVelocity = other->GetVelocity();
+		Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, meteoriteMass, meteoriteVelocity, 1.0f, normal);
+		velocity_ = velocity;
+
+		// 隕石のバンプタイマーが0以下の場合、正規化された逆速度に基づいてバンプを追加します
+		if (meteoriteBumpPopHitTimer_ <= 0.0f) {
+			// 他のオブジェクトとのワールド座標の差を求め、正規化します
+			bumpDirection_ = Normalize(other->GetWorldPosition() - GetCollider()->GetWorldPosition());
+
+			Vector3 worldDirection = RotatePosition(bumpDirection_, -(GetRotate().z));
+
+			// 変換後のベクトルを正規化してバンプを追加します
+			bumpManager_->AddBump(Normalize(worldDirection));
+
+			// バンプタイマーをリセットします
 			meteoriteBumpPopHitTimer_ = float(kNoneHitTime_);
 		}
-		break;
+
+
+		meteoriteHitTimer_ = kNoneHitTime_;
+
+	}
+	break;
 
 	}
 
 }
+
+Vector3 Player::RotatePosition(const Vector3& position, float angle)
+{
+	float radians = angle;// * (3.1415926535f / 180.0f); // 度数法からラジアンへの変換
+	float cosAngle = cos(radians);
+	float sinAngle = sin(radians);
+
+	float rotatedX = position.x * cosAngle - position.y * sinAngle;
+	float rotatedY = position.x * sinAngle + position.y * cosAngle;
+	float rotatedZ = position.z; // Z軸は回転しない
+
+	return Vector3(rotatedX, rotatedY, rotatedZ);
+}
+
