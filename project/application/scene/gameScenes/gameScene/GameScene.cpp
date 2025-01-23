@@ -71,7 +71,7 @@ void GameScene::Initialize() {
 
 	// 板ポリパーティクルの作成
 	SUGER::CreateParticle("dustParticle", ParticleType::kPlane, "circle.png");
-	
+
 
 	//
 	// スプライトの初期化処理
@@ -101,9 +101,9 @@ void GameScene::Initialize() {
 
 	for (uint32_t i = 0; i < 3; i++) {
 		earthHpNumUI_[i] = std::make_unique<Object2DController>();
-		earthHpNumUI_[i]->Initialize(SUGER::Create2DObject("0_earthHpNumUI", "Number/Number.png"));
+		earthHpNumUI_[i]->Initialize(SUGER::Create2DObject("0_earthHpNumUI", "Number/Number_x128y192.png"));
 		earthHpNumUI_[i]->SetCutOutSize(numberTextureSize_);
-		earthHpNumUI_[i]->SetSize(numberTextureSize_);
+		earthHpNumUI_[i]->SetSize(numberTextureSize_ / 2.0f);
 	}
 
 	earthHpNum_ = SplitDigits(static_cast<uint32_t>(earth_->GetHp()));
@@ -115,9 +115,9 @@ void GameScene::Initialize() {
 	earthHpNumUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUINumPosY");
 
 	// UIのポジションを決定
-	earthHpNumUI_[0]->SetPosition(earthHpNumUIPosition_ - Vector2(32.0f, 0.0f));
+	earthHpNumUI_[0]->SetPosition(earthHpNumUIPosition_ - Vector2(numGap_, 0.0f));
 	earthHpNumUI_[1]->SetPosition(earthHpNumUIPosition_);
-	earthHpNumUI_[2]->SetPosition(earthHpNumUIPosition_ + Vector2(32.0f, 0.0f));
+	earthHpNumUI_[2]->SetPosition(earthHpNumUIPosition_ + Vector2(numGap_, 0.0f));
 
 	// 数字を基に左上をずらして描画
 	for (uint32_t i = 0; i < 3; i++) {
@@ -198,9 +198,9 @@ void GameScene::SceneStatePlayUpdate() {
 	}
 
 	// UIのポジションを決定
-	earthHpNumUI_[0]->SetPosition(earthHpNumUIPosition_ - Vector2(32.0f, 0.0f));
+	earthHpNumUI_[0]->SetPosition(earthHpNumUIPosition_ - Vector2(numGap_, 0.0f));
 	earthHpNumUI_[1]->SetPosition(earthHpNumUIPosition_);
-	earthHpNumUI_[2]->SetPosition(earthHpNumUIPosition_ + Vector2(32.0f, 0.0f));
+	earthHpNumUI_[2]->SetPosition(earthHpNumUIPosition_ + Vector2(numGap_, 0.0f));
 
 	// HPの数字を桁ごとに分割
 	earthHpNum_ = SplitDigits(static_cast<uint32_t>(earth_->GetHp()));

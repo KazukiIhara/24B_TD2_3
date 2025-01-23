@@ -64,8 +64,8 @@ private:
 	std::array<std::unique_ptr<Object2DController>, 3> earthHpNumUI_;
 	std::array<int32_t, 3> earthHpNum_;
 	Vector2 earthHpNumUIPosition_ = { 0.0f,0.0f };
-	Vector2 numberTextureSize_ = { 32.0f,48.0f };
-
+	Vector2 numberTextureSize_ = { 128.0f,192.0f };
+	float numGap_ = 64.0f;
 
 };
 
