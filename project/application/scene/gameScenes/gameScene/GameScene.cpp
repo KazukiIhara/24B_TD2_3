@@ -95,6 +95,31 @@ void GameScene::Initialize() {
 		earthHPUI_[i]->SetPosition(earthUIPosition_);
 	}
 
+	for (uint32_t i = 0; i < 3; i++) {
+		earthHpNumUI_[i] = std::make_unique<Object2DController>();
+		earthHpNumUI_[i]->Initialize(SUGER::Create2DObject("0_earthHpNumUI", "Number/Number.png"));
+		earthHpNumUI_[i]->SetCutOutSize(numberTextureSize_);
+		earthHpNumUI_[i]->SetSize(numberTextureSize_);
+	}
+
+	earthHpNum_ = SplitDigits(static_cast<uint32_t>(earth_->GetHp()));
+
+	SUGER::AddGrobalDataItem("UI", "EarthUINumPosX", earthHpNumUIPosition_.x);
+	SUGER::AddGrobalDataItem("UI", "EarthUINumPosY", earthHpNumUIPosition_.y);
+
+	earthHpNumUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUINumPosX");
+	earthHpNumUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUINumPosY");
+
+	// UIのポジションを決定
+	earthHpNumUI_[0]->SetPosition(earthHpNumUIPosition_ - Vector2(32.0f, 0.0f));
+	earthHpNumUI_[1]->SetPosition(earthHpNumUIPosition_);
+	earthHpNumUI_[2]->SetPosition(earthHpNumUIPosition_ + Vector2(32.0f, 0.0f));
+
+	// 数字を基に左上をずらして描画
+	for (uint32_t i = 0; i < 3; i++) {
+		earthHpNumUI_[i]->SetLeftTop(Vector2(earthHpNum_[i] * numberTextureSize_.x, 0.0f));
+	}
+
 }
 
 void GameScene::Finalize() {
@@ -114,6 +139,9 @@ void GameScene::SceneStatePlayUpdate() {
 
 	earthUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosX");
 	earthUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosY");
+
+	earthHpNumUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUINumPosX");
+	earthHpNumUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUINumPosY");
 
 #endif // DEBUG
 
@@ -161,6 +189,22 @@ void GameScene::SceneStatePlayUpdate() {
 		earthHPUI_[2]->SetIsActive(false);
 	}
 
+	if (earth_->GetHp() < 100.0f) {
+		earthHpNumUI_[0]->SetIsActive(false);
+	}
+
+	// UIのポジションを決定
+	earthHpNumUI_[0]->SetPosition(earthHpNumUIPosition_ - Vector2(32.0f, 0.0f));
+	earthHpNumUI_[1]->SetPosition(earthHpNumUIPosition_);
+	earthHpNumUI_[2]->SetPosition(earthHpNumUIPosition_ + Vector2(32.0f, 0.0f));
+
+	// HPの数字を桁ごとに分割
+	earthHpNum_ = SplitDigits(static_cast<uint32_t>(earth_->GetHp()));
+	// 数字を基に左上をずらして描画
+	for (uint32_t i = 0; i < 3; i++) {
+		earthHpNumUI_[i]->SetLeftTop(Vector2(earthHpNum_[i] * numberTextureSize_.x, 0.0f));
+	}
+
 	//
 	// コライダーの処理ここから
 	//
@@ -176,7 +220,25 @@ void GameScene::SceneStatePlayUpdate() {
 	SUGER::AddColliderList(earth_.get());
 	meteoriteManager_->AddColliderList();
 	fragmentManager_->AddColliderList();
-
 	bumpManager_->AddColliderList();
+}
+
+std::array<int32_t, 3> GameScene::SplitDigits(int32_t number) {
+	std::array<int32_t, 3> digits = { 0, 0, 0 };
+
+	if (number > 999) {
+		for (uint32_t i = 0; i < 3; i++) {
+			digits[i] = 9;
+		}
+		return digits;
+	}
+
+	// 一桁ずつ取り出して配列に格納
+	for (int i = 2; i >= 0; --i) {
+		digits[i] = number % 10;
+		number /= 10;
+	}
+
+	return digits;
 }
 
