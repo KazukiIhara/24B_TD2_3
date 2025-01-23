@@ -5,10 +5,12 @@
 #include "objects/Earth/Earth.h"
 #include "objects/player/Player.h"
 
-
+#include "random/Random.h"
 
 void Fragment::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
+
+	velocity_ = CalculateDirection(GetTranslate(), earth_->GetTranslate(), 60.0f);
 
 	playerHitTimer_ = 0;
 	isAlive_ = true;
@@ -20,8 +22,6 @@ void Fragment::SetEarth(Earth* earth) {
 }
 
 void Fragment::Update() {
-
-
 
 	HitTimerUpdate();
 
@@ -107,6 +107,7 @@ void Fragment::BehaviorUpdate() {
 }
 
 void Fragment::RootInitialize() {
+
 }
 
 void Fragment::RootUpdate() {
@@ -118,6 +119,8 @@ void Fragment::Move() {
 	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 	// 現在の移動量をセット
 	GetCollider()->SetVelocity(velocity_);
+	// 回転量を足す
+	SetRotate(GetRotate() + velocity_ * SUGER::kDeltaTime_);
 }
 
 void Fragment::MoveLimit() {
@@ -125,7 +128,6 @@ void Fragment::MoveLimit() {
 		|| GetTranslate().y > stageHeight_ || GetTranslate().y < -stageHeight_) {
 		HP_ = 0;
 	}
-
 }
 
 void Fragment::UpdateLifeState() {
@@ -137,4 +139,26 @@ void Fragment::UpdateLifeState() {
 
 void Fragment::SetSpeed(float speed) {
 	speed_ = speed;
+}
+
+Vector3 Fragment::CalculateDirection(const Vector3& startPosition, const Vector3& targetPosition, float spreadAngle) {
+	Vector3 direction = targetPosition - startPosition;
+	direction = Normalize(direction);
+
+	// ランダムな角度を生成 (-spreadAngle ～ +spreadAngle)
+	float randomYaw = Random::GenerateFloat(-spreadAngle, spreadAngle);
+
+	// 角度をラジアンに変換
+	float yawRad = DirectX::XMConvertToRadians(randomYaw);
+
+	// Z軸回転の適用
+	Vector3 finalDirection = {
+		direction.x * std::cos(yawRad) - direction.y * std::sin(yawRad), // X成分
+		direction.x * std::sin(yawRad) + direction.y * std::cos(yawRad), // Y成分
+		0.0f // Z成分 (2Dゲームでは0固定)
+	};
+
+	// ベクトルを正規化して長さを1にする
+	finalDirection = Normalize(finalDirection);
+	return finalDirection;
 }

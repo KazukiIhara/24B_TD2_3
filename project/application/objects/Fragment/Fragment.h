@@ -45,6 +45,8 @@ public:
 
 	void SetSpeed(float speed);
 
+	Vector3 CalculateDirection(const Vector3& startPosition, const Vector3& targetPosition, float spreadAngle);
+
 	void SetPlayer(Player* player) { player_ = player; };
 public: // ゲッター
 	bool GetAlive() const { return isAlive_; };
@@ -70,8 +72,8 @@ private:
 	Vector3 velocity_{};
 
 	// 移動できる範囲
-	float stageWidth_ = 40.0f;
-	float stageHeight_ = 22.5f;
+	float stageWidth_ = 48.0f;
+	float stageHeight_ = 27.0;
 
 	// シリアルナンバー
 	uint32_t serialNumber_ = 0;

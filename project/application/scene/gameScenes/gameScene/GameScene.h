@@ -47,3 +47,4 @@ private:
 	std::unique_ptr<BumpManager> bumpManager_ = nullptr;
 
 };
+
