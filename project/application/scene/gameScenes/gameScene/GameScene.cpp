@@ -2,6 +2,8 @@
 
 #include "framework/SUGER.h"
 
+#include "random/Random.h"
+
 void GameScene::Initialize() {
 	// シーンの初期化(初期化処理の先頭)
 	BaseScene::Initialize();
@@ -49,7 +51,7 @@ void GameScene::Initialize() {
 	// 
 
 	meteoriteManager_ = std::make_unique<MeteoriteManager>();
-	meteoriteManager_->Initialize(earth_.get(),player_.get(), fragmentManager_.get());
+	meteoriteManager_->Initialize(earth_.get(), player_.get(), fragmentManager_.get());
 	meteoriteManager_->AddMeteorite();
 
 	//
@@ -91,7 +93,7 @@ void GameScene::SceneStatePlayUpdate() {
 		sceneCamera_->Shake(15, 0.1f);
 	}
 
-	
+
 	// 地球の更新
 	earth_->Update();
 

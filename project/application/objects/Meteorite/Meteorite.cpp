@@ -10,7 +10,7 @@
 
 void Meteorite::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
-
+	SetScale(1.4f);
 
 }
 
@@ -19,7 +19,7 @@ void Meteorite::SetEarth(Earth* earth) {
 	earth_ = earth;
 }
 
-void Meteorite::SetPlayer(Player* player){
+void Meteorite::SetPlayer(Player* player) {
 	assert(player);
 	player_ = player;
 }
@@ -86,7 +86,7 @@ void Meteorite::OnCollision(Collider* other) {
 
 			behaviorRequest_ = Behavior::kDagame;
 
-			
+
 		}
 		break;
 	}

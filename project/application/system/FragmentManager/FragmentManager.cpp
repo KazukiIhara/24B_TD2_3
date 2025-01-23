@@ -12,8 +12,8 @@ void FragmentManager::Initialize() {
 	fragments_.clear();
 
 
-	float screenWidth = 32.0f;
-	float screenHeight = 18.0f;
+	float screenWidth = 40.0f;
+	float screenHeight = 22.5f;
 	popPosition_[Top] = { 0.0f,screenHeight,0.0f };
 	popPosition_[LeftTop] = { -screenWidth,screenHeight,0.0f };
 	popPosition_[Left] = { -screenWidth, 0.0f, 0.0f };
@@ -26,16 +26,6 @@ void FragmentManager::Initialize() {
 
 	popTimer_ = popIntervalTime_;
 
-	for (int32_t i = 0; i < popNum_; i++) {
-		Vector3 popPosition = {
-			popPosition_[popPlace_].x + Random::GenerateFloat(-2.0f,2.0f),
-			popPosition_[popPlace_].y + Random::GenerateFloat(-2.0f,2.0f),
-			0.0f
-		};
-		AddFragment(popPosition);
-		popTimer_ = popIntervalTime_;
-	}
-
 }
 void FragmentManager::Update() {
 
@@ -45,6 +35,7 @@ void FragmentManager::Update() {
 	ImGui::End();
 #endif // _DEBUG
 
+	PopFragments();
 
 	// コンテナ内のかけらすべてを更新
 	for (auto& fragment : fragments_) {
@@ -66,11 +57,10 @@ void FragmentManager::AddFragment(const Vector3& popTranslate) {
 
 	// 新しいかけらを作成
 	std::unique_ptr<Fragment> newFragment = std::make_unique<Fragment>();
-	newFragment->Initialize(SUGER::CreateEntity("Fragment", "Fragment", popTransform));
-
 	newFragment->SetPlayer(player_);
-
-	newFragment->CreateCollider(ColliderCategory::Fragment, kSphere, 0.2f);
+	newFragment->SetEarth(earth_);
+	newFragment->Initialize(SUGER::CreateEntity("Fragment", "Fragment", popTransform));
+	newFragment->CreateCollider(ColliderCategory::Fragment, kSphere, 0.6f);
 	newFragment->SetSerialNumber(currentSerialNumber_);
 	newFragment->GetCollider()->SetMass(20.0f);
 	// 追加

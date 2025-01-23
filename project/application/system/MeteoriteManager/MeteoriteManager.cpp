@@ -60,7 +60,7 @@ void MeteoriteManager::AddMeteorite() {
 	newMeteorite->SetEarth(earth_);
 	newMeteorite->SetPlayer(player_);
 	newMeteorite->SetFragmentManager(fragmentManager_);
-	newMeteorite->CreateCollider(ColliderCategory::Meteorite, kSphere, 4.0f);
+	newMeteorite->CreateCollider(ColliderCategory::Meteorite, kSphere, 3.5f);
 
 	newMeteorite->GetCollider()->SetMass(20000.0f);
 
