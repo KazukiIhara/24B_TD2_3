@@ -46,7 +46,7 @@ void FragmentManager::Update() {
 		});
 
 
-	PopFragments();
+	// PopFragments();
 }
 
 

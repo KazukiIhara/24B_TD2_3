@@ -105,6 +105,7 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	SUGER::LoadModel("Meteorite");
 	SUGER::LoadModel("Fragment");
 	SUGER::LoadModel("Skydome");
+	SUGER::LoadModel("Bump");
 
 	// レベルデータ読み込み
 	SUGER::LoadJsonLevelData("GameScene");
