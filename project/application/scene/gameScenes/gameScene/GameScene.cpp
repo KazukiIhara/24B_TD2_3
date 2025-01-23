@@ -67,6 +67,23 @@ void GameScene::Initialize() {
 	// 
 	player_->SetBumpManager(bumpManager_.get());
 
+
+
+	//
+	// スプライトの初期化処理
+	//
+
+	for (uint32_t i = 0; i < 4; i++) {
+		earthHPUI_[i] = std::make_unique<Object2DController>();
+	}
+
+	std::string earthHpUiString = "Earth_HP_UI/Earth_HP_UI";
+
+	earthHPUI_[0]->Initialize(SUGER::Create2DObject("0_earthHPUI", earthHpUiString + "_25%.png"));
+	earthHPUI_[1]->Initialize(SUGER::Create2DObject("0_earthHPUI", earthHpUiString + "_50%.png"));
+	earthHPUI_[2]->Initialize(SUGER::Create2DObject("0_earthHPUI", earthHpUiString + "_75%.png"));
+	earthHPUI_[3]->Initialize(SUGER::Create2DObject("0_earthHPUI", earthHpUiString + "_100%.png"));
+
 }
 
 void GameScene::Finalize() {

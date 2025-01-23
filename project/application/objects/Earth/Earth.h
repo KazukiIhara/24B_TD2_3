@@ -41,7 +41,7 @@ private:
 	float returnMoveTimer_ = 0.0f;
 	float returnSpeed_ = 0.9f;
 
-	float HP_ = 10;
+	float HP_ = 100;
 
 	bool isAlive_ = true;
 
