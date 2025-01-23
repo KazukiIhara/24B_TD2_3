@@ -84,6 +84,13 @@ void GameScene::Initialize() {
 	earthHPUI_[2]->Initialize(SUGER::Create2DObject("0_earthHPUI", earthHpUiString + "_75%.png"));
 	earthHPUI_[3]->Initialize(SUGER::Create2DObject("0_earthHPUI", earthHpUiString + "_100%.png"));
 
+	SUGER::AddGrobalDataGroup("UI");
+	SUGER::AddGrobalDataItem("UI", "EarthUIPosX", earthUIPosition_.x);
+	SUGER::AddGrobalDataItem("UI", "EarthUIPosY", earthUIPosition_.y);
+
+	earthUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosX");
+	earthUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosY");
+
 }
 
 void GameScene::Finalize() {
@@ -100,6 +107,9 @@ void GameScene::SceneStatePlayUpdate() {
 	ImGui::Begin("GameScene");
 	ImGui::Text("Restart :R");
 	ImGui::End();
+
+	earthUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosX");
+	earthUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosY");
 
 #endif // DEBUG
 
@@ -132,6 +142,11 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// 天球の更新
 	skydome_->Update();
+
+
+	for (uint32_t i = 0; i < 4; i++) {
+		earthHPUI_[i]->SetPosition(earthUIPosition_);
+	}
 
 
 	//

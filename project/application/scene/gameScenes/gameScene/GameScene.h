@@ -57,6 +57,7 @@ private:
 
 	// 地球のHPUI
 	std::array<std::unique_ptr<Object2DController>, 4> earthHPUI_;
+	Vector2 earthUIPosition_ = { 0.0f,0.0f };
 
 };
 
