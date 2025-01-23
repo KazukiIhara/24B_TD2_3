@@ -62,6 +62,8 @@ void FragmentManager::AddFragment(const Vector3& popTranslate) {
 	newFragment->Initialize(SUGER::CreateEntity("Fragment", "Fragment", popTransform));
 	newFragment->CreateCollider(ColliderCategory::Fragment, kSphere, 0.6f);
 	newFragment->SetSerialNumber(currentSerialNumber_);
+	newFragment->SetPraticle(currentSerialNumber_);
+
 	newFragment->GetCollider()->SetMass(20.0f);
 	// 追加
 	fragments_.push_back(std::move(newFragment));

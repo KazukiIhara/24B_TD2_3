@@ -67,6 +67,11 @@ void GameScene::Initialize() {
 	// 
 	player_->SetBumpManager(bumpManager_.get());
 
+
+
+	// 板ポリパーティクルの作成
+	SUGER::CreateParticle("dustParticle", ParticleType::kPlane, "circle.png");
+	
 }
 
 void GameScene::Finalize() {
