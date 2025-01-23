@@ -23,6 +23,10 @@ void EntityController::OnCollision(Collider* other) {
 	}
 }
 
+void EntityController::UpdateWorldTransform() {
+	entity_->Update();
+}
+
 
 void EntityController::SetScale(const Vector3& scale) {
 	entity_->SetScale(scale);

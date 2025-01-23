@@ -39,6 +39,7 @@ void BumpManager::AddBump(const Vector3& popTranslate)
 	newBump->SetSerialNumber(currentSerialNumber_);
 	newBump->SetScale(0.5f);
 	newBump->SetParent(player_->GetWorldTransformPtr());
+	newBump->UpdateWorldTransform();
 	// 追加
 	bumps_.push_back(std::move(newBump));
 

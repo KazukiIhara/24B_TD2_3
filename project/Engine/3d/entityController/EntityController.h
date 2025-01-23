@@ -19,6 +19,8 @@ public:
 	// 衝突コールバック関数
 	virtual void OnCollision([[maybe_unused]] Collider* other);
 
+	void UpdateWorldTransform();
+
 	//
 	// Setter
 	//
