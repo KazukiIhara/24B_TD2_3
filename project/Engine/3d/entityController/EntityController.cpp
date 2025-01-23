@@ -18,8 +18,8 @@ void EntityController::OnCollision(Collider* other) {
 	ColliderCategory category = other->GetColliderCategory();
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
-		case ColliderCategory::None:
-			break;
+	case ColliderCategory::None:
+		break;
 	}
 }
 
@@ -82,6 +82,10 @@ const Vector3& EntityController::GetRotate() const {
 
 const Vector3& EntityController::GetTranslate() const {
 	return entity_->GetTranslate();
+}
+
+UVTransform& EntityController::GetUVTransform() {
+	return entity_->GetUVTransform();
 }
 
 WorldTransform* EntityController::GetWorldTransformPtr() {

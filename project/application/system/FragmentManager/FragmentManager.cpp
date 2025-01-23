@@ -97,6 +97,9 @@ void FragmentManager::PopFragments() {
 				0.0f
 			};
 			AddFragment(popPosition);
+
+			int popPosNum = Random::GenerateUint32_t(0, 7);
+			popPlace_ = static_cast<PopPlace>(popPosNum);
 			popTimer_ = popIntervalTime_;
 		}
 
