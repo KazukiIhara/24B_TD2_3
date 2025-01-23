@@ -66,6 +66,7 @@ void FragmentManager::AddFragment(const Vector3& popTranslate) {
 	newFragment->SetPraticle(currentSerialNumber_);
 
 	newFragment->GetCollider()->SetMass(100.0f);
+	newFragment->UpdateWorldTransform();
 
 	// 追加
 	fragments_.push_back(std::move(newFragment));
