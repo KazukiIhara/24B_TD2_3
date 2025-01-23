@@ -62,7 +62,7 @@ void SampleScene::Initialize() {
 	// エミッターの発生タイプを設定
 	emitter_.SetEmitType(kRandom);
 	// 繰り返し発生オフ
-	emitter_.SetIsRepeat(true);
+	emitter_.SetIsRepeat(true); 
 
 	emitter_.SetMaxVelocity(Vector3(2.0f, 2.0f, 2.0f));
 	emitter_.SetMinVelocity(Vector3(-2.0f, -2.0f, -2.0f));

@@ -25,6 +25,8 @@ PixelShaderOutput main(VertexShaderOutput input)
         discard;
     }
     
+    output.color = pow(output.color, 2.2);
+    
     return output;
 }
 

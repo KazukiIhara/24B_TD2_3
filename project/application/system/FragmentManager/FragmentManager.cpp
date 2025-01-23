@@ -60,11 +60,13 @@ void FragmentManager::AddFragment(const Vector3& popTranslate) {
 	newFragment->SetPlayer(player_);
 	newFragment->SetEarth(earth_);
 	newFragment->Initialize(SUGER::CreateEntity("Fragment", "Fragment", popTransform));
-	newFragment->CreateCollider(ColliderCategory::Fragment, kSphere, 0.6f);
+	newFragment->CreateCollider(ColliderCategory::Fragment, kSphere, 0.8f);
 	newFragment->SetSerialNumber(currentSerialNumber_);
+
 	newFragment->SetPraticle(currentSerialNumber_);
 
-	newFragment->GetCollider()->SetMass(20.0f);
+	newFragment->GetCollider()->SetMass(100.0f);
+
 	// 追加
 	fragments_.push_back(std::move(newFragment));
 

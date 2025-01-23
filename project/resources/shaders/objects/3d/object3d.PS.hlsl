@@ -73,7 +73,7 @@ PixelShaderOutput main(VertexShaderOutput input)
 
 
         // DirectionLight
-        float nDotL = dot(normal, -gPunctualLight.directionalLight.direction);
+        float nDotL = saturate(0.5 * dot(normal, -gPunctualLight.directionalLight.direction) + 0.5);
         float cos = pow(nDotL * 0.5f + 0.5f, 2.0f);
         // PointLight
         float pointnDotL = dot(normal, -pointLightDirection);
@@ -118,6 +118,8 @@ PixelShaderOutput main(VertexShaderOutput input)
     {
         discard;
     }
-        
+    
+    output.color.rgb = pow(output.color.rgb, 2.2);
+    
     return output;
 }

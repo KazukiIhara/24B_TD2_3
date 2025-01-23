@@ -25,12 +25,11 @@ public:
 
 	// 生死処理
 	void UpdateLifeState();
-public:
+
+	float& GetHp();
 
 private:
 	Vector3 velocity_{};
-	int32_t kNoneHitTime_ = 2;
-	int32_t earthHitTimer_ = 0;
 
 	// 移動できる範囲
 	float stageWidth_ = 31.0f;
@@ -41,7 +40,7 @@ private:
 	float returnMoveTimer_ = 0.0f;
 	float returnSpeed_ = 0.9f;
 
-	float HP_ = 10;
+	float HP_ = 100.0f;
 
 	bool isAlive_ = true;
 
