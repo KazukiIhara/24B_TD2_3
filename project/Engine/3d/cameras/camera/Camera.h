@@ -18,7 +18,7 @@ public:
 	// 更新
 	virtual void Update();
 
-	void Shake(int32_t duration, float intensity);
+	void Shake(float duration, float intensity);
 
 	// 定数バッファに転送
 	void TransferCamera(const uint32_t& index);
@@ -94,7 +94,8 @@ protected:
 	CameraForGPU* cameraData_ = nullptr;
 
 	// カメラシェイク
-	int32_t shakeDuration_ = 0;
+	float shakeTime_ = 0;
+	float shakeDuration_ = 0;
 	float shakeIntensity_ = 0.0f;
-
+	Vector3 shakeStartTranslate_ = { 0.0f,0.0f,0.0f };
 };

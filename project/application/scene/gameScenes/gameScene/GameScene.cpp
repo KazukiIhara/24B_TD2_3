@@ -123,7 +123,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// シェイクテスト用
 	if (SUGER::TriggerKey(DIK_SPACE)) {
-		sceneCamera_->Shake(15, 0.1f);
+		sceneCamera_->Shake(15.0f, 0.5f);
 	}
 
 	// 地球の更新
