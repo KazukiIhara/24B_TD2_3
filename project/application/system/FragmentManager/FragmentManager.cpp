@@ -14,14 +14,14 @@ void FragmentManager::Initialize() {
 
 	float screenWidth = 40.0f;
 	float screenHeight = 22.5f;
-	popPosition_[Top] = { 0.0f,screenHeight,0.0f };
-	popPosition_[LeftTop] = { -screenWidth,screenHeight,0.0f };
-	popPosition_[Left] = { -screenWidth, 0.0f, 0.0f };
-	popPosition_[LeftBottom] = { -screenWidth, -screenHeight, 0.0f };
-	popPosition_[Bottom] = { 0.0f, -screenHeight, 0.0f };
-	popPosition_[RightBottom] = { screenWidth, -screenHeight, 0.0f };
-	popPosition_[Right] = { screenWidth, 0.0f, 0.0f };
-	popPosition_[RightTop] = { screenWidth, screenHeight, 0.0f };
+	popPosition_[static_cast<uint32_t>(FragmentPopPlace::Top)] = { 0.0f,screenHeight,0.0f };
+	popPosition_[static_cast<uint32_t>(FragmentPopPlace::LeftTop)] = { -screenWidth,screenHeight,0.0f };
+	popPosition_[static_cast<uint32_t>(FragmentPopPlace::Left)] = { -screenWidth, 0.0f, 0.0f };
+	popPosition_[static_cast<uint32_t>(FragmentPopPlace::LeftBottom)] = { -screenWidth, -screenHeight, 0.0f };
+	popPosition_[static_cast<uint32_t>(FragmentPopPlace::Bottom)] = {0.0f, -screenHeight, 0.0f};
+	popPosition_[static_cast<uint32_t>(FragmentPopPlace::RightBottom)] = { screenWidth, -screenHeight, 0.0f };
+	popPosition_[static_cast<uint32_t>(FragmentPopPlace::Right)] = { screenWidth, 0.0f, 0.0f };
+	popPosition_[static_cast<uint32_t>(FragmentPopPlace::RightTop)] = { screenWidth, screenHeight, 0.0f };
 
 
 	popTimer_ = popIntervalTime_;
@@ -97,14 +97,14 @@ void FragmentManager::PopFragments() {
 	} else {
 		for (int32_t i = 0; i < popNum_; i++) {
 			Vector3 popPosition = {
-				popPosition_[popPlace_].x + Random::GenerateFloat(-2.0f,2.0f),
-				popPosition_[popPlace_].y + Random::GenerateFloat(-2.0f,2.0f),
+				popPosition_[static_cast<uint32_t>(popPlace_)].x + Random::GenerateFloat(-2.0f,2.0f),
+				popPosition_[static_cast<uint32_t>(popPlace_)].y + Random::GenerateFloat(-2.0f,2.0f),
 				0.0f
 			};
 			AddFragment(popPosition);
 
 			int popPosNum = Random::GenerateUint32_t(0, 7);
-			popPlace_ = static_cast<PopPlace>(popPosNum);
+			popPlace_ = static_cast<FragmentPopPlace>(popPosNum);
 			popTimer_ = popIntervalTime_;
 		}
 
