@@ -412,6 +412,7 @@
     <ClCompile Include="application\objects\Skydome\Skydome.cpp" />
     <ClCompile Include="application\objects\DamagePiece\DamagePiece.cpp" />
     <ClCompile Include="application\system\DamagePieceManager\DamagePieceManager.cpp" />
+    <ClCompile Include="application\scene\gameScenes\tutorialScene\TutorialScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -636,6 +637,7 @@
     <ClInclude Include="application\objects\Skydome\Skydome.h" />
     <ClInclude Include="application\objects\DamagePiece\DamagePiece.h" />
     <ClInclude Include="application\system\DamagePieceManager\DamagePieceManager.h" />
+    <ClInclude Include="application\scene\gameScenes\tutorialScene\TutorialScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

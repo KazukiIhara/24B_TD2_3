@@ -6,6 +6,7 @@
 #include "scene/gameScenes/gameScene/GameScene.h"
 #include "scene/gameScenes/titleScene/TitleScene.h"
 #include "scene/gameScenes/resultScene/ResultScene.h"
+#include "scene/gameScenes/tutorialScene/TutorialScene.h"
 
 BaseScene* SceneFactory::CreateScene(const std::string& sceneName) {
 	// 次のシーンを生成
@@ -21,6 +22,8 @@ BaseScene* SceneFactory::CreateScene(const std::string& sceneName) {
 		newScene = new TitleScene();
 	} else if (sceneName == "RESULT") {
 		newScene = new ResultScene();
+	} else if (sceneName == "TUTORIAL") {
+		newScene = new TutorialScene();
 	}
 
 	return newScene;
