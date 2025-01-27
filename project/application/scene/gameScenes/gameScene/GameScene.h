@@ -16,9 +16,9 @@
 #include "system/FragmentManager/FragmentManager.h"
 #include "system/BumpManager/BumpManager.h"
 #include "system/DamagePieceManager/DamagePieceManager.h"
- 
 
-class GameScene :public BaseScene {
+
+class GameScene:public BaseScene {
 public:
 	GameScene() = default;
 	~GameScene() = default;
@@ -37,6 +37,13 @@ public:
 	std::array<int32_t, 3> SplitDigits(int32_t number);
 
 private:
+	// 日数加算用タイマー
+	float scoreTimer_ = 0.0f;
+
+	// 経過日数
+	uint32_t currentDays_ = 0;
+	// 経過年数
+	uint32_t currentYears_ = 0;
 
 	//
 	// forDebug

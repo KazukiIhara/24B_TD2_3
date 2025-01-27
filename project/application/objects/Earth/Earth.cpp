@@ -10,7 +10,7 @@ void Earth::Initialize(const std::string& name) {
 	inclinationRadian_ = DegreesToRadians(inclination_);
 	SetRotate(Vector3(0.0f, 0.0f, -inclinationRadian_));
 
-	
+
 }
 
 void Earth::Update() {
@@ -31,7 +31,7 @@ void Earth::Update() {
 
 	// 移動量を足す
 	if (isAlive_) {
-		SetRotateY(GetRotate().y + 0.01f);
+		SetRotateY(GetRotate().y + std::numbers::pi_v<float>*2.0f / aroundFrame_);
 		SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 		// コライダーに移動量をセット
 		GetCollider()->SetVelocity(velocity_);
@@ -52,52 +52,52 @@ void Earth::OnCollision(Collider* other) {
 	float playerMass{};
 	float fragmentMass{};
 	switch (category) {
-	case ColliderCategory::Player:
-	{
-		earthMass = GetCollider()->GetMass();
-		Vector3 earthVelocity = GetCollider()->GetVelocity();
-		playerMass = other->GetMass();
-		Vector3 playerVelocity = other->GetVelocity();
-		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
-		velocity_ = velocity;
-		returnMoveTimer_ = kReturnMoveTime_;
-	}
-	break;
-	case ColliderCategory::Fragment:
-		earthMass = GetCollider()->GetMass();
-		Vector3 earthVelocity = GetCollider()->GetVelocity();
-		fragmentMass = other->GetMass();
-		Vector3 fragmentVelocity = other->GetVelocity();
-		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
-
-		
-		EmitDust(normal, normal);
-
-		HP_ -= 1;
-		isObjectHit = true;
-		objectHitLevel = 1;
+		case ColliderCategory::Player:
+		{
+			earthMass = GetCollider()->GetMass();
+			Vector3 earthVelocity = GetCollider()->GetVelocity();
+			playerMass = other->GetMass();
+			Vector3 playerVelocity = other->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+			Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+			velocity_ = velocity;
+			returnMoveTimer_ = kReturnMoveTime_;
+		}
 		break;
-	case ColliderCategory::Meteorite:
-	{
-		earthMass = GetCollider()->GetMass();
-		Vector3 earthVelocity = GetCollider()->GetVelocity();
-		playerMass = other->GetMass();
-		Vector3 playerVelocity = other->GetVelocity();
-		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
-		velocity_ = velocity;
-		returnMoveTimer_ = kReturnMoveTime_;
+		case ColliderCategory::Fragment:
+			earthMass = GetCollider()->GetMass();
+			Vector3 earthVelocity = GetCollider()->GetVelocity();
+			fragmentMass = other->GetMass();
+			Vector3 fragmentVelocity = other->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+			Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
 
 
-		EmitDust(normal, normal);
+			EmitDust(normal, normal);
 
-		isObjectHit = true;
-		objectHitLevel = 2;
-	}
-	HP_ -= 25;
-	break;
+			HP_ -= 1;
+			isObjectHit = true;
+			objectHitLevel = 1;
+			break;
+		case ColliderCategory::Meteorite:
+		{
+			earthMass = GetCollider()->GetMass();
+			Vector3 earthVelocity = GetCollider()->GetVelocity();
+			playerMass = other->GetMass();
+			Vector3 playerVelocity = other->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+			Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+			velocity_ = velocity;
+			returnMoveTimer_ = kReturnMoveTime_;
+
+
+			EmitDust(normal, normal);
+
+			isObjectHit = true;
+			objectHitLevel = 2;
+		}
+		HP_ -= 25;
+		break;
 	}
 }
 
@@ -123,22 +123,24 @@ float& Earth::GetHp() {
 	return HP_;
 }
 
-void Earth::SetPraticle()
-{
+void Earth::SetPraticle() {
 	emitterDustRed_ = std::make_unique<EmitterController>();
 	emitterDustYellow_ = std::make_unique<EmitterController>();
 	emitterDustGray_ = std::make_unique<EmitterController>();
 	emitterDustBlack_ = std::make_unique<EmitterController>();
-	CreateEmit("earthDustParticle", "earthDustFire", 10, 1.0f, { 0.75f, 1.5f}, { 1, 0, 0 }, emitterDustRed_.get());
+	CreateEmit("earthDustParticle", "earthDustFire", 10, 1.0f, { 0.75f, 1.5f }, { 1, 0, 0 }, emitterDustRed_.get());
 	CreateEmit("earthDustParticle", "earthDustFire2", 10, 0.7f, { 1.0f, 1.5f }, { 1, 1, 0 }, emitterDustYellow_.get());
 	CreateEmit("earthDustParticle", "earthDustFire3", 55, 0.7f, { 1.5f, 2.5f }, { 0.412f, 0.412f, 0.412f }, emitterDustGray_.get());
 	CreateEmit("earthDustParticle", "earthDustFire4", 55, 0.7f, { 1.5f, 2.5f }, { 0.039f, 0.039f, 0.039f }, emitterDustBlack_.get());
-	
+
 
 }
 
-void Earth::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit)
-{
+float Earth::GetAroundFrame() const {
+	return aroundFrame_;
+}
+
+void Earth::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit) {
 	std::string name_ = emitName;
 	// エミッターの作成
 	SUGER::CreateEmitter(name_);
@@ -167,16 +169,15 @@ void Earth::CreateEmit(const std::string praticleName, const std::string emitNam
 	// 生存時間
 	emit->SetMinLifeTime(lifeTime.x);
 	emit->SetMaxLifeTime(lifeTime.y);
-	
+
 
 	// カラー
 	emit->SetMaxColor(color);
 	emit->SetMinColor(color);
 }
 
-void Earth::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit)
-{
-	Vector3 velocity =(veloctiy);
+void Earth::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit) {
+	Vector3 velocity = (veloctiy);
 
 	Vector3 min = (velocity * 0.25f);
 	Vector3 max = (velocity * 2.5f);
@@ -193,7 +194,7 @@ void Earth::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterContr
 	Vector3 minPos = ElementWiseMin(-min, -max);
 
 
-	
+
 	emit->SetMinPosition(minPos);
 	emit->SetMaxPosition(maxPos);
 
@@ -202,8 +203,7 @@ void Earth::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterContr
 	emit->Emit();
 }
 
-void Earth::EmitDust(const Vector3& pos, const Vector3& veloctiy)
-{
+void Earth::EmitDust(const Vector3& pos, const Vector3& veloctiy) {
 	EmitMinMax(pos, Normalize(veloctiy) * 3, emitterDustRed_.get()); // 赤
 	EmitMinMax(pos, Normalize(veloctiy) * 2, emitterDustYellow_.get()); //黄色
 	EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterDustGray_.get());
