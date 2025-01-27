@@ -30,6 +30,7 @@ void GameScene::Initialize() {
 	earth_->CreateCollider(ColliderCategory::Earth, kSphere, 2.0f);
 	earth_->SetScale(2.0f);
 	earth_->GetCollider()->SetMass(200.0f);
+	
 	//
 	// Playerの初期化処理
 	//
@@ -71,9 +72,13 @@ void GameScene::Initialize() {
 
 	// 板ポリパーティクルの作成
 	SUGER::CreateParticle("dustParticle", ParticleType::kPlane, "circle.png");
-	SUGER::CreateParticle("fragmentParticle", ParticleType::kModel,"Fragment/Fragment.gltf");
+	//SUGER::CreateParticle("fragmentParticle", ParticleType::kModel,"Fragment");
+	SUGER::CreateParticle("fragmentParticle", ParticleType::kPlane, "dust.png");
+	SUGER::CreateParticle("earthDustParticle", ParticleType::kPlane, "dust.png");
 
 
+	earth_->SetPraticle();
+	earth_->UpdateWorldTransform();
 	//
 	// スプライトの初期化処理
 	//
@@ -156,11 +161,23 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// シェイクテスト用
 	if (SUGER::TriggerKey(DIK_SPACE)) {
-		sceneCamera_->Shake(15.0f, 0.5f);
+	//	sceneCamera_->Shake(15.0f, 0.5f);
 	}
+
+
 
 	// 地球の更新
 	earth_->Update();
+
+	if (earth_->GetIsHit()) {
+		if (earth_->GetHitLevel() == 1) {
+			sceneCamera_->Shake(15.0f, 0.5f);
+		}
+		else if (earth_->GetHitLevel() == 2) {
+			sceneCamera_->Shake(25.0f, 1.5f);
+		}
+		earth_->SetIsHit(false);
+	}
 
 	// プレイヤーの更新処理
 	player_->Update();

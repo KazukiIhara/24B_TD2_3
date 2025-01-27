@@ -56,21 +56,22 @@ void Fragment::OnCollision(Collider* other) {
 			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
 			Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f, normal);
 			velocity_ = velocity;
-			playerHitTimer_ = kNoneHitTime_;
 			GetCollider()->SetDamage(1.0f);
 
-			emitterFragment_->Emit();
+			EmitFragment(velocity_);
+			
+			playerHitTimer_ = 0.5f;
 		}
 		break;
 	case ColliderCategory::Meteorite:
 
 		HP_ -= 3;
 
-		emitterFragment_->Emit();
+		EmitFragment(velocity_);
 		break;
 	case ColliderCategory::Earth:
 		HP_ -= 3;
-		emitterFragment_->Emit();
+		EmitFragment(velocity_);
 		break;
 	case ColliderCategory::Bump:
 		float fragmentMass = GetCollider()->GetMass();
@@ -84,16 +85,19 @@ void Fragment::OnCollision(Collider* other) {
 		GetCollider()->SetDamage(1.0f * other->GetDamageMultiplier());
 
 		Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f * bounceFactor, normal);
-		velocity_ = velocity;
+		velocity_ = Normalize(velocity);
 
-		emitterFragment_->Emit();
+		// 反射の比率を固定
+		velocity_ = (velocity_ * 20) * bounceFactor;
+
+		//EmitFragment(velocity_);
 		break;
 	}
 }
 
 void Fragment::HitTimerUpdate() {
 	if (playerHitTimer_ > 0) {
-		playerHitTimer_--;
+		playerHitTimer_ -= SUGER::kDeltaTime_;
 	}
 }
 
@@ -215,7 +219,7 @@ void Fragment::SetPraticle(int count)
 	emitterFragment_ = std::make_unique<EmitterController>();
 	CreateEmit("dustParticle", "dustEmitter", 1,0.8f ,{ 1,1,0 },emitter_.get());
 	CreateEmit("dustParticle", "dustFire", 1,1.0f,{ 1,0,0 },emitterDust_.get());
-	CreateEmit("fragmentParticle", "fragment", 1,1.0f,{ 1,0,0 }, emitterFragment_.get());
+	CreateEmit("fragmentParticle", "fragment", 5,0.5f,{ 1,1,1 }, emitterFragment_.get());
 
 }
 
@@ -255,6 +259,24 @@ void Fragment::CreateEmit(const std::string praticleName, const std::string emit
 void Fragment::DustEmit()
 {
 
+}
+
+void Fragment::EmitFragment(const Vector3& velo)
+{
+	Vector3 velocity = Normalize(velo);
+
+	Vector3 min = -(velocity * 0.25f);
+	Vector3 max = -(velocity * 2.5f);
+
+	Vector3 maxVelo = ElementWiseMax(min, max);
+	Vector3 minVelo = ElementWiseMin(min, max);
+
+	emitterFragment_->SetMinPosition(minVelo);
+	emitterFragment_->SetMaxPosition(maxVelo);
+
+	emitterFragment_->SetMaxVelocity(maxVelo);
+	emitterFragment_->SetMinVelocity(minVelo);
+	emitterFragment_->Emit();
 }
 
 

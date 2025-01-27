@@ -68,6 +68,8 @@ private:
 
 	void DustEmit();
 
+	void EmitFragment(const Vector3& velo);
+
 	static Vector3 ElementWiseMax(const Vector3& a, const Vector3& b) {
 		return Vector3((std::max)(a.x, b.x), (std::max)(a.y, b.y), (std::max)(a.z, b.z));
 	}
@@ -94,7 +96,7 @@ private:
 
 
 	int32_t kNoneHitTime_ = 2;
-	int32_t playerHitTimer_ = 0;
+	float playerHitTimer_ = 0;
 
 	Vector3 velocity_{};
 

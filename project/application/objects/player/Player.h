@@ -79,7 +79,7 @@ private:
 	int32_t earthHitTimer_ = 0;
 	// 対隕石ヒットタイマー
 	int32_t meteoriteHitTimer_ = 0;
-
+	
 	// 対隕石たんこぶ生成ヒットタイマー
 	float meteoriteBumpPopHitTimer_ = 0;
 	// たんこぶのできる位置
