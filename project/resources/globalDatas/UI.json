@@ -1,7 +1,11 @@
 {
     "UI": {
-        "EarthUINumPosX": 1650.0,
-        "EarthUINumPosY": 620.0,
+        "CurrentDaysNumPosX": 550.0,
+        "CurrentDaysNumPosY": 16.0,
+        "CurrentYearsNumPosX": 240.0,
+        "CurrentYearsNumPosY": 16.0,
+        "EarthUINumPosX": 1550.0,
+        "EarthUINumPosY": 608.0,
         "EarthUIPosX": 1500.0,
         "EarthUIPosY": 700.0
     }
