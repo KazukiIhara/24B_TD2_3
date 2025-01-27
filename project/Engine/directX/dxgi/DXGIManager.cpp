@@ -126,7 +126,7 @@ ComPtr<ID3D12Resource> DXGIManager::CreateBufferResource(size_t sizeInBytes, boo
 
 		// バッファリソースを作る
 		Microsoft::WRL::ComPtr<ID3D12Resource>resource = nullptr;
-		hr = device_->CreateCommittedResource(
+ 		hr = device_->CreateCommittedResource(
 			&uplodeHeapProperties,
 			D3D12_HEAP_FLAG_NONE,
 			&resourceDesc,

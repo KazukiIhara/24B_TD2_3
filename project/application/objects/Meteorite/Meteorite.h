@@ -2,10 +2,13 @@
 
 #include "3d/entityController/EntityController.h"
 
+#include "VFX/particle/emitterController/EmitterController.h"
+
 #include <optional>
 
 class Earth;
 class FragmentManager;
+class DamagePieceManager;
 class Player;
 
 class Meteorite : public EntityController {
@@ -26,6 +29,8 @@ public:
 
 	void SetFragmentManager(FragmentManager* fragmentManager);
 
+	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
+
 	bool GetIsAlive()const;
 
 	// 更新
@@ -43,7 +48,38 @@ public:
 	void BreakInitialize();
 	void BreakUpdate();
 
+	// 大気圏内処理
+	void Atmosphere();
+
 	void SetSpeed(float speed);
+
+	void SetPraticle(int count);
+private:
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="emitPraticle"></param> パーティクル名
+	/// <param name="emitName"></param> エミッター名
+	/// <param name="count"></param> 出現数
+	/// <param name="size"></param> 大きさ(float)
+	/// <param name="color"></param> カラー(Vector)　
+	/// <param name="emit"></param> エミッタークラス
+	void CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit);
+
+	//void EmitFragment(const Vector3& velo);
+	void EmitDust(const Vector3& pos, const Vector3& veloctiy);
+
+	void EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit);
+
+
+	static Vector3 ElementWiseMax(const Vector3& a, const Vector3& b) {
+		return Vector3((std::max)(a.x, b.x), (std::max)(a.y, b.y), (std::max)(a.z, b.z));
+	}
+
+	static Vector3 ElementWiseMin(const Vector3& a, const Vector3& b) {
+		return Vector3((std::min)(a.x, b.x), (std::min)(a.y, b.y), (std::min)(a.z, b.z));
+	}
+
 private:
 	// 
 	// パラメータ
@@ -51,7 +87,8 @@ private:
 
 	// 速度
 	float speed_ = 0.001f;
-
+	// 
+	Vector3 velocity_{};
 	// ふるまい管理変数
 	// 現在のふるまい
 	Behavior behavior_ = Behavior::kRoot;
@@ -63,6 +100,10 @@ private:
 
 	// HP
 	float hp_ = 3;
+
+	// 
+	float damagePieceTime_ = 0;
+	const float kDamagePieceTime_ = 1.0f;
 
 
 
@@ -81,6 +122,11 @@ private:
 
 	//
 	float damege_;
+	// 大気圏範囲
+	float atmosphereRenge = 10.0f;
+
+	// 番号
+	uint32_t particleNumber_ = 0;
 
 private:
 	Earth* earth_ = nullptr;
@@ -88,4 +134,19 @@ private:
 	Player* player_ = nullptr;
 
 	FragmentManager* fragmentManager_ = nullptr;
+	DamagePieceManager* damagePieceManager_ = nullptr;
+
+	std::unique_ptr<EmitterController> emitter_;
+	std::unique_ptr<EmitterController> emitterDust_;
+
+	std::unique_ptr<EmitterController> emitterExplosionFire_;
+	std::unique_ptr<EmitterController> emitterExplosionFireYellow_;
+	std::unique_ptr<EmitterController> emitterExplosionDust_;
+
+
+	std::unique_ptr<EmitterController> emitterDustRed_; // 赤
+	std::unique_ptr<EmitterController> emitterDustYellow_; // 黄色
+	std::unique_ptr<EmitterController> emitterDustGray_; // 灰色
+	std::unique_ptr<EmitterController> emitterDustBlack_; // 黒っぽい色
+
 };
