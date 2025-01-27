@@ -11,16 +11,25 @@ class Earth;
 class Player;
 class FragmentManager;
 
+enum class MeteoritePopPlace {
+	LeftTop,
+	LeftBottom,
+	RightBottom,
+	RightTop,
+};
+
 // 隕石マネージャ
 class MeteoriteManager {
 public:
-	void Initialize(Earth* earth, Player* player,FragmentManager* fragmentManager);
+	void Initialize(Earth* earth, Player* player, FragmentManager* fragmentManager);
 
 	void Update();
 
-	void AddMeteorite();
+	void AddMeteorite(const Vector3& popTranslate);
 
 	void AddColliderList();
+
+	void PopMateorites();
 
 private:
 
@@ -31,26 +40,27 @@ private:
 	// データグループ名の定数
 	const std::string kParamaterString_ = "MeteoriteParamater";
 
-	// 隕石生成スケール
-	Vector3	kMeteritePopScale_ = { 1.0f,1.0f,1.0f };
-
-	// 隕石生成回転量
-	Vector3 kMeteritePopRotate_ = { 0.0f,0.0f,0.0f };
-
-	// 隕石生成トランスレート
-	Vector3 kMeteritePopTranslate_ = { 3.0f,3.0f,0.0f };
-
 	float speed_ = 0.0f;
 
 	// 隕石リスト
 	std::list<std::unique_ptr<Meteorite>> meteorites_;
 
-	// ひとまず隕石生成地点
-	EulerTransform3D meteoritePopTransform_{
-		{1.0f,1.0f,1.0f}, // S
-		{0.0f,0.0f,0.0f}, // R
-		{0.0f,0.0f,0.0f}  // T
-	};
+	// 沸く場所の列挙型
+	MeteoritePopPlace popPlace_ = MeteoritePopPlace::RightBottom;
+
+	// 沸く場所
+	std::array<Vector3, 4> popPosition_;
+
+	// 一度に沸く数
+	int32_t popNum_ = 1;
+
+	int32_t popTimer_ = 0;
+
+	int32_t popIntervalTime_ = 900;
+
+	uint32_t currentSerialNumber_ = 0;
+
+	int count = 0;
 
 private:
 	// 地球クラスのインスタンスを受け取る

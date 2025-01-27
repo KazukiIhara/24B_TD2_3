@@ -8,7 +8,7 @@
 class Earth;
 class Player;
 
-enum PopPlace {
+enum class FragmentPopPlace {
 	Top,
 	LeftTop,
 	Left,
@@ -35,11 +35,9 @@ public:
 
 	void PopFragments();
 
-	void SwitchPopPosition();
-
 private:
 	// 沸く場所の種類
-	PopPlace popPlace_ = PopPlace::Top;
+	FragmentPopPlace popPlace_ = FragmentPopPlace::Top;
 
 	// 沸く場所
 	std::array<Vector3, 8> popPosition_;
