@@ -76,6 +76,10 @@ void EntityController::SetColliderTranslate(const Vector3& colliderTranslate) {
 	entity_->GetCollider()->SetTranslate(colliderTranslate);
 }
 
+void EntityController::SetShinness(float shinness) {
+	entity_->SetShininess(shinness);
+}
+
 const Vector3& EntityController::GetScale() const {
 	return entity_->GetScale();
 }

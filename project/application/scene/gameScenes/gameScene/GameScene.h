@@ -39,6 +39,12 @@ public:
 private:
 
 	//
+	// forDebug
+	//
+
+	std::unique_ptr<EntityController> plane_ = nullptr;
+
+	//
 	// Object
 	//
 
