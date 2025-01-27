@@ -23,11 +23,11 @@ void GameScene::Initialize() {
 	plane_->SetRotateY(std::numbers::pi_v<float>);
 	plane_->SetScale(100.0f);
 	plane_->SetShinness(0.0f);*/
-	
+
 
 	//破片破損モデル
-	SUGER::CreateEntity("DamagePiece", "DamagePiece",{-100,0,0});
-	SUGER::CreateEntity("DamagePiece2", "DamagePiece2",{-100, 0, 0});
+	SUGER::CreateEntity("DamagePiece", "DamagePiece", { -100,0,0 });
+	SUGER::CreateEntity("DamagePiece2", "DamagePiece2", { -100, 0, 0 });
 
 	//
 	// 天球の初期化処理
@@ -70,17 +70,16 @@ void GameScene::Initialize() {
 	light_->GetPunctualLight().pointLight.color = { 1.0f,1.0f,0.0f,1.0f };
 	light_->GetPunctualLight().pointLight.radius = 10.0f;
 
-	SpotLightForGPU& spotLight = light_->GetPunctualLight().spotLight;
 
-	spotLight.color = { 1.0f,1.0f,0.0f,1.0f };
-	spotLight.position = sceneCamera_->GetWorldPos();
+	light_->GetPunctualLight().spotLight.color = { 1.0f,1.0f,0.0f,1.0f };
+	light_->GetPunctualLight().spotLight.position = sceneCamera_->GetWorldPos();
 
-	spotLight.direction = Normalize(sceneCamera_->GetWorldPos() - player_->GetTranslate());
-	spotLight.intensity = 4.0f;
-	spotLight.decay = 3.0f;
-	spotLight.distance = 100.0f;
-	spotLight.cosAngle = 1.0f;
-	spotLight.cosFalloffStart = 0.99f;
+	light_->GetPunctualLight().spotLight.direction = Normalize(player_->GetTranslate() - sceneCamera_->GetWorldPos());
+	light_->GetPunctualLight().spotLight.intensity = 4.0f;
+	light_->GetPunctualLight().spotLight.decay = 3.0f;
+	light_->GetPunctualLight().spotLight.distance = 100.0f;
+	light_->GetPunctualLight().spotLight.cosAngle = 1.0f;
+	light_->GetPunctualLight().spotLight.cosFalloffStart = 0.99f;
 
 	// 
 	// かけらマネージャの初期化処理
