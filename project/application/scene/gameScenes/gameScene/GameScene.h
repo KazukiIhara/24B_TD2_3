@@ -29,6 +29,8 @@ public:
 	void SceneStatePlayInitialize()override;
 	// プレイフェーズ更新
 	void SceneStatePlayUpdate()override;
+	// フェードアウト終了時
+	void SceneStateFadeOutUpdate()override;
 
 	std::array<int32_t, 3> SplitDigits(int32_t number);
 

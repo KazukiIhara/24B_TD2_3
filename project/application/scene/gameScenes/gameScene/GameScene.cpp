@@ -159,6 +159,11 @@ void GameScene::SceneStatePlayUpdate() {
 		ChangeScene("GAME");
 	}
 
+	// ゲームオーバー確認処理
+	if (earth_->GetHp() <= 0) {
+		sceneStateRequest_ = SceneState::kFadeOut;
+	}
+
 	// シェイクテスト用
 	if (SUGER::TriggerKey(DIK_SPACE)) {
 	//	sceneCamera_->Shake(15.0f, 0.5f);
@@ -243,6 +248,16 @@ void GameScene::SceneStatePlayUpdate() {
 	meteoriteManager_->AddColliderList();
 	fragmentManager_->AddColliderList();
 	bumpManager_->AddColliderList();
+}
+
+void GameScene::SceneStateFadeOutUpdate() {
+	// フェード更新
+	fade_->Update();
+
+	if (fade_->IsFinished()) {
+		ChangeScene("TITLE");
+		fade_->Stop();
+	}
 }
 
 std::array<int32_t, 3> GameScene::SplitDigits(int32_t number) {

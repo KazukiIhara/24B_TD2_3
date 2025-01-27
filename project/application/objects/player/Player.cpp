@@ -112,22 +112,16 @@ void Player::Move() {
 void Player::MoveLimit() {
 	Vector3 translate_ = GetTranslate();
 
-	if (translate_.x < -stageWidth_ || translate_.x > stageWidth_) {
-		//acceralation_.x = 0;
-		velocity_.x = 0;
+	if (translate_.x > stageWidth_ ||
+		translate_.x < -stageWidth_) {
+		velocity_.x = 0.0f;
 	}
-	if (translate_.y < -stageHeight_ || translate_.y > stageHeight_) {
-		velocity_.y = 0;
-		//acceralation_.y = 0;
+	if (translate_.y > stageHeight_ ||
+		translate_.y < -stageHeight_) {
+		velocity_.y = 0.0f;
 	}
-
-
 	translate_.x = std::clamp(translate_.x, -stageWidth_, stageWidth_);
 	translate_.y = std::clamp(translate_.y, -stageHeight_, stageHeight_);
-
-	
-
-
 
 	SetTranslate(translate_);
 }
@@ -226,8 +220,7 @@ void Player::OnCollision(Collider* other) {
 
 }
 
-Vector3 Player::RotatePosition(const Vector3& position, float angle)
-{
+Vector3 Player::RotatePosition(const Vector3& position, float angle) {
 	float radians = angle;// * (3.1415926535f / 180.0f); // 度数法からラジアンへの変換
 	float cosAngle = cos(radians);
 	float sinAngle = sin(radians);

@@ -113,9 +113,9 @@ void Earth::MoveLimit() {
 }
 
 void Earth::UpdateLifeState() {
-	if (HP_ <= 0) {
+	if (HP_ <= 0.0f) {
 		isAlive_ = false;
-
+		HP_ = 0.0f;
 	}
 }
 
