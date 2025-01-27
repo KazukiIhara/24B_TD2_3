@@ -105,7 +105,7 @@ void GameScene::Initialize() {
 	bumpManager_->Initialize();
 	bumpManager_->SetPlayer(player_.get());
 	bumpManager_->SetEarth(earth_.get());
-	// 
+	
 	player_->SetBumpManager(bumpManager_.get());
 
 
@@ -186,6 +186,8 @@ void GameScene::SceneStatePlayUpdate() {
 #ifdef _DEBUG
 	ImGui::Begin("GameScene");
 	ImGui::Text("Restart :R");
+	ImGui::Text("CurrentDays: %u", currentDays_);
+	ImGui::Text("CurrentYears: %u", currentYears_);
 	ImGui::End();
 
 	earthUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosX");
@@ -232,7 +234,8 @@ void GameScene::SceneStatePlayUpdate() {
 		//	sceneCamera_->Shake(15.0f, 0.5f);
 	}
 
-
+	// スコア用のタイマー更新
+	scoreTimer_++;
 
 	// 地球の更新
 	earth_->Update();
@@ -247,8 +250,13 @@ void GameScene::SceneStatePlayUpdate() {
 	}
 
 	// 経過日数を加算
-	if (std::fmod(earth_->GetRotate().y, std::numbers::pi_v<float>*2.0f) == 0.0f) {
-
+	if (scoreTimer_ == earth_->GetAroundFrame() / 10.0f) {
+		currentDays_++;
+		scoreTimer_ = 0.0f;
+	}
+	if (currentDays_ == 365) {
+		currentYears_++;
+		currentDays_ = 0;
 	}
 
 	// ライトの座標

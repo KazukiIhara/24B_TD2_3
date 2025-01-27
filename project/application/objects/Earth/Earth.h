@@ -38,6 +38,8 @@ public:
 
 	int GetHitLevel() { return objectHitLevel; }
 
+	float GetAroundFrame() const;
+
 private:
 	/// <summary>
 	/// 
@@ -71,6 +73,10 @@ private:
 
 
 private:
+
+	// 一周するフレーム
+	const float aroundFrame_ = 300.0f;
+
 	Vector3 velocity_{};
 
 	// 移動できる範囲
