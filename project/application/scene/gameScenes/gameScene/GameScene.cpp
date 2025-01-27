@@ -116,6 +116,7 @@ void GameScene::Initialize() {
 	SUGER::CreateParticle("fragmentParticle", ParticleType::kPlane, "dust.png");
 	SUGER::CreateParticle("earthDustParticle", ParticleType::kPlane, "dust.png");
 	SUGER::CreateParticle("explosionDustParticle", ParticleType::kPlane, "dust.png");
+	SUGER::CreateParticle("bumpParticle", ParticleType::kPlane, "circle.png");
 
 
 	earth_->SetPraticle();

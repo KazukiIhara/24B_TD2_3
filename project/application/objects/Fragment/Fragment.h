@@ -77,6 +77,9 @@ private:
 	static Vector3 ElementWiseMin(const Vector3& a, const Vector3& b) {
 		return Vector3((std::min)(a.x, b.x), (std::min)(a.y, b.y), (std::min)(a.z, b.z));
 	}
+
+	void BumpHitEffect();
+
 public: // ゲッター
 	bool GetAlive() const { return isAlive_; };
 
@@ -118,6 +121,11 @@ private:
 
 	// 大気圏範囲
 	float atmosphereRenge = 10.0f;
+
+	bool isBumpHit = false;
+	float effectTimer = 0.0f;
+	float kEffectTimer = 1.5f;
+
 private:
 	Earth* earth_ = nullptr;
 
