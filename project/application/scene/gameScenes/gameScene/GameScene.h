@@ -15,6 +15,8 @@
 #include "system/MeteoriteManager/MeteoriteManager.h"
 #include "system/FragmentManager/FragmentManager.h"
 #include "system/BumpManager/BumpManager.h"
+#include "system/DamagePieceManager/DamagePieceManager.h"
+ 
 
 class GameScene :public BaseScene {
 public:
@@ -54,6 +56,8 @@ private:
 	std::unique_ptr<FragmentManager> fragmentManager_ = nullptr;
 	// たんこぶマネージャー
 	std::unique_ptr<BumpManager> bumpManager_ = nullptr;
+	// ダメージ破片
+	std::unique_ptr<DamagePieceManager> damagePieceManager_ = nullptr;
 
 	//
 	// スプライト

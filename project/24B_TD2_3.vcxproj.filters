@@ -410,6 +410,8 @@
     <ClCompile Include="application\scene\gameScenes\resultScene\ResultScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\titleScene\TitleScene.cpp" />
     <ClCompile Include="application\objects\Skydome\Skydome.cpp" />
+    <ClCompile Include="application\objects\DamagePiece\DamagePiece.cpp" />
+    <ClCompile Include="application\system\DamagePieceManager\DamagePieceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -632,6 +634,8 @@
     <ClInclude Include="application\scene\gameScenes\resultScene\ResultScene.h" />
     <ClInclude Include="application\scene\gameScenes\titleScene\TitleScene.h" />
     <ClInclude Include="application\objects\Skydome\Skydome.h" />
+    <ClInclude Include="application\objects\DamagePiece\DamagePiece.h" />
+    <ClInclude Include="application\system\DamagePieceManager\DamagePieceManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

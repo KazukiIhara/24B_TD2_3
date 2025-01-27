@@ -7,14 +7,15 @@
 
 #include "random/Random.h"
 
-void MeteoriteManager::Initialize(Earth* earth, Player* player, FragmentManager* fragmentManager) {
+void MeteoriteManager::Initialize(Earth* earth, Player* player, FragmentManager* fragmentManager, DamagePieceManager* damagePieceManager) {
 	assert(earth);
 	assert(player);
 	assert(fragmentManager);
+	assert(damagePieceManager);
 	earth_ = earth;
 	player_ = player;
 	fragmentManager_ = fragmentManager;
-
+	damagePieceManager_ = damagePieceManager;
 
 	// コンテナをクリア
 	meteorites_.clear();
@@ -65,12 +66,18 @@ void MeteoriteManager::AddMeteorite(const Vector3& popTranslate) {
 	newMeteorite->SetEarth(earth_);
 	newMeteorite->SetPlayer(player_);
 	newMeteorite->SetFragmentManager(fragmentManager_);
+	newMeteorite->SetDamagePieceManager(damagePieceManager_);
 	newMeteorite->CreateCollider(ColliderCategory::Meteorite, kSphere, 3.5f);
+	//newMeteorite->
 
 	newMeteorite->GetCollider()->SetMass(20000.0f);
+	newMeteorite->SetPraticle(currentSerialNumber_);
+	newMeteorite->UpdateWorldTransform();
 
 	// 追加
 	meteorites_.push_back(std::move(newMeteorite));
+
+	currentSerialNumber_++;
 }
 
 void MeteoriteManager::AddColliderList() {

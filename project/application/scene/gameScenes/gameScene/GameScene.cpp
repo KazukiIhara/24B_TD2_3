@@ -11,6 +11,10 @@ void GameScene::Initialize() {
 	// レベルデータをシーンにインポート
 	levelDataImporter_.Import("GameScene");
 
+	//破片破損モデル
+	SUGER::CreateEntity("DamagePiece", "DamagePiece",{-100,0,0});
+	SUGER::CreateEntity("DamagePiece2", "DamagePiece2",{-100, 0, 0});
+
 	//
 	// 天球の初期化処理
 	//
@@ -20,6 +24,12 @@ void GameScene::Initialize() {
 	skydome_->SetEnableLight(false);
 	skydome_->SetScale(100.0f);
 	skydome_->GetUVTransform().scale = { 10.0f,10.0f };
+
+	//
+	//
+	//
+	damagePieceManager_ = std::make_unique<DamagePieceManager>();
+	damagePieceManager_->Initialize();
 
 	// 
 	// 地球の初期化処理
@@ -54,7 +64,7 @@ void GameScene::Initialize() {
 	// 
 
 	meteoriteManager_ = std::make_unique<MeteoriteManager>();
-	meteoriteManager_->Initialize(earth_.get(), player_.get(), fragmentManager_.get());
+	meteoriteManager_->Initialize(earth_.get(), player_.get(), fragmentManager_.get(), damagePieceManager_.get());
 
 
 	//
@@ -75,6 +85,7 @@ void GameScene::Initialize() {
 	//SUGER::CreateParticle("fragmentParticle", ParticleType::kModel,"Fragment");
 	SUGER::CreateParticle("fragmentParticle", ParticleType::kPlane, "dust.png");
 	SUGER::CreateParticle("earthDustParticle", ParticleType::kPlane, "dust.png");
+	SUGER::CreateParticle("explosionDustParticle", ParticleType::kPlane, "dust.png");
 
 
 	earth_->SetPraticle();
@@ -197,6 +208,8 @@ void GameScene::SceneStatePlayUpdate() {
 	// かけらマネージャの更新
 	fragmentManager_->Update();
 
+	// ダメージ破片の更新
+	damagePieceManager_->Update();
 
 	// 天球の更新
 	skydome_->Update();

@@ -110,6 +110,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClCompile Include="application\myGame\MyGame.cpp" />
     <ClCompile Include="application\objects\bump\Bump.cpp" />
+    <ClCompile Include="application\objects\DamagePiece\DamagePiece.cpp" />
     <ClCompile Include="application\objects\Earth\Earth.cpp" />
     <ClCompile Include="application\objects\Fragment\Fragment.cpp" />
     <ClCompile Include="application\objects\Meteorite\Meteorite.cpp" />
@@ -124,6 +125,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\scene\gameScenes\sample\SampleScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\titleScene\TitleScene.cpp" />
     <ClCompile Include="application\system\BumpManager\BumpManager.cpp" />
+    <ClCompile Include="application\system\DamagePieceManager\DamagePieceManager.cpp" />
     <ClCompile Include="application\system\FragmentManager\FragmentManager.cpp" />
     <ClCompile Include="application\system\MeteoriteManager\MeteoriteManager.cpp" />
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
@@ -206,6 +208,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\colliderCategory\ColliderCategory.h" />
     <ClInclude Include="application\myGame\MyGame.h" />
     <ClInclude Include="application\objects\bump\Bump.h" />
+    <ClInclude Include="application\objects\DamagePiece\DamagePiece.h" />
     <ClInclude Include="application\objects\Earth\Earth.h" />
     <ClInclude Include="application\objects\Fragment\Fragment.h" />
     <ClInclude Include="application\objects\Meteorite\Meteorite.h" />
@@ -220,6 +223,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\scene\gameScenes\sample\SampleScene.h" />
     <ClInclude Include="application\scene\gameScenes\titleScene\TitleScene.h" />
     <ClInclude Include="application\system\BumpManager\BumpManager.h" />
+    <ClInclude Include="application\system\DamagePieceManager\DamagePieceManager.h" />
     <ClInclude Include="application\system\FragmentManager\FragmentManager.h" />
     <ClInclude Include="application\system\MeteoriteManager\MeteoriteManager.h" />
     <ClInclude Include="Engine\3d\lineController\LineController.h" />

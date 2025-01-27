@@ -278,7 +278,7 @@ void Model::LoadModel(const std::string& filename, const std::string& directoryP
 
 			// 頂点解析
 			for (uint32_t vertexIndex = 0; vertexIndex < mesh->mNumVertices; ++vertexIndex) {
-				aiVector3D& position = mesh->mVertices[vertexIndex];
+ 				aiVector3D& position = mesh->mVertices[vertexIndex];
 				aiVector3D& normal = mesh->mNormals[vertexIndex];
 				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
 

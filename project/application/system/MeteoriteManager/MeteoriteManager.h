@@ -10,6 +10,7 @@
 class Earth;
 class Player;
 class FragmentManager;
+class DamagePieceManager;
 
 enum class MeteoritePopPlace {
 	LeftTop,
@@ -21,7 +22,7 @@ enum class MeteoritePopPlace {
 // 隕石マネージャ
 class MeteoriteManager {
 public:
-	void Initialize(Earth* earth, Player* player, FragmentManager* fragmentManager);
+	void Initialize(Earth* earth, Player* player, FragmentManager* fragmentManager, DamagePieceManager* damagePieceManager);
 
 	void Update();
 
@@ -69,4 +70,5 @@ private:
 	Player* player_ = nullptr;
 	// かけらマネージャのインスタンスを受け取る
 	FragmentManager* fragmentManager_ = nullptr;
+	DamagePieceManager* damagePieceManager_ = nullptr;
 };
