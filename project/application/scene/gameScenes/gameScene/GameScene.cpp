@@ -105,7 +105,7 @@ void GameScene::Initialize() {
 	bumpManager_->Initialize();
 	bumpManager_->SetPlayer(player_.get());
 	bumpManager_->SetEarth(earth_.get());
-	
+
 	player_->SetBumpManager(bumpManager_.get());
 
 
@@ -171,6 +171,58 @@ void GameScene::Initialize() {
 		earthHpNumUI_[i]->SetLeftTop(Vector2(earthHpNum_[i] * numberTextureSize_.x, 0.0f));
 	}
 
+	//
+	// 日数表示
+	//
+
+	for (uint32_t i = 0; i < 3; i++) {
+		currentDaysNumUI_[i] = std::make_unique<Object2DController>();
+		currentDaysNumUI_[i]->Initialize(SUGER::Create2DObject("0_currentDays", "Number/Number_x128y192.png"));
+		currentDaysNumUI_[i]->SetCutOutSize(numberTextureSize_);
+		currentDaysNumUI_[i]->SetSize(numberTextureSize_ / 2.0f);
+	}
+
+	SUGER::AddGrobalDataItem("UI", "CurrentDaysNumPosX", currentDaysPosition_.x);
+	SUGER::AddGrobalDataItem("UI", "CurrentDaysNumPosY", currentDaysPosition_.y);
+
+	currentDaysPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "CurrentDaysNumPosX");
+	currentDaysPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "CurrentDaysNumPosY");
+
+	currentDaysNumUI_[0]->SetPosition(currentDaysPosition_ - Vector2(numGap_, 0.0f));
+	currentDaysNumUI_[1]->SetPosition(currentDaysPosition_);
+	currentDaysNumUI_[2]->SetPosition(currentDaysPosition_ + Vector2(numGap_, 0.0f));
+
+	// 描画フラグ初期化
+	currentDaysNumUI_[0]->SetIsActive(false);
+	currentDaysNumUI_[1]->SetIsActive(false);
+	currentDaysNumUI_[2]->SetIsActive(true);
+
+	//
+	// 年数表示
+	//
+
+	for (uint32_t i = 0; i < 3; i++) {
+		currentYearsNumUI_[i] = std::make_unique<Object2DController>();
+		currentYearsNumUI_[i]->Initialize(SUGER::Create2DObject("0_currentYears", "Number/Number_x128y192.png"));
+		currentYearsNumUI_[i]->SetCutOutSize(numberTextureSize_);
+		currentYearsNumUI_[i]->SetSize(numberTextureSize_ / 2.0f);
+	}
+
+	SUGER::AddGrobalDataItem("UI", "CurrentYearsNumPosX", currentYearsPosition_.x);
+	SUGER::AddGrobalDataItem("UI", "CurrentYearsNumPosY", currentYearsPosition_.y);
+
+	currentYearsPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "CurrentYearsNumPosX");
+	currentYearsPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "CurrentYearsNumPosY");
+
+	currentYearsNumUI_[0]->SetPosition(currentYearsPosition_ - Vector2(numGap_, 0.0f));
+	currentYearsNumUI_[1]->SetPosition(currentYearsPosition_);
+	currentYearsNumUI_[2]->SetPosition(currentYearsPosition_ + Vector2(numGap_, 0.0f));
+
+	// 描画フラグ初期化
+	currentYearsNumUI_[0]->SetIsActive(false);
+	currentYearsNumUI_[1]->SetIsActive(false);
+	currentYearsNumUI_[2]->SetIsActive(true);
+
 }
 
 void GameScene::Finalize() {
@@ -195,6 +247,12 @@ void GameScene::SceneStatePlayUpdate() {
 
 	earthHpNumUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUINumPosX");
 	earthHpNumUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUINumPosY");
+
+	currentDaysPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "CurrentDaysNumPosX");
+	currentDaysPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "CurrentDaysNumPosY");
+
+	currentYearsPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "CurrentYearsNumPosX");
+	currentYearsPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "CurrentYearsNumPosY");
 
 #endif // DEBUG
 
@@ -284,6 +342,10 @@ void GameScene::SceneStatePlayUpdate() {
 	skydome_->Update();
 
 
+	// 
+	// 地球UI
+	// 
+
 	for (uint32_t i = 0; i < 4; i++) {
 		earthHPUI_[i]->SetPosition(earthUIPosition_);
 	}
@@ -298,9 +360,15 @@ void GameScene::SceneStatePlayUpdate() {
 		earthHPUI_[2]->SetIsActive(false);
 	}
 
-	if (earth_->GetHp() < 100.0f) {
+	if (earth_->GetHp() < 10.0f) {
+		earthHpNumUI_[1]->SetIsActive(false);
+	} else if (earth_->GetHp() < 100.0f) {
 		earthHpNumUI_[0]->SetIsActive(false);
 	}
+
+	// 
+	// 地球HPUI
+	// 
 
 	// UIのポジションを決定
 	earthHpNumUI_[0]->SetPosition(earthHpNumUIPosition_ - Vector2(numGap_, 0.0f));
@@ -313,6 +381,70 @@ void GameScene::SceneStatePlayUpdate() {
 	for (uint32_t i = 0; i < 3; i++) {
 		earthHpNumUI_[i]->SetLeftTop(Vector2(earthHpNum_[i] * numberTextureSize_.x, 0.0f));
 	}
+
+
+	// 
+	// スコアUI 日数編
+	// 
+
+	// 日数によって桁を描画するかどうかの処理
+	if (currentDays_ < 10) {
+		currentDaysNumUI_[0]->SetIsActive(false);
+		currentDaysNumUI_[1]->SetIsActive(false);
+		currentDaysNumUI_[2]->SetIsActive(true);
+	} else if (currentDays_ < 100) {
+		currentDaysNumUI_[0]->SetIsActive(false);
+		currentDaysNumUI_[1]->SetIsActive(true);
+		currentDaysNumUI_[2]->SetIsActive(true);
+	} else {
+		currentDaysNumUI_[0]->SetIsActive(true);
+		currentDaysNumUI_[1]->SetIsActive(true);
+		currentDaysNumUI_[2]->SetIsActive(true);
+	}
+
+	// ポジションをセット
+	currentDaysNumUI_[0]->SetPosition(currentDaysPosition_ - Vector2(numGap_, 0.0f));
+	currentDaysNumUI_[1]->SetPosition(currentDaysPosition_);
+	currentDaysNumUI_[2]->SetPosition(currentDaysPosition_ + Vector2(numGap_, 0.0f));
+
+	// 数字分割処理
+	currentDaysNum_ = SplitDigits(currentDays_);
+	// 分割した数字をもとにずらして描画
+	for (uint32_t i = 0; i < 3; i++) {
+		currentDaysNumUI_[i]->SetLeftTop(Vector2(currentDaysNum_[i] * numberTextureSize_.x, 0.0f));
+	}
+
+	//
+	// スコアUI 年数編
+	//
+
+	// 日数によって桁を描画するかどうかの処理
+	if (currentYears_ < 10) {
+		currentYearsNumUI_[0]->SetIsActive(false);
+		currentYearsNumUI_[1]->SetIsActive(false);
+		currentYearsNumUI_[2]->SetIsActive(true);
+	} else if (currentYears_ < 100) {
+		currentYearsNumUI_[0]->SetIsActive(false);
+		currentYearsNumUI_[1]->SetIsActive(true);
+		currentYearsNumUI_[2]->SetIsActive(true);
+	} else {
+		currentYearsNumUI_[0]->SetIsActive(true);
+		currentYearsNumUI_[1]->SetIsActive(true);
+		currentYearsNumUI_[2]->SetIsActive(true);
+	}
+
+	// ポジションをセット
+	currentYearsNumUI_[0]->SetPosition(currentYearsPosition_ - Vector2(numGap_, 0.0f));
+	currentYearsNumUI_[1]->SetPosition(currentYearsPosition_);
+	currentYearsNumUI_[2]->SetPosition(currentYearsPosition_ + Vector2(numGap_, 0.0f));
+
+	// 数字分割処理
+	currentYearsNum_ = SplitDigits(currentYears_);
+	// 分割した数字をもとにずらして描画
+	for (uint32_t i = 0; i < 3; i++) {
+		currentYearsNumUI_[i]->SetLeftTop(Vector2(currentYearsNum_[i] * numberTextureSize_.x, 0.0f));
+	}
+
 
 	//
 	// コライダーの処理ここから

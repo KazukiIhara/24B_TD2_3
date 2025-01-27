@@ -75,7 +75,7 @@ void Earth::OnCollision(Collider* other) {
 
 			EmitDust(normal, normal);
 
-			HP_ -= 1;
+			HP_ -= 5;
 			isObjectHit = true;
 			objectHitLevel = 1;
 			break;

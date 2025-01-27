@@ -40,11 +40,6 @@ private:
 	// 日数加算用タイマー
 	float scoreTimer_ = 0.0f;
 
-	// 経過日数
-	uint32_t currentDays_ = 0;
-	// 経過年数
-	uint32_t currentYears_ = 0;
-
 	//
 	// forDebug
 	//
@@ -86,5 +81,19 @@ private:
 	Vector2 numberTextureSize_ = { 128.0f,192.0f };
 	float numGap_ = 64.0f;
 
-};
 
+	// 経過日数UI
+	std::array<std::unique_ptr<Object2DController>, 3> currentDaysNumUI_;
+	std::array<int32_t, 3> currentDaysNum_;
+	Vector2 currentDaysPosition_{ 0.0f,0.0f };
+
+	// 経過年数UI
+	std::array<std::unique_ptr<Object2DController>, 3> currentYearsNumUI_;
+	std::array<int32_t, 3> currentYearsNum_;
+	Vector2 currentYearsPosition_{ 0.0f,0.0f };
+
+	// 経過日数
+	uint32_t currentDays_ = 0;
+	// 経過年数
+	uint32_t currentYears_ = 0;
+};
