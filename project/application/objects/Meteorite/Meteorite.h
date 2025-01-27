@@ -64,9 +64,13 @@ private:
 	/// <param name="size"></param> 大きさ(float)
 	/// <param name="color"></param> カラー(Vector)　
 	/// <param name="emit"></param> エミッタークラス
-	void CreateEmit(const std::string emitPraticle, const std::string emitName, int count, float size, Vector3 color, EmitterController* emit);
+	void CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit);
 
 	//void EmitFragment(const Vector3& velo);
+	void EmitDust(const Vector3& pos, const Vector3& veloctiy);
+
+	void EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit);
+
 
 	static Vector3 ElementWiseMax(const Vector3& a, const Vector3& b) {
 		return Vector3((std::max)(a.x, b.x), (std::max)(a.y, b.y), (std::max)(a.z, b.z));
@@ -138,4 +142,11 @@ private:
 	std::unique_ptr<EmitterController> emitterExplosionFire_;
 	std::unique_ptr<EmitterController> emitterExplosionFireYellow_;
 	std::unique_ptr<EmitterController> emitterExplosionDust_;
+
+
+	std::unique_ptr<EmitterController> emitterDustRed_; // 赤
+	std::unique_ptr<EmitterController> emitterDustYellow_; // 黄色
+	std::unique_ptr<EmitterController> emitterDustGray_; // 灰色
+	std::unique_ptr<EmitterController> emitterDustBlack_; // 黒っぽい色
+
 };

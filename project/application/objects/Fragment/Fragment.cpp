@@ -67,7 +67,23 @@ void Fragment::OnCollision(Collider* other) {
 
 		HP_ -= 3;
 
+
 		EmitFragment(velocity_);
+
+
+		emitter_->SetMaxSize(1.8f);
+		emitter_->SetMinSize(1.8f);
+		emitter_->SetCount(10);
+		emitter_->SetMaxVelocity({});
+		emitter_->SetMinVelocity({});
+		emitterDust_->SetMaxSize(2.0f);
+		emitterDust_->SetMinSize(2.0f);
+		emitterDust_->SetCount(10);
+		emitterDust_->SetMaxVelocity({});
+		emitterDust_->SetMinVelocity({});
+
+		emitter_->Emit();
+		emitterDust_->Emit();
 		break;
 	case ColliderCategory::Earth:
 		HP_ -= 3;
@@ -169,9 +185,14 @@ void Fragment::Atmosphere()
 		Vector3 minVelo = ElementWiseMin(min, max);
 
 		  
-
+		emitter_->SetMaxSize(0.8f);
+		emitter_->SetMinSize(0.8f);
+		emitter_->SetCount(1);
 		emitter_->SetMaxVelocity(maxVelo);
 		emitter_->SetMinVelocity(minVelo);
+		emitterDust_->SetMaxSize(1.0f);
+		emitterDust_->SetMinSize(1.0f);
+		emitterDust_->SetCount(1);
 		emitterDust_->SetMaxVelocity(maxVelo);
 		emitterDust_->SetMinVelocity(minVelo);
 		
