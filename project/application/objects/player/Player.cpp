@@ -29,6 +29,8 @@ void Player::Update() {
 	ImGui::Begin("PlayerOperation");
 	ImGui::Text("MOVE: WASD");
 	ImGui::Text("ROTATE: JK");
+	ImGui::InputFloat3("velocity", &velocity_.x);
+	ImGui::InputFloat3("acceralation", &acceralation_.x);
 	ImGui::End();
 #endif // =DEBUG
 
@@ -109,6 +111,7 @@ void Player::Move() {
 
 void Player::MoveLimit() {
 	Vector3 translate_ = GetTranslate();
+
 	if (translate_.x > stageWidth_ ||
 		translate_.x < -stageWidth_) {
 		velocity_.x = 0.0f;

@@ -9,6 +9,8 @@ void Earth::Initialize(const std::string& name) {
 
 	inclinationRadian_ = DegreesToRadians(inclination_);
 	SetRotate(Vector3(0.0f, 0.0f, -inclinationRadian_));
+
+	
 }
 
 void Earth::Update() {
@@ -48,6 +50,7 @@ void Earth::OnCollision(Collider* other) {
 	// カテゴリごとに衝突判定を書く
 	float earthMass{};
 	float playerMass{};
+	float fragmentMass{};
 	switch (category) {
 	case ColliderCategory::Player:
 	{
@@ -62,7 +65,19 @@ void Earth::OnCollision(Collider* other) {
 	}
 	break;
 	case ColliderCategory::Fragment:
+		earthMass = GetCollider()->GetMass();
+		Vector3 earthVelocity = GetCollider()->GetVelocity();
+		fragmentMass = other->GetMass();
+		Vector3 fragmentVelocity = other->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
+
+		
+		EmitDust(normal, normal);
+
 		HP_ -= 1;
+		isObjectHit = true;
+		objectHitLevel = 1;
 		break;
 	case ColliderCategory::Meteorite:
 	{
@@ -74,6 +89,12 @@ void Earth::OnCollision(Collider* other) {
 		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
 		velocity_ = velocity;
 		returnMoveTimer_ = kReturnMoveTime_;
+
+
+		EmitDust(normal, normal);
+
+		isObjectHit = true;
+		objectHitLevel = 2;
 	}
 	HP_ -= 25;
 	break;
@@ -100,6 +121,93 @@ void Earth::UpdateLifeState() {
 
 float& Earth::GetHp() {
 	return HP_;
+}
+
+void Earth::SetPraticle()
+{
+	emitterDustRed_ = std::make_unique<EmitterController>();
+	emitterDustYellow_ = std::make_unique<EmitterController>();
+	emitterDustGray_ = std::make_unique<EmitterController>();
+	emitterDustBlack_ = std::make_unique<EmitterController>();
+	CreateEmit("earthDustParticle", "earthDustFire", 10, 1.0f, { 0.75f, 1.5f}, { 1, 0, 0 }, emitterDustRed_.get());
+	CreateEmit("earthDustParticle", "earthDustFire2", 10, 0.7f, { 1.0f, 1.5f }, { 1, 1, 0 }, emitterDustYellow_.get());
+	CreateEmit("earthDustParticle", "earthDustFire3", 55, 0.7f, { 1.5f, 2.5f }, { 0.412f, 0.412f, 0.412f }, emitterDustGray_.get());
+	CreateEmit("earthDustParticle", "earthDustFire4", 55, 0.7f, { 1.5f, 2.5f }, { 0.039f, 0.039f, 0.039f }, emitterDustBlack_.get());
+	
+
+}
+
+void Earth::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit)
+{
+	std::string name_ = emitName;
+	// エミッターの作成
+	SUGER::CreateEmitter(name_);
+	emit->Initialize(name_);
+	emit->SetParent(GetCollider()->GetWorldTransformPtr());
+
+	// エミッターにパーティクルをセット
+	emit->SetParticle(praticleName);
+	// エミッターの発生個数を変更
+	emit->SetCount(count);
+	// エミッターの発生タイプを設定
+	emit->SetEmitType(kRandom);
+	// 繰り返し発生オフ
+	emit->SetIsRepeat(false);
+	// 
+	emit->SetFrequency(0.01f);
+
+	// 速度
+	emit->SetMaxVelocity(Vector3(2.0f, 2.0f, 2.0f));
+	emit->SetMinVelocity(Vector3(-2.0f, -2.0f, -2.0f));
+
+	// サイズ
+	emit->SetMaxSize(size);
+	emit->SetMinSize(size);
+
+	// 生存時間
+	emit->SetMinLifeTime(lifeTime.x);
+	emit->SetMaxLifeTime(lifeTime.y);
+	
+
+	// カラー
+	emit->SetMaxColor(color);
+	emit->SetMinColor(color);
+}
+
+void Earth::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit)
+{
+	Vector3 velocity =(veloctiy);
+
+	Vector3 min = (velocity * 0.25f);
+	Vector3 max = (velocity * 2.5f);
+
+	Vector3 maxVelo = ElementWiseMax(min, max);
+	Vector3 minVelo = ElementWiseMin(min, max);
+
+	Vector3 pospos = (pos);
+
+	min = (pospos * 0.25f);
+	max = (pospos * 2.5f);
+
+	Vector3 maxPos = ElementWiseMax(-min, -max);
+	Vector3 minPos = ElementWiseMin(-min, -max);
+
+
+	
+	emit->SetMinPosition(minPos);
+	emit->SetMaxPosition(maxPos);
+
+	emit->SetMaxVelocity(maxPos);
+	emit->SetMinVelocity(minPos);
+	emit->Emit();
+}
+
+void Earth::EmitDust(const Vector3& pos, const Vector3& veloctiy)
+{
+	EmitMinMax(pos, Normalize(veloctiy) * 3, emitterDustRed_.get()); // 赤
+	EmitMinMax(pos, Normalize(veloctiy) * 2, emitterDustYellow_.get()); //黄色
+	EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterDustGray_.get());
+	EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterDustBlack_.get());
 }
 
 void Earth::ReturnPosition() {
