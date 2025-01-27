@@ -54,6 +54,8 @@ public:
 	// コライダーのトランスレートセット
 	void SetColliderTranslate(const Vector3& colliderTranslate);
 
+	// Shinnessのセット
+	void SetShinness(float shinness);
 
 	//
 	// Getter

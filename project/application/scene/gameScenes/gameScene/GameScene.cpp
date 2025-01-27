@@ -11,6 +11,18 @@ void GameScene::Initialize() {
 	// レベルデータをシーンにインポート
 	levelDataImporter_.Import("GameScene");
 
+
+	//
+	// forDebug
+	//
+
+	/*plane_ = std::make_unique<EntityController>();
+
+	plane_->Initialize(SUGER::CreateEntity("Plane", "Plane"));
+	plane_->SetRotateY(std::numbers::pi_v<float>);
+	plane_->SetScale(100.0f);
+	plane_->SetShinness(0.0f);*/
+	
 	//
 	// 天球の初期化処理
 	//
@@ -45,6 +57,18 @@ void GameScene::Initialize() {
 	light_->GetPunctualLight().pointLight.intensity = 7.0f;
 	light_->GetPunctualLight().pointLight.color = { 1.0f,1.0f,0.0f,1.0f };
 	light_->GetPunctualLight().pointLight.radius = 10.0f;
+
+	SpotLightForGPU& spotLight = light_->GetPunctualLight().spotLight;
+
+	spotLight.color = { 1.0f,1.0f,0.0f,1.0f };
+	spotLight.position = sceneCamera_->GetWorldPos();
+
+	spotLight.direction = Normalize(sceneCamera_->GetWorldPos() - player_->GetTranslate());
+	spotLight.intensity = 4.0f;
+	spotLight.decay = 3.0f;
+	spotLight.distance = 100.0f;
+	spotLight.cosAngle = 1.0f;
+	spotLight.cosFalloffStart = 0.99f;
 
 	// 
 	// かけらマネージャの初期化処理
@@ -173,6 +197,16 @@ void GameScene::SceneStatePlayUpdate() {
 	ImGui::DragFloat("radius", &pointLight.radius);
 	ImGui::DragFloat("decay", &pointLight.decay);
 	ImGui::End();
+
+	ImGui::Begin("SpotLightSetting");
+	SpotLightForGPU& spotLight = light_->GetPunctualLight().spotLight;
+	ImGui::ColorEdit3("color", &spotLight.color.x);
+	ImGui::DragFloat("intensity", &spotLight.intensity);
+	ImGui::DragFloat("decay", &spotLight.decay, 0.01f);
+	ImGui::DragFloat("cosAngle", &spotLight.cosAngle, 0.01f);
+	ImGui::DragFloat("cosFallossStart", &spotLight.cosFalloffStart, 0.01f);
+	ImGui::End();
+
 #endif // _DEBUG
 
 
@@ -202,6 +236,8 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// ライトの座標
 	light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
+	light_->GetPunctualLight().spotLight.direction = Normalize(player_->GetTranslate() - sceneCamera_->GetWorldPos());
+
 
 	// プレイヤーの更新処理
 	player_->Update();
