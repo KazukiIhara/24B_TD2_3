@@ -37,6 +37,8 @@ void Fragment::Update() {
 	Atmosphere(); // 大気圏内処理
 
 	UpdateLifeState(); // 生死処理
+
+	BumpHitEffect(); // たんこぶに当たったときの処理
 }
 
 void Fragment::OnCollision(Collider* other) {
@@ -106,7 +108,8 @@ void Fragment::OnCollision(Collider* other) {
 		// 反射の比率を固定
 		velocity_ = (velocity_ * 20) * bounceFactor;
 
-		//EmitFragment(velocity_);
+
+		isBumpHit = true;
 		break;
 	}
 }
@@ -298,6 +301,36 @@ void Fragment::EmitFragment(const Vector3& velo)
 	emitterFragment_->SetMaxVelocity(maxVelo);
 	emitterFragment_->SetMinVelocity(minVelo);
 	emitterFragment_->Emit();
+}
+
+void Fragment::BumpHitEffect()
+{
+	if (isBumpHit) {
+		effectTimer += SUGER::kDeltaTime_;
+
+		if (effectTimer < kEffectTimer) {
+			Vector3 min = -(velocity_ * 0.85f);
+			Vector3 max = -(velocity_ * 1.15f);
+
+			Vector3 maxVelo = ElementWiseMax(min, max);
+			Vector3 minVelo = ElementWiseMin(min, max);
+
+
+			emitter_->SetMaxSize(0.8f);
+			emitter_->SetMinSize(0.8f);
+			emitter_->SetCount(1);
+			emitter_->SetMaxVelocity(maxVelo);
+			emitter_->SetMinVelocity(minVelo);
+			emitterDust_->SetMaxSize(1.0f);
+			emitterDust_->SetMinSize(1.0f);
+			emitterDust_->SetCount(1);
+			emitterDust_->SetMaxVelocity(maxVelo);
+			emitterDust_->SetMinVelocity(minVelo);
+
+			emitter_->Emit();
+			emitterDust_->Emit();
+		}
+	}
 }
 
 

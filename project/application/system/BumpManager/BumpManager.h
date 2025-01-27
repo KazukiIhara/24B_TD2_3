@@ -25,7 +25,6 @@ public:
 
 	void SetEarth(Earth* earth) { earth_ = earth; }
 
-	
 private:
 	// たんこぶのリスト
 	std::list<std::unique_ptr<Bump>> bumps_;

@@ -37,7 +37,8 @@ void BumpManager::AddBump(const Vector3& popTranslate)
 	newBump->Initialize(SUGER::CreateEntity("Bump", "Bump", popTransform));
 	newBump->CreateCollider(ColliderCategory::Bump, kSphere, 0.2f);
 	newBump->SetSerialNumber(currentSerialNumber_);
-	newBump->SetScale(0.5f);
+	newBump->SetParticle(currentSerialNumber_);
+	newBump->SetScale(0.0f);
 	newBump->SetParent(player_->GetWorldTransformPtr());
 	newBump->UpdateWorldTransform();
 	// 追加
@@ -55,5 +56,7 @@ void BumpManager::AddColliderList()
 		SUGER::AddColliderList(bump.get());
 	}
 }
+
+
 
 
