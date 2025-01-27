@@ -9,14 +9,12 @@ void ResultScene::Initialize() {
 
 }
 
-void ResultScene::Finalize() {
-}
+void ResultScene::Finalize() {}
 
-void ResultScene::SceneStatePlayInitialize() {
-}
+void ResultScene::SceneStatePlayInitialize() {}
 
 void ResultScene::SceneStatePlayUpdate() {
-	if (SUGER::TriggerKey(DIK_SPACE)) {
+	if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
 		ChangeScene("TITLE");
 	}
 

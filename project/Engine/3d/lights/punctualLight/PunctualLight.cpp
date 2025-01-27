@@ -51,6 +51,10 @@ void PunctualLight::SetPunctualLightSetting(const PunctualLightForGPU& punctualL
 	punctualLight = punctualLightSetting;
 }
 
+PunctualLightForGPU& PunctualLight::GetPunctualLight() {
+	return punctualLight;
+}
+
 void PunctualLight::CreatePunctualLightResource() {
 	// WVP用のリソースを作る
 	punctualLightResource_ = SUGER::CreateBufferResource(sizeof(PunctualLightForGPU));

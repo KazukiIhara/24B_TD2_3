@@ -19,6 +19,9 @@ public:
 	bool HoldKey(BYTE keyNumber);
 	bool ReleaseKey(BYTE keyNumber);
 
+	// パッドが刺さっているどうか
+	bool IsGamepadConnected(int index);
+
 	// コントローラのボタン入力
 	bool PushButton(int controllerID, int buttonNumber);
 	bool TriggerButton(int controllerID, int buttonNumber);

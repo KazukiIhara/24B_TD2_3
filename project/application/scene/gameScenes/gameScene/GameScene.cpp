@@ -40,7 +40,7 @@ void GameScene::Initialize() {
 	earth_->CreateCollider(ColliderCategory::Earth, kSphere, 2.0f);
 	earth_->SetScale(2.0f);
 	earth_->GetCollider()->SetMass(200.0f);
-	
+
 	//
 	// Playerの初期化処理
 	//
@@ -50,6 +50,11 @@ void GameScene::Initialize() {
 	// プレイヤーのコライダーを作成
 	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.0f);
 	player_->GetCollider()->SetMass(20.0f);
+
+	light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
+	light_->GetPunctualLight().pointLight.intensity = 7.0f;
+	light_->GetPunctualLight().pointLight.color = { 1.0f,1.0f,0.0f,1.0f };
+	light_->GetPunctualLight().pointLight.radius = 10.0f;
 
 	// 
 	// かけらマネージャの初期化処理
@@ -166,9 +171,21 @@ void GameScene::SceneStatePlayUpdate() {
 
 #endif // DEBUG
 
+#ifdef _DEBUG
 	if (SUGER::TriggerKey(DIK_R)) {
 		ChangeScene("GAME");
 	}
+
+
+	ImGui::Begin("PointLightSetting");
+	PointLightForGPU& pointLight = light_->GetPunctualLight().pointLight;
+	ImGui::ColorEdit3("color", &pointLight.color.x);
+	ImGui::DragFloat("intensity", &pointLight.intensity);
+	ImGui::DragFloat("radius", &pointLight.radius);
+	ImGui::DragFloat("decay", &pointLight.decay);
+	ImGui::End();
+#endif // _DEBUG
+
 
 	// ゲームオーバー確認処理
 	if (earth_->GetHp() <= 0) {
@@ -177,7 +194,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// シェイクテスト用
 	if (SUGER::TriggerKey(DIK_SPACE)) {
-	//	sceneCamera_->Shake(15.0f, 0.5f);
+		//	sceneCamera_->Shake(15.0f, 0.5f);
 	}
 
 
@@ -188,12 +205,14 @@ void GameScene::SceneStatePlayUpdate() {
 	if (earth_->GetIsHit()) {
 		if (earth_->GetHitLevel() == 1) {
 			sceneCamera_->Shake(15.0f, 0.5f);
-		}
-		else if (earth_->GetHitLevel() == 2) {
+		} else if (earth_->GetHitLevel() == 2) {
 			sceneCamera_->Shake(25.0f, 1.5f);
 		}
 		earth_->SetIsHit(false);
 	}
+
+	// ライトの座標
+	light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
 
 	// プレイヤーの更新処理
 	player_->Update();

@@ -551,6 +551,10 @@ bool SUGER::ReleaseKey(BYTE keyNumber) {
 	return directInput_->ReleaseKey(keyNumber);
 }
 
+bool SUGER::IsGamepadConnected(int index) {
+	return directInput_->IsGamepadConnected(index);
+}
+
 bool SUGER::PushButton(int controllerID, int buttonNumber) {
 	return directInput_->PushButton(controllerID, buttonNumber);
 }

@@ -102,6 +102,9 @@ public: // クラスメソッド
 	// キーを離した
 	static bool ReleaseKey(BYTE keyNumber);
 
+	// 該当する番号のパッドが有効かどうかを判定
+	static bool IsGamepadConnected(int index);
+
 	// ボタンを押している
 	static bool PushButton(int controllerID, int buttonNumber);
 	// ボタンを押した

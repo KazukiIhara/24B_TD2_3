@@ -88,16 +88,20 @@ void Player::Operation() {
 		rotateDirection_ -= 1.0f;
 	}
 
-	// パッド操作
-	moveVector_.x = static_cast<float>(SUGER::GetLeftStickX(0));
-	moveVector_.y = static_cast<float>(SUGER::GetLeftStickY(0));
+	
+	if (SUGER::IsGamepadConnected(0)) {
+		// パッド操作
+		moveVector_.x = static_cast<float>(SUGER::GetLeftStickX(0));
+		moveVector_.y = static_cast<float>(SUGER::GetLeftStickY(0));
 
-	if (SUGER::PushButton(0, ButtonR)) {
-		rotateDirection_ -= 1.0f;
+		if (SUGER::PushButton(0, ButtonR)) {
+			rotateDirection_ -= 1.0f;
+		}
+		if (SUGER::PushButton(0, ButtonL)) {
+			rotateDirection_ += 1.0f;
+		}
 	}
-	if (SUGER::PushButton(0, ButtonL)) {
-		rotateDirection_ += 1.0f;
-	}
+
 	// 移動ベクトル正規化
 	moveVector_ = Normalize(moveVector_);
 
