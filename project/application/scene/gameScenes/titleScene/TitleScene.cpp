@@ -17,5 +17,25 @@ void TitleScene::SceneStatePlayInitialize() {
 }
 
 void TitleScene::SceneStatePlayUpdate() {
+#ifdef _DEBUG
+	ImGui::Begin("TitleScene");
+	if (ImGui::Button("ChangeScene")) {
+		sceneStateRequest_ = SceneState::kFadeOut;
+	}
+	ImGui::End();
+#endif // _DEBUG
 
+	if (SUGER::TriggerKey(DIK_SPACE)) {
+		sceneStateRequest_ = SceneState::kFadeOut;
+	}
+}
+
+void TitleScene::SceneStateFadeOutUpdate() {
+	// フェード更新
+	fade_->Update();
+
+	if (fade_->IsFinished()) {
+		ChangeScene("GAME");
+		fade_->Stop();
+	}
 }

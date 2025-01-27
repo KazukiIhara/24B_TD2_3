@@ -21,7 +21,8 @@ public:
 	void SceneStatePlayInitialize()override;
 	// プレイフェーズ更新
 	void SceneStatePlayUpdate()override;
-
+	// フェードアウト終了時
+	void SceneStateFadeOutUpdate()override;
 private:
 
 };
