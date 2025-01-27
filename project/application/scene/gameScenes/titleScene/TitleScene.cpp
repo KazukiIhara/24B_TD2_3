@@ -17,5 +17,12 @@ void TitleScene::SceneStatePlayInitialize() {
 }
 
 void TitleScene::SceneStatePlayUpdate() {
+#ifdef _DEBUG
+	ImGui::Begin("TitleScene");
+	if (ImGui::Button("ChangeScene")) {
+		ChangeScene("GAME");
+	}
+	ImGui::End();
+#endif // _DEBUG
 
 }
