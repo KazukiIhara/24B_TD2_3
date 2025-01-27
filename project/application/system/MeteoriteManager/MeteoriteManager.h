@@ -52,11 +52,11 @@ private:
 	std::array<Vector3, 4> popPosition_;
 
 	// 一度に沸く数
-	int32_t popNum_ = 4;
+	int32_t popNum_ = 1;
 
 	int32_t popTimer_ = 0;
 
-	int32_t popIntervalTime_ = 300;
+	int32_t popIntervalTime_ = 900;
 
 	uint32_t currentSerialNumber_ = 0;
 
