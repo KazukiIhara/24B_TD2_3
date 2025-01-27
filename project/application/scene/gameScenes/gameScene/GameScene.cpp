@@ -246,6 +246,11 @@ void GameScene::SceneStatePlayUpdate() {
 		earth_->SetIsHit(false);
 	}
 
+	// 経過日数を加算
+	if (std::fmod(earth_->GetRotate().y, std::numbers::pi_v<float>*2.0f) == 0.0f) {
+
+	}
+
 	// ライトの座標
 	light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
 	light_->GetPunctualLight().spotLight.direction = Normalize(player_->GetTranslate() - sceneCamera_->GetWorldPos());

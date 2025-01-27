@@ -38,6 +38,11 @@ public:
 
 private:
 
+	// 経過日数
+
+	// 経過年数
+
+
 	//
 	// forDebug
 	//
