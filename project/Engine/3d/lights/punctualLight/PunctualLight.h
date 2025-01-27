@@ -18,6 +18,8 @@ public: // メンバ関数
 	void InitializeLightSetting();
 	void SetPunctualLightSetting(const PunctualLightForGPU& punctualLightSetting);
 
+	PunctualLightForGPU& GetPunctualLight();
+
 private: // 非公開メンバ関数
 	void CreatePunctualLightResource();
 	void MapPunctualLightData();

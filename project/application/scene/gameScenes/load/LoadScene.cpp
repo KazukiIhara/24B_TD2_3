@@ -46,30 +46,30 @@ void LoadScene::LoadSceneStateInitialize() {
 		loadSceneState_ = loadSceneStateRequest_.value();
 		// 状態ごとの初期化を実行
 		switch (loadSceneState_) {
-		case LoadScene::kPreLoad:
-			LoadSceneStatePreLoadInitialize();
-			break;
-		case LoadScene::kLoading:
-			LoadSceneStateLoadingInitialize();
-			break;
-		case LoadScene::kFinished:
-			LoadSceneStateFinishedInitizlize();
-			break;
+			case LoadScene::kPreLoad:
+				LoadSceneStatePreLoadInitialize();
+				break;
+			case LoadScene::kLoading:
+				LoadSceneStateLoadingInitialize();
+				break;
+			case LoadScene::kFinished:
+				LoadSceneStateFinishedInitizlize();
+				break;
 		}
 	}
 }
 
 void LoadScene::LoadSceneStateUpdate() {
 	switch (loadSceneState_) {
-	case LoadScene::kPreLoad:
-		LoadSceneStatePreLoadUpdate();
-		break;
-	case LoadScene::kLoading:
-		LoadSceneStateLoadingUpdate();
-		break;
-	case LoadScene::kFinished:
-		LoadSceneStateFinishedUpdate();
-		break;
+		case LoadScene::kPreLoad:
+			LoadSceneStatePreLoadUpdate();
+			break;
+		case LoadScene::kLoading:
+			LoadSceneStateLoadingUpdate();
+			break;
+		case LoadScene::kFinished:
+			LoadSceneStateFinishedUpdate();
+			break;
 	}
 }
 
@@ -138,7 +138,7 @@ void LoadScene::LoadSceneStateFinishedUpdate() {
 #endif // DEBUG
 
 	// ボタンでフェードアウト処理
-	if (SUGER::TriggerKey(DIK_SPACE)) {
+	if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
 		sceneStateRequest_ = SceneState::kFadeOut;
 	}
 }

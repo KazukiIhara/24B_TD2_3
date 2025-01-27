@@ -25,7 +25,7 @@ void TitleScene::SceneStatePlayUpdate() {
 	ImGui::End();
 #endif // _DEBUG
 
-	if (SUGER::TriggerKey(DIK_SPACE)) {
+	if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
 		sceneStateRequest_ = SceneState::kFadeOut;
 	}
 }

@@ -60,6 +60,16 @@ bool DirectInput::ReleaseKey(BYTE keyNumber) {
 	return preKey[keyNumber] && !key[keyNumber];
 }
 
+bool DirectInput::IsGamepadConnected(int index) {
+	XINPUT_STATE state;
+	ZeroMemory(&state, sizeof(XINPUT_STATE));
+
+	// XInputGetStateを使用して指定のパッドを確認
+	DWORD result = XInputGetState(index, &state);
+
+	// コントローラーが接続されている場合はERROR_SUCCESSを返す
+	return (result == ERROR_SUCCESS);
+}
 
 bool DirectInput::PushButton(int controllerID, int buttonNumber) {
 	return (gamepadStates[controllerID].Gamepad.wButtons & buttonNumber) != 0;
