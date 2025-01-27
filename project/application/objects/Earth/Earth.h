@@ -88,7 +88,7 @@ private:
 	float returnMoveTimer_ = 0.0f;
 	float returnSpeed_ = 0.9f;
 
-	float HP_ = 1000.0f;
+	float HP_ = 100.0f;
 
 	bool isAlive_ = true;
 	float inclination_ = 23.4f;
