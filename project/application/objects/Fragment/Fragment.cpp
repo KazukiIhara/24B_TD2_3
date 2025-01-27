@@ -58,14 +58,19 @@ void Fragment::OnCollision(Collider* other) {
 			velocity_ = velocity;
 			playerHitTimer_ = kNoneHitTime_;
 			GetCollider()->SetDamage(1.0f);
+
+			emitterFragment_->Emit();
 		}
 		break;
 	case ColliderCategory::Meteorite:
 
 		HP_ -= 3;
+
+		emitterFragment_->Emit();
 		break;
 	case ColliderCategory::Earth:
 		HP_ -= 3;
+		emitterFragment_->Emit();
 		break;
 	case ColliderCategory::Bump:
 		float fragmentMass = GetCollider()->GetMass();
@@ -80,6 +85,8 @@ void Fragment::OnCollision(Collider* other) {
 
 		Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f * bounceFactor, normal);
 		velocity_ = velocity;
+
+		emitterFragment_->Emit();
 		break;
 	}
 }
@@ -205,8 +212,11 @@ void Fragment::SetPraticle(int count)
 
 	emitter_ = std::make_unique<EmitterController>();
 	emitterDust_ = std::make_unique<EmitterController>();
+	emitterFragment_ = std::make_unique<EmitterController>();
 	CreateEmit("dustParticle", "dustEmitter", 1,0.8f ,{ 1,1,0 },emitter_.get());
 	CreateEmit("dustParticle", "dustFire", 1,1.0f,{ 1,0,0 },emitterDust_.get());
+	CreateEmit("fragmentParticle", "fragment", 1,1.0f,{ 1,0,0 }, emitterFragment_.get());
+
 }
 
 void Fragment::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size,Vector3 color, EmitterController* emit)

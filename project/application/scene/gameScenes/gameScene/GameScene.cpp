@@ -71,6 +71,7 @@ void GameScene::Initialize() {
 
 	// 板ポリパーティクルの作成
 	SUGER::CreateParticle("dustParticle", ParticleType::kPlane, "circle.png");
+	SUGER::CreateParticle("fragmentParticle", ParticleType::kModel,"Fragment/Fragment.gltf");
 
 
 	//

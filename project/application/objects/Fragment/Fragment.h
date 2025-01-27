@@ -124,4 +124,8 @@ private:
 	// Emitterコントローラ
 	std::unique_ptr<EmitterController> emitter_;
 	std::unique_ptr<EmitterController> emitterDust_;
+	
+	std::unique_ptr<EmitterController> emitterFragment_;
+
+	
 };
