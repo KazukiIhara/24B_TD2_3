@@ -234,6 +234,25 @@ void GameScene::Initialize() {
 	currentYearsNumUI_[1]->SetIsActive(false);
 	currentYearsNumUI_[2]->SetIsActive(true);
 
+	// 
+	// シンボル
+	// 
+
+	for (uint32_t i = 0; i < 2; i++) {
+		symbolUI_[i] = std::make_unique<Object2DController>();
+	}
+	symbolUI_[0]->Initialize(SUGER::Create2DObject("0_Days", "Number/Symbol_x128y192.png"));
+	symbolUI_[1]->Initialize(SUGER::Create2DObject("0_Years", "Number/Symbol_x128y192.png"));
+
+	for (uint32_t i = 0; i < 2; i++) {
+		symbolUI_[i]->SetCutOutSize(numberTextureSize_);
+		symbolUI_[i]->SetSize(numberTextureSize_ / 2.0f);
+	}
+
+	symbolUI_[0]->SetLeftTop(Vector2(8 * numberTextureSize_.x, 0.0f));
+	symbolUI_[0]->SetPosition(currentDaysPosition_ + Vector2(numGap_ * 2.0f, 8.0f));
+	symbolUI_[1]->SetLeftTop(Vector2(9 * numberTextureSize_.x, 0.0f));
+	symbolUI_[1]->SetPosition(currentYearsPosition_ + Vector2(numGap_ * 2.0f, 8.0f));
 
 	//
 	// ムーン少佐
