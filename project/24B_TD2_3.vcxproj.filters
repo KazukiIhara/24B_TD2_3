@@ -638,6 +638,7 @@
     <ClInclude Include="application\objects\DamagePiece\DamagePiece.h" />
     <ClInclude Include="application\system\DamagePieceManager\DamagePieceManager.h" />
     <ClInclude Include="application\scene\gameScenes\tutorialScene\TutorialScene.h" />
+    <ClInclude Include="application\GameData\GameData.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">

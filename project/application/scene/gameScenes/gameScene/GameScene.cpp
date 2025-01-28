@@ -298,6 +298,10 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// ゲームオーバー確認処理
 	if (earth_->GetHp() <= 0) {
+		// スコアを保存
+		GetGameData().days_ = currentDays_;
+		GetGameData().years_ = currentYears_;
+		// フェードリクエスト
 		sceneStateRequest_ = SceneState::kFadeOut;
 	}
 
@@ -498,7 +502,7 @@ void GameScene::SceneStateFadeOutUpdate() {
 	fade_->Update();
 
 	if (fade_->IsFinished()) {
-		ChangeScene("TITLE");
+		ChangeScene("RESULT");
 		fade_->Stop();
 	}
 }

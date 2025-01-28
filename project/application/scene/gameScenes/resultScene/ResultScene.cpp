@@ -14,6 +14,14 @@ void ResultScene::Finalize() {}
 void ResultScene::SceneStatePlayInitialize() {}
 
 void ResultScene::SceneStatePlayUpdate() {
+
+	ImGui::Begin("Result");
+
+	ImGui::Text("%u Years %u Days", GetGameData().years_, GetGameData().days_);
+
+	ImGui::End();
+
+
 	if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
 		ChangeScene("TITLE");
 	}

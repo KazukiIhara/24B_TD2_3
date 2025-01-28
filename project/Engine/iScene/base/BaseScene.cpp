@@ -72,6 +72,10 @@ void BaseScene::ChangeScene(const std::string& nextScene) {
 	sceneManager_->ChangeScene(nextScene);
 }
 
+GameData& BaseScene::GetGameData() {
+	return sceneManager_->GetGameData();
+}
+
 void BaseScene::SetSceneManager(SceneManager* sceneManager) {
 	sceneManager_ = sceneManager;
 }
