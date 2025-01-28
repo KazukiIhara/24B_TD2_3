@@ -4,9 +4,11 @@
         "CurrentDaysNumPosY": 16.0,
         "CurrentYearsNumPosX": 240.0,
         "CurrentYearsNumPosY": 16.0,
-        "EarthUINumPosX": 1550.0,
-        "EarthUINumPosY": 608.0,
-        "EarthUIPosX": 1500.0,
-        "EarthUIPosY": 700.0
+        "EarthUINumPosX": 1600.0,
+        "EarthUINumPosY": 850.0,
+        "EarthUIPosX": 1700.0,
+        "EarthUIPosY": 900.0,
+        "EarthUISizeX": 240.0,
+        "EarthUISizeY": 240.0
     }
 }

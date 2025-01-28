@@ -132,15 +132,25 @@ void GameScene::Initialize() {
 	earthHPUI_[2]->Initialize(SUGER::Create2DObject("1_earthHPUI", earthHpUiString + "_50%.png"));
 	earthHPUI_[3]->Initialize(SUGER::Create2DObject("0_earthHPUI", earthHpUiString + "_25%.png"));
 
+	earthUISize_ = earthHPUI_[0]->GetSize();
+
+
 	SUGER::AddGrobalDataGroup("UI");
 	SUGER::AddGrobalDataItem("UI", "EarthUIPosX", earthUIPosition_.x);
 	SUGER::AddGrobalDataItem("UI", "EarthUIPosY", earthUIPosition_.y);
+	SUGER::AddGrobalDataItem("UI", "EarthUISizeX", earthUISize_.x);
+	SUGER::AddGrobalDataItem("UI", "EarthUISizeY", earthUISize_.y);
 
 	earthUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosX");
 	earthUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosY");
 
+	earthUISize_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUISizeX");
+	earthUISize_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUISizeY");
+
+
 	for (uint32_t i = 0; i < 4; i++) {
 		earthHPUI_[i]->SetPosition(earthUIPosition_);
+		earthHPUI_[i]->SetSize(earthUISize_);
 	}
 
 	for (uint32_t i = 0; i < 3; i++) {
@@ -241,6 +251,9 @@ void GameScene::SceneStatePlayUpdate() {
 
 	earthUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosX");
 	earthUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosY");
+
+	earthUISize_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUISizeX");
+	earthUISize_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUISizeY");
 
 	earthHpNumUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUINumPosX");
 	earthHpNumUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUINumPosY");
@@ -345,6 +358,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 	for (uint32_t i = 0; i < 4; i++) {
 		earthHPUI_[i]->SetPosition(earthUIPosition_);
+		earthHPUI_[i]->SetSize(earthUISize_);
 	}
 
 	if (earth_->GetHp() <= 75.0f) {
