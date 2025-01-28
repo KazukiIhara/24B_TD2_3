@@ -35,7 +35,7 @@ void TitleScene::SceneStateFadeOutUpdate() {
 	fade_->Update();
 
 	if (fade_->IsFinished()) {
-		ChangeScene("GAME");
+		ChangeScene("TUTORIAL");
 		fade_->Stop();
 	}
 }
