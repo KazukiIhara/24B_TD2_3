@@ -98,6 +98,11 @@ private:
 	std::array<int32_t, 3> currentYearsNum_;
 	Vector2 currentYearsPosition_{ 0.0f,0.0f };
 
+	// シンボル
+	std::array<std::unique_ptr<Object2DController>, 2> symbolUI_;
+	Vector2 yearPosition_ = { 0.0f,0.0f };
+	Vector2	daysPosition_ = { 0.0f,0.0f };
+
 	// 経過日数
 	uint32_t currentDays_ = 0;
 	// 経過年数
