@@ -98,8 +98,8 @@ void TitleScene::SceneStatePlayUpdate() {
 
 
 	// ライトの座標
-	light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
-	light_->GetPunctualLight().spotLight.direction = Normalize(player_->GetTranslate() - sceneCamera_->GetWorldPos());
+	//light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
+	//light_->GetPunctualLight().spotLight.direction = Normalize(player_->GetTranslate() - sceneCamera_->GetWorldPos());
 
 
 	// プレイヤーの更新処理
