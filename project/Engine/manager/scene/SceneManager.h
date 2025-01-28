@@ -6,12 +6,10 @@
 // MyHedder
 #include "iScene/abstractFactory/AbstractSceneFactory.h"
 
+#include "GameData/GameData.h"
+
 // 前方宣言
 class BaseScene;
-
-struct GameData {
-
-};
 
 // シーン管理クラス
 class SceneManager {
@@ -32,6 +30,8 @@ public: // メンバ関数
 	void SetSceneFactory(AbstractSceneFactory* sceneFactory) {
 		sceneFactory_ = sceneFactory;
 	};
+
+	GameData& GetGameData();
 
 private:
 

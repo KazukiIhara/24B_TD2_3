@@ -11,6 +11,8 @@
 #include "enum/SceneEnum.h"
 #include "importer/level/json/JsonLevelDataImporter.h"
 
+#include "GameData/GameData.h"
+
 // 前方宣言
 class SceneManager;
 
@@ -28,6 +30,8 @@ public: // 仮想関数
 
 	// シーンチェンジ
 	void ChangeScene(const std::string& nextScene);
+
+	GameData& GetGameData();
 
 	// シーンマネージャのセット
 	virtual void SetSceneManager(SceneManager* sceneManager);
@@ -66,7 +70,7 @@ private:
 	// カメラズーム操作
 	void HandleCameraZoom(Vector3& cameraTranslate, Vector3& cameraRotate, int64_t wheelDelta);
 
-private:
+protected:
 	// シーンマネージャ
 	SceneManager* sceneManager_ = nullptr;
 

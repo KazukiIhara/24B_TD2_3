@@ -48,3 +48,7 @@ void SceneManager::ChangeScene(const std::string& sceneName) {
 	// 次シーンを作成
 	nextScene_ = sceneFactory_->CreateScene(sceneName);
 }
+
+GameData& SceneManager::GetGameData() {
+	return gameData_;
+}
