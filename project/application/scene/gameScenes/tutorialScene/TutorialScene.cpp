@@ -66,13 +66,17 @@ void TutorialScene::SceneStatePlayUpdate() {
 
 	// ボタンでページ送り
 	if (SUGER::TriggerButton(0, ButtonA)) {
-		currentPage_++;
-		if (currentPage_ == tutorialPages_[static_cast<uint32_t>(currentTutorial_)]) {
-			currentPage_ = 0;
-			uint32_t current = static_cast<uint32_t>(currentTutorial_);
-			current++;
-			currentTutorial_ = static_cast<MMTutorial>(current);
-		}
+
+		// ベータプレイ会用処理
+		sceneStateRequest_ = SceneState::kFadeOut;
+
+		//currentPage_++;
+		//if (currentPage_ == tutorialPages_[static_cast<uint32_t>(currentTutorial_)]) {
+		//	currentPage_ = 0;
+		//	uint32_t current = static_cast<uint32_t>(currentTutorial_);
+		//	current++;
+		//	currentTutorial_ = static_cast<MMTutorial>(current);
+		//}
 	}
 
 	if (static_cast<uint32_t>(currentTutorial_) == 3) {

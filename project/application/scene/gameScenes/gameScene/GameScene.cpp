@@ -151,7 +151,11 @@ void GameScene::Initialize() {
 	for (uint32_t i = 0; i < 4; i++) {
 		earthHPUI_[i]->SetPosition(earthUIPosition_);
 		earthHPUI_[i]->SetSize(earthUISize_);
+		earthHPUI_[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 0.8f));
+		earthHPUI_[i]->SetIsActive(false);
 	}
+
+	earthHPUI_[0]->SetIsActive(true);
 
 	for (uint32_t i = 0; i < 3; i++) {
 		earthHpNumUI_[i] = std::make_unique<Object2DController>();
@@ -361,15 +365,29 @@ void GameScene::SceneStatePlayUpdate() {
 		earthHPUI_[i]->SetSize(earthUISize_);
 	}
 
-	if (earth_->GetHp() <= 75.0f) {
-		earthHPUI_[0]->SetIsActive(false);
-	}
-	if (earth_->GetHp() <= 50.0f) {
-		earthHPUI_[1]->SetIsActive(false);
-	}
 	if (earth_->GetHp() <= 25.0f) {
+		earthHPUI_[0]->SetIsActive(false);
+		earthHPUI_[1]->SetIsActive(false);
 		earthHPUI_[2]->SetIsActive(false);
+		earthHPUI_[3]->SetIsActive(true);
+	} else if (earth_->GetHp() <= 50.0f) {
+		earthHPUI_[0]->SetIsActive(false);
+		earthHPUI_[1]->SetIsActive(false);
+		earthHPUI_[2]->SetIsActive(true);
+		earthHPUI_[3]->SetIsActive(false);
+	} else if (earth_->GetHp() <= 75.0f) {
+		earthHPUI_[0]->SetIsActive(false);
+		earthHPUI_[1]->SetIsActive(true);
+		earthHPUI_[2]->SetIsActive(false);
+		earthHPUI_[3]->SetIsActive(false);
+	} else {
+		earthHPUI_[0]->SetIsActive(true);
+		earthHPUI_[1]->SetIsActive(false);
+		earthHPUI_[2]->SetIsActive(false);
+		earthHPUI_[3]->SetIsActive(false);
 	}
+
+
 
 	if (earth_->GetHp() < 10.0f) {
 		earthHpNumUI_[1]->SetIsActive(false);
