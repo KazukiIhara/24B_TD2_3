@@ -39,4 +39,12 @@ private:
 	// ダメージ破片
 	std::unique_ptr<DamagePieceManager> damagePieceManager_ = nullptr;
 
+
+	// Aボタン
+	std::unique_ptr<Object2DController> A_UI_;
+	Vector2 A_UIPosition_ = { 0.0f,0.0f };
+	Vector2 A_UISize_ = { 0.0f,0.0f };
+
+	float time_ = 0;
+	int clock_ = 1;
 };
