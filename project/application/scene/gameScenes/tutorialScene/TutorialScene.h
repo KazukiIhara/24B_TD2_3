@@ -7,8 +7,25 @@
 #include "VFX/particle/emitterController/EmitterController.h"
 #include "3d/lineController/LineController.h"
 
+// GameScene
+#include "objects/player/Player.h"
+#include "objects/Earth/Earth.h"
+#include "objects/Skydome/Skydome.h"
 
-class TutorialScene:public BaseScene {
+#include "system/MeteoriteManager/MeteoriteManager.h"
+#include "system/FragmentManager/FragmentManager.h"
+#include "system/BumpManager/BumpManager.h"
+#include "system/DamagePieceManager/DamagePieceManager.h"
+
+enum class MMTutorial {
+	Operation,
+	Fragment,
+	Bump,
+
+	num,
+};
+
+class TutorialScene :public BaseScene {
 public:
 	TutorialScene() = default;
 	~TutorialScene() = default;
@@ -26,5 +43,20 @@ public:
 	void SceneStateFadeOutUpdate()override;
 
 private:
+	//
+	// ムーン少佐スプライト
+	//
 
+	// チュートリアル
+	std::array<std::unique_ptr<Object2DController>, 3> moonMajarTurorials_;
+	// 少佐のテキストの座標
+	Vector2 moonMajarTextPosition_ = { 960.0f,951.0f };
+	// 少佐のテキストの切り取りサイズ
+	const Vector2 moonMajarTextCutSize_ = { 1025.0f,192.0f };
+	// 現在のチュートリアル
+	MMTutorial currentTutorial_ = MMTutorial::Operation;
+	// チュートリアルごとのページ数
+	uint32_t tutorialPages_[static_cast<uint32_t>(MMTutorial::num)];
+	// 現在のページ
+	uint32_t currentPage_ = 0;
 };
