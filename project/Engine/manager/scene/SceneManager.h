@@ -9,6 +9,10 @@
 // 前方宣言
 class BaseScene;
 
+struct GameData {
+
+};
+
 // シーン管理クラス
 class SceneManager {
 public: // メンバ関数
@@ -30,6 +34,10 @@ public: // メンバ関数
 	};
 
 private:
+
+	// シーン間共有データの構造体
+	GameData gameData_{};
+
 	// 現在のシーン
 	BaseScene* currentScene_ = nullptr;
 	// 次のシーン
