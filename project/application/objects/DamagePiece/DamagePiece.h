@@ -20,11 +20,23 @@ public:
 	// 衝突コールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
 
+
 	
 public: // ゲッター
 	bool GetAlive() const { return isAlive_; };
 
 	void SetIsReduction() {isReduction = true; }
+
+	void SetScaleMinMax(Vector2 scale) {
+		scaleMin = scale.x;
+		scaleMax = scale.y;
+	}
+	void SetLifeMinMax(Vector2 time) {
+		kMinBreakTime_ = time.x;
+		kMaxBreakTime_ = time.y;
+	}
+
+	//void SetColor4(Vector4 color) { SetColor(color); };
 
 private:
 	void Move();
@@ -43,8 +55,8 @@ private:
 
 private:
 	// 破壊時間定数
-	const float kMaxBreakTime_ = 6;
-	const float kMinBreakTime_ = 3;
+	float kMaxBreakTime_ = 6;
+	float kMinBreakTime_ = 3;
 	float kBreakTime_ = 0;
 
 	// 破壊タイマー

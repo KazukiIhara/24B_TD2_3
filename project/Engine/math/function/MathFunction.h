@@ -41,8 +41,9 @@ static float Distance(const Vector3& point1, const Vector3& point2)
 
 
 // ベクトルの長さ
+float Length(const Vector4& a);
 float Length(const Vector3& a);
-
+float Length(const Vector2& a);
 // 正規化
 Vector3 Normalize(const Vector3& a);
 

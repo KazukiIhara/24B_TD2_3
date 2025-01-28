@@ -58,6 +58,9 @@ public:
 	void SetShinness(float shinness);
 
 	//
+	void SetModel(const std::string& name);
+
+	//
 	// Getter
 	//
 

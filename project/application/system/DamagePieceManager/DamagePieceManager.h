@@ -15,7 +15,10 @@ public:
 
 	void Update();
 
-	void AddDamagePiece(const Vector3& popTranslate, const Vector3& velo = {}, const float& renge = {}, const bool& isReduction = false);
+	void AddDamagePiece(const Vector3& popTranslate, const Vector3& velo = {},
+		const float& renge = {}, const bool& isReduction = false,
+		const Vector2& scaleMinMax = {},const Vector4& color = {}, 
+		const Vector2& lifeMInMaxTime = {});
 
 private:
 	// かけらのリスト

@@ -80,6 +80,12 @@ void EntityController::SetShinness(float shinness) {
 	entity_->SetShininess(shinness);
 }
 
+void EntityController::SetModel(const std::string& name)
+{
+	entity_->SetModel(name);
+}
+
+
 const Vector3& EntityController::GetScale() const {
 	return entity_->GetScale();
 }

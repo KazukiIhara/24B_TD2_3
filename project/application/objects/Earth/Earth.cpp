@@ -2,6 +2,11 @@
 
 #include "framework/SUGER.h"
 
+#include "system/FragmentManager/FragmentManager.h"
+#include "system/DamagePieceManager/DamagePieceManager.h"
+
+#include "random/Random.h"
+
 void Earth::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 	returnMoveTimer_ = 0;
@@ -52,17 +57,21 @@ void Earth::OnCollision(Collider* other) {
 	float playerMass{};
 	float fragmentMass{};
 	switch (category) {
-		case ColliderCategory::Player:
-		{
-			earthMass = GetCollider()->GetMass();
-			Vector3 earthVelocity = GetCollider()->GetVelocity();
-			playerMass = other->GetMass();
-			Vector3 playerVelocity = other->GetVelocity();
-			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-			Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
-			velocity_ = velocity;
-			returnMoveTimer_ = kReturnMoveTime_;
+	case ColliderCategory::Player:
+	{
+		earthMass = GetCollider()->GetMass();
+		Vector3 earthVelocity = GetCollider()->GetVelocity();
+		playerMass = other->GetMass();
+		Vector3 playerVelocity = other->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+		velocity_ = velocity;
+		returnMoveTimer_ = kReturnMoveTime_;
+
+		for (int i = 0; i < 5; i++) {
+			EmitDamegePiece2(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_);
 		}
+	}
 		break;
 		case ColliderCategory::Fragment:
 			earthMass = GetCollider()->GetMass();
@@ -203,11 +212,47 @@ void Earth::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterContr
 	emit->Emit();
 }
 
+void Earth::EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager)
+{
+	Vector3 velocity = (veloctiy);
+
+	
+
+	Vector3 radomVelo{};
+	radomVelo.x = velocity.x * Random::GenerateFloat(0.25f, 2.5f);
+	radomVelo.y = velocity.y * Random::GenerateFloat(0.25f, 2.5f);
+	radomVelo.z = 0;
+
+	Vector3 pospos = (pos);
+
+	damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f,false,{0.12f,0.17f},{ 0.604f, 0.384f, 0.161f ,1.0f},{1.5f,2.5f});
+}
+
+void Earth::EmitDamegePiece2(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager)
+{
+	Vector3 velocity = (veloctiy);
+
+
+
+	Vector3 radomVelo{};
+	radomVelo.x = velocity.x * Random::GenerateFloat(0.25f, 2.5f);
+	radomVelo.y = velocity.y * Random::GenerateFloat(0.25f, 2.5f);
+	radomVelo.z = 0;
+
+	Vector3 pospos = (pos);
+
+	damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.05f,0.10f }, {}, { 0.5f,1.0f });
+}
+
 void Earth::EmitDust(const Vector3& pos, const Vector3& veloctiy) {
 	EmitMinMax(pos, Normalize(veloctiy) * 3, emitterDustRed_.get()); // 赤
 	EmitMinMax(pos, Normalize(veloctiy) * 2, emitterDustYellow_.get()); //黄色
 	EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterDustGray_.get());
 	EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterDustBlack_.get());
+
+	for (int i = 0; i < 15; i++) {
+		EmitDamegePiece(-GetCollider()->GetWorldPosition() + pos * 1.5f, Normalize(veloctiy) * 2.5f, damagePieceManager_);
+	}
 }
 
 void Earth::ReturnPosition() {
