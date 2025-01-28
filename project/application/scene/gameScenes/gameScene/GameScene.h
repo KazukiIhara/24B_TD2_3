@@ -18,7 +18,7 @@
 #include "system/DamagePieceManager/DamagePieceManager.h"
 
 
-class GameScene:public BaseScene {
+class GameScene :public BaseScene {
 public:
 	GameScene() = default;
 	~GameScene() = default;
@@ -70,6 +70,11 @@ private:
 	//
 	// スプライト
 	//
+
+	// ムーン少佐
+	std::unique_ptr<Object2DController> moonMajarSprite_ = nullptr;
+	Vector2 moonMajarPosition_ = { 960.0f,951.0f };
+	float moonMajarAlpha_ = 1.0f;
 
 	// 地球のHPUI
 	std::array<std::unique_ptr<Object2DController>, 4> earthHPUI_;

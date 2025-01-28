@@ -234,6 +234,16 @@ void GameScene::Initialize() {
 	currentYearsNumUI_[1]->SetIsActive(false);
 	currentYearsNumUI_[2]->SetIsActive(true);
 
+
+	//
+	// ムーン少佐
+	// 
+
+	moonMajarSprite_ = std::make_unique<Object2DController>();
+	moonMajarSprite_->Initialize(SUGER::Create2DObject("MoonMajarUI", "MoonMajorText/MoonMajorText_Game.png"));
+	moonMajarSprite_->SetAnchorPoint(Vector2(0.5f, 0.5f));
+	moonMajarSprite_->SetPosition(moonMajarPosition_);
+
 }
 
 void GameScene::Finalize() {
@@ -477,6 +487,16 @@ void GameScene::SceneStatePlayUpdate() {
 	for (uint32_t i = 0; i < 3; i++) {
 		currentYearsNumUI_[i]->SetLeftTop(Vector2(currentYearsNum_[i] * numberTextureSize_.x, 0.0f));
 	}
+
+	// 
+	// ムーン少佐
+	// 
+
+	if (currentDays_ > 10 && moonMajarAlpha_ > 0.0f) {
+		moonMajarAlpha_ -= 0.05f;
+	}
+
+	moonMajarSprite_->SetColor(Vector4(1.0f, 1.0f, 1.0f, moonMajarAlpha_));
 
 
 	//
