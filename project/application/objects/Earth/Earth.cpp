@@ -49,6 +49,36 @@ void Earth::Update() {
 	UpdateLifeState();
 }
 
+void Earth::UpdateTitle()
+{
+
+#ifdef _DEBUG
+	ImGui::Begin("EarthVelo");
+	ImGui::DragFloat3("Velocity", &velocity_.x, 0.0f);
+	ImGui::End();
+#endif // _DEBUG
+
+
+	if (returnMoveTimer_ > 0) {
+		returnMoveTimer_ -= SUGER::kDeltaTime_;
+		if (returnMoveTimer_ < 0.1f) {
+			returnMoveTimer_ = 0;
+		}
+	}
+
+	// 移動量を足す
+	if (isAlive_) {
+		SetRotateY(GetRotate().y + std::numbers::pi_v<float>*2.0f / aroundFrame_);
+		SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
+		// コライダーに移動量をセット
+		GetCollider()->SetVelocity(velocity_);
+	}
+
+	MoveLimit();
+
+	UpdateLifeState();
+}
+
 void Earth::OnCollision(Collider* other) {
 	// 衝突相手のカテゴリーを取得
 	ColliderCategory category = other->GetColliderCategory();
