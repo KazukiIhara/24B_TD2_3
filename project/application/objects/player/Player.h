@@ -37,6 +37,7 @@ public:
 
 public:
 
+
 	void SetBumpManager(BumpManager* bumpManager) {
 		bumpManager_ = bumpManager;
 	};

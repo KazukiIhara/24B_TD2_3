@@ -14,6 +14,7 @@ public:
 
 	// 更新
 	void Update()override;
+	void UpdateTitle();
 
 	// 衝突コールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;

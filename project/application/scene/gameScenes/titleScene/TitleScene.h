@@ -7,6 +7,11 @@
 #include "VFX/particle/emitterController/EmitterController.h"
 #include "3d/lineController/LineController.h"
 
+// GameScene
+#include "objects/player/Player.h"
+#include "objects/Earth/Earth.h"
+#include "objects/Skydome/Skydome.h"
+#include "system/DamagePieceManager/DamagePieceManager.h"
 
 class TitleScene :public BaseScene {
 public:
@@ -24,5 +29,14 @@ public:
 	// フェードアウト終了時
 	void SceneStateFadeOutUpdate()override;
 private:
+	// プレイヤー
+	std::unique_ptr<Player> player_ = nullptr;
+	// 地球
+	std::unique_ptr<Earth> earth_ = nullptr;
+
+	// 天球
+	std::unique_ptr<Skydome> skydome_ = nullptr;
+	// ダメージ破片
+	std::unique_ptr<DamagePieceManager> damagePieceManager_ = nullptr;
 
 };
