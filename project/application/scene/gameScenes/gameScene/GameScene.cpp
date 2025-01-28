@@ -25,10 +25,6 @@ void GameScene::Initialize() {
 	plane_->SetShinness(0.0f);*/
 
 
-	//破片破損モデル
-	SUGER::CreateEntity("DamagePiece", "DamagePiece", { -100,0,0 });
-	SUGER::CreateEntity("DamagePiece2", "DamagePiece2", { -100, 0, 0 });
-
 	//
 	// 天球の初期化処理
 	//
@@ -54,7 +50,7 @@ void GameScene::Initialize() {
 	earth_->CreateCollider(ColliderCategory::Earth, kSphere, 2.0f);
 	earth_->SetScale(2.0f);
 	earth_->GetCollider()->SetMass(200.0f);
-
+	earth_->SetDamagePieceManager(damagePieceManager_.get());
 	//
 	// Playerの初期化処理
 	//

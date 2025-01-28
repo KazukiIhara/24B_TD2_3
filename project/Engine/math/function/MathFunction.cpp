@@ -17,8 +17,14 @@ float DegreesToRadians(const float& degrees) {
 	return degrees * (std::numbers::pi_v<float> / 180.0f);
 }
 
+float Length(const Vector4& a) {
+	return std::sqrt(a.x * a.x + a.y * a.y + a.z * a.z+ a.w * a.w);
+}
 float Length(const Vector3& a) {
 	return std::sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+}
+float Length(const Vector2& a) {
+	return std::sqrt(a.x * a.x + a.y * a.y);
 }
 
 Vector3 Normalize(const Vector3& a) {

@@ -55,6 +55,9 @@ public:
 
 	void SetPraticle(int count);
 private:
+
+	void SwitchingHPModel();
+
 	/// <summary>
 	/// 
 	/// </summary>

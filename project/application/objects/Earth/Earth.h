@@ -4,7 +4,7 @@
 
 #include "VFX/particle/emitterController/EmitterController.h"
 
-
+class DamagePieceManager;
 class Earth : public EntityController {
 public:
 	Earth() = default;
@@ -36,6 +36,10 @@ public:
 
 	void SetIsHit(bool hit) { isObjectHit = hit; }
 
+	void SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
+		damagePieceManager_ = damagePieceManager;
+	}
+
 	int GetHitLevel() { return objectHitLevel; }
 
 	float GetAroundFrame() const;
@@ -54,6 +58,8 @@ private:
 	void CreateEmit(const std::string praticleName, const std::string emitName, int count, float size,Vector2 lifeTime ,Vector3 color, EmitterController* emit);
 
 	void EmitMinMax(const Vector3& pos,const Vector3& veloctiy, EmitterController* emit);
+	void EmitDamegePiece(const Vector3& pos,const Vector3& veloctiy, DamagePieceManager* damagePieceManager_);
+	void EmitDamegePiece2(const Vector3& pos,const Vector3& veloctiy, DamagePieceManager* damagePieceManager_);
 
 	void EmitDust(const Vector3& pos, const Vector3& veloctiy);
 
@@ -97,4 +103,7 @@ private:
 	// 当たった物体の大きさ(これでカメラのシェイクの大きさが決まる)
 	int objectHitLevel = 0;
 	bool isObjectHit = false;
+
+
+	DamagePieceManager* damagePieceManager_ = nullptr;
 };

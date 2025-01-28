@@ -137,6 +137,8 @@ void Meteorite::DamageInitialize(float damage) {
 	hp_ -= damage;
 	damageTimer_ = kDamageTime_;
 	SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+
+	SwitchingHPModel();
 }
 
 void Meteorite::DamageUpdate() {
@@ -256,6 +258,28 @@ void Meteorite::SetPraticle(int count)
 	CreateEmit("earthDustParticle", "MeteoriteDustFire3", 55, 0.7f, { 1.5f, 2.5f }, { 0.412f, 0.412f, 0.412f }, emitterDustGray_.get());
 	CreateEmit("earthDustParticle", "MeteoriteDustFire4", 55, 0.7f, { 1.5f, 2.5f }, { 0.039f, 0.039f, 0.039f }, emitterDustBlack_.get());
 
+}
+
+void Meteorite::SwitchingHPModel()
+{
+	if (hp_ <= 0) {
+		SetModel("Meteorite3");
+	}
+	else if (hp_ <= 1) {
+		SetModel("Meteorite3");
+		for (int i = 0; i < 12; i++) {
+			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition(),{},{},true,{0.5,1.0f},{},{0.5f,1.0f});
+		}
+	}
+	else if (hp_ <= 2) {
+		SetModel("Meteorite2");
+		for (int i = 0; i < 10; i++) {
+			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition(), {}, {}, true, { 0.5,1.0f }, {}, { 0.5f,1.0f });
+		}
+	}
+	else {
+
+	}
 }
 
 void Meteorite::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit)
