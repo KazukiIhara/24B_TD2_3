@@ -66,6 +66,7 @@ void TutorialScene::SceneStatePlayUpdate() {
 
 	// ボタンでページ送り
 	if (SUGER::TriggerButton(0, ButtonA)) {
+
 		currentPage_++;
 		if (currentPage_ == tutorialPages_[static_cast<uint32_t>(currentTutorial_)]) {
 			currentPage_ = 0;

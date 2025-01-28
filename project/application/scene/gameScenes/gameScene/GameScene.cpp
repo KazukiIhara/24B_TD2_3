@@ -132,16 +132,30 @@ void GameScene::Initialize() {
 	earthHPUI_[2]->Initialize(SUGER::Create2DObject("1_earthHPUI", earthHpUiString + "_50%.png"));
 	earthHPUI_[3]->Initialize(SUGER::Create2DObject("0_earthHPUI", earthHpUiString + "_25%.png"));
 
+	earthUISize_ = earthHPUI_[0]->GetSize();
+
+
 	SUGER::AddGrobalDataGroup("UI");
 	SUGER::AddGrobalDataItem("UI", "EarthUIPosX", earthUIPosition_.x);
 	SUGER::AddGrobalDataItem("UI", "EarthUIPosY", earthUIPosition_.y);
+	SUGER::AddGrobalDataItem("UI", "EarthUISizeX", earthUISize_.x);
+	SUGER::AddGrobalDataItem("UI", "EarthUISizeY", earthUISize_.y);
 
 	earthUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosX");
 	earthUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosY");
 
+	earthUISize_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUISizeX");
+	earthUISize_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUISizeY");
+
+
 	for (uint32_t i = 0; i < 4; i++) {
 		earthHPUI_[i]->SetPosition(earthUIPosition_);
+		earthHPUI_[i]->SetSize(earthUISize_);
+		earthHPUI_[i]->SetColor(Vector4(1.0f, 1.0f, 1.0f, 0.8f));
+		earthHPUI_[i]->SetIsActive(false);
 	}
+
+	earthHPUI_[0]->SetIsActive(true);
 
 	for (uint32_t i = 0; i < 3; i++) {
 		earthHpNumUI_[i] = std::make_unique<Object2DController>();
@@ -241,6 +255,9 @@ void GameScene::SceneStatePlayUpdate() {
 
 	earthUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosX");
 	earthUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUIPosY");
+
+	earthUISize_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUISizeX");
+	earthUISize_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUISizeY");
 
 	earthHpNumUIPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "EarthUINumPosX");
 	earthHpNumUIPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "EarthUINumPosY");
@@ -345,17 +362,32 @@ void GameScene::SceneStatePlayUpdate() {
 
 	for (uint32_t i = 0; i < 4; i++) {
 		earthHPUI_[i]->SetPosition(earthUIPosition_);
+		earthHPUI_[i]->SetSize(earthUISize_);
 	}
 
-	if (earth_->GetHp() <= 75.0f) {
-		earthHPUI_[0]->SetIsActive(false);
-	}
-	if (earth_->GetHp() <= 50.0f) {
-		earthHPUI_[1]->SetIsActive(false);
-	}
 	if (earth_->GetHp() <= 25.0f) {
+		earthHPUI_[0]->SetIsActive(false);
+		earthHPUI_[1]->SetIsActive(false);
 		earthHPUI_[2]->SetIsActive(false);
+		earthHPUI_[3]->SetIsActive(true);
+	} else if (earth_->GetHp() <= 50.0f) {
+		earthHPUI_[0]->SetIsActive(false);
+		earthHPUI_[1]->SetIsActive(false);
+		earthHPUI_[2]->SetIsActive(true);
+		earthHPUI_[3]->SetIsActive(false);
+	} else if (earth_->GetHp() <= 75.0f) {
+		earthHPUI_[0]->SetIsActive(false);
+		earthHPUI_[1]->SetIsActive(true);
+		earthHPUI_[2]->SetIsActive(false);
+		earthHPUI_[3]->SetIsActive(false);
+	} else {
+		earthHPUI_[0]->SetIsActive(true);
+		earthHPUI_[1]->SetIsActive(false);
+		earthHPUI_[2]->SetIsActive(false);
+		earthHPUI_[3]->SetIsActive(false);
 	}
+
+
 
 	if (earth_->GetHp() < 10.0f) {
 		earthHpNumUI_[1]->SetIsActive(false);

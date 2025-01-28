@@ -63,7 +63,7 @@ private:
 	// SRVリソースのインデックス
 	uint32_t srvIndex_ = 0;
 	// クリアカラー
-	const Vector4 kClearColor_ = { 0.0f,0.0f,1.0f,1.0f };
+	const Vector4 kClearColor_ = { 0.1f,0.05f,0.1f,1.0f };
 	// ポストエフェクトのタイプ
 	PostEffectPipelineType postEffectType_ = kPostEffectNone;
 	// ブレンドモード
