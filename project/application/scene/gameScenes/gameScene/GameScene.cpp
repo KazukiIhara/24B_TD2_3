@@ -52,6 +52,7 @@ void GameScene::Initialize() {
 	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.0f);
 	player_->GetCollider()->SetMass(20.0f);
 	player_->SetScale(2.0f);
+	player_->UpdateWorldTransform();
 
 
 	light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
@@ -80,6 +81,9 @@ void GameScene::Initialize() {
 	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 2.0f);
 	moon_->GetCollider()->SetMass(200.0f);
 	moon_->SetDamagePieceManager(damagePieceManager_.get());
+	moon_->UpdateWorldTransform();
+
+
 
 	// 
 	// かけらマネージャの初期化処理

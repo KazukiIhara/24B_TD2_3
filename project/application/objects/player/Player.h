@@ -6,7 +6,7 @@
 
 class BumpManager;
 
-class Player : public EntityController {
+class Player: public EntityController {
 public:
 	Player() = default;
 	~Player() = default;
@@ -68,7 +68,7 @@ private:
 	float scale_ = 1.0f;
 
 	// 月の回転速度
-	float moonRotationSpeed_ = 0.01f;
+	float moonRotationSpeed_ = std::numbers::pi_v<float>*2.0f;
 
 	// 移動できる範囲
 	float stageWidth_ = 32.0f;
