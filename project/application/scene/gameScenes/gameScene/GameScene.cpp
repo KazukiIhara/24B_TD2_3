@@ -51,6 +51,8 @@ void GameScene::Initialize() {
 	// プレイヤーのコライダーを作成
 	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.0f);
 	player_->GetCollider()->SetMass(20.0f);
+	player_->SetScale(2.0f);
+
 
 	light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
 	light_->GetPunctualLight().pointLight.intensity = 7.0f;
@@ -73,12 +75,12 @@ void GameScene::Initialize() {
 	// 
 
 	moon_ = std::make_unique<Moon>();
-	moon_->SetPlayer(player_.get());
 	moon_->Initialize(SUGER::CreateEntity("Moon", "Moon"));
+	moon_->SetParent(player_->GetLocalTransform());
 	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 2.0f);
-	moon_->SetScale(2.0f);
 	moon_->GetCollider()->SetMass(200.0f);
 	moon_->SetDamagePieceManager(damagePieceManager_.get());
+	moon_->SetScale(0.7f);
 
 	// 
 	// かけらマネージャの初期化処理

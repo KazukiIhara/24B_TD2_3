@@ -6,7 +6,7 @@
 
 class BumpManager;
 
-class Player: public EntityController {
+class Player : public EntityController {
 public:
 	Player() = default;
 	~Player() = default;
@@ -35,6 +35,8 @@ public:
 
 	Vector3 RotatePosition(const Vector3& position, float angle);
 
+	WorldTransform* GetLocalTransform();
+
 public:
 
 
@@ -43,6 +45,9 @@ public:
 	};
 
 private:
+
+	WorldTransform loaclTransform_{};
+
 	// 定数
 	const std::string kParamaterString = "PlayerParamater";
 
@@ -80,7 +85,7 @@ private:
 	int32_t earthHitTimer_ = 0;
 	// 対隕石ヒットタイマー
 	int32_t meteoriteHitTimer_ = 0;
-	
+
 	// 対隕石たんこぶ生成ヒットタイマー
 	float meteoriteBumpPopHitTimer_ = 0;
 	// たんこぶのできる位置
