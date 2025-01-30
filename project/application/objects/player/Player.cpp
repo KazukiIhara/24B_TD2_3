@@ -50,7 +50,7 @@ void Player::Update() {
 	Move();
 	MoveLimit();
 
-	localTransform_.rotate_.y += rotationSpeed_;
+	localTransform_.rotate_.z += rotationSpeed_;
 	localTransform_.translate_ = GetWorldTransformPtr()->translate_;
 
 	localTransform_.Update();
@@ -78,8 +78,6 @@ void Player::Operation() {
 	// 移動方向を初期化
 	moveVector_ = { 0.0f,0.0f,0.0f };
 	rotateDirection_ = 0.0f;
-
-
 
 	// キーボード操作
 	if (SUGER::PushKey(DIK_W)) {
