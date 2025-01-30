@@ -63,7 +63,7 @@ private:
 	// 最大速度(std::clampで利用しているため、-の値にならないように注意)
 	float kMaxSpeed_ = 0.2f;
 	// 回転速度
-	float rotationSpeed_ = 0.1f;
+	float rotationSpeed_ = std::numbers::pi_v<float>;
 	// 大きさ
 	float scale_ = 1.0f;
 
