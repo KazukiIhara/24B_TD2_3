@@ -4,7 +4,7 @@
 enum class ColliderCategory {
 	None,
 	Player,
-	Earth,
+	Moon,
 	Fragment,
 	Meteorite,
 	Bump,

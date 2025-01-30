@@ -7,7 +7,7 @@
 #include <list>
 
 // 前方宣言
-class Earth;
+class Moon;
 class Player;
 class FragmentManager;
 class DamagePieceManager;
@@ -22,7 +22,7 @@ enum class MeteoritePopPlace {
 // 隕石マネージャ
 class MeteoriteManager {
 public:
-	void Initialize(Earth* earth, Player* player, FragmentManager* fragmentManager, DamagePieceManager* damagePieceManager);
+	void Initialize(Moon* earth, Player* player, FragmentManager* fragmentManager, DamagePieceManager* damagePieceManager);
 
 	void Update();
 
@@ -65,7 +65,7 @@ private:
 
 private:
 	// 地球クラスのインスタンスを受け取る
-	Earth* earth_ = nullptr;
+	Moon* moon_ = nullptr;
 	//
 	Player* player_ = nullptr;
 	// かけらマネージャのインスタンスを受け取る

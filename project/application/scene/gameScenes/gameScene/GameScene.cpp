@@ -45,12 +45,12 @@ void GameScene::Initialize() {
 	// 地球の初期化処理
 	// 
 
-	earth_ = std::make_unique<Earth>();
-	earth_->Initialize(SUGER::CreateEntity("Earth", "Earth"));
-	earth_->CreateCollider(ColliderCategory::Earth, kSphere, 2.0f);
-	earth_->SetScale(2.0f);
-	earth_->GetCollider()->SetMass(200.0f);
-	earth_->SetDamagePieceManager(damagePieceManager_.get());
+	moon_ = std::make_unique<Moon>();
+	moon_->Initialize(SUGER::CreateEntity("Earth", "Earth"));
+	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 2.0f);
+	moon_->SetScale(2.0f);
+	moon_->GetCollider()->SetMass(200.0f);
+	moon_->SetDamagePieceManager(damagePieceManager_.get());
 	//
 	// Playerの初期化処理
 	//
@@ -83,14 +83,14 @@ void GameScene::Initialize() {
 
 	fragmentManager_ = std::make_unique<FragmentManager>();
 	fragmentManager_->Initialize();
-	fragmentManager_->SetEarth(earth_.get());
+	fragmentManager_->SetEarth(moon_.get());
 	fragmentManager_->SetPlayer(player_.get());
 	// 
 	// 隕石マネージャの初期化処理
 	// 
 
 	meteoriteManager_ = std::make_unique<MeteoriteManager>();
-	meteoriteManager_->Initialize(earth_.get(), player_.get(), fragmentManager_.get(), damagePieceManager_.get());
+	meteoriteManager_->Initialize(moon_.get(), player_.get(), fragmentManager_.get(), damagePieceManager_.get());
 
 
 	//
@@ -100,7 +100,7 @@ void GameScene::Initialize() {
 	bumpManager_ = std::make_unique<BumpManager>();
 	bumpManager_->Initialize();
 	bumpManager_->SetPlayer(player_.get());
-	bumpManager_->SetEarth(earth_.get());
+	bumpManager_->SetEarth(moon_.get());
 
 	player_->SetBumpManager(bumpManager_.get());
 
@@ -115,8 +115,8 @@ void GameScene::Initialize() {
 	SUGER::CreateParticle("bumpParticle", ParticleType::kPlane, "circle.png");
 
 
-	earth_->SetPraticle();
-	earth_->UpdateWorldTransform();
+	moon_->SetPraticle();
+	moon_->UpdateWorldTransform();
 	//
 	// スプライトの初期化処理
 	//
@@ -164,7 +164,7 @@ void GameScene::Initialize() {
 		earthHpNumUI_[i]->SetSize(numberTextureSize_ / 2.0f);
 	}
 
-	earthHpNum_ = SplitDigits(static_cast<uint32_t>(earth_->GetHp()));
+	earthHpNum_ = SplitDigits(static_cast<uint32_t>(moon_->GetHp()));
 
 	SUGER::AddGrobalDataItem("UI", "EarthUINumPosX", earthHpNumUIPosition_.x);
 	SUGER::AddGrobalDataItem("UI", "EarthUINumPosY", earthHpNumUIPosition_.y);
@@ -326,7 +326,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 
 	// ゲームオーバー確認処理
-	if (earth_->GetHp() <= 0) {
+	if (moon_->GetHp() <= 0) {
 		// スコアを保存
 		GetGameData().days_ = currentDays_;
 		GetGameData().years_ = currentYears_;
@@ -343,19 +343,19 @@ void GameScene::SceneStatePlayUpdate() {
 	scoreTimer_++;
 
 	// 地球の更新
-	earth_->Update();
+	moon_->Update();
 
-	if (earth_->GetIsHit()) {
-		if (earth_->GetHitLevel() == 1) {
+	if (moon_->GetIsHit()) {
+		if (moon_->GetHitLevel() == 1) {
 			sceneCamera_->Shake(15.0f, 0.5f);
-		} else if (earth_->GetHitLevel() == 2) {
+		} else if (moon_->GetHitLevel() == 2) {
 			sceneCamera_->Shake(25.0f, 1.5f);
 		}
-		earth_->SetIsHit(false);
+		moon_->SetIsHit(false);
 	}
 
 	// 経過日数を加算
-	if (scoreTimer_ == earth_->GetAroundFrame() / 10.0f) {
+	if (scoreTimer_ == moon_->GetAroundFrame() / 10.0f) {
 		currentDays_++;
 		scoreTimer_ = 0.0f;
 	}
@@ -398,17 +398,17 @@ void GameScene::SceneStatePlayUpdate() {
 		earthHPUI_[i]->SetSize(earthUISize_);
 	}
 
-	if (earth_->GetHp() <= 25.0f) {
+	if (moon_->GetHp() <= 25.0f) {
 		earthHPUI_[0]->SetIsActive(false);
 		earthHPUI_[1]->SetIsActive(false);
 		earthHPUI_[2]->SetIsActive(false);
 		earthHPUI_[3]->SetIsActive(true);
-	} else if (earth_->GetHp() <= 50.0f) {
+	} else if (moon_->GetHp() <= 50.0f) {
 		earthHPUI_[0]->SetIsActive(false);
 		earthHPUI_[1]->SetIsActive(false);
 		earthHPUI_[2]->SetIsActive(true);
 		earthHPUI_[3]->SetIsActive(false);
-	} else if (earth_->GetHp() <= 75.0f) {
+	} else if (moon_->GetHp() <= 75.0f) {
 		earthHPUI_[0]->SetIsActive(false);
 		earthHPUI_[1]->SetIsActive(true);
 		earthHPUI_[2]->SetIsActive(false);
@@ -422,9 +422,9 @@ void GameScene::SceneStatePlayUpdate() {
 
 
 
-	if (earth_->GetHp() < 10.0f) {
+	if (moon_->GetHp() < 10.0f) {
 		earthHpNumUI_[1]->SetIsActive(false);
-	} else if (earth_->GetHp() < 100.0f) {
+	} else if (moon_->GetHp() < 100.0f) {
 		earthHpNumUI_[0]->SetIsActive(false);
 	}
 
@@ -438,7 +438,7 @@ void GameScene::SceneStatePlayUpdate() {
 	earthHpNumUI_[2]->SetPosition(earthHpNumUIPosition_ + Vector2(numGap_, 0.0f));
 
 	// HPの数字を桁ごとに分割
-	earthHpNum_ = SplitDigits(static_cast<uint32_t>(earth_->GetHp()));
+	earthHpNum_ = SplitDigits(static_cast<uint32_t>(moon_->GetHp()));
 	// 数字を基に左上をずらして描画
 	for (uint32_t i = 0; i < 3; i++) {
 		earthHpNumUI_[i]->SetLeftTop(Vector2(earthHpNum_[i] * numberTextureSize_.x, 0.0f));
@@ -530,7 +530,7 @@ void GameScene::SceneStatePlayUpdate() {
 	// 
 
 	SUGER::AddColliderList(player_.get());
-	SUGER::AddColliderList(earth_.get());
+	SUGER::AddColliderList(moon_.get());
 	meteoriteManager_->AddColliderList();
 	fragmentManager_->AddColliderList();
 	bumpManager_->AddColliderList();

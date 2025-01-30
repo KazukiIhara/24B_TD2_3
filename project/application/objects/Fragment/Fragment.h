@@ -7,7 +7,7 @@
 #include <optional>
 
 
-class Earth;
+class Moon;
 class Player;
 
 // 隕石のかけら
@@ -22,7 +22,7 @@ public:
 
 	void Initialize(const std::string& name)override;
 
-	void SetEarth(Earth* earth);
+	void SetEarth(Moon* earth);
 
 	// 更新
 	void Update()override;
@@ -127,7 +127,7 @@ private:
 	float kEffectTimer = 1.5f;
 
 private:
-	Earth* earth_ = nullptr;
+	Moon* moon_ = nullptr;
 
 	Player* player_ = nullptr;
 

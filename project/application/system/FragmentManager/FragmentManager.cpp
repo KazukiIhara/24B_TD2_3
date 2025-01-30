@@ -58,7 +58,7 @@ void FragmentManager::AddFragment(const Vector3& popTranslate) {
 	// 新しいかけらを作成
 	std::unique_ptr<Fragment> newFragment = std::make_unique<Fragment>();
 	newFragment->SetPlayer(player_);
-	newFragment->SetEarth(earth_);
+	newFragment->SetEarth(moon_);
 	newFragment->Initialize(SUGER::CreateEntity("Fragment", "Fragment", popTransform));
 	newFragment->CreateCollider(ColliderCategory::Fragment, kSphere, 0.8f);
 	newFragment->SetSerialNumber(currentSerialNumber_);
@@ -81,9 +81,9 @@ void FragmentManager::AddColliderList() {
 	}
 }
 
-void FragmentManager::SetEarth(Earth* earth) {
+void FragmentManager::SetEarth(Moon* earth) {
 	assert(earth);
-	earth_ = earth;
+	moon_ = earth;
 }
 
 void FragmentManager::SetPlayer(Player* player) {

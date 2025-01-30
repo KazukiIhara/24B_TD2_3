@@ -148,7 +148,7 @@ void Player::OnCollision(Collider* other) {
 	ColliderCategory category = other->GetColliderCategory();
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
-		case ColliderCategory::Earth:
+		case ColliderCategory::Moon:
 
 		{
 			//

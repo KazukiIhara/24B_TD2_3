@@ -27,13 +27,13 @@ void TitleScene::Initialize() {
 	// 地球の初期化処理
 	// 
 
-	earth_ = std::make_unique<Earth>();
-	earth_->Initialize(SUGER::CreateEntity("Earth", "Earth"));
-	earth_->CreateCollider(ColliderCategory::Earth, kSphere, 2.0f);
-	earth_->SetScale(2.0f);
-	earth_->GetCollider()->SetMass(200.0f);
-	earth_->SetDamagePieceManager(damagePieceManager_.get());
-	earth_->SetTranslate({ 0,0,3 });
+	moon_ = std::make_unique<Moon>();
+	moon_->Initialize(SUGER::CreateEntity("Earth", "Earth"));
+	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 2.0f);
+	moon_->SetScale(2.0f);
+	moon_->GetCollider()->SetMass(200.0f);
+	moon_->SetDamagePieceManager(damagePieceManager_.get());
+	moon_->SetTranslate({ 0,0,3 });
 	//
 	// Playerの初期化処理
 	//
@@ -91,16 +91,16 @@ void TitleScene::SceneStatePlayUpdate() {
 #endif // _DEBUG
 
 	// 地球の更新
-	earth_->UpdateTitle();
+	moon_->UpdateTitle();
 
-	if (earth_->GetIsHit()) {
-		if (earth_->GetHitLevel() == 1) {
+	if (moon_->GetIsHit()) {
+		if (moon_->GetHitLevel() == 1) {
 			sceneCamera_->Shake(15.0f, 0.5f);
 		}
-		else if (earth_->GetHitLevel() == 2) {
+		else if (moon_->GetHitLevel() == 2) {
 			sceneCamera_->Shake(25.0f, 1.5f);
 		}
-		earth_->SetIsHit(false);
+		moon_->SetIsHit(false);
 	}
 
 

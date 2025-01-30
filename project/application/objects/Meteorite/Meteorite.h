@@ -6,7 +6,7 @@
 
 #include <optional>
 
-class Earth;
+class Moon;
 class FragmentManager;
 class DamagePieceManager;
 class Player;
@@ -24,7 +24,7 @@ public:
 
 	void Initialize(const std::string& name)override;
 
-	void SetEarth(Earth* earth);
+	void SetEarth(Moon* earth);
 	void SetPlayer(Player* earth);
 
 	void SetFragmentManager(FragmentManager* fragmentManager);
@@ -132,7 +132,7 @@ private:
 	uint32_t particleNumber_ = 0;
 
 private:
-	Earth* earth_ = nullptr;
+	Moon* moon_ = nullptr;
 
 	Player* player_ = nullptr;
 
