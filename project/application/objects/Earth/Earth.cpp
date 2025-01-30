@@ -7,6 +7,8 @@
 
 #include "random/Random.h"
 
+#include "objects/player/Player.h"
+
 void Moon::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 	returnMoveTimer_ = 0;
@@ -15,6 +17,9 @@ void Moon::Initialize(const std::string& name) {
 	inclinationRadian_ = DegreesToRadians(inclination_);
 	SetRotate(Vector3(0.0f, 0.0f, -inclinationRadian_));
 
+	SetTranslate(Vector3(distanceToPlayer_, 0.0f, 0.0f));
+
+	SetParent(player_->GetWorldTransformPtr());
 
 }
 
@@ -27,30 +32,31 @@ void Moon::Update() {
 #endif // _DEBUG
 
 
-	if (returnMoveTimer_ > 0) {
+	/*if (returnMoveTimer_ > 0) {
 		returnMoveTimer_ -= SUGER::kDeltaTime_;
 		if (returnMoveTimer_ < 0.1f) {
 			returnMoveTimer_ = 0;
 		}
-	}
+	}*/
 
-	// 移動量を足す
-	if (isAlive_) {
-		SetRotateY(GetRotate().y + std::numbers::pi_v<float>*2.0f / aroundFrame_);
-		SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
-		// コライダーに移動量をセット
-		GetCollider()->SetVelocity(velocity_);
+	
 
-		ReturnPosition();
-	}
+	//// 移動量を足す
+	//if (isAlive_) {
+	//	SetRotateY(GetRotate().y + std::numbers::pi_v<float>*2.0f / aroundFrame_);
+	//	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
+	//	// コライダーに移動量をセット
+	//	GetCollider()->SetVelocity(velocity_);
+
+	//	ReturnPosition();
+	//}
 
 	MoveLimit();
 
 	UpdateLifeState();
 }
 
-void Moon::UpdateTitle()
-{
+void Moon::UpdateTitle() {
 
 #ifdef _DEBUG
 	ImGui::Begin("EarthVelo");
@@ -69,7 +75,6 @@ void Moon::UpdateTitle()
 	// 移動量を足す
 	if (isAlive_) {
 		SetRotateY(GetRotate().y + std::numbers::pi_v<float>*2.0f / aroundFrame_);
-		SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 		// コライダーに移動量をセット
 		GetCollider()->SetVelocity(velocity_);
 	}
@@ -102,41 +107,41 @@ void Moon::OnCollision(Collider* other) {
 			EmitDamegePiece2(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_);
 		}
 	}
+	break;
+	case ColliderCategory::Fragment:
+		earthMass = GetCollider()->GetMass();
+		Vector3 earthVelocity = GetCollider()->GetVelocity();
+		fragmentMass = other->GetMass();
+		Vector3 fragmentVelocity = other->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
+
+
+		EmitDust(normal, normal);
+
+		HP_ -= 5;
+		isObjectHit = true;
+		objectHitLevel = 1;
 		break;
-		case ColliderCategory::Fragment:
-			earthMass = GetCollider()->GetMass();
-			Vector3 earthVelocity = GetCollider()->GetVelocity();
-			fragmentMass = other->GetMass();
-			Vector3 fragmentVelocity = other->GetVelocity();
-			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-			Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
+	case ColliderCategory::Meteorite:
+	{
+		earthMass = GetCollider()->GetMass();
+		Vector3 earthVelocity = GetCollider()->GetVelocity();
+		playerMass = other->GetMass();
+		Vector3 playerVelocity = other->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+		velocity_ = velocity;
+		returnMoveTimer_ = kReturnMoveTime_;
 
 
-			EmitDust(normal, normal);
+		EmitDust(normal, normal);
 
-			HP_ -= 5;
-			isObjectHit = true;
-			objectHitLevel = 1;
-			break;
-		case ColliderCategory::Meteorite:
-		{
-			earthMass = GetCollider()->GetMass();
-			Vector3 earthVelocity = GetCollider()->GetVelocity();
-			playerMass = other->GetMass();
-			Vector3 playerVelocity = other->GetVelocity();
-			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-			Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
-			velocity_ = velocity;
-			returnMoveTimer_ = kReturnMoveTime_;
-
-
-			EmitDust(normal, normal);
-
-			isObjectHit = true;
-			objectHitLevel = 2;
-		}
-		HP_ -= 25;
-		break;
+		isObjectHit = true;
+		objectHitLevel = 2;
+	}
+	HP_ -= 25;
+	break;
 	}
 }
 
@@ -242,11 +247,10 @@ void Moon::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterContro
 	emit->Emit();
 }
 
-void Moon::EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager)
-{
+void Moon::EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager) {
 	Vector3 velocity = (veloctiy);
 
-	
+
 
 	Vector3 radomVelo{};
 	radomVelo.x = velocity.x * Random::GenerateFloat(0.25f, 2.5f);
@@ -255,11 +259,10 @@ void Moon::EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamagePi
 
 	Vector3 pospos = (pos);
 
-	damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f,false,{0.12f,0.17f},{ 0.604f, 0.384f, 0.161f ,1.0f},{1.5f,2.5f});
+	damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.12f,0.17f }, { 0.604f, 0.384f, 0.161f ,1.0f }, { 1.5f,2.5f });
 }
 
-void Moon::EmitDamegePiece2(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager)
-{
+void Moon::EmitDamegePiece2(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager) {
 	Vector3 velocity = (veloctiy);
 
 

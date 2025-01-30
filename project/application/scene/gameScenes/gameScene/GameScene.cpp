@@ -41,22 +41,13 @@ void GameScene::Initialize() {
 	damagePieceManager_ = std::make_unique<DamagePieceManager>();
 	damagePieceManager_->Initialize();
 
-	// 
-	// 地球の初期化処理
-	// 
 
-	moon_ = std::make_unique<Moon>();
-	moon_->Initialize(SUGER::CreateEntity("Earth", "Earth"));
-	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 2.0f);
-	moon_->SetScale(2.0f);
-	moon_->GetCollider()->SetMass(200.0f);
-	moon_->SetDamagePieceManager(damagePieceManager_.get());
 	//
 	// Playerの初期化処理
 	//
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize(SUGER::CreateEntity("Player", "Moon"));
+	player_->Initialize(SUGER::CreateEntity("Player", "Earth"));
 	// プレイヤーのコライダーを作成
 	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.0f);
 	player_->GetCollider()->SetMass(20.0f);
@@ -76,6 +67,18 @@ void GameScene::Initialize() {
 	light_->GetPunctualLight().spotLight.distance = 100.0f;
 	light_->GetPunctualLight().spotLight.cosAngle = 1.0f;
 	light_->GetPunctualLight().spotLight.cosFalloffStart = 0.99f;
+
+	// 
+	// 月の初期化処理
+	// 
+
+	moon_ = std::make_unique<Moon>();
+	moon_->SetPlayer(player_.get());
+	moon_->Initialize(SUGER::CreateEntity("Moon", "Moon"));
+	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 2.0f);
+	moon_->SetScale(2.0f);
+	moon_->GetCollider()->SetMass(200.0f);
+	moon_->SetDamagePieceManager(damagePieceManager_.get());
 
 	// 
 	// かけらマネージャの初期化処理

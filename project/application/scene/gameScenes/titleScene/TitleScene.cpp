@@ -23,27 +23,35 @@ void TitleScene::Initialize() {
 	damagePieceManager_ = std::make_unique<DamagePieceManager>();
 	damagePieceManager_->Initialize();
 
-	// 
-	// 地球の初期化処理
-	// 
-
-	moon_ = std::make_unique<Moon>();
-	moon_->Initialize(SUGER::CreateEntity("Earth", "Earth"));
-	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 2.0f);
-	moon_->SetScale(2.0f);
-	moon_->GetCollider()->SetMass(200.0f);
-	moon_->SetDamagePieceManager(damagePieceManager_.get());
-	moon_->SetTranslate({ 0,0,3 });
 	//
 	// Playerの初期化処理
 	//
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize(SUGER::CreateEntity("Player", "Moon"));
+	player_->Initialize(SUGER::CreateEntity("Player", "Earth"));
 	// プレイヤーのコライダーを作成
 	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.0f);
 	player_->GetCollider()->SetMass(20.0f);
 	player_->SetTranslate(Vector3{ -10.5f, -0.5f, 0 });
+
+
+	// 
+	// 月の初期化処理
+	// 
+
+	moon_ = std::make_unique<Moon>();
+	moon_->SetPlayer(player_.get());
+	moon_->Initialize(SUGER::CreateEntity("Moon", "Moon"));
+	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 2.0f);
+	moon_->SetScale(2.0f);
+	moon_->GetCollider()->SetMass(200.0f);
+	moon_->SetDamagePieceManager(damagePieceManager_.get());
+	moon_->SetTranslate({ 0,0,3 });
+
+
+	//
+	// ライトの処理
+	//
 
 	light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
 	light_->GetPunctualLight().pointLight.intensity = 7.0f;
@@ -61,15 +69,15 @@ void TitleScene::Initialize() {
 	light_->GetPunctualLight().spotLight.cosAngle = 1.0f;
 	light_->GetPunctualLight().spotLight.cosFalloffStart = 0.99f;
 
-	sceneCamera_->SetTranslate({-10.5f,0.25f,-3.5});
-	sceneCamera_->SetRotate({0.0f,0.6f,0}); 
-	
+	sceneCamera_->SetTranslate({ -10.5f,0.25f,-3.5 });
+	sceneCamera_->SetRotate({ 0.0f,0.6f,0 });
+
 
 	A_UI_ = std::make_unique<Object2DController>();
-	A_UI_->Initialize(SUGER::Create2DObject("A","A.png"));
+	A_UI_->Initialize(SUGER::Create2DObject("A", "A.png"));
 	A_UI_->SetAnchorPoint({ 0.5f,0.5f });
-	A_UI_->SetPosition({1920/2,870});
-	A_UI_->SetSize({64*3,64*3});
+	A_UI_->SetPosition({ 1920 / 2,870 });
+	A_UI_->SetSize({ 64 * 3,64 * 3 });
 }
 
 
@@ -96,8 +104,7 @@ void TitleScene::SceneStatePlayUpdate() {
 	if (moon_->GetIsHit()) {
 		if (moon_->GetHitLevel() == 1) {
 			sceneCamera_->Shake(15.0f, 0.5f);
-		}
-		else if (moon_->GetHitLevel() == 2) {
+		} else if (moon_->GetHitLevel() == 2) {
 			sceneCamera_->Shake(25.0f, 1.5f);
 		}
 		moon_->SetIsHit(false);
@@ -106,12 +113,11 @@ void TitleScene::SceneStatePlayUpdate() {
 
 	if (++time_ >= 40) {
 		time_ = 0;
-		clock_ *= -1; 
+		clock_ *= -1;
 	}
 	if (clock_ == 1) {
 		A_UI_->SetIsActive(true);
-	}
-	else {
+	} else {
 		A_UI_->SetIsActive(false);
 	}
 
@@ -119,7 +125,7 @@ void TitleScene::SceneStatePlayUpdate() {
 	//light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
 	//light_->GetPunctualLight().spotLight.direction = Normalize(player_->GetTranslate() - sceneCamera_->GetWorldPos());
 
-	
+
 	// プレイヤーの更新処理
 	//player_->Update();
 
