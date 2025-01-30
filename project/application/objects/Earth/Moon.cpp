@@ -181,6 +181,14 @@ float Moon::GetAroundFrame() const {
 	return aroundFrame_;
 }
 
+void Moon::AttackInitialize() {
+
+}
+
+void Moon::AttackUpdate() {
+
+}
+
 void Moon::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit) {
 	std::string name_ = emitName;
 	// エミッターの作成

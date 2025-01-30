@@ -50,6 +50,10 @@ public:
 
 	float GetAroundFrame() const;
 
+
+	void AttackInitialize();
+	void AttackUpdate();
+
 private:
 	/// <summary>
 	/// 
