@@ -48,7 +48,7 @@ public:
 
 private:
 
-	WorldTransform loaclTransform_{};
+	WorldTransform localTransform_{};
 
 	// 定数
 	const std::string kParamaterString = "PlayerParamater";
@@ -66,6 +66,9 @@ private:
 	float rotationSpeed_ = 0.1f;
 	// 大きさ
 	float scale_ = 1.0f;
+
+	// 月の回転速度
+	float moonRotationSpeed_ = 0.01f;
 
 	// 移動できる範囲
 	float stageWidth_ = 32.0f;

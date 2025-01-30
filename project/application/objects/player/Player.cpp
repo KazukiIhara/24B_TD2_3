@@ -6,7 +6,7 @@
 
 void Player::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
-	loaclTransform_.Initialize();
+	localTransform_.Initialize();
 
 	// プレイヤーのパラメータをグローバルデータグループに登録
 	SUGER::AddGrobalDataGroup(kParamaterString);
@@ -50,9 +50,10 @@ void Player::Update() {
 	Move();
 	MoveLimit();
 
-	loaclTransform_.translate_ = GetWorldTransformPtr()->translate_;
+	localTransform_.rotate_.y += rotationSpeed_;
+	localTransform_.translate_ = GetWorldTransformPtr()->translate_;
 
-	loaclTransform_.Update();
+	localTransform_.Update();
 }
 
 void Player::SetParamaters() {
@@ -77,6 +78,8 @@ void Player::Operation() {
 	// 移動方向を初期化
 	moveVector_ = { 0.0f,0.0f,0.0f };
 	rotateDirection_ = 0.0f;
+
+
 
 	// キーボード操作
 	if (SUGER::PushKey(DIK_W)) {
@@ -133,7 +136,7 @@ void Player::Move() {
 	GetCollider()->SetVelocity(velocity_);
 
 	// 回転
-	loaclTransform_.rotate_.z += +rotateDirection_ * rotationSpeed_;
+	localTransform_.rotate_.z += +rotateDirection_ * rotationSpeed_;
 
 }
 
@@ -265,6 +268,6 @@ Vector3 Player::RotatePosition(const Vector3& position, float angle) {
 }
 
 WorldTransform* Player::GetLocalTransform() {
-	return &loaclTransform_;
+	return &localTransform_;
 }
 
