@@ -100,6 +100,10 @@ void Player::Operation() {
 		rotateDirection_ -= 1.0f;
 	}
 
+	if (SUGER::TriggerKey(DIK_SPACE)) {
+		Shot();
+	}
+
 
 	if (SUGER::IsGamepadConnected(0)) {
 		// パッド操作

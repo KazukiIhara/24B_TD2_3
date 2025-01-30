@@ -83,7 +83,7 @@ void GameScene::Initialize() {
 	moon_->SetDamagePieceManager(damagePieceManager_.get());
 	moon_->UpdateWorldTransform();
 
-
+	player_->SetMoon(moon_.get());
 
 	// 
 	// かけらマネージャの初期化処理

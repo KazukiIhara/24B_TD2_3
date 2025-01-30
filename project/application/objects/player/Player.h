@@ -6,6 +6,8 @@
 
 class BumpManager;
 
+class Moon;
+
 class Player: public EntityController {
 public:
 	Player() = default;
@@ -40,7 +42,9 @@ public:
 	WorldTransform* GetLocalTransform();
 
 public:
-
+	void SetMoon(Moon* moon) {
+		moon_ = moon;
+	}
 
 	void SetBumpManager(BumpManager* bumpManager) {
 		bumpManager_ = bumpManager;
@@ -102,5 +106,8 @@ private:
 	const float aroundFrame_ = 300.0f;
 	float inclination_ = 23.4f;
 	float inclinationRadian_ = 0.0f;
+
+
+	Moon* moon_ = nullptr;
 
 };
