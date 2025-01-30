@@ -15,7 +15,7 @@ void BumpManager::Update()
 	// コンテナ内のかけらすべてを更新
 	for (auto& bump : bumps_) {
 		bump->Update();
-		if (10 >= Distance(earth_->GetTranslate(), player_->GetTranslate())) {
+		if (10 >= Distance(moon_->GetTranslate(), player_->GetTranslate())) {
 			bump->GrowthBump();
 		}
 	}

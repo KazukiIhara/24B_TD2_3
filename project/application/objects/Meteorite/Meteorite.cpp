@@ -15,9 +15,9 @@ void Meteorite::Initialize(const std::string& name) {
 	damagePieceTime_ = kDamagePieceTime_;
 }
 
-void Meteorite::SetEarth(Earth* earth) {
+void Meteorite::SetEarth(Moon* earth) {
 	assert(earth);
-	earth_ = earth;
+	moon_ = earth;
 }
 
 void Meteorite::SetPlayer(Player* player) {
@@ -107,7 +107,7 @@ void Meteorite::OnCollision(Collider* other) {
 			EmitDust(normal, normal);
 		}
 		break;
-	case ColliderCategory::Earth:
+	case ColliderCategory::Moon:
 		if (behavior_ != Behavior::kBreak) {
 			behaviorRequest_ = Behavior::kBreak;
 		}
@@ -123,7 +123,7 @@ void Meteorite::RootInitialize() {
 
 void Meteorite::RootUpdate() {
 
-	Vector3 target = ExtractionWorldPos(earth_->GetWorldTransformPtr()->worldMatrix_);
+	Vector3 target = ExtractionWorldPos(moon_->GetWorldTransformPtr()->worldMatrix_);
 	// 目標に対して保管移動
 	velocity_ = Lerp(GetTranslate(), target, speed_) - GetTranslate();
 	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
@@ -195,11 +195,11 @@ void Meteorite::Atmosphere()
 {
 	float color = 1.0f; // 初期カラー値
 
-	if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - earth_->GetCollider()->GetWorldPosition())) {
+	if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - moon_->GetCollider()->GetWorldPosition())) {
 		damagePieceTime_ -= SUGER::kDeltaTime_;
 		
 		// 対象が地球の大気圏内にいる場合、カラーを変化させます
-		color = (Length(GetCollider()->GetWorldPosition() - earth_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
+		color = (Length(GetCollider()->GetWorldPosition() - moon_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
 
 		Vector3 min = -(velocity_ * 0.85f);
 		Vector3 max = -(velocity_ * 1.15f);

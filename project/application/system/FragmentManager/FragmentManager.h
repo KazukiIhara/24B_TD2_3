@@ -5,7 +5,7 @@
 #include <vector>
 #include <list>
 
-class Earth;
+class Moon;
 class Player;
 
 enum class FragmentPopPlace {
@@ -30,7 +30,7 @@ public:
 
 	void AddColliderList();
 
-	void SetEarth(Earth* earth);
+	void SetEarth(Moon* earth);
 	void SetPlayer(Player* player);
 
 	void PopFragments();
@@ -57,7 +57,7 @@ private:
 	int count = 0;
 
 private:
-	Earth* earth_ = nullptr;
+	Moon* moon_ = nullptr;
 	Player* player_ = nullptr;
 
 };

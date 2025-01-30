@@ -7,7 +7,7 @@
 
 #include "random/Random.h"
 
-void Earth::Initialize(const std::string& name) {
+void Moon::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 	returnMoveTimer_ = 0;
 	isAlive_ = true;
@@ -18,7 +18,7 @@ void Earth::Initialize(const std::string& name) {
 
 }
 
-void Earth::Update() {
+void Moon::Update() {
 
 #ifdef _DEBUG
 	ImGui::Begin("EarthVelo");
@@ -49,7 +49,7 @@ void Earth::Update() {
 	UpdateLifeState();
 }
 
-void Earth::UpdateTitle()
+void Moon::UpdateTitle()
 {
 
 #ifdef _DEBUG
@@ -79,7 +79,7 @@ void Earth::UpdateTitle()
 	UpdateLifeState();
 }
 
-void Earth::OnCollision(Collider* other) {
+void Moon::OnCollision(Collider* other) {
 	// 衝突相手のカテゴリーを取得
 	ColliderCategory category = other->GetColliderCategory();
 	// カテゴリごとに衝突判定を書く
@@ -140,7 +140,7 @@ void Earth::OnCollision(Collider* other) {
 	}
 }
 
-void Earth::MoveLimit() {
+void Moon::MoveLimit() {
 	Vector3 translate_ = GetTranslate();
 	if (translate_.x > stageWidth_ || translate_.x < -stageWidth_ ||
 		translate_.y < -stageHeight_ || translate_.y > stageHeight_) {
@@ -151,18 +151,18 @@ void Earth::MoveLimit() {
 	}
 }
 
-void Earth::UpdateLifeState() {
+void Moon::UpdateLifeState() {
 	if (HP_ <= 0.0f) {
 		isAlive_ = false;
 		HP_ = 0.0f;
 	}
 }
 
-float& Earth::GetHp() {
+float& Moon::GetHp() {
 	return HP_;
 }
 
-void Earth::SetPraticle() {
+void Moon::SetPraticle() {
 	emitterDustRed_ = std::make_unique<EmitterController>();
 	emitterDustYellow_ = std::make_unique<EmitterController>();
 	emitterDustGray_ = std::make_unique<EmitterController>();
@@ -175,11 +175,11 @@ void Earth::SetPraticle() {
 
 }
 
-float Earth::GetAroundFrame() const {
+float Moon::GetAroundFrame() const {
 	return aroundFrame_;
 }
 
-void Earth::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit) {
+void Moon::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit) {
 	std::string name_ = emitName;
 	// エミッターの作成
 	SUGER::CreateEmitter(name_);
@@ -215,7 +215,7 @@ void Earth::CreateEmit(const std::string praticleName, const std::string emitNam
 	emit->SetMinColor(color);
 }
 
-void Earth::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit) {
+void Moon::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit) {
 	Vector3 velocity = (veloctiy);
 
 	Vector3 min = (velocity * 0.25f);
@@ -242,7 +242,7 @@ void Earth::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterContr
 	emit->Emit();
 }
 
-void Earth::EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager)
+void Moon::EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager)
 {
 	Vector3 velocity = (veloctiy);
 
@@ -258,7 +258,7 @@ void Earth::EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamageP
 	damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f,false,{0.12f,0.17f},{ 0.604f, 0.384f, 0.161f ,1.0f},{1.5f,2.5f});
 }
 
-void Earth::EmitDamegePiece2(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager)
+void Moon::EmitDamegePiece2(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager)
 {
 	Vector3 velocity = (veloctiy);
 
@@ -274,7 +274,7 @@ void Earth::EmitDamegePiece2(const Vector3& pos, const Vector3& veloctiy, Damage
 	damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.05f,0.10f }, {}, { 0.5f,1.0f });
 }
 
-void Earth::EmitDust(const Vector3& pos, const Vector3& veloctiy) {
+void Moon::EmitDust(const Vector3& pos, const Vector3& veloctiy) {
 	EmitMinMax(pos, Normalize(veloctiy) * 3, emitterDustRed_.get()); // 赤
 	EmitMinMax(pos, Normalize(veloctiy) * 2, emitterDustYellow_.get()); //黄色
 	EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterDustGray_.get());
@@ -285,7 +285,7 @@ void Earth::EmitDust(const Vector3& pos, const Vector3& veloctiy) {
 	}
 }
 
-void Earth::ReturnPosition() {
+void Moon::ReturnPosition() {
 	Vector3 translate_ = GetTranslate();
 	if (returnMoveTimer_ == 0) {
 		if (translate_ != Vector3{ 0,0,0 }) {

@@ -5,10 +5,10 @@
 #include "VFX/particle/emitterController/EmitterController.h"
 
 class DamagePieceManager;
-class Earth : public EntityController {
+class Moon : public EntityController {
 public:
-	Earth() = default;
-	~Earth() = default;
+	Moon() = default;
+	~Moon() = default;
 
 	void Initialize(const std::string& name)override;
 

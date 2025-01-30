@@ -5,7 +5,7 @@
 #include "list"
 
 class Player;
-class Earth;
+class Moon;
 
 // たんこぶマネージャ
 class BumpManager {
@@ -23,7 +23,7 @@ public:
 
 	void SetPlayer(Player* player) { player_ = player; };
 
-	void SetEarth(Earth* earth) { earth_ = earth; }
+	void SetEarth(Moon* earth) { moon_ = earth; }
 
 private:
 	// たんこぶのリスト
@@ -31,7 +31,7 @@ private:
 
 	// プレイヤー
 	Player* player_ = nullptr;
-	Earth* earth_ = nullptr;
+	Moon* moon_ = nullptr;
 
 	uint32_t currentSerialNumber_ = 0;
 };

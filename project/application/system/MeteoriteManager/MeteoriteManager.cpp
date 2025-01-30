@@ -7,12 +7,12 @@
 
 #include "random/Random.h"
 
-void MeteoriteManager::Initialize(Earth* earth, Player* player, FragmentManager* fragmentManager, DamagePieceManager* damagePieceManager) {
+void MeteoriteManager::Initialize(Moon* earth, Player* player, FragmentManager* fragmentManager, DamagePieceManager* damagePieceManager) {
 	assert(earth);
 	assert(player);
 	assert(fragmentManager);
 	assert(damagePieceManager);
-	earth_ = earth;
+	moon_ = earth;
 	player_ = player;
 	fragmentManager_ = fragmentManager;
 	damagePieceManager_ = damagePieceManager;
@@ -63,7 +63,7 @@ void MeteoriteManager::AddMeteorite(const Vector3& popTranslate) {
 	// 新しい隕石を作成
 	std::unique_ptr<Meteorite> newMeteorite = std::make_unique<Meteorite>();
 	newMeteorite->Initialize(SUGER::CreateEntity("Meteorite", "Meteorite", popTransform));
-	newMeteorite->SetEarth(earth_);
+	newMeteorite->SetEarth(moon_);
 	newMeteorite->SetPlayer(player_);
 	newMeteorite->SetFragmentManager(fragmentManager_);
 	newMeteorite->SetDamagePieceManager(damagePieceManager_);

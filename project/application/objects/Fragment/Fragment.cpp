@@ -12,7 +12,7 @@
 void Fragment::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 
-	velocity_ = CalculateDirection(GetTranslate(), earth_->GetTranslate(), 60.0f);
+	velocity_ = CalculateDirection(GetTranslate(), moon_->GetTranslate(), 60.0f);
 
 	playerHitTimer_ = 0;
 	isAlive_ = true;
@@ -20,9 +20,9 @@ void Fragment::Initialize(const std::string& name) {
 
 }
 
-void Fragment::SetEarth(Earth* earth) {
+void Fragment::SetEarth(Moon* earth) {
 	assert(earth);
-	earth_ = earth;
+	moon_ = earth;
 }
 
 void Fragment::Update() {
@@ -87,7 +87,7 @@ void Fragment::OnCollision(Collider* other) {
 		emitter_->Emit();
 		emitterDust_->Emit();
 		break;
-	case ColliderCategory::Earth:
+	case ColliderCategory::Moon:
 		HP_ -= 3;
 		EmitFragment(velocity_);
 		break;
@@ -177,9 +177,9 @@ void Fragment::Atmosphere()
 {
 	float color = 1.0f; // 初期カラー値
 
-	if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - earth_->GetCollider()->GetWorldPosition())) {
+	if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - moon_->GetCollider()->GetWorldPosition())) {
 		// 対象が地球の大気圏内にいる場合、カラーを変化させます
-		color = (Length(GetCollider()->GetWorldPosition() - earth_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
+		color = (Length(GetCollider()->GetWorldPosition() - moon_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
 		
 		Vector3 min = -(velocity_ * 0.85f);
 		Vector3 max = -(velocity_ * 1.15f);

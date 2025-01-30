@@ -32,7 +32,7 @@ private:
 	// プレイヤー
 	std::unique_ptr<Player> player_ = nullptr;
 	// 地球
-	std::unique_ptr<Earth> earth_ = nullptr;
+	std::unique_ptr<Moon> moon_ = nullptr;
 
 	// 天球
 	std::unique_ptr<Skydome> skydome_ = nullptr;
