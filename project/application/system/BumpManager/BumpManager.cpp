@@ -3,7 +3,7 @@
 #include "framework/SUGER.h"
 
 #include"application/objects/player/Player.h"
-#include "application/objects/Earth/Earth.h"
+#include "application/objects/Earth/Moon.h"
 
 void BumpManager::Initialize() 
 {

@@ -36,7 +36,7 @@ void GameScene::Initialize() {
 	skydome_->GetUVTransform().scale = { 10.0f,10.0f };
 
 	//
-	//
+	// 
 	//
 	damagePieceManager_ = std::make_unique<DamagePieceManager>();
 	damagePieceManager_->Initialize();
