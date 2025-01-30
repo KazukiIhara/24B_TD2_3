@@ -30,6 +30,8 @@ public:
 	// 移動制限
 	void MoveLimit();
 
+	void Shot();
+
 	// 衝突コールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
 

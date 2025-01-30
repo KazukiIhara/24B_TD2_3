@@ -5,12 +5,17 @@
 #include "VFX/particle/emitterController/EmitterController.h"
 
 class DamagePieceManager;
+class Player;
 class Moon : public EntityController {
 public:
 	Moon() = default;
 	~Moon() = default;
 
 	void Initialize(const std::string& name)override;
+
+	void SetPlayer(Player* player) {
+		player_ = player;
+	}
 
 	// 更新
 	void Update()override;
@@ -108,5 +113,7 @@ private:
 
 
 	DamagePieceManager* damagePieceManager_ = nullptr;
+
+	Player* player_ = nullptr;
 
 };

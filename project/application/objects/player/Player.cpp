@@ -154,6 +154,10 @@ void Player::MoveLimit() {
 	SetTranslate(translate_);
 }
 
+void Player::Shot() {
+
+}
+
 void Player::OnCollision(Collider* other) {
 	// 衝突相手のカテゴリーを取得
 	ColliderCategory category = other->GetColliderCategory();
