@@ -11,6 +11,10 @@ void Player::Initialize(const std::string& name) {
 	// プレイヤーのパラメータをグローバルデータグループに登録
 	SUGER::AddGrobalDataGroup(kParamaterString);
 
+	inclinationRadian_ = DegreesToRadians(inclination_);
+	SetRotate(Vector3(0.0f, 0.0f, -inclinationRadian_));
+
+
 	// 各パラメータをリストに登録
 	SUGER::AddGrobalDataItem(kParamaterString, "Speed", kSpeed_);
 	SUGER::AddGrobalDataItem(kParamaterString, "MaxSpeed", kMaxSpeed_);
@@ -35,6 +39,10 @@ void Player::Update() {
 	ImGui::InputFloat3("acceralation", &acceralation_.x);
 	ImGui::End();
 #endif // =DEBUG
+
+	// 自転
+	SetRotateY(GetRotate().y + std::numbers::pi_v<float>*2.0f / aroundFrame_);
+
 
 	HitTimersUpdate();
 	SetParamaters();

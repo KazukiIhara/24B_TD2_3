@@ -80,7 +80,6 @@ void GameScene::Initialize() {
 	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 2.0f);
 	moon_->GetCollider()->SetMass(200.0f);
 	moon_->SetDamagePieceManager(damagePieceManager_.get());
-	moon_->SetScale(0.7f);
 
 	// 
 	// かけらマネージャの初期化処理

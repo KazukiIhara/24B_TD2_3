@@ -14,8 +14,6 @@ void Moon::Initialize(const std::string& name) {
 	returnMoveTimer_ = 0;
 	isAlive_ = true;
 	
-	inclinationRadian_ = DegreesToRadians(inclination_);
-	SetRotate(Vector3(0.0f, 0.0f, -inclinationRadian_));
 
 	SetTranslate(Vector3(distanceToPlayer_, 0.0f, 0.0f));
 

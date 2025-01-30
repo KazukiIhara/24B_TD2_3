@@ -92,4 +92,10 @@ private:
 	Vector3 bumpDirection_{};
 
 	BumpManager* bumpManager_ = nullptr;
+
+	// 一周するフレーム
+	const float aroundFrame_ = 300.0f;
+	float inclination_ = 23.4f;
+	float inclinationRadian_ = 0.0f;
+
 };

@@ -98,8 +98,6 @@ private:
 	float HP_ = 100.0f;
 
 	bool isAlive_ = true;
-	float inclination_ = 23.4f;
-	float inclinationRadian_ = 0.0f;
 
 	// 当たった物体の大きさ(これでカメラのシェイクの大きさが決まる)
 	int objectHitLevel = 0;
