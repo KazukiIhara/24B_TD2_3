@@ -12,8 +12,7 @@
 void Moon::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 	returnMoveTimer_ = 0;
-	isAlive_ = true;
-
+	
 
 	SetTranslate(Vector3(5.0f, 0.0f, 0.0f));
 
@@ -68,7 +67,6 @@ void Moon::Update() {
 
 	MoveLimit();
 
-	UpdateLifeState();
 }
 
 void Moon::UpdateTitle() {
@@ -88,13 +86,11 @@ void Moon::UpdateTitle() {
 	}
 
 	// 移動量を足す
-	if (isAlive_) {
-		SetRotateY(GetRotate().y + std::numbers::pi_v<float>*2.0f / aroundFrame_);
-	}
-
+	SetRotateY(GetRotate().y + std::numbers::pi_v<float>*2.0f / aroundFrame_);
+	
 	MoveLimit();
 
-	UpdateLifeState();
+	
 }
 
 void Moon::OnCollision(Collider* other) {
@@ -104,6 +100,7 @@ void Moon::OnCollision(Collider* other) {
 	float earthMass{};
 	float playerMass{};
 	float fragmentMass{};
+	HitParticleTimer_ -= SUGER::kDeltaTime_;
 	switch (category) {
 		case ColliderCategory::Player:
 		{
@@ -132,9 +129,8 @@ void Moon::OnCollision(Collider* other) {
 
 			EmitDust(normal, normal);
 
-			HP_ -= 5;
-			isObjectHit = true;
-			objectHitLevel = 1;
+			
+			
 			break;
 		case ColliderCategory::Meteorite:
 		{
@@ -147,13 +143,14 @@ void Moon::OnCollision(Collider* other) {
 			velocity_ = velocity;
 			returnMoveTimer_ = kReturnMoveTime_;
 
+			if (HitParticleTimer_ <= 0) {
+				EmitDust(normal, normal);
+				HitParticleTimer_ = 1;
+			}
 
-			EmitDust(normal, normal);
-
-			isObjectHit = true;
-			objectHitLevel = 2;
+			
 		}
-		HP_ -= 25;
+		
 		break;
 	}
 }
@@ -169,17 +166,6 @@ void Moon::MoveLimit() {
 		velocity_.y = -velocity_.y;
 	}
 	SetTranslate(translate_);
-}
-
-void Moon::UpdateLifeState() {
-	if (HP_ <= 0.0f) {
-		isAlive_ = false;
-		HP_ = 0.0f;
-	}
-}
-
-float& Moon::GetHp() {
-	return HP_;
 }
 
 void Moon::SetPraticle() {
@@ -227,13 +213,10 @@ void Moon::AttackInitialize() {
 
 void Moon::AttackUpdate() {
 	// 移動量を足す
-	if (isAlive_) {
+	//if (isAlive_) {
 		SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 		// コライダーに移動量をセット
 		GetCollider()->SetVelocity(velocity_);
-	}
-
-
 }
 
 void Moon::BackInitialize() {

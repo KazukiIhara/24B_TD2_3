@@ -42,6 +42,10 @@ public:
 	// 月射出
 	void Shot();
 
+	// 生死処理
+	void UpdateLifeState();
+
+
 	// 衝突コールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
 
@@ -66,6 +70,19 @@ public:
 		bumpManager_ = bumpManager;
 	};
 
+	bool GetIsHit() const {
+		return isObjectHit;
+	};
+
+	void SetIsHit(bool hit) {
+		isObjectHit = hit;
+	}
+
+	int GetHitLevel() {
+		return objectHitLevel;
+	}
+	
+	float& GetHp();
 private:
 
 	Behavior behavior_ = Behavior::kRoot;
@@ -128,6 +145,7 @@ private:
 	float inclinationRadian_ = 0.0f;
 
 
+
 	// 月をキャッチする距離
 	float moonCatchDistance_ = 5.0f;
 
@@ -136,6 +154,14 @@ private:
 
 	const int32_t catchTime_ = 30;
 	int32_t catchTimer_ = 0;
+
+	float HP_ = 100.0f;
+	bool isAlive_ = true;
+	// 当たった物体の大きさ(これでカメラのシェイクの大きさが決まる)
+	int objectHitLevel = 0;
+	bool isObjectHit = false;
+
+
 
 	Moon* moon_ = nullptr;
 

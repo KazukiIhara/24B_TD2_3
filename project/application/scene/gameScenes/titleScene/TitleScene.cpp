@@ -101,13 +101,13 @@ void TitleScene::SceneStatePlayUpdate() {
 	// 地球の更新
 	moon_->UpdateTitle();
 
-	if (moon_->GetIsHit()) {
-		if (moon_->GetHitLevel() == 1) {
+	if (player_->GetIsHit()) {
+		if (player_->GetHitLevel() == 1) {
 			sceneCamera_->Shake(15.0f, 0.5f);
-		} else if (moon_->GetHitLevel() == 2) {
+		} else if (player_->GetHitLevel() == 2) {
 			sceneCamera_->Shake(25.0f, 1.5f);
 		}
-		moon_->SetIsHit(false);
+		player_->SetIsHit(false);
 	}
 
 

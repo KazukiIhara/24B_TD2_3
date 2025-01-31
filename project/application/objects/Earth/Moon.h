@@ -37,28 +37,16 @@ public:
 	// 初期位置に戻る
 	void ReturnPosition();
 
-	// 生死処理
-	void UpdateLifeState();
-
-	float& GetHp();
-
+	
 	void SetPraticle();
 
-	bool GetIsHit() const {
-		return isObjectHit;
-	};
-
-	void SetIsHit(bool hit) {
-		isObjectHit = hit;
-	}
+	
 
 	void SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 		damagePieceManager_ = damagePieceManager;
 	}
 
-	int GetHitLevel() {
-		return objectHitLevel;
-	}
+	
 
 	float GetAroundFrame() const;
 
@@ -107,7 +95,7 @@ private:
 	std::unique_ptr<EmitterController> emitterDustBlack_; // 黒っぽい色
 
 
-
+	float HitParticleTimer_ = 0;
 private:
 	// ふるまい
 	Behavior behavior_ = Behavior::kRoot;
@@ -128,13 +116,11 @@ private:
 	float returnMoveTimer_ = 0.0f;
 	float returnSpeed_ = 0.9f;
 
-	float HP_ = 100.0f;
-
-	bool isAlive_ = true;
+	
 
 	// 当たった物体の大きさ(これでカメラのシェイクの大きさが決まる)
-	int objectHitLevel = 0;
-	bool isObjectHit = false;
+	//int objectHitLevel = 0;
+	//bool isObjectHit = false;
 
 	// プレイヤーとの距離
 	float speed_ = 20.0f;
