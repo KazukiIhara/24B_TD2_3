@@ -4,6 +4,8 @@
 
 #include "application/system/BumpManager/BumpManager.h"
 
+#include "objects/Earth/Moon.h"
+
 void Player::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 	localTransform_.Initialize();
@@ -160,7 +162,7 @@ void Player::MoveLimit() {
 }
 
 void Player::Shot() {
-
+	moon_->AttackRequest();
 }
 
 void Player::OnCollision(Collider* other) {
