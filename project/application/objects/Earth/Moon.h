@@ -4,18 +4,23 @@
 
 #include "VFX/particle/emitterController/EmitterController.h"
 
+#include <optional>
+
 class DamagePieceManager;
 class Player;
-class Moon : public EntityController {
+class Moon: public EntityController {
+public:
+	enum class Behavior {
+		kRoot,
+		kAttack,
+	};
 public:
 	Moon() = default;
 	~Moon() = default;
 
 	void Initialize(const std::string& name)override;
 
-	void SetPlayer(Player* player) {
-		player_ = player;
-	}
+	void SetPlayer(Player* player);
 
 	// 更新
 	void Update()override;
@@ -38,17 +43,30 @@ public:
 
 	void SetPraticle();
 
-	bool GetIsHit() const { return isObjectHit; };
+	bool GetIsHit() const {
+		return isObjectHit;
+	};
 
-	void SetIsHit(bool hit) { isObjectHit = hit; }
+	void SetIsHit(bool hit) {
+		isObjectHit = hit;
+	}
 
 	void SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 		damagePieceManager_ = damagePieceManager;
 	}
 
-	int GetHitLevel() { return objectHitLevel; }
+	int GetHitLevel() {
+		return objectHitLevel;
+	}
 
 	float GetAroundFrame() const;
+
+	void AttackRequest();
+
+	void RootInitialize();
+	void RootUpdate();
+	void AttackInitialize();
+	void AttackUpdate();
 
 private:
 	/// <summary>
@@ -61,11 +79,11 @@ private:
 	/// <param name="lifeTime"></param> 生存時間(Vector2){x = min,y = max}
 	/// <param name="color"></param> カラー(Vector)　
 	/// <param name="emit"></param> エミッタークラス
-	void CreateEmit(const std::string praticleName, const std::string emitName, int count, float size,Vector2 lifeTime ,Vector3 color, EmitterController* emit);
+	void CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit);
 
-	void EmitMinMax(const Vector3& pos,const Vector3& veloctiy, EmitterController* emit);
-	void EmitDamegePiece(const Vector3& pos,const Vector3& veloctiy, DamagePieceManager* damagePieceManager_);
-	void EmitDamegePiece2(const Vector3& pos,const Vector3& veloctiy, DamagePieceManager* damagePieceManager_);
+	void EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit);
+	void EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager_);
+	void EmitDamegePiece2(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager_);
 
 	void EmitDust(const Vector3& pos, const Vector3& veloctiy);
 
@@ -85,6 +103,10 @@ private:
 
 
 private:
+	// ふるまい
+	Behavior behavior_ = Behavior::kRoot;
+	// ふるまいリクエスト
+	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
 	// 一周するフレーム
 	const float aroundFrame_ = 300.0f;
@@ -103,18 +125,17 @@ private:
 	float HP_ = 100.0f;
 
 	bool isAlive_ = true;
-	float inclination_ = 23.4f;
-	float inclinationRadian_ = 0.0f;
 
 	// 当たった物体の大きさ(これでカメラのシェイクの大きさが決まる)
 	int objectHitLevel = 0;
 	bool isObjectHit = false;
 
 	// プレイヤーとの距離
-	float distanceToPlayer_ = 3.5f;
-
+	float distanceToPlayer_ = 5.0f;
+	float speed_ = 20.0f;
 
 	DamagePieceManager* damagePieceManager_ = nullptr;
 
 	Player* player_ = nullptr;
+
 };

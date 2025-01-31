@@ -3,7 +3,7 @@
 #include "framework/SUGER.h"
 
 #include "system/FragmentManager/FragmentManager.h"
-#include "objects/Earth/Earth.h"
+#include "objects/Earth/Moon.h"
 
 #include "random/Random.h"
 

@@ -6,6 +6,8 @@
 
 class BumpManager;
 
+class Moon;
+
 class Player: public EntityController {
 public:
 	Player() = default;
@@ -30,19 +32,28 @@ public:
 	// 移動制限
 	void MoveLimit();
 
+	void Shot();
+
 	// 衝突コールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
 
 	Vector3 RotatePosition(const Vector3& position, float angle);
 
-public:
+	WorldTransform* GetLocalTransform();
 
+public:
+	void SetMoon(Moon* moon) {
+		moon_ = moon;
+	}
 
 	void SetBumpManager(BumpManager* bumpManager) {
 		bumpManager_ = bumpManager;
 	};
 
 private:
+
+	WorldTransform localTransform_{};
+
 	// 定数
 	const std::string kParamaterString = "PlayerParamater";
 
@@ -56,9 +67,12 @@ private:
 	// 最大速度(std::clampで利用しているため、-の値にならないように注意)
 	float kMaxSpeed_ = 0.2f;
 	// 回転速度
-	float rotationSpeed_ = 0.1f;
+	float rotationSpeed_ = std::numbers::pi_v<float>;
 	// 大きさ
 	float scale_ = 1.0f;
+
+	// 月の回転速度
+	float moonRotationSpeed_ = std::numbers::pi_v<float>*2.0f;
 
 	// 移動できる範囲
 	float stageWidth_ = 32.0f;
@@ -80,11 +94,20 @@ private:
 	int32_t earthHitTimer_ = 0;
 	// 対隕石ヒットタイマー
 	int32_t meteoriteHitTimer_ = 0;
-	
+
 	// 対隕石たんこぶ生成ヒットタイマー
 	float meteoriteBumpPopHitTimer_ = 0;
 	// たんこぶのできる位置
 	Vector3 bumpDirection_{};
 
 	BumpManager* bumpManager_ = nullptr;
+
+	// 一周するフレーム
+	const float aroundFrame_ = 300.0f;
+	float inclination_ = 23.4f;
+	float inclinationRadian_ = 0.0f;
+
+
+	Moon* moon_ = nullptr;
+
 };

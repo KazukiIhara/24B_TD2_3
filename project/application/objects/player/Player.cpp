@@ -4,10 +4,18 @@
 
 #include "application/system/BumpManager/BumpManager.h"
 
+#include "objects/Earth/Moon.h"
+
 void Player::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
+	localTransform_.Initialize();
+
 	// プレイヤーのパラメータをグローバルデータグループに登録
 	SUGER::AddGrobalDataGroup(kParamaterString);
+
+	inclinationRadian_ = DegreesToRadians(inclination_);
+	SetRotate(Vector3(0.0f, 0.0f, -inclinationRadian_));
+
 
 	// 各パラメータをリストに登録
 	SUGER::AddGrobalDataItem(kParamaterString, "Speed", kSpeed_);
@@ -18,7 +26,7 @@ void Player::Initialize(const std::string& name) {
 	SetParamaters();
 
 	// 座標を初期化
-	SetTranslate(initializePosition_);
+	SetTranslate(Vector3(0.0f, 0.0f, 0.0f));
 
 	earthHitTimer_ = 0;
 	meteoriteHitTimer_ = 0;
@@ -34,14 +42,20 @@ void Player::Update() {
 	ImGui::End();
 #endif // =DEBUG
 
+	// 自転
+	SetRotateY(GetRotate().y + std::numbers::pi_v<float>*2.0f / aroundFrame_);
+
+
 	HitTimersUpdate();
 	SetParamaters();
 	Operation();
 	Move();
 	MoveLimit();
 
+	localTransform_.rotate_.z += rotationSpeed_ * SUGER::kDeltaTime_;
+	localTransform_.translate_ = GetWorldTransformPtr()->translate_;
 
-
+	localTransform_.Update();
 }
 
 void Player::SetParamaters() {
@@ -88,7 +102,11 @@ void Player::Operation() {
 		rotateDirection_ -= 1.0f;
 	}
 
-	
+	if (SUGER::TriggerKey(DIK_SPACE)) {
+		Shot();
+	}
+
+
 	if (SUGER::IsGamepadConnected(0)) {
 		// パッド操作
 		moveVector_.x = static_cast<float>(SUGER::GetLeftStickX(0));
@@ -122,7 +140,7 @@ void Player::Move() {
 	GetCollider()->SetVelocity(velocity_);
 
 	// 回転
-	SetRotateZ(GetRotate().z + rotateDirection_ * rotationSpeed_);
+	localTransform_.rotate_.z += +rotateDirection_ * rotationSpeed_;
 
 }
 
@@ -141,6 +159,10 @@ void Player::MoveLimit() {
 	translate_.y = std::clamp(translate_.y, -stageHeight_, stageHeight_);
 
 	SetTranslate(translate_);
+}
+
+void Player::Shot() {
+	moon_->AttackRequest();
 }
 
 void Player::OnCollision(Collider* other) {
@@ -247,5 +269,9 @@ Vector3 Player::RotatePosition(const Vector3& position, float angle) {
 	float rotatedZ = position.z; // Z軸は回転しない
 
 	return Vector3(rotatedX, rotatedY, rotatedZ);
+}
+
+WorldTransform* Player::GetLocalTransform() {
+	return &localTransform_;
 }
 

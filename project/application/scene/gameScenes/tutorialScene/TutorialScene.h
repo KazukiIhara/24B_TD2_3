@@ -9,7 +9,7 @@
 
 // GameScene
 #include "objects/player/Player.h"
-#include "objects/Earth/Earth.h"
+#include "objects/Earth/Moon.h"
 #include "objects/Skydome/Skydome.h"
 
 #include "system/MeteoriteManager/MeteoriteManager.h"

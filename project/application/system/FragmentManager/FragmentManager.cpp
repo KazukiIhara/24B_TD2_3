@@ -2,7 +2,7 @@
 
 #include "framework/SUGER.h"
 
-#include "objects/Earth/Earth.h"
+#include "objects/Earth/Moon.h"
 #include "objects/player/Player.h"
 
 #include "random/Random.h"
