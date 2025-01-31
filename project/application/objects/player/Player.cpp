@@ -47,19 +47,21 @@ void Player::Update() {
 
 	// 自転
 	SetRotateY(GetRotate().y + std::numbers::pi_v<float>*2.0f / aroundFrame_);
-
-
 	HitTimersUpdate();
 	SetParamaters();
+
+
 	Operation();
 	Move();
 	MoveLimit();
 	UpdateLifeState();
 
-	localTransform_.rotate_.z += rotationSpeed_ * SUGER::kDeltaTime_;
 	localTransform_.translate_ = GetWorldTransformPtr()->translate_;
-
 	localTransform_.Update();
+
+
+	BehaviorUpdate();
+
 }
 
 void Player::SetParamaters() {
@@ -106,11 +108,6 @@ void Player::Operation() {
 		rotateDirection_ -= 1.0f;
 	}
 
-	if (SUGER::TriggerKey(DIK_SPACE)) {
-		Shot();
-	}
-
-
 	if (SUGER::IsGamepadConnected(0)) {
 		// パッド操作
 		moveVector_.x = static_cast<float>(SUGER::GetLeftStickX(0));
@@ -126,6 +123,11 @@ void Player::Operation() {
 
 	// 移動ベクトル正規化
 	moveVector_ = Normalize(moveVector_);
+
+	// 
+	// 射撃操作
+	// 
+
 
 }
 
@@ -167,6 +169,7 @@ void Player::MoveLimit() {
 
 void Player::Shot() {
 	moon_->AttackRequest();
+	behaviorRequest_ = Behavior::kThrowMoon;
 }
 
 void Player::UpdateLifeState()
@@ -295,8 +298,90 @@ WorldTransform* Player::GetLocalTransform() {
 	return &localTransform_;
 }
 
+
+void Player::BehaviorUpdate() {
+	// ふるまい変更
+	if (behaviorRequest_) {
+		behavior_ = behaviorRequest_.value();
+		switch (behavior_) {
+			case Player::Behavior::kRoot:
+				RootInitialize();
+				break;
+			case Player::Behavior::kCharge:
+				ChargeInitialize();
+				break;
+			case Player::Behavior::kThrowMoon:
+				ThrowInitialize();
+				break;
+		}
+		behaviorRequest_ = std::nullopt;
+	}
+
+	// ふるまい
+	switch (behavior_) {
+		case Player::Behavior::kRoot:
+			RootUpdate();
+			break;
+		case Player::Behavior::kCharge:
+			ChargeUpdate();
+			break;
+		case Player::Behavior::kThrowMoon:
+			ThrowUpdate();
+			break;
+	}
+}
+
+void Player::RootInitialize() {
+
+}
+
+void Player::RootUpdate() {
+	if (SUGER::TriggerKey(DIK_SPACE)) {
+		behaviorRequest_ = Behavior::kCharge;
+	}
+
+	// 月を回す処理
+	localTransform_.rotate_.z += rotationSpeed_ * SUGER::kDeltaTime_;
+}
+
+void Player::ChargeInitialize() {
+
+}
+
+void Player::ChargeUpdate() {
+	if (SUGER::ReleaseKey(DIK_SPACE)) {
+		Shot();
+	}
+}
+
+void Player::ThrowInitialize() {
+	localTransform_.rotate_.z = 0.0f;
+}
+
+void Player::ThrowUpdate() {
+
+	if (catchTimer_ > 0) {
+		catchTimer_--;
+	}
+
+	Vector3 worldPosition = ExtractionWorldPos(localTransform_.worldMatrix_);
+	Vector3 moonPosition = ExtractionWorldPos(moon_->GetWorldTransformPtr()->worldMatrix_);
+	Vector3 subtract = moonPosition - worldPosition;
+	Vector3 direction = Normalize(subtract);
+	float distance = Length(subtract);
+
+	if (distance < moonCatchDistance_ && !catchTimer_) {
+		moon_->RootRequest();
+		moon_->SetTranslate(direction * (distance + moonRotateDistanceOffset_));
+		moon_->UpdateWorldTransform();
+		moon_->SetVelocity(Vector3(0.0f, 0.0f, 0.0f));
+		behaviorRequest_ = Behavior::kRoot;
+		catchTimer_ = catchTime_;
+	}
+
 float& Player::GetHp()
 {
 	return HP_;
+
 }
 

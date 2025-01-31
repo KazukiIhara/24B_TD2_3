@@ -2,6 +2,8 @@
 
 #include "3d/entityController/EntityController.h"
 
+#include <optional>
+
 //#include "system/BumpManager/BumpManager.h
 
 class BumpManager;
@@ -9,6 +11,11 @@ class BumpManager;
 class Moon;
 
 class Player: public EntityController {
+	enum class Behavior {
+		kRoot,
+		kCharge,
+		kThrowMoon,
+	};
 public:
 	Player() = default;
 	~Player() = default;
@@ -32,6 +39,7 @@ public:
 	// 移動制限
 	void MoveLimit();
 
+	// 月射出
 	void Shot();
 
 	// 生死処理
@@ -44,6 +52,14 @@ public:
 	Vector3 RotatePosition(const Vector3& position, float angle);
 
 	WorldTransform* GetLocalTransform();
+
+	void BehaviorUpdate();
+	void RootInitialize();
+	void RootUpdate();
+	void ChargeInitialize();
+	void ChargeUpdate();
+	void ThrowInitialize();
+	void ThrowUpdate();
 
 public:
 	void SetMoon(Moon* moon) {
@@ -68,6 +84,10 @@ public:
 	
 	float& GetHp();
 private:
+
+	Behavior behavior_ = Behavior::kRoot;
+
+	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
 	WorldTransform localTransform_{};
 
@@ -124,6 +144,16 @@ private:
 	float inclination_ = 23.4f;
 	float inclinationRadian_ = 0.0f;
 
+
+
+	// 月をキャッチする距離
+	float moonCatchDistance_ = 5.0f;
+
+	// キャッチする距離と月が実際に回転する距離のオフセット
+	float moonRotateDistanceOffset_ = 0.5f;
+
+	const int32_t catchTime_ = 30;
+	int32_t catchTimer_ = 0;
 
 	float HP_ = 100.0f;
 	bool isAlive_ = true;
