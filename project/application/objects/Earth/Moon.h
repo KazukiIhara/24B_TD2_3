@@ -13,6 +13,7 @@ public:
 	enum class Behavior {
 		kRoot,
 		kAttack,
+		kBack,
 	};
 public:
 	Moon() = default;
@@ -61,12 +62,17 @@ public:
 
 	float GetAroundFrame() const;
 
+	void RootRequest();
 	void AttackRequest();
 
 	void RootInitialize();
 	void RootUpdate();
 	void AttackInitialize();
 	void AttackUpdate();
+	void BackInitialize();
+	void BackUpdate();
+
+	void SetVelocity(const Vector3& velocity);
 
 private:
 	/// <summary>
@@ -131,11 +137,11 @@ private:
 	bool isObjectHit = false;
 
 	// プレイヤーとの距離
-	float distanceToPlayer_ = 5.0f;
 	float speed_ = 20.0f;
 
 	DamagePieceManager* damagePieceManager_ = nullptr;
 
 	Player* player_ = nullptr;
 
+	Vector3 targetPos_ = { 0.0f,0.0f,0.0f };
 };

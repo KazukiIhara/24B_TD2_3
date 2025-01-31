@@ -15,7 +15,7 @@ void Moon::Initialize(const std::string& name) {
 	isAlive_ = true;
 
 
-	SetTranslate(Vector3(distanceToPlayer_, 0.0f, 0.0f));
+	SetTranslate(Vector3(5.0f, 0.0f, 0.0f));
 
 
 }
@@ -160,13 +160,15 @@ void Moon::OnCollision(Collider* other) {
 
 void Moon::MoveLimit() {
 	Vector3 translate_ = GetTranslate();
-	if (translate_.x > stageWidth_ || translate_.x < -stageWidth_ ||
-		translate_.y < -stageHeight_ || translate_.y > stageHeight_) {
+	if (translate_.x > stageWidth_ || translate_.x < -stageWidth_) {
 		translate_.x = std::clamp(translate_.x, -stageWidth_, stageWidth_);
-		translate_.y = std::clamp(translate_.y, -stageHeight_, stageHeight_);
-		SetTranslate(translate_);
-		velocity_ = { 0.0f,0.0f,0.0f };
+		velocity_.x = -velocity_.x;
 	}
+	if (translate_.y < -stageHeight_ || translate_.y > stageHeight_) {
+		translate_.y = std::clamp(translate_.y, -stageHeight_, stageHeight_);
+		velocity_.y = -velocity_.y;
+	}
+	SetTranslate(translate_);
 }
 
 void Moon::UpdateLifeState() {
@@ -197,6 +199,11 @@ float Moon::GetAroundFrame() const {
 	return aroundFrame_;
 }
 
+void Moon::RootRequest() {
+	behaviorRequest_ = Behavior::kRoot;
+	SetParent(player_->GetLocalTransform());
+}
+
 void Moon::AttackRequest() {
 	behaviorRequest_ = Behavior::kAttack;
 }
@@ -225,6 +232,20 @@ void Moon::AttackUpdate() {
 		// コライダーに移動量をセット
 		GetCollider()->SetVelocity(velocity_);
 	}
+
+
+}
+
+void Moon::BackInitialize() {
+
+}
+
+void Moon::BackUpdate() {
+
+}
+
+void Moon::SetVelocity(const Vector3& velocity) {
+	velocity_ = velocity;
 }
 
 void Moon::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit) {
