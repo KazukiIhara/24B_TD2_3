@@ -34,6 +34,10 @@ public:
 
 	void Shot();
 
+	// 生死処理
+	void UpdateLifeState();
+
+
 	// 衝突コールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
 
@@ -50,6 +54,19 @@ public:
 		bumpManager_ = bumpManager;
 	};
 
+	bool GetIsHit() const {
+		return isObjectHit;
+	};
+
+	void SetIsHit(bool hit) {
+		isObjectHit = hit;
+	}
+
+	int GetHitLevel() {
+		return objectHitLevel;
+	}
+	
+	float& GetHp();
 private:
 
 	WorldTransform localTransform_{};
@@ -106,6 +123,14 @@ private:
 	const float aroundFrame_ = 300.0f;
 	float inclination_ = 23.4f;
 	float inclinationRadian_ = 0.0f;
+
+
+	float HP_ = 100.0f;
+	bool isAlive_ = true;
+	// 当たった物体の大きさ(これでカメラのシェイクの大きさが決まる)
+	int objectHitLevel = 0;
+	bool isObjectHit = false;
+
 
 
 	Moon* moon_ = nullptr;

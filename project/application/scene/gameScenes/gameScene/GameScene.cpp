@@ -173,7 +173,7 @@ void GameScene::Initialize() {
 		earthHpNumUI_[i]->SetSize(numberTextureSize_ / 2.0f);
 	}
 
-	earthHpNum_ = SplitDigits(static_cast<uint32_t>(moon_->GetHp()));
+	earthHpNum_ = SplitDigits(static_cast<uint32_t>(player_->GetHp()));
 
 	SUGER::AddGrobalDataItem("UI", "EarthUINumPosX", earthHpNumUIPosition_.x);
 	SUGER::AddGrobalDataItem("UI", "EarthUINumPosY", earthHpNumUIPosition_.y);
@@ -335,7 +335,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 
 	// ゲームオーバー確認処理
-	if (moon_->GetHp() <= 0) {
+	if (player_->GetHp() <= 0) {
 		// スコアを保存
 		GetGameData().days_ = currentDays_;
 		GetGameData().years_ = currentYears_;
@@ -354,13 +354,13 @@ void GameScene::SceneStatePlayUpdate() {
 	// 地球の更新
 	moon_->Update();
 
-	if (moon_->GetIsHit()) {
-		if (moon_->GetHitLevel() == 1) {
+	if (player_->GetIsHit()) {
+		if (player_->GetHitLevel() == 1) {
 			sceneCamera_->Shake(15.0f, 0.5f);
-		} else if (moon_->GetHitLevel() == 2) {
+		} else if (player_->GetHitLevel() == 2) {
 			sceneCamera_->Shake(25.0f, 1.5f);
 		}
-		moon_->SetIsHit(false);
+		player_->SetIsHit(false);
 	}
 
 	// 経過日数を加算
@@ -407,17 +407,17 @@ void GameScene::SceneStatePlayUpdate() {
 		earthHPUI_[i]->SetSize(earthUISize_);
 	}
 
-	if (moon_->GetHp() <= 25.0f) {
+	if (player_->GetHp() <= 25.0f) {
 		earthHPUI_[0]->SetIsActive(false);
 		earthHPUI_[1]->SetIsActive(false);
 		earthHPUI_[2]->SetIsActive(false);
 		earthHPUI_[3]->SetIsActive(true);
-	} else if (moon_->GetHp() <= 50.0f) {
+	} else if (player_->GetHp() <= 50.0f) {
 		earthHPUI_[0]->SetIsActive(false);
 		earthHPUI_[1]->SetIsActive(false);
 		earthHPUI_[2]->SetIsActive(true);
 		earthHPUI_[3]->SetIsActive(false);
-	} else if (moon_->GetHp() <= 75.0f) {
+	} else if (player_->GetHp() <= 75.0f) {
 		earthHPUI_[0]->SetIsActive(false);
 		earthHPUI_[1]->SetIsActive(true);
 		earthHPUI_[2]->SetIsActive(false);
@@ -431,9 +431,9 @@ void GameScene::SceneStatePlayUpdate() {
 
 
 
-	if (moon_->GetHp() < 10.0f) {
+	if (player_->GetHp() < 10.0f) {
 		earthHpNumUI_[1]->SetIsActive(false);
-	} else if (moon_->GetHp() < 100.0f) {
+	} else if (player_->GetHp() < 100.0f) {
 		earthHpNumUI_[0]->SetIsActive(false);
 	}
 
@@ -447,7 +447,7 @@ void GameScene::SceneStatePlayUpdate() {
 	earthHpNumUI_[2]->SetPosition(earthHpNumUIPosition_ + Vector2(numGap_, 0.0f));
 
 	// HPの数字を桁ごとに分割
-	earthHpNum_ = SplitDigits(static_cast<uint32_t>(moon_->GetHp()));
+	earthHpNum_ = SplitDigits(static_cast<uint32_t>(player_->GetHp()));
 	// 数字を基に左上をずらして描画
 	for (uint32_t i = 0; i < 3; i++) {
 		earthHpNumUI_[i]->SetLeftTop(Vector2(earthHpNum_[i] * numberTextureSize_.x, 0.0f));

@@ -112,6 +112,11 @@ void Meteorite::OnCollision(Collider* other) {
 			behaviorRequest_ = Behavior::kBreak;
 		}
 		break;
+	case ColliderCategory::Player:
+		if (behavior_ != Behavior::kBreak) {
+			behaviorRequest_ = Behavior::kBreak;
+		}
+		break;
 	}
 	
 }
@@ -195,11 +200,11 @@ void Meteorite::Atmosphere()
 {
 	float color = 1.0f; // 初期カラー値
 
-	if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - moon_->GetCollider()->GetWorldPosition())) {
+	if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition())) {
 		damagePieceTime_ -= SUGER::kDeltaTime_;
 		
 		// 対象が地球の大気圏内にいる場合、カラーを変化させます
-		color = (Length(GetCollider()->GetWorldPosition() - moon_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
+		color = (Length(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
 
 		Vector3 min = -(velocity_ * 0.85f);
 		Vector3 max = -(velocity_ * 1.15f);

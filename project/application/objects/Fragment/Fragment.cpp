@@ -47,23 +47,8 @@ void Fragment::OnCollision(Collider* other) {
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
 	case ColliderCategory::Player:
-		if (playerHitTimer_ > 0) {
-			break;
-		}
-		{
-			float fragmentMass = GetCollider()->GetMass();
-			Vector3 fragmentVelocity = GetCollider()->GetVelocity();
-			float playerMass = other->GetMass();
-			Vector3 playerVelocity = other->GetVelocity();
-			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-			Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f, normal);
-			velocity_ = velocity;
-			GetCollider()->SetDamage(1.0f);
-
-			EmitFragment(velocity_);
-			
-			playerHitTimer_ = 0.5f;
-		}
+		HP_ -= 3;
+		EmitFragment(velocity_);
 		break;
 	case ColliderCategory::Meteorite:
 
@@ -88,8 +73,24 @@ void Fragment::OnCollision(Collider* other) {
 		emitterDust_->Emit();
 		break;
 	case ColliderCategory::Moon:
+		if (playerHitTimer_ > 0) {
+			break;
+		}
+		{
+			float fragmentMass = GetCollider()->GetMass();
+			Vector3 fragmentVelocity = GetCollider()->GetVelocity();
+			float playerMass = other->GetMass();
+			Vector3 playerVelocity = other->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+			Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f, normal);
+			velocity_ = velocity;
+			GetCollider()->SetDamage(1.0f);
+
+			EmitFragment(velocity_);
+
+			playerHitTimer_ = 0.5f;
+		}
 		HP_ -= 3;
-		EmitFragment(velocity_);
 		break;
 	case ColliderCategory::Bump:
 		float fragmentMass = GetCollider()->GetMass();
@@ -177,9 +178,9 @@ void Fragment::Atmosphere()
 {
 	float color = 1.0f; // 初期カラー値
 
-	if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - moon_->GetCollider()->GetWorldPosition())) {
+	if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition())) {
 		// 対象が地球の大気圏内にいる場合、カラーを変化させます
-		color = (Length(GetCollider()->GetWorldPosition() - moon_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
+		color = (Length(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
 		
 		Vector3 min = -(velocity_ * 0.85f);
 		Vector3 max = -(velocity_ * 1.15f);
