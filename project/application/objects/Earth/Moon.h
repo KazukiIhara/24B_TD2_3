@@ -13,7 +13,6 @@ public:
 	enum class Behavior {
 		kRoot,
 		kAttack,
-		kBack,
 	};
 public:
 	Moon() = default;
@@ -52,13 +51,13 @@ public:
 
 	void RootRequest();
 	void AttackRequest();
-	void BackRequest();
 
 	void RootInitialize();
 	void RootUpdate();
 	void AttackInitialize();
 	void AttackUpdate();
-	void BackInitialize();
+
+
 	void BackUpdate();
 
 	void SetVelocity(const Vector3& velocity);

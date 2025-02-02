@@ -361,7 +361,7 @@ void Player::ThrowInitialize() {
 void Player::ThrowUpdate() {
 
 	if (SUGER::PushKey(DIK_SPACE)) {
-
+		moon_->BackUpdate();
 	}
 
 	if (catchTimer_ > 0) {

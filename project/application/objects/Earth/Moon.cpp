@@ -57,14 +57,6 @@ void Moon::Update() {
 			break;
 	}
 
-	/*if (returnMoveTimer_ > 0) {
-		returnMoveTimer_ -= SUGER::kDeltaTime_;
-		if (returnMoveTimer_ < 0.1f) {
-			returnMoveTimer_ = 0;
-		}
-	}*/
-
-
 	MoveLimit();
 
 }
@@ -194,10 +186,6 @@ void Moon::AttackRequest() {
 	behaviorRequest_ = Behavior::kAttack;
 }
 
-void Moon::BackRequest() {
-	behaviorRequest_ = Behavior::kBack;
-}
-
 void Moon::RootInitialize() {
 
 }
@@ -222,11 +210,15 @@ void Moon::AttackUpdate() {
 	GetCollider()->SetVelocity(velocity_);
 }
 
-void Moon::BackInitialize() {
-
-}
-
 void Moon::BackUpdate() {
+	Vector3 target = ExtractionWorldPos(player_->GetWorldTransformPtr()->worldMatrix_);
+	Vector3 worldPos = ExtractionWorldPos(GetWorldTransformPtr()->worldMatrix_);
+	velocity_ = Lerp(worldPos, target, 0.8f) - worldPos;
+
+	// 移動量を足す
+	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
+	// コライダーに移動量をセット
+	GetCollider()->SetVelocity(velocity_);
 }
 
 void Moon::SetVelocity(const Vector3& velocity) {

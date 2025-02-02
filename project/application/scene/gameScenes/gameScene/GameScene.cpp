@@ -55,7 +55,7 @@ void GameScene::Initialize() {
 	player_->UpdateWorldTransform();
 
 
-	light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
+	light_->GetPunctualLight().pointLight.position = moon_->GetTranslate();
 	light_->GetPunctualLight().pointLight.intensity = 7.0f;
 	light_->GetPunctualLight().pointLight.color = { 1.0f,1.0f,0.0f,1.0f };
 	light_->GetPunctualLight().pointLight.radius = 10.0f;
@@ -64,7 +64,7 @@ void GameScene::Initialize() {
 	light_->GetPunctualLight().spotLight.color = { 1.0f,1.0f,0.0f,1.0f };
 	light_->GetPunctualLight().spotLight.position = sceneCamera_->GetWorldPos();
 
-	light_->GetPunctualLight().spotLight.direction = Normalize(player_->GetTranslate() - sceneCamera_->GetWorldPos());
+	light_->GetPunctualLight().spotLight.direction = Normalize(moon_->GetTranslate() - sceneCamera_->GetWorldPos());
 	light_->GetPunctualLight().spotLight.intensity = 4.0f;
 	light_->GetPunctualLight().spotLight.decay = 3.0f;
 	light_->GetPunctualLight().spotLight.distance = 100.0f;
@@ -374,8 +374,8 @@ void GameScene::SceneStatePlayUpdate() {
 	}
 
 	// ライトの座標
-	light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
-	light_->GetPunctualLight().spotLight.direction = Normalize(player_->GetTranslate() - sceneCamera_->GetWorldPos());
+	light_->GetPunctualLight().pointLight.position = moon_->GetTranslate();
+	light_->GetPunctualLight().spotLight.direction = Normalize(moon_->GetTranslate() - sceneCamera_->GetWorldPos());
 
 
 	// プレイヤーの更新処理
