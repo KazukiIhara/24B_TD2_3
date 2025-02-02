@@ -335,7 +335,7 @@ void Player::RootInitialize() {
 }
 
 void Player::RootUpdate() {
-	if (SUGER::TriggerKey(DIK_SPACE)) {
+	if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
 		behaviorRequest_ = Behavior::kCharge;
 	}
 
@@ -348,7 +348,7 @@ void Player::ChargeInitialize() {
 }
 
 void Player::ChargeUpdate() {
-	if (SUGER::ReleaseKey(DIK_SPACE)) {
+	if (SUGER::ReleaseKey(DIK_SPACE) || SUGER::ReleaseButton(0, ButtonA)) {
 		Shot();
 	}
 }
@@ -360,7 +360,7 @@ void Player::ThrowInitialize() {
 
 void Player::ThrowUpdate() {
 
-	if (SUGER::PushKey(DIK_SPACE)) {
+	if (SUGER::PushKey(DIK_SPACE) || SUGER::PushButton(0, ButtonA)) {
 		moon_->BackUpdate();
 	}
 
