@@ -13,10 +13,8 @@ class FragmentManager;
 class DamagePieceManager;
 
 enum class MeteoritePopPlace {
-	LeftTop,
-	LeftBottom,
-	RightBottom,
-	RightTop,
+	Left,
+	Right,
 };
 
 // 隕石マネージャ
@@ -26,7 +24,7 @@ public:
 
 	void Update();
 
-	void AddMeteorite(const Vector3& popTranslate);
+	void AddMeteorite(const Vector3& popTranslate, const Vector3& velocity);
 
 	void AddColliderList();
 
@@ -47,7 +45,7 @@ private:
 	std::list<std::unique_ptr<Meteorite>> meteorites_;
 
 	// 沸く場所の列挙型
-	MeteoritePopPlace popPlace_ = MeteoritePopPlace::RightBottom;
+	MeteoritePopPlace popPlace_ = MeteoritePopPlace::Right;
 
 	// 沸く場所
 	std::array<Vector3, 4> popPosition_;

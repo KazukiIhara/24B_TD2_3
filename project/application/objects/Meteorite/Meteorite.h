@@ -54,6 +54,9 @@ public:
 	void SetSpeed(float speed);
 
 	void SetPraticle(int count);
+
+	void SetVelocity(const Vector3& velocity);
+
 private:
 
 	void SwitchingHPModel();
@@ -107,7 +110,6 @@ private:
 	// 
 	float damagePieceTime_ = 0;
 	const float kDamagePieceTime_ = 1.0f;
-
 
 
 	// ダメージ時間定数
