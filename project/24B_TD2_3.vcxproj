@@ -109,6 +109,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="application\myGame\MyGame.cpp" />
+    <ClCompile Include="application\objects\Boss\Boss.cpp" />
     <ClCompile Include="application\objects\bump\Bump.cpp" />
     <ClCompile Include="application\objects\DamagePiece\DamagePiece.cpp" />
     <ClCompile Include="application\objects\Earth\Moon.cpp" />
@@ -118,6 +119,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\objects\pronamaChan\PronamaChan.cpp" />
     <ClCompile Include="application\objects\Skydome\Skydome.cpp" />
     <ClCompile Include="application\objects\teapot\Teapot.cpp" />
+    <ClCompile Include="application\objects\UFO\UFO.cpp" />
     <ClCompile Include="application\scene\factory\SceneFactory.cpp" />
     <ClCompile Include="application\scene\gameScenes\gameScene\GameScene.cpp" />
     <ClCompile Include="application\scene\gameScenes\load\LoadScene.cpp" />
@@ -209,6 +211,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\colliderCategory\ColliderCategory.h" />
     <ClInclude Include="application\GameData\GameData.h" />
     <ClInclude Include="application\myGame\MyGame.h" />
+    <ClInclude Include="application\objects\Boss\Boss.h" />
     <ClInclude Include="application\objects\bump\Bump.h" />
     <ClInclude Include="application\objects\DamagePiece\DamagePiece.h" />
     <ClInclude Include="application\objects\Earth\Moon.h" />
@@ -218,6 +221,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\objects\pronamaChan\PronamaChan.h" />
     <ClInclude Include="application\objects\Skydome\Skydome.h" />
     <ClInclude Include="application\objects\teapot\Teapot.h" />
+    <ClInclude Include="application\objects\UFO\UFO.h" />
     <ClInclude Include="application\scene\factory\SceneFactory.h" />
     <ClInclude Include="application\scene\gameScenes\gameScene\GameScene.h" />
     <ClInclude Include="application\scene\gameScenes\load\LoadScene.h" />

@@ -413,6 +413,8 @@
     <ClCompile Include="application\objects\DamagePiece\DamagePiece.cpp" />
     <ClCompile Include="application\system\DamagePieceManager\DamagePieceManager.cpp" />
     <ClCompile Include="application\scene\gameScenes\tutorialScene\TutorialScene.cpp" />
+    <ClCompile Include="application\objects\Boss\Boss.cpp" />
+    <ClCompile Include="application\objects\UFO\UFO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -639,6 +641,8 @@
     <ClInclude Include="application\system\DamagePieceManager\DamagePieceManager.h" />
     <ClInclude Include="application\scene\gameScenes\tutorialScene\TutorialScene.h" />
     <ClInclude Include="application\GameData\GameData.h" />
+    <ClInclude Include="application\objects\Boss\Boss.h" />
+    <ClInclude Include="application\objects\UFO\UFO.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
