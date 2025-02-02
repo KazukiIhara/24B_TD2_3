@@ -6,9 +6,22 @@ void ResultScene::Initialize() {
 	// シーンの初期化(初期化処理の先頭)
 	BaseScene::Initialize();
 
-	InitializeUI(scoreUI_, "AllScore", "Number/Number_x128y192.png", numberTextureSize_);
+	// 全体スコア
+	InitializeUI(allScoreUI_, "AllScore", "Number/Number_x128y192.png", numberTextureSize_);
 
+	// 欠片スコア
+	InitializeUI(fragmentScoreUI_, "fragmentScore", "Number/Number_x128y192.png", numberTextureSize_);
 
+	// 隕石スコア
+	InitializeUI(meteoriteScoreUI_, "meteoriteScore", "Number/Number_x128y192.png", numberTextureSize_);
+
+	// UFOスコア
+	InitializeUI(ufoScoreUI_, "ufoScore", "Number/Number_x128y192.png", numberTextureSize_);
+
+	// BOSSスコア
+	InitializeUI(bossScoreUI_, "bossScore", "Number/Number_x128y192.png", numberTextureSize_);
+
+	// 
 
 }
 
@@ -23,15 +36,15 @@ void ResultScene::SceneStatePlayUpdate() {
 	ImGui::Begin("Result");
 
 	ImGui::Text("%u Years %u Days", GetGameData().years_, GetGameData().days_);
-	int fragmentScore = GetGameData().fragmentNum_ * 100;
-	ImGui::Text("fragment %u Score %d", GetGameData().fragmentNum_, fragmentScore);
-	int meteoriteScore = GetGameData().meteoriteNum_ * 500;
-	ImGui::Text("meteorite %u Score %d", GetGameData().meteoriteNum_, meteoriteScore);
-	int ufoScore = GetGameData().ufoNum_ * 200;
-	ImGui::Text("ufo %u Score %d", GetGameData().ufoNum_, ufoScore);
-	int bossScore = int(GetGameData().bossDeath_) * 2000;
-	ImGui::Text("boss %u Score %d", uint32_t(GetGameData().bossDeath_), bossScore);
-	int score = fragmentScore + meteoriteScore + ufoScore + bossScore;
+	fragmentScore_ = GetGameData().fragmentNum_ * 100;
+	ImGui::Text("fragment %u Score %d", GetGameData().fragmentNum_, fragmentScore_);
+	meteoriteScore_ = GetGameData().meteoriteNum_ * 500;
+	ImGui::Text("meteorite %u Score %d", GetGameData().meteoriteNum_, meteoriteScore_);
+	ufoScore_ = GetGameData().ufoNum_ * 200;
+	ImGui::Text("ufo %u Score %d", GetGameData().ufoNum_, ufoScore_);
+	bossScore_ = int(GetGameData().bossDeath_) * 2000;
+	ImGui::Text("boss %u Score %d", uint32_t(GetGameData().bossDeath_), bossScore_);
+	int score = fragmentScore_ + meteoriteScore_ + ufoScore_ + bossScore_;
 	int allScore = int(float(score) * (1.0f + float(GetGameData().years_) + float(float(GetGameData().days_) / float(365))));
 	if (GetGameData().bossDeath_) {
 		GetGameData().totalScore_ = allScore * 2;
@@ -44,7 +57,10 @@ void ResultScene::SceneStatePlayUpdate() {
 	ImGui::End();
 
 
-	ActiveUI(scoreUI_, scoreNum_,scorePosition_ ,totalScore_, numGap_);
+	// UI関係更新
+	UpdateUI();
+
+	
 
 	
 
@@ -62,6 +78,25 @@ void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 5
 		ui[i]->SetCutOutSize(textureSize);
 		ui[i]->SetSize(textureSize / 2.0f);
 	}
+}
+
+void ResultScene::UpdateUI()
+{
+	// 全体スコア
+	ActiveUI(allScoreUI_, allScoreNum_, allScorePosition_, totalScore_, numGap_);
+
+	// 欠片スコア
+	ActiveUI(fragmentScoreUI_, fragmentScoreNum_, fragmentScorePosition_, fragmentScore_, numGap_);
+
+	// 隕石スコア
+	ActiveUI(meteoriteScoreUI_, meteoriteScoreNum_, meteoriteScorePosition_, meteoriteScore_, numGap_);
+
+	// UFOスコア
+	ActiveUI(ufoScoreUI_, ufoScoreNum_, ufoScorePosition_, ufoScore_, numGap_);
+	
+	// BOSSスコア
+	ActiveUI(bossScoreUI_, bossScoreNum_, bossScorePosition_, bossScore_, numGap_);
+
 }
 
 #pragma region Digits

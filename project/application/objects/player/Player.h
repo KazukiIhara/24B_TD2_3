@@ -167,7 +167,7 @@ private:
 	const int32_t catchTime_ = 30;
 	int32_t catchTimer_ = 0;
 
-	float HP_ = 10.0f;
+	float HP_ = 100.0f;
 	bool isAlive_ = true;
 	// 当たった物体の大きさ(これでカメラのシェイクの大きさが決まる)
 	int objectHitLevel = 0;
