@@ -7,8 +7,6 @@
 class Boss: public EntityController {
 	enum class Behavior {
 		kRoot,
-		kCharge,
-		kThrowMoon,
 	};
 public:
 	Boss();

@@ -131,6 +131,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\system\DamagePieceManager\DamagePieceManager.cpp" />
     <ClCompile Include="application\system\FragmentManager\FragmentManager.cpp" />
     <ClCompile Include="application\system\MeteoriteManager\MeteoriteManager.cpp" />
+    <ClCompile Include="application\system\UFOManager\UFOManager.cpp" />
     <ClCompile Include="Engine\3d\lineController\LineController.cpp" />
     <ClCompile Include="Engine\computePipeline\skinning\SkinningComputePipeline.cpp" />
     <ClCompile Include="Engine\contactRecord\ContactRecord.cpp" />
@@ -233,6 +234,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\system\DamagePieceManager\DamagePieceManager.h" />
     <ClInclude Include="application\system\FragmentManager\FragmentManager.h" />
     <ClInclude Include="application\system\MeteoriteManager\MeteoriteManager.h" />
+    <ClInclude Include="application\system\UFOManager\UFOManager.h" />
     <ClInclude Include="Engine\3d\lineController\LineController.h" />
     <ClInclude Include="Engine\computePipeline\skinning\SkinningComputePipeline.h" />
     <ClInclude Include="Engine\contactRecord\ContactRecord.h" />
