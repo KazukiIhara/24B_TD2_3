@@ -355,6 +355,7 @@ void Player::ChargeUpdate() {
 
 void Player::ThrowInitialize() {
 	localTransform_.rotate_.z = 0.0f;
+	catchTimer_ = catchTime_;
 }
 
 void Player::ThrowUpdate() {
@@ -375,7 +376,6 @@ void Player::ThrowUpdate() {
 		moon_->UpdateWorldTransform();
 		moon_->SetVelocity(Vector3(0.0f, 0.0f, 0.0f));
 		behaviorRequest_ = Behavior::kRoot;
-		catchTimer_ = catchTime_;
 	}
 }
 
