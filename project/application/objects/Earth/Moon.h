@@ -13,7 +13,6 @@ public:
 	enum class Behavior {
 		kRoot,
 		kAttack,
-		kBack,
 	};
 public:
 	Moon() = default;
@@ -57,7 +56,8 @@ public:
 	void RootUpdate();
 	void AttackInitialize();
 	void AttackUpdate();
-	void BackInitialize();
+
+
 	void BackUpdate();
 
 	void SetVelocity(const Vector3& velocity);
@@ -108,8 +108,8 @@ private:
 	Vector3 velocity_{};
 
 	// 移動できる範囲
-	float stageWidth_ = 31.0f;
-	float stageHeight_ = 17.0f;
+	float stageWidth_ = 33.6f;
+	float stageHeight_ = 18.9f;
 
 	// 初期位置に戻ろうとする行動に入る時間
 	float kReturnMoveTime_ = 3.0f;
