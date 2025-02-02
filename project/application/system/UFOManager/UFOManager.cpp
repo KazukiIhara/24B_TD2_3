@@ -16,7 +16,6 @@ void UFOManager::Update() {
 	// コンテナ内の隕石をすべて更新
 	for (auto& ufo : ufos_) {
 		ufo->Update();
-		ufo->SetSpeed(speed_);
 	}
 }
 
