@@ -49,6 +49,10 @@ void Fragment::OnCollision(Collider* other) {
 	case ColliderCategory::Player:
 		HP_ -= 3;
 		EmitFragment(velocity_);
+
+		// スコア関係
+		player_->GetScoreData().score_ += score_;
+		player_->GetScoreData().fragmentNum_++;
 		break;
 	case ColliderCategory::Meteorite:
 
@@ -91,6 +95,9 @@ void Fragment::OnCollision(Collider* other) {
 			playerHitTimer_ = 0.5f;
 		}
 		HP_ -= 3;
+		// スコア関係
+		player_->GetScoreData().score_ += score_;
+		player_->GetScoreData().fragmentNum_++;
 		break;
 	case ColliderCategory::Bump:
 		float fragmentMass = GetCollider()->GetMass();

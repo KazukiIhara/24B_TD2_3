@@ -16,6 +16,15 @@ class Player: public EntityController {
 		kCharge,
 		kThrowMoon,
 	};
+
+	struct ScoreData {
+		uint32_t score_;		// スコア
+		uint32_t totalScore_;	// 合計スコア
+		uint32_t fragmentNum_;	// 破壊された欠片数
+		uint32_t meteoriteNum_;	// 破壊された隕石数
+		uint32_t ufoNum_;		// 破壊されたUFO数
+		bool bossDeath_;        // ボスが死んだか
+	};
 public:
 	Player() = default;
 	~Player() = default;
@@ -83,6 +92,9 @@ public:
 	}
 	
 	float& GetHp();
+
+	ScoreData& GetScoreData() { return scoreData_; };
+
 private:
 
 	Behavior behavior_ = Behavior::kRoot;
@@ -155,13 +167,15 @@ private:
 	const int32_t catchTime_ = 30;
 	int32_t catchTimer_ = 0;
 
-	float HP_ = 100.0f;
+	float HP_ = 10.0f;
 	bool isAlive_ = true;
 	// 当たった物体の大きさ(これでカメラのシェイクの大きさが決まる)
 	int objectHitLevel = 0;
 	bool isObjectHit = false;
 
 
+	
+	ScoreData scoreData_;
 
 	Moon* moon_ = nullptr;
 

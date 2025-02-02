@@ -137,5 +137,5 @@ private:
 	
 	std::unique_ptr<EmitterController> emitterFragment_;
 
-	
+	int score_ = 100;
 };
