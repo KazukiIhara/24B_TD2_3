@@ -415,6 +415,7 @@
     <ClCompile Include="application\scene\gameScenes\tutorialScene\TutorialScene.cpp" />
     <ClCompile Include="application\objects\Boss\Boss.cpp" />
     <ClCompile Include="application\objects\UFO\UFO.cpp" />
+    <ClCompile Include="application\system\UFOManager\UFOManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\input\direct\DirectInput.h">
@@ -643,6 +644,7 @@
     <ClInclude Include="application\GameData\GameData.h" />
     <ClInclude Include="application\objects\Boss\Boss.h" />
     <ClInclude Include="application\objects\UFO\UFO.h" />
+    <ClInclude Include="application\system\UFOManager\UFOManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\objects\2d\object2d.PS.hlsl">
