@@ -130,15 +130,11 @@ void Meteorite::RootInitialize() {
 }
 
 void Meteorite::RootUpdate() {
-
-	Vector3 target = ExtractionWorldPos(moon_->GetWorldTransformPtr()->worldMatrix_);
 	// 目標に対して保管移動
-	velocity_ = Lerp(GetTranslate(), target, speed_) - GetTranslate();
 	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 	SetRotate(GetRotate() + Vector3(speed_, speed_, speed_ * SUGER::kDeltaTime_));
 
 	GetCollider()->SetVelocity(velocity_);
-
 }
 
 void Meteorite::DamageInitialize(float damage) {
@@ -270,6 +266,10 @@ void Meteorite::SetPraticle(int count)
 	CreateEmit("earthDustParticle", "MeteoriteDustFire3", 55, 0.7f, { 1.5f, 2.5f }, { 0.412f, 0.412f, 0.412f }, emitterDustGray_.get());
 	CreateEmit("earthDustParticle", "MeteoriteDustFire4", 55, 0.7f, { 1.5f, 2.5f }, { 0.039f, 0.039f, 0.039f }, emitterDustBlack_.get());
 
+}
+
+void Meteorite::SetVelocity(const Vector3& velocity) {
+	velocity_ = velocity;
 }
 
 void Meteorite::SwitchingHPModel()

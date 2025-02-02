@@ -4,8 +4,6 @@
 
 #include <optional>
 
-//#include "system/BumpManager/BumpManager.h
-
 class BumpManager;
 
 class Moon;

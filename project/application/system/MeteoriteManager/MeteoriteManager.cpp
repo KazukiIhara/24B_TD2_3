@@ -28,11 +28,8 @@ void MeteoriteManager::Initialize(Moon* earth, Player* player, FragmentManager* 
 	speed_ = SUGER::GetGrobalDataValueFloat(kParamaterString_, "Speed");
 
 	float screenWidth = 40.0f;
-	float screenHeight = 22.5f;
-	popPosition_[static_cast<uint32_t>(MeteoritePopPlace::LeftTop)] = { -screenWidth,screenHeight,0.0f };
-	popPosition_[static_cast<uint32_t>(MeteoritePopPlace::LeftBottom)] = { -screenWidth, -screenHeight, 0.0f };
-	popPosition_[static_cast<uint32_t>(MeteoritePopPlace::RightBottom)] = { screenWidth, -screenHeight, 0.0f };
-	popPosition_[static_cast<uint32_t>(MeteoritePopPlace::RightTop)] = { screenWidth, screenHeight, 0.0f };
+	popPosition_[static_cast<uint32_t>(MeteoritePopPlace::Left)] = { -screenWidth,0.0f,0.0f };
+	popPosition_[static_cast<uint32_t>(MeteoritePopPlace::Right)] = { screenWidth, 0.0f, 0.0f };
 
 	popTimer_ = popIntervalTime_;
 
@@ -56,7 +53,7 @@ void MeteoriteManager::Update() {
 	}
 }
 
-void MeteoriteManager::AddMeteorite(const Vector3& popTranslate) {
+void MeteoriteManager::AddMeteorite(const Vector3& popTranslate, const Vector3& velocity) {
 	EulerTransform3D popTransform{};
 	popTransform.translate = popTranslate;
 
@@ -68,7 +65,7 @@ void MeteoriteManager::AddMeteorite(const Vector3& popTranslate) {
 	newMeteorite->SetFragmentManager(fragmentManager_);
 	newMeteorite->SetDamagePieceManager(damagePieceManager_);
 	newMeteorite->CreateCollider(ColliderCategory::Meteorite, kSphere, 3.5f);
-	//newMeteorite->
+	newMeteorite->SetVelocity(velocity);
 
 	newMeteorite->GetCollider()->SetMass(20000.0f);
 	newMeteorite->SetPraticle(currentSerialNumber_);
@@ -100,7 +97,16 @@ void MeteoriteManager::PopMateorites() {
 				popPosition_[static_cast<uint32_t>(popPlace_)].y + Random::GenerateFloat(-10.0f,10.0f),
 				0.0f
 			};
-			AddMeteorite(popPosition);
+
+			switch (popPlace_) {
+				case MeteoritePopPlace::Left:
+					AddMeteorite(popPosition, Vector3(1.0f, 0.0f, 0.0f));
+					break;
+				case MeteoritePopPlace::Right:
+					AddMeteorite(popPosition, Vector3(-1.0f, 0.0f, 0.0f));
+					break;
+			}
+
 
 			int popPosNum = Random::GenerateUint32_t(0, 3);
 			popPlace_ = static_cast<MeteoritePopPlace>(popPosNum);

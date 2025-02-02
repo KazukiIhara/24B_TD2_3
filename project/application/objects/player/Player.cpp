@@ -335,7 +335,7 @@ void Player::RootInitialize() {
 }
 
 void Player::RootUpdate() {
-	if (SUGER::TriggerKey(DIK_SPACE)) {
+	if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
 		behaviorRequest_ = Behavior::kCharge;
 	}
 
@@ -348,16 +348,21 @@ void Player::ChargeInitialize() {
 }
 
 void Player::ChargeUpdate() {
-	if (SUGER::ReleaseKey(DIK_SPACE)) {
+	if (SUGER::ReleaseKey(DIK_SPACE) || SUGER::ReleaseButton(0, ButtonA)) {
 		Shot();
 	}
 }
 
 void Player::ThrowInitialize() {
 	localTransform_.rotate_.z = 0.0f;
+	catchTimer_ = catchTime_;
 }
 
 void Player::ThrowUpdate() {
+
+	if (SUGER::PushKey(DIK_SPACE) || SUGER::PushButton(0, ButtonA)) {
+		moon_->BackUpdate();
+	}
 
 	if (catchTimer_ > 0) {
 		catchTimer_--;
@@ -375,7 +380,6 @@ void Player::ThrowUpdate() {
 		moon_->UpdateWorldTransform();
 		moon_->SetVelocity(Vector3(0.0f, 0.0f, 0.0f));
 		behaviorRequest_ = Behavior::kRoot;
-		catchTimer_ = catchTime_;
 	}
 }
 
