@@ -346,6 +346,13 @@ void GameScene::SceneStatePlayUpdate() {
 		// スコアを保存
 		GetGameData().days_ = currentDays_;
 		GetGameData().years_ = currentYears_;
+		GetGameData().score_ = player_->GetScoreData().score_;
+		GetGameData().fragmentNum_ = player_->GetScoreData().fragmentNum_;
+		GetGameData().meteoriteNum_ = player_->GetScoreData().meteoriteNum_;
+		GetGameData().ufoNum_ = player_->GetScoreData().ufoNum_;
+		GetGameData().bossDeath_ = player_->GetScoreData().bossDeath_;
+
+
 		// フェードリクエスト
 		sceneStateRequest_ = SceneState::kFadeOut;
 	}

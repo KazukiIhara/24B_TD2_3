@@ -112,6 +112,9 @@ private:
 	const float kDamagePieceTime_ = 1.0f;
 
 
+	int score_ = 500;
+
+
 	// ダメージ時間定数
 	const int32_t kDamageTime_ = 10;
 	// ダメージタイマー

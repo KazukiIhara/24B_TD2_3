@@ -14,6 +14,15 @@ class Player: public EntityController {
 		kCharge,
 		kThrowMoon,
 	};
+
+	struct ScoreData {
+		uint32_t score_;		// スコア
+		uint32_t totalScore_;	// 合計スコア
+		uint32_t fragmentNum_;	// 破壊された欠片数
+		uint32_t meteoriteNum_;	// 破壊された隕石数
+		uint32_t ufoNum_;		// 破壊されたUFO数
+		bool bossDeath_;        // ボスが死んだか
+	};
 public:
 	Player() = default;
 	~Player() = default;
@@ -81,6 +90,9 @@ public:
 	}
 	
 	float& GetHp();
+
+	ScoreData& GetScoreData() { return scoreData_; };
+
 private:
 
 	Behavior behavior_ = Behavior::kRoot;
@@ -160,6 +172,8 @@ private:
 	bool isObjectHit = false;
 
 
+	
+	ScoreData scoreData_;
 
 	Moon* moon_ = nullptr;
 

@@ -9,6 +9,9 @@
 #include "system/FragmentManager/FragmentManager.h"
 #include "system/DamagePieceManager/DamagePieceManager.h"
 
+#include"manager/scene/SceneManager.h"
+
+
 void Meteorite::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 	SetScale(1.4f);
@@ -164,11 +167,15 @@ void Meteorite::BreakUpdate() {
 
 	if (breakTimer_ == 0) {
 		SetIsDelete(true);
+		
 		isAlive_ = false;
 		for (int i = 0; i < 10; i++) {
 			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition());
 		}
 
+		// スコア関係
+		player_->GetScoreData().score_ += score_;
+		player_->GetScoreData().meteoriteNum_++;
 
 		Vector3 min = Vector3(-2,-2,0);
 		Vector3 max = Vector3( 2, 2, 0);
