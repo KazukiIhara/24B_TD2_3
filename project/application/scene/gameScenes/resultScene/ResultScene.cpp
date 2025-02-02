@@ -53,6 +53,7 @@ void ResultScene::SceneStatePlayUpdate() {
 		GetGameData().totalScore_ = allScore;
 	}
 	totalScore_ = GetGameData().totalScore_;
+	ImGui::Text("AllScore = (score * (1.0f + years + (days / 365))) * if(bossDeath){2}");
 	ImGui::Text("Score %d", GetGameData().totalScore_);
 	ImGui::End();
 
