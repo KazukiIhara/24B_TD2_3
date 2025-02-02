@@ -360,6 +360,10 @@ void Player::ThrowInitialize() {
 
 void Player::ThrowUpdate() {
 
+	if (SUGER::PushKey(DIK_SPACE)) {
+
+	}
+
 	if (catchTimer_ > 0) {
 		catchTimer_--;
 	}

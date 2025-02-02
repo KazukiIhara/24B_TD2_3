@@ -12,7 +12,7 @@
 void Moon::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
 	returnMoveTimer_ = 0;
-	
+
 
 	SetTranslate(Vector3(5.0f, 0.0f, 0.0f));
 
@@ -87,10 +87,10 @@ void Moon::UpdateTitle() {
 
 	// 移動量を足す
 	SetRotateY(GetRotate().y + std::numbers::pi_v<float>*2.0f / aroundFrame_);
-	
+
 	MoveLimit();
 
-	
+
 }
 
 void Moon::OnCollision(Collider* other) {
@@ -129,8 +129,8 @@ void Moon::OnCollision(Collider* other) {
 
 			EmitDust(normal, normal);
 
-			
-			
+
+
 			break;
 		case ColliderCategory::Meteorite:
 		{
@@ -148,9 +148,9 @@ void Moon::OnCollision(Collider* other) {
 				HitParticleTimer_ = 1;
 			}
 
-			
+
 		}
-		
+
 		break;
 	}
 }
@@ -194,6 +194,10 @@ void Moon::AttackRequest() {
 	behaviorRequest_ = Behavior::kAttack;
 }
 
+void Moon::BackRequest() {
+	behaviorRequest_ = Behavior::kBack;
+}
+
 void Moon::RootInitialize() {
 
 }
@@ -213,10 +217,9 @@ void Moon::AttackInitialize() {
 
 void Moon::AttackUpdate() {
 	// 移動量を足す
-	//if (isAlive_) {
-		SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
-		// コライダーに移動量をセット
-		GetCollider()->SetVelocity(velocity_);
+	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
+	// コライダーに移動量をセット
+	GetCollider()->SetVelocity(velocity_);
 }
 
 void Moon::BackInitialize() {
@@ -224,7 +227,6 @@ void Moon::BackInitialize() {
 }
 
 void Moon::BackUpdate() {
-
 }
 
 void Moon::SetVelocity(const Vector3& velocity) {
