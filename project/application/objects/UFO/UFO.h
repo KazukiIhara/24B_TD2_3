@@ -58,6 +58,9 @@ private:
 	// 次のふるまいリクエスト
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
+	int32_t shotTimer_ = 0;
+	int32_t shotInterval_ = 120;
+
 private:
 	UFOBulletManager* ufoBulletManager_ = nullptr;
 

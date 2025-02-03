@@ -30,5 +30,5 @@ void UFOBullet::SetVelocity(const Vector3& velocity) {
 }
 
 bool UFOBullet::GetIsAlive() const {
-	return false;
+	return isAlive_;
 }

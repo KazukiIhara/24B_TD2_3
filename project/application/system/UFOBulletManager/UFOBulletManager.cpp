@@ -10,8 +10,8 @@ void UFOBulletManager::Initialize(Player* player) {
 
 void UFOBulletManager::Update() {
 	// コンテナ内のかけらすべてを更新
-	for (auto& fragment : ufoBullets_) {
-		fragment->Update();
+	for (auto& ufoBullet : ufoBullets_) {
+		ufoBullet->Update();
 	}
 
 	ufoBullets_.remove_if([](const std::unique_ptr<UFOBullet>& fragment) {
@@ -26,7 +26,7 @@ void UFOBulletManager::AddUFOBullet(const Vector3& translate) {
 	Vector3 playerWorldPos = ExtractionWorldPos(player_->GetWorldTransformPtr()->worldMatrix_);
 	Vector3 bulletPos = translate;
 
-	Vector3 direction = Normalize(bulletPos - playerWorldPos);
+	Vector3 direction = Normalize(playerWorldPos - bulletPos);
 
 	Vector3 velocity = direction * speed_;
 
@@ -34,6 +34,7 @@ void UFOBulletManager::AddUFOBullet(const Vector3& translate) {
 	newBulet->Initialize(SUGER::CreateEntity("UFOBullet", "Fragment", popTransform));
 	newBulet->CreateCollider(ColliderCategory::UFOBullet, kSphere, 0.8f);
 	newBulet->SetVelocity(velocity);
+	newBulet->SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 	newBulet->SetSerialNumber(currentSerialNumber_);
 	newBulet->UpdateWorldTransform();
 	ufoBullets_.push_back(std::move(newBulet));

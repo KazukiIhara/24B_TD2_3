@@ -419,6 +419,9 @@ void GameScene::SceneStatePlayUpdate() {
 	// UFOマネージャの更新
 	ufoManager_->Update();
 
+	// UFOの弾マネージャの更新
+	ufoBulletManager_->Update();
+
 	// ダメージ破片の更新
 	damagePieceManager_->Update();
 
