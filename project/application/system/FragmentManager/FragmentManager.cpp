@@ -37,14 +37,15 @@ void FragmentManager::Update() {
 
 	PopFragments();
 
+	fragments_.remove_if([](const std::unique_ptr<Fragment>& fragment) {
+		return !fragment->GetAlive();
+		});
+
 	// コンテナ内のかけらすべてを更新
 	for (auto& fragment : fragments_) {
 		fragment->Update();
 	}
 
-	fragments_.remove_if([](const std::unique_ptr<Fragment>& fragment) {
-		return !fragment->GetAlive();
-		});
 }
 
 
