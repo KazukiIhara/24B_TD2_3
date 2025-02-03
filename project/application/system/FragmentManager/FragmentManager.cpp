@@ -76,7 +76,9 @@ void FragmentManager::AddFragment(const Vector3& popTranslate) {
 
 void FragmentManager::AddColliderList() {
 	for (auto& fragment : fragments_) {
-		SUGER::AddColliderList(fragment.get());
+		if (fragment->GetAlive()) {
+			SUGER::AddColliderList(fragment.get());
+		}
 	}
 }
 

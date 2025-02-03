@@ -171,7 +171,8 @@ void Fragment::Move() {
 void Fragment::MoveLimit() {
 	if (GetTranslate().x > stageWidth_ || GetTranslate().x < -stageWidth_
 		|| GetTranslate().y > stageHeight_ || GetTranslate().y < -stageHeight_) {
-		HP_ = 0;
+		isAlive_ = false;
+		SetIsDelete(true);
 	}
 }
 
