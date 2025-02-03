@@ -26,7 +26,7 @@ public:
 	// 発生数のセット
 	void SetCount(const uint32_t& count);
 	// 発生頻度のセット
-	void SetFrequency(const float& frequency);
+	void SetFrequency(const float& frequency_);
 	// 繰り返し発生フラグのセット
 	void SetIsRepeat(const bool& isRepeat);
 	// 発生タイプのセット

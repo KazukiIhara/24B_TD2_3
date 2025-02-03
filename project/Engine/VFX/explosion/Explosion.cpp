@@ -26,7 +26,7 @@ void Explosion::Initialize() {
 	fire.maxLifeTime = 1.7f;
 	fire.count = 100;
 	fire.isRepeat = false;
-	fire.frequency = 0.0f;
+	fire.frequency_ = 0.0f;
 
 	fireEmitter_.SetEmitterSetting(fire);
 
@@ -48,7 +48,7 @@ void Explosion::Initialize() {
 	fire2.maxLifeTime = 1.5f;
 	fire2.count = 100;
 	fire2.isRepeat = false;
-	fire2.frequency = 0.0f;
+	fire2.frequency_ = 0.0f;
 
 	fireEmitter2_.SetEmitterSetting(fire2);
 
@@ -69,7 +69,7 @@ void Explosion::Initialize() {
 	flash.maxLifeTime = 2.0f;
 	flash.count = 256;
 	flash.isRepeat = false;
-	flash.frequency = 0.0f;
+	flash.frequency_ = 0.0f;
 
 	flashEmitter_.SetEmitterSetting(flash);
 }

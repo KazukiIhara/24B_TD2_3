@@ -32,12 +32,19 @@ private:
 	// 
 	// パラメータ
 	// 
+	float time_ = 0.1f;
 
 	Vector3 initVelocity_ = {};
 	Vector3 velocity_ = {};
 
+	float phase_ = 0.0f;
+
 	// 速度
 	float speed_ = 0.001f;
+
+	float amplitude_ = 3.0f;  // 揺れの大きさ
+	float frequency_ = 0.5f;  // 揺れの速さ
+
 
 	bool isAlive_ = true;
 

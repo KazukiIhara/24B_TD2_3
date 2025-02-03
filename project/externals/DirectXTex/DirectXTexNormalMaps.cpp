@@ -74,7 +74,7 @@ namespace
         }
     }
 
-    HRESULT ComputeNMap(_In_ const Image& srcImage, _In_ CNMAP_FLAGS flags, _In_ float amplitude,
+    HRESULT ComputeNMap(_In_ const Image& srcImage, _In_ CNMAP_FLAGS flags, _In_ float amplitude_,
         _In_ DXGI_FORMAT format, _In_ const Image& normalMap) noexcept
     {
         if (!srcImage.pixels || !normalMap.pixels)
@@ -173,10 +173,10 @@ namespace
             {
                 // Compute normal via central differencing
                 float totDelta = (val0[x] - val0[x + 2]) + (val1[x] - val1[x + 2]) + (val2[x] - val2[x + 2]);
-                const float deltaZX = totDelta * amplitude / 6.f;
+                const float deltaZX = totDelta * amplitude_ / 6.f;
 
                 totDelta = (val0[x] - val2[x]) + (val0[x + 1] - val2[x + 1]) + (val0[x + 2] - val2[x + 2]);
-                const float deltaZY = totDelta * amplitude / 6.f;
+                const float deltaZY = totDelta * amplitude_ / 6.f;
 
                 const XMVECTOR vx = XMVectorSetZ(g_XMNegIdentityR0, deltaZX);   // (-1.0f, 0.0f, deltaZX)
                 const XMVECTOR vy = XMVectorSetZ(g_XMNegIdentityR1, deltaZY);   // (0.0f, -1.0f, deltaZY)
@@ -202,7 +202,7 @@ namespace
                     t = val2[x + 2] - c;    if (t > 0.f) delta += t;
 
                     // Average delta (divide by 8, scale by amplitude factor)
-                    delta *= 0.125f * amplitude;
+                    delta *= 0.125f * amplitude_;
                     if (delta > 0.f)
                     {
                         // If < 0, then no occlusion
@@ -257,7 +257,7 @@ _Use_decl_annotations_
 HRESULT DirectX::ComputeNormalMap(
     const Image& srcImage,
     CNMAP_FLAGS flags,
-    float amplitude,
+    float amplitude_,
     DXGI_FORMAT format,
     ScratchImage& normalMap) noexcept
 {
@@ -299,7 +299,7 @@ HRESULT DirectX::ComputeNormalMap(
         return E_POINTER;
     }
 
-    hr = ComputeNMap(srcImage, flags, amplitude, format, *img);
+    hr = ComputeNMap(srcImage, flags, amplitude_, format, *img);
     if (FAILED(hr))
     {
         normalMap.Release();
@@ -315,7 +315,7 @@ HRESULT DirectX::ComputeNormalMap(
     size_t nimages,
     const TexMetadata& metadata,
     CNMAP_FLAGS flags,
-    float amplitude,
+    float amplitude_,
     DXGI_FORMAT format,
     ScratchImage& normalMaps) noexcept
 {
@@ -381,7 +381,7 @@ HRESULT DirectX::ComputeNormalMap(
             return E_FAIL;
         }
 
-        hr = ComputeNMap(src, flags, amplitude, format, dest[index]);
+        hr = ComputeNMap(src, flags, amplitude_, format, dest[index]);
         if (FAILED(hr))
         {
             normalMaps.Release();

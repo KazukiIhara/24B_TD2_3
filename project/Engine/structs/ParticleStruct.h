@@ -49,7 +49,7 @@ struct EmitterSetting {
 	// 繰り返し発生するかどうか
 	bool isRepeat;
 	// 発生頻度
-	float frequency;
+	float frequency_;
 	// 発生速度(radius発生時のパラメータ)
 	float speed;
 };
