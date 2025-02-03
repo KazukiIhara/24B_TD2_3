@@ -17,6 +17,7 @@
 #include "system/BumpManager/BumpManager.h"
 #include "system/DamagePieceManager/DamagePieceManager.h"
 #include "system/UFOManager/UFOManager.h"
+#include "system/UFOBulletManager/UFOBulletManager.h"
 
 
 class GameScene :public BaseScene {
@@ -67,6 +68,9 @@ private:
 	std::unique_ptr<BumpManager> bumpManager_ = nullptr;
 	// UFOマネージャ
 	std::unique_ptr<UFOManager> ufoManager_ = nullptr;
+	// UFO弾マネージャ
+	std::unique_ptr<UFOBulletManager> ufoBulletManager_ = nullptr;
+
 	// ダメージ破片
 	std::unique_ptr<DamagePieceManager> damagePieceManager_ = nullptr;
 

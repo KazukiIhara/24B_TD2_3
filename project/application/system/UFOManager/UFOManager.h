@@ -11,10 +11,12 @@ enum class UFOPopPlace {
 	RightBottom,
 };
 
+class UFOBulletManager;
+
 class UFOManager {
 public:
 
-	void Initialize();
+	void Initialize(UFOBulletManager* ufoBulletManager);
 
 	void Update();
 
@@ -46,6 +48,7 @@ private:
 	uint32_t currentSerialNumber_ = 0;
 
 	int count = 0;
-
+private:
+	UFOBulletManager* ufoBulletManager_ = nullptr;
 
 };

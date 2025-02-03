@@ -4,6 +4,8 @@
 
 #include <optional>
 
+class UFOBulletManager;
+
 class UFO : public EntityController {
 	enum class Behavior {
 		kRoot,
@@ -27,6 +29,8 @@ public:
 	void RootUpdate();
 
 	void SetVelocity(const Vector3& velocity);
+
+	void SetUFOBulletManager(UFOBulletManager* ufoBulletManager);
 
 private:
 	// 
@@ -54,5 +58,10 @@ private:
 	// 次のふるまいリクエスト
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
+	int32_t shotTimer_ = 0;
+	int32_t shotInterval_ = 120;
+
+private:
+	UFOBulletManager* ufoBulletManager_ = nullptr;
 
 };

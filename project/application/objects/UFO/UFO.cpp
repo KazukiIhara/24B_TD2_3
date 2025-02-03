@@ -5,6 +5,8 @@
 #include <numbers>
 #include "random/Random.h"
 
+#include "system/UFOBulletManager/UFOBulletManager.h"
+
 UFO::UFO() {
 }
 
@@ -15,6 +17,8 @@ void UFO::Initialize(const std::string& name) {
 
 	// ランダムな位相を設定 (0 〜 2π の範囲で)
 	phase_ = Random::GenerateFloat(0.0f, std::numbers::pi_v<float> *2.0f);
+
+	shotTimer_ = shotInterval_;
 }
 
 bool UFO::GetIsAlive() const {
@@ -50,6 +54,15 @@ void UFO::RootInitialize() {
 }
 
 void UFO::RootUpdate() {
+	if (shotTimer_ > 0) {
+		shotTimer_--;
+	}
+
+	if (shotTimer_ == 0) {
+		ufoBulletManager_->AddUFOBullet(GetTranslate());
+		shotTimer_ = shotInterval_;
+	}
+
 	// 時間経過を取得
 	time_ += SUGER::kDeltaTime_;
 
@@ -70,4 +83,8 @@ void UFO::RootUpdate() {
 void UFO::SetVelocity(const Vector3& velocity) {
 	initVelocity_ = velocity;
 	velocity_ = initVelocity_;
+}
+
+void UFO::SetUFOBulletManager(UFOBulletManager* ufoBulletManager) {
+	ufoBulletManager_ = ufoBulletManager;
 }
