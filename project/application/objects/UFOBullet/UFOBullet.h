@@ -15,7 +15,11 @@ public:
 	void OnCollision([[maybe_unused]] Collider* other)override;
 	void SetVelocity(const Vector3& velocity);
 	bool GetIsAlive()const;
+	void MoveLimit();
 private:
 	Vector3 velocity_ = {};
 	bool isAlive_ = true;
+
+	float stageWidth_ = 48.0f;
+	float stageHeight_ = 27.0;
 };

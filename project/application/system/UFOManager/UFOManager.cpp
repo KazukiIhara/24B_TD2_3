@@ -7,7 +7,7 @@
 
 void UFOManager::Initialize(UFOBulletManager* ufoBulletManager) {
 	ufoBulletManager_ = ufoBulletManager;
-	
+
 	ufos_.clear();
 
 	popTimer_ = popIntervalTime_;
@@ -27,8 +27,8 @@ void UFOManager::Update() {
 	PopUFOs();
 
 	// 削除フラグの立った隕石を削除
-	ufos_.remove_if([](const std::unique_ptr<UFO>& meteorite) {
-		return !meteorite->GetIsAlive();
+	ufos_.remove_if([](const std::unique_ptr<UFO>& ufo) {
+		return !ufo->GetIsAlive();
 		});
 
 	// コンテナ内の隕石をすべて更新
@@ -56,10 +56,9 @@ void UFOManager::AddUFO(const Vector3& popTranslate, const Vector3 velocity) {
 void UFOManager::AddColliderList() {
 	for (auto& ufo : ufos_) {
 		if (ufo->GetIsAlive()) {
-			if (ufo->GetIsAlive()) {
-				SUGER::AddColliderList(ufo.get());
-			}
+			SUGER::AddColliderList(ufo.get());
 		}
+
 	}
 }
 

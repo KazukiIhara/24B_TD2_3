@@ -67,8 +67,8 @@ void UFO::RootUpdate() {
 	time_ += SUGER::kDeltaTime_;
 
 	// 上下の揺れの速度を算出（位相を考慮）
-	float waveVelocity = amplitude_ * frequency_ * (std::numbers::pi_v<float> *2.0f) *
-		std::cos(time_ * frequency_ * (std::numbers::pi_v<float> *2.0f) + phase_);
+	float waveVelocity = amplitude_ * frequency_ * (std::numbers::pi_v<float> * 2.0f) *
+		std::cos(time_ * frequency_ * (std::numbers::pi_v<float> * 2.0f) + phase_);
 
 	// 速度を計算（初期速度に揺れの速度を加算）
 	velocity_ = initVelocity_ + Vector3(0.0f, waveVelocity, 0.0f);
@@ -78,6 +78,8 @@ void UFO::RootUpdate() {
 
 	// コライダーに速度を適用
 	GetCollider()->SetVelocity(velocity_);
+
+	MoveLimit();
 }
 
 void UFO::SetVelocity(const Vector3& velocity) {
@@ -87,4 +89,12 @@ void UFO::SetVelocity(const Vector3& velocity) {
 
 void UFO::SetUFOBulletManager(UFOBulletManager* ufoBulletManager) {
 	ufoBulletManager_ = ufoBulletManager;
+}
+
+void UFO::MoveLimit() {
+	if (GetTranslate().x > stageWidth_ || GetTranslate().x < -stageWidth_
+		|| GetTranslate().y > stageHeight_ || GetTranslate().y < -stageHeight_) {
+		isAlive_ = false;
+		SetIsDelete(true);
+	}
 }

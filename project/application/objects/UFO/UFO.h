@@ -32,6 +32,8 @@ public:
 
 	void SetUFOBulletManager(UFOBulletManager* ufoBulletManager);
 
+	void MoveLimit();
+
 private:
 	// 
 	// パラメータ
@@ -48,6 +50,9 @@ private:
 
 	float amplitude_ = 3.0f;  // 揺れの大きさ
 	float frequency_ = 0.5f;  // 揺れの速さ
+
+	float stageWidth_ = 48.0f;
+	float stageHeight_ = 27.0;
 
 
 	bool isAlive_ = true;

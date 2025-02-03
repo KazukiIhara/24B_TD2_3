@@ -18,7 +18,7 @@ void FragmentManager::Initialize() {
 	popPosition_[static_cast<uint32_t>(FragmentPopPlace::LeftTop)] = { -screenWidth,screenHeight,0.0f };
 	popPosition_[static_cast<uint32_t>(FragmentPopPlace::Left)] = { -screenWidth, 0.0f, 0.0f };
 	popPosition_[static_cast<uint32_t>(FragmentPopPlace::LeftBottom)] = { -screenWidth, -screenHeight, 0.0f };
-	popPosition_[static_cast<uint32_t>(FragmentPopPlace::Bottom)] = {0.0f, -screenHeight, 0.0f};
+	popPosition_[static_cast<uint32_t>(FragmentPopPlace::Bottom)] = { 0.0f, -screenHeight, 0.0f };
 	popPosition_[static_cast<uint32_t>(FragmentPopPlace::RightBottom)] = { screenWidth, -screenHeight, 0.0f };
 	popPosition_[static_cast<uint32_t>(FragmentPopPlace::Right)] = { screenWidth, 0.0f, 0.0f };
 	popPosition_[static_cast<uint32_t>(FragmentPopPlace::RightTop)] = { screenWidth, screenHeight, 0.0f };
@@ -37,15 +37,14 @@ void FragmentManager::Update() {
 
 	PopFragments();
 
-	// コンテナ内のかけらすべてを更新
-	for (auto& fragment : fragments_) {
-		fragment->Update();
-	}
-
 	fragments_.remove_if([](const std::unique_ptr<Fragment>& fragment) {
 		return !fragment->GetAlive();
 		});
 
+	// コンテナ内のかけらすべてを更新
+	for (auto& fragment : fragments_) {
+		fragment->Update();
+	}
 
 }
 
@@ -77,7 +76,9 @@ void FragmentManager::AddFragment(const Vector3& popTranslate) {
 
 void FragmentManager::AddColliderList() {
 	for (auto& fragment : fragments_) {
-		SUGER::AddColliderList(fragment.get());
+		if (fragment->GetAlive()) {
+			SUGER::AddColliderList(fragment.get());
+		}
 	}
 }
 

@@ -9,14 +9,14 @@ void UFOBulletManager::Initialize(Player* player) {
 }
 
 void UFOBulletManager::Update() {
+	ufoBullets_.remove_if([](const std::unique_ptr<UFOBullet>& fragment) {
+		return !fragment->GetIsAlive();
+		});
+
 	// コンテナ内のかけらすべてを更新
 	for (auto& ufoBullet : ufoBullets_) {
 		ufoBullet->Update();
 	}
-
-	ufoBullets_.remove_if([](const std::unique_ptr<UFOBullet>& fragment) {
-		return !fragment->GetIsAlive();
-		});
 }
 
 void UFOBulletManager::AddUFOBullet(const Vector3& translate) {
@@ -44,7 +44,9 @@ void UFOBulletManager::AddUFOBullet(const Vector3& translate) {
 
 void UFOBulletManager::AddColliderList() {
 	for (auto& ufoBullet : ufoBullets_) {
-		SUGER::AddColliderList(ufoBullet.get());
+		if (ufoBullet->GetIsAlive()) {
+			SUGER::AddColliderList(ufoBullet.get());
+		}
 	}
 }
 

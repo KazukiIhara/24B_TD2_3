@@ -36,8 +36,6 @@ void Fragment::Update() {
 
 	Atmosphere(); // 大気圏内処理
 
-	UpdateLifeState(); // 生死処理
-
 	BumpHitEffect(); // たんこぶに当たったときの処理
 }
 
@@ -48,6 +46,8 @@ void Fragment::OnCollision(Collider* other) {
 	switch (category) {
 	case ColliderCategory::Player:
 		HP_ -= 3;
+		UpdateLifeState(); // 生死処理
+
 		EmitFragment(velocity_);
 
 		// スコア関係
@@ -57,7 +57,7 @@ void Fragment::OnCollision(Collider* other) {
 	case ColliderCategory::Meteorite:
 
 		HP_ -= 3;
-
+		UpdateLifeState(); // 生死処理
 
 		EmitFragment(velocity_);
 
@@ -95,6 +95,7 @@ void Fragment::OnCollision(Collider* other) {
 			playerHitTimer_ = 0.5f;
 		}
 		HP_ -= 3;
+		UpdateLifeState(); // 
 		// スコア関係
 		player_->GetScoreData().score_ += score_;
 		player_->GetScoreData().fragmentNum_++;
@@ -170,7 +171,8 @@ void Fragment::Move() {
 void Fragment::MoveLimit() {
 	if (GetTranslate().x > stageWidth_ || GetTranslate().x < -stageWidth_
 		|| GetTranslate().y > stageHeight_ || GetTranslate().y < -stageHeight_) {
-		HP_ = 0;
+		isAlive_ = false;
+		SetIsDelete(true);
 	}
 }
 
@@ -181,21 +183,20 @@ void Fragment::UpdateLifeState() {
 	}
 }
 
-void Fragment::Atmosphere()
-{
+void Fragment::Atmosphere() {
 	float color = 1.0f; // 初期カラー値
 
 	if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition())) {
 		// 対象が地球の大気圏内にいる場合、カラーを変化させます
 		color = (Length(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
-		
+
 		Vector3 min = -(velocity_ * 0.85f);
 		Vector3 max = -(velocity_ * 1.15f);
 
 		Vector3 maxVelo = ElementWiseMax(min, max);
 		Vector3 minVelo = ElementWiseMin(min, max);
 
-		  
+
 		emitter_->SetMaxSize(0.8f);
 		emitter_->SetMinSize(0.8f);
 		emitter_->SetCount(1);
@@ -206,7 +207,7 @@ void Fragment::Atmosphere()
 		emitterDust_->SetCount(1);
 		emitterDust_->SetMaxVelocity(maxVelo);
 		emitterDust_->SetMinVelocity(minVelo);
-		
+
 		emitter_->Emit();
 		emitterDust_->Emit();
 	}
@@ -242,21 +243,19 @@ Vector3 Fragment::CalculateDirection(const Vector3& startPosition, const Vector3
 	return finalDirection;
 }
 
-void Fragment::SetPraticle(int count)
-{
+void Fragment::SetPraticle(int count) {
 	particleNumber_ = count;
 
 	emitter_ = std::make_unique<EmitterController>();
 	emitterDust_ = std::make_unique<EmitterController>();
 	emitterFragment_ = std::make_unique<EmitterController>();
-	CreateEmit("dustParticle", "dustEmitter", 1,0.8f ,{ 1,1,0 },emitter_.get());
-	CreateEmit("dustParticle", "dustFire", 1,1.0f,{ 1,0,0 },emitterDust_.get());
-	CreateEmit("fragmentParticle", "fragment", 5,0.5f,{ 1,1,1 }, emitterFragment_.get());
+	CreateEmit("dustParticle", "dustEmitter", 1, 0.8f, { 1,1,0 }, emitter_.get());
+	CreateEmit("dustParticle", "dustFire", 1, 1.0f, { 1,0,0 }, emitterDust_.get());
+	CreateEmit("fragmentParticle", "fragment", 5, 0.5f, { 1,1,1 }, emitterFragment_.get());
 
 }
 
-void Fragment::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size,Vector3 color, EmitterController* emit)
-{
+void Fragment::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector3 color, EmitterController* emit) {
 	std::string name_ = emitName + std::to_string(particleNumber_);
 	// エミッターの作成
 	SUGER::CreateEmitter(name_);
@@ -288,13 +287,11 @@ void Fragment::CreateEmit(const std::string praticleName, const std::string emit
 	emit->SetMinColor(color);
 }
 
-void Fragment::DustEmit()
-{
+void Fragment::DustEmit() {
 
 }
 
-void Fragment::EmitFragment(const Vector3& velo)
-{
+void Fragment::EmitFragment(const Vector3& velo) {
 	Vector3 velocity = Normalize(velo);
 
 	Vector3 min = -(velocity * 0.25f);
@@ -311,8 +308,7 @@ void Fragment::EmitFragment(const Vector3& velo)
 	emitterFragment_->Emit();
 }
 
-void Fragment::BumpHitEffect()
-{
+void Fragment::BumpHitEffect() {
 	if (isBumpHit) {
 		effectTimer += SUGER::kDeltaTime_;
 
