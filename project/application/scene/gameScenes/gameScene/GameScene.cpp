@@ -120,12 +120,17 @@ void GameScene::Initialize() {
 
 	player_->SetBumpManager(bumpManager_.get());
 
+	// 
+	// UFO弾マネージャの初期化
+	// 
+	ufoBulletManager_ = std::make_unique<UFOBulletManager>();
+	ufoBulletManager_->Initialize(player_.get());
 
 	// 
 	// UFOマネージャの初期化処理
 	// 
 	ufoManager_ = std::make_unique<UFOManager>();
-	ufoManager_->Initialize();
+	ufoManager_->Initialize(ufoBulletManager_.get());
 
 
 	// 板ポリパーティクルの作成

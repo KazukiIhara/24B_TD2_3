@@ -2,8 +2,10 @@
 
 #include "framework/SUGER.h"
 
-void UFOBulletManager::Initialize() {
+#include "objects/player/Player.h"
 
+void UFOBulletManager::Initialize(Player* player) {
+	player_ = player;
 }
 
 void UFOBulletManager::Update() {
@@ -17,9 +19,16 @@ void UFOBulletManager::Update() {
 		});
 }
 
-void UFOBulletManager::AddUFOBullet(const Vector3& translate, const Vector3& velocity) {
+void UFOBulletManager::AddUFOBullet(const Vector3& translate) {
 	EulerTransform3D popTransform{};
 	popTransform.translate = translate;
+
+	Vector3 playerWorldPos = ExtractionWorldPos(player_->GetWorldTransformPtr()->worldMatrix_);
+	Vector3 bulletPos = translate;
+
+	Vector3 direction = Normalize(bulletPos - playerWorldPos);
+
+	Vector3 velocity = direction * speed_;
 
 	std::unique_ptr<UFOBullet> newBulet = std::make_unique<UFOBullet>();
 	newBulet->Initialize(SUGER::CreateEntity("UFOBullet", "Fragment", popTransform));

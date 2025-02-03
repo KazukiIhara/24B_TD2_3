@@ -3,7 +3,11 @@
 
 #include "random/Random.h"
 
-void UFOManager::Initialize() {
+#include "system/UFOBulletManager/UFOBulletManager.h"
+
+void UFOManager::Initialize(UFOBulletManager* ufoBulletManager) {
+	ufoBulletManager_ = ufoBulletManager;
+	
 	ufos_.clear();
 
 	popTimer_ = popIntervalTime_;
@@ -40,6 +44,7 @@ void UFOManager::AddUFO(const Vector3& popTranslate, const Vector3 velocity) {
 	std::unique_ptr<UFO> newUfo = std::make_unique<UFO>();
 	newUfo->Initialize(SUGER::CreateEntity("UFO", "UFO", popTransform));
 	newUfo->CreateCollider(ColliderCategory::UFO, kSphere, 1.0f);
+	newUfo->SetUFOBulletManager(ufoBulletManager_);
 	newUfo->UpdateWorldTransform();
 	newUfo->SetVelocity(velocity);
 
