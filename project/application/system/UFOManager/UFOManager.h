@@ -20,4 +20,6 @@ public:
 private:
 	// UFOリスト
 	std::list<std::unique_ptr<UFO>> ufos_;
+
+	// 
 };

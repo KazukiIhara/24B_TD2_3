@@ -41,4 +41,6 @@ void UFO::RootInitialize() {
 	SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
-void UFO::RootUpdate() {}
+void UFO::RootUpdate() {
+
+}

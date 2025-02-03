@@ -48,7 +48,7 @@ private:
 	MeteoritePopPlace popPlace_ = MeteoritePopPlace::Right;
 
 	// 沸く場所
-	std::array<Vector3, 4> popPosition_;
+	std::array<Vector3, 2> popPosition_;
 
 	// 一度に沸く数
 	int32_t popNum_ = 1;
