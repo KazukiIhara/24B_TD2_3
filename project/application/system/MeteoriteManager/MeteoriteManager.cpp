@@ -36,21 +36,30 @@ void MeteoriteManager::Initialize(Moon* earth, Player* player, FragmentManager* 
 }
 
 void MeteoriteManager::Update() {
+
 	// グローバルデータクラスからデータを取得
 	speed_ = SUGER::GetGrobalDataValueFloat(kParamaterString_, "Speed");
 
 	PopMateorites();
-
-	// 削除フラグの立った隕石を削除
-	meteorites_.remove_if([](const std::unique_ptr<Meteorite>& meteorite) {
-		return !meteorite->GetIsAlive();
-		});
 
 	// コンテナ内の隕石をすべて更新
 	for (auto& meteorite : meteorites_) {
 		meteorite->Update();
 		meteorite->SetSpeed(speed_);
 	}
+
+	// 削除フラグの立った隕石を削除
+	meteorites_.remove_if([](const std::unique_ptr<Meteorite>& meteorite) {
+		return !meteorite->GetIsAlive();
+		});
+
+#ifdef _DEBUG
+	ImGui::Begin("MeteoriteManager");
+	ImGui::Text("num: %d", meteorites_.size());
+	ImGui::End();
+
+
+#endif // _DEBUG
 }
 
 void MeteoriteManager::AddMeteorite(const Vector3& popTranslate, const Vector3& velocity) {
@@ -80,9 +89,7 @@ void MeteoriteManager::AddMeteorite(const Vector3& popTranslate, const Vector3& 
 void MeteoriteManager::AddColliderList() {
 	for (auto& meteorite : meteorites_) {
 		if (meteorite->GetIsAlive()) {
-			if (meteorite->GetIsAlive()) {
-				SUGER::AddColliderList(meteorite.get());
-			}
+			SUGER::AddColliderList(meteorite.get());
 		}
 	}
 }
@@ -94,7 +101,7 @@ void MeteoriteManager::PopMateorites() {
 		for (int32_t i = 0; i < popNum_; i++) {
 			Vector3 popPosition = {
 				popPosition_[static_cast<uint32_t>(popPlace_)].x,
-				popPosition_[static_cast<uint32_t>(popPlace_)].y + Random::GenerateFloat(-12.0f,12.0f),
+				popPosition_[static_cast<uint32_t>(popPlace_)].y + Random::GenerateFloat(-10.0f,10.0f),
 				0.0f
 			};
 
@@ -108,7 +115,7 @@ void MeteoriteManager::PopMateorites() {
 			}
 
 
-			int popPosNum = Random::GenerateUint32_t(0, 3);
+			int popPosNum = Random::GenerateUint32_t(0, 1);
 			popPlace_ = static_cast<MeteoritePopPlace>(popPosNum);
 			popTimer_ = popIntervalTime_;
 		}

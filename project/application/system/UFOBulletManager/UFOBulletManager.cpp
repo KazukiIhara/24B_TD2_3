@@ -9,11 +9,11 @@ void UFOBulletManager::Initialize(Player* player) {
 }
 
 void UFOBulletManager::Update() {
+
 	// コンテナ内のかけらすべてを更新
 	for (auto& ufoBullet : ufoBullets_) {
 		ufoBullet->Update();
 	}
-
 	ufoBullets_.remove_if([](const std::unique_ptr<UFOBullet>& fragment) {
 		return !fragment->GetIsAlive();
 		});

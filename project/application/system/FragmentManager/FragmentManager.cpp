@@ -18,7 +18,7 @@ void FragmentManager::Initialize() {
 	popPosition_[static_cast<uint32_t>(FragmentPopPlace::LeftTop)] = { -screenWidth,screenHeight,0.0f };
 	popPosition_[static_cast<uint32_t>(FragmentPopPlace::Left)] = { -screenWidth, 0.0f, 0.0f };
 	popPosition_[static_cast<uint32_t>(FragmentPopPlace::LeftBottom)] = { -screenWidth, -screenHeight, 0.0f };
-	popPosition_[static_cast<uint32_t>(FragmentPopPlace::Bottom)] = {0.0f, -screenHeight, 0.0f};
+	popPosition_[static_cast<uint32_t>(FragmentPopPlace::Bottom)] = { 0.0f, -screenHeight, 0.0f };
 	popPosition_[static_cast<uint32_t>(FragmentPopPlace::RightBottom)] = { screenWidth, -screenHeight, 0.0f };
 	popPosition_[static_cast<uint32_t>(FragmentPopPlace::Right)] = { screenWidth, 0.0f, 0.0f };
 	popPosition_[static_cast<uint32_t>(FragmentPopPlace::RightTop)] = { screenWidth, screenHeight, 0.0f };
@@ -45,8 +45,6 @@ void FragmentManager::Update() {
 	fragments_.remove_if([](const std::unique_ptr<Fragment>& fragment) {
 		return !fragment->GetAlive();
 		});
-
-
 }
 
 

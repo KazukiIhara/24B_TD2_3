@@ -13,7 +13,7 @@ class FragmentManager;
 class DamagePieceManager;
 
 enum class MeteoritePopPlace {
-	Left,
+	Left = 0,
 	Right,
 };
 
