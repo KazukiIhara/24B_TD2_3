@@ -42,16 +42,16 @@ void MeteoriteManager::Update() {
 
 	PopMateorites();
 
+	// 削除フラグの立った隕石を削除
+	meteorites_.remove_if([](const std::unique_ptr<Meteorite>& meteorite) {
+		return !meteorite->GetIsAlive();
+		});
+
 	// コンテナ内の隕石をすべて更新
 	for (auto& meteorite : meteorites_) {
 		meteorite->Update();
 		meteorite->SetSpeed(speed_);
 	}
-
-	// 削除フラグの立った隕石を削除
-	meteorites_.remove_if([](const std::unique_ptr<Meteorite>& meteorite) {
-		return !meteorite->GetIsAlive();
-		});
 
 #ifdef _DEBUG
 	ImGui::Begin("MeteoriteManager");
@@ -107,10 +107,10 @@ void MeteoriteManager::PopMateorites() {
 
 			switch (popPlace_) {
 			case MeteoritePopPlace::Left:
-				AddMeteorite(popPosition, Vector3(0.5f, 0.0f, 0.0f));
+				AddMeteorite(popPosition, Vector3(0.8f, 0.0f, 0.0f));
 				break;
 			case MeteoritePopPlace::Right:
-				AddMeteorite(popPosition, Vector3(-0.5f, 0.0f, 0.0f));
+				AddMeteorite(popPosition, Vector3(-0.8f, 0.0f, 0.0f));
 				break;
 			}
 

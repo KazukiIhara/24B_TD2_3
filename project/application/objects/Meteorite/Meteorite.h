@@ -122,7 +122,7 @@ private:
 	float stageHeight_ = 27.0;
 
 	// ダメージ時間定数
-	const int32_t kDamageTime_ = 10;
+	const int32_t kDamageTime_ = 30;
 	// ダメージタイマー
 	int32_t damageTimer_ = 0;
 

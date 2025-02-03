@@ -88,3 +88,11 @@ void UFO::SetVelocity(const Vector3& velocity) {
 void UFO::SetUFOBulletManager(UFOBulletManager* ufoBulletManager) {
 	ufoBulletManager_ = ufoBulletManager;
 }
+
+void UFO::MoveLimit() {
+	if (GetTranslate().x > stageWidth_ || GetTranslate().x < -stageWidth_
+		|| GetTranslate().y > stageHeight_ || GetTranslate().y < -stageHeight_) {
+		isAlive_ = false;
+		SetIsDelete(true);
+	}
+}

@@ -79,7 +79,8 @@ void Meteorite::Update() {
 void Meteorite::MoveLimit() {
 	if (GetTranslate().x > stageWidth_ || GetTranslate().x < -stageWidth_
 		|| GetTranslate().y > stageHeight_ || GetTranslate().y < -stageHeight_) {
-		hp_ = 0;
+		isAlive_ = false;
+		SetIsDelete(true);
 	}
 }
 
@@ -117,13 +118,13 @@ void Meteorite::OnCollision(Collider* other) {
 		}
 		break;
 	case ColliderCategory::Moon:
-		if (behavior_ != Behavior::kBreak) {
-			behaviorRequest_ = Behavior::kBreak;
+		if (behavior_ == Behavior::kRoot) {
+			behaviorRequest_ = Behavior::kDagame;
 		}
 		break;
 	case ColliderCategory::Player:
-		if (behavior_ != Behavior::kBreak) {
-			behaviorRequest_ = Behavior::kBreak;
+		if (behavior_ == Behavior::kRoot) {
+			behaviorRequest_ = Behavior::kDagame;
 		}
 		break;
 	}
@@ -140,11 +141,13 @@ void Meteorite::RootUpdate() {
 	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 	SetRotate(GetRotate() + Vector3(speed_, speed_, speed_ * SUGER::kDeltaTime_));
 
+	MoveLimit();
+
 	GetCollider()->SetVelocity(velocity_);
 }
 
 void Meteorite::DamageInitialize(float damage) {
-	hp_ -= damage;
+	hp_--;
 	damageTimer_ = kDamageTime_;
 	SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 
