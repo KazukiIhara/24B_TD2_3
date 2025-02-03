@@ -33,8 +33,7 @@ void Meteorite::SetFragmentManager(FragmentManager* fragmentManager) {
 	fragmentManager_ = fragmentManager;
 }
 
-void Meteorite::SetDamagePieceManager(DamagePieceManager* damagePieceManager)
-{
+void Meteorite::SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 	assert(damagePieceManager);
 	damagePieceManager_ = damagePieceManager;
 }
@@ -75,6 +74,13 @@ void Meteorite::Update() {
 		break;
 	}
 	Atmosphere();
+}
+
+void Meteorite::MoveLimit() {
+	if (GetTranslate().x > stageWidth_ || GetTranslate().x < -stageWidth_
+		|| GetTranslate().y > stageHeight_ || GetTranslate().y < -stageHeight_) {
+		hp_ = 0;
+	}
 }
 
 void Meteorite::OnCollision(Collider* other) {
@@ -121,7 +127,7 @@ void Meteorite::OnCollision(Collider* other) {
 		}
 		break;
 	}
-	
+
 }
 
 void Meteorite::RootInitialize() {
@@ -167,7 +173,7 @@ void Meteorite::BreakUpdate() {
 
 	if (breakTimer_ == 0) {
 		SetIsDelete(true);
-		
+
 		isAlive_ = false;
 		for (int i = 0; i < 10; i++) {
 			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition());
@@ -177,8 +183,8 @@ void Meteorite::BreakUpdate() {
 		player_->GetScoreData().score_ += score_;
 		player_->GetScoreData().meteoriteNum_++;
 
-		Vector3 min = Vector3(-2,-2,0);
-		Vector3 max = Vector3( 2, 2, 0);
+		Vector3 min = Vector3(-2, -2, 0);
+		Vector3 max = Vector3(2, 2, 0);
 
 		Vector3 maxVelo = ElementWiseMax(min, max);
 		Vector3 minVelo = ElementWiseMin(min, max);
@@ -189,7 +195,7 @@ void Meteorite::BreakUpdate() {
 		emitterExplosionFire_->SetMinVelocity(minVelo);
 		emitterExplosionFireYellow_->SetMaxVelocity(maxVelo);
 		emitterExplosionFireYellow_->SetMinVelocity(minVelo);
-		
+
 		emitterExplosionDust_->SetMaxVelocity(maxVelo);
 		emitterExplosionDust_->SetMinVelocity(minVelo);
 
@@ -199,13 +205,12 @@ void Meteorite::BreakUpdate() {
 	}
 }
 
-void Meteorite::Atmosphere()
-{
+void Meteorite::Atmosphere() {
 	float color = 1.0f; // 初期カラー値
 
 	if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition())) {
 		damagePieceTime_ -= SUGER::kDeltaTime_;
-		
+
 		// 対象が地球の大気圏内にいる場合、カラーを変化させます
 		color = (Length(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
 
@@ -227,7 +232,7 @@ void Meteorite::Atmosphere()
 
 		// 欠片
 		if (damagePieceTime_ <= 0) {
-			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition(), -velocity_ * 3,4.0f,true);
+			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition(), -velocity_ * 3, 4.0f, true);
 			damagePieceTime_ = kDamagePieceTime_;
 		}
 	}
@@ -241,8 +246,7 @@ void Meteorite::SetSpeed(float speed) {
 	speed_ = speed;
 }
 
-void Meteorite::SetPraticle(int count)
-{
+void Meteorite::SetPraticle(int count) {
 	particleNumber_ = count;
 
 	emitter_ = std::make_unique<EmitterController>();
@@ -272,30 +276,25 @@ void Meteorite::SetVelocity(const Vector3& velocity) {
 	velocity_ = velocity;
 }
 
-void Meteorite::SwitchingHPModel()
-{
+void Meteorite::SwitchingHPModel() {
 	if (hp_ <= 0) {
 		SetModel("Meteorite3");
-	}
-	else if (hp_ <= 1) {
+	} else if (hp_ <= 1) {
 		SetModel("Meteorite3");
 		for (int i = 0; i < 12; i++) {
-			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition(),{},{},true,{0.5,1.0f},{},{0.5f,1.0f});
+			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition(), {}, {}, true, { 0.5,1.0f }, {}, { 0.5f,1.0f });
 		}
-	}
-	else if (hp_ <= 2) {
+	} else if (hp_ <= 2) {
 		SetModel("Meteorite2");
 		for (int i = 0; i < 10; i++) {
 			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition(), {}, {}, true, { 0.5,1.0f }, {}, { 0.5f,1.0f });
 		}
-	}
-	else {
+	} else {
 
 	}
 }
 
-void Meteorite::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit)
-{
+void Meteorite::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit) {
 	std::string name_ = emitName + std::to_string(particleNumber_);
 	// エミッターの作成
 	SUGER::CreateEmitter(name_);
@@ -331,16 +330,14 @@ void Meteorite::CreateEmit(const std::string praticleName, const std::string emi
 	emit->SetMinColor(color);
 }
 
-void Meteorite::EmitDust(const Vector3& pos, const Vector3& veloctiy)
-{
+void Meteorite::EmitDust(const Vector3& pos, const Vector3& veloctiy) {
 	EmitMinMax(pos, Normalize(veloctiy) * 3, emitterDustRed_.get()); // 赤
 	EmitMinMax(pos, Normalize(veloctiy) * 2, emitterDustYellow_.get()); //黄色
 	EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterDustGray_.get());
 	EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterDustBlack_.get());
 }
 
-void Meteorite::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit)
-{
+void Meteorite::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit) {
 	Vector3 velocity = (veloctiy);
 
 	Vector3 min = (velocity * 0.25f);

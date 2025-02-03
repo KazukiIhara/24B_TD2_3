@@ -36,6 +36,9 @@ public:
 	// 更新
 	void Update()override;
 
+
+	void MoveLimit();
+
 	// 衝突コールバック関数
 	void OnCollision([[maybe_unused]] Collider* other)override;
 
@@ -114,6 +117,9 @@ private:
 
 	int score_ = 500;
 
+
+	float stageWidth_ = 48.0f;
+	float stageHeight_ = 27.0;
 
 	// ダメージ時間定数
 	const int32_t kDamageTime_ = 10;
