@@ -26,15 +26,15 @@ void UFOManager::Update() {
 
 	PopUFOs();
 
-	// コンテナ内の隕石をすべて更新
-	for (auto& ufo : ufos_) {
-		ufo->Update();
-	}
-
 	// 削除フラグの立った隕石を削除
 	ufos_.remove_if([](const std::unique_ptr<UFO>& ufo) {
 		return !ufo->GetIsAlive();
 		});
+
+	// コンテナ内の隕石をすべて更新
+	for (auto& ufo : ufos_) {
+		ufo->Update();
+	}
 }
 
 void UFOManager::AddUFO(const Vector3& popTranslate, const Vector3 velocity) {
@@ -56,10 +56,9 @@ void UFOManager::AddUFO(const Vector3& popTranslate, const Vector3 velocity) {
 void UFOManager::AddColliderList() {
 	for (auto& ufo : ufos_) {
 		if (ufo->GetIsAlive()) {
-			if (ufo->GetIsAlive()) {
-				SUGER::AddColliderList(ufo.get());
-			}
+			SUGER::AddColliderList(ufo.get());
 		}
+
 	}
 }
 
