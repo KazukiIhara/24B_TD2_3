@@ -9,4 +9,5 @@ enum class ColliderCategory {
 	Meteorite,
 	Bump,
 	DamagePiece, // 破損片
+	UFO,
 };
