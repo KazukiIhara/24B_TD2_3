@@ -100,10 +100,10 @@ void MeteoriteManager::PopMateorites() {
 
 			switch (popPlace_) {
 			case MeteoritePopPlace::Left:
-				AddMeteorite(popPosition, Vector3(1.0f, 0.0f, 0.0f));
+				AddMeteorite(popPosition, Vector3(0.5f, 0.0f, 0.0f));
 				break;
 			case MeteoritePopPlace::Right:
-				AddMeteorite(popPosition, Vector3(-1.0f, 0.0f, 0.0f));
+				AddMeteorite(popPosition, Vector3(-0.5f, 0.0f, 0.0f));
 				break;
 			}
 
