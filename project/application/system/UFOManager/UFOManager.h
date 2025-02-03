@@ -24,6 +24,8 @@ public:
 
 	void PopUFOs();
 
+	void SetPopIntervalTime(const uint32_t& popInterval);
+
 private:
 	// UFOリスト
 	std::list<std::unique_ptr<UFO>> ufos_;

@@ -93,3 +93,7 @@ void UFOManager::PopUFOs() {
 
 	}
 }
+
+void UFOManager::SetPopIntervalTime(const uint32_t& popInterval) {
+	popIntervalTime_ = popInterval;
+}
