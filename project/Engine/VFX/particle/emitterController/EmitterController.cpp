@@ -43,8 +43,8 @@ void EmitterController::SetIsRepeat(const bool& isRepeat) {
 	emitter_->SetIsRepeat(isRepeat);
 }
 
-void EmitterController::SetFrequency(const float& frequency) {
-	emitter_->SetFrequency(frequency);
+void EmitterController::SetFrequency(const float& frequency_) {
+	emitter_->SetFrequency(frequency_);
 }
 
 void EmitterController::SetEmitType(const EmitType& emitType) {

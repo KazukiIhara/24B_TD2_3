@@ -2,12 +2,19 @@
 
 #include "framework/SUGER.h"
 
-UFO::UFO() {}
+#include <numbers>
+#include "random/Random.h"
+
+UFO::UFO() {
+}
 
 UFO::~UFO() {}
 
 void UFO::Initialize(const std::string& name) {
 	EntityController::Initialize(name);
+
+	// ランダムな位相を設定 (0 〜 2π の範囲で)
+	phase_ = Random::GenerateFloat(0.0f, std::numbers::pi_v<float> *2.0f);
 }
 
 bool UFO::GetIsAlive() const {
@@ -35,7 +42,6 @@ void UFO::Update() {
 }
 
 void UFO::OnCollision(Collider* other) {
-
 }
 
 void UFO::RootInitialize() {
@@ -44,8 +50,20 @@ void UFO::RootInitialize() {
 }
 
 void UFO::RootUpdate() {
+	// 時間経過を取得
+	time_ += SUGER::kDeltaTime_;
+
+	// 上下の揺れの速度を算出（位相を考慮）
+	float waveVelocity = amplitude_ * frequency_ * (std::numbers::pi_v<float> *2.0f) *
+		std::cos(time_ * frequency_ * (std::numbers::pi_v<float> *2.0f) + phase_);
+
+	// 速度を計算（初期速度に揺れの速度を加算）
+	velocity_ = initVelocity_ + Vector3(0.0f, waveVelocity, 0.0f);
+
+	// 位置を更新
 	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 
+	// コライダーに速度を適用
 	GetCollider()->SetVelocity(velocity_);
 }
 

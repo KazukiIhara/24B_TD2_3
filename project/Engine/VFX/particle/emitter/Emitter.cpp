@@ -34,10 +34,10 @@ void Emitter::Update() {
 		frequencyTime_ += kDeltaTime_;
 
 		// 頻度より大きいなら発生
-		if (emitterSetting_.frequency <= frequencyTime_) {
+		if (emitterSetting_.frequency_ <= frequencyTime_) {
 			Emit();
 			// 余計に過ぎた時間も加味して頻度計算する
-			frequencyTime_ -= emitterSetting_.frequency;
+			frequencyTime_ -= emitterSetting_.frequency_;
 		}
 	}
 }
@@ -183,7 +183,7 @@ void Emitter::InitializeEmitterSetting() {
 	// 発生設定の初期化
 	emitterSetting_.count = 1;
 	emitterSetting_.emitType = kDefault;
-	emitterSetting_.frequency = 1.0f;
+	emitterSetting_.frequency_ = 1.0f;
 	emitterSetting_.isRepeat = false;
 	emitterSetting_.minColor = { 1.0f,1.0f,1.0f };
 	emitterSetting_.maxColor = { 1.0f,1.0f,1.0f };
@@ -201,8 +201,8 @@ void Emitter::SetCount(const uint32_t& count) {
 	emitterSetting_.count = count;
 }
 
-void Emitter::SetFrequency(const float& frequency) {
-	emitterSetting_.frequency = frequency;
+void Emitter::SetFrequency(const float& frequency_) {
+	emitterSetting_.frequency_ = frequency_;
 }
 
 void Emitter::SetIsRepeat(const bool& isRepeat) {

@@ -765,11 +765,11 @@ namespace DirectX
     };
 
     HRESULT __cdecl ComputeNormalMap(
-        _In_ const Image& srcImage, _In_ CNMAP_FLAGS flags, _In_ float amplitude,
+        _In_ const Image& srcImage, _In_ CNMAP_FLAGS flags, _In_ float amplitude_,
         _In_ DXGI_FORMAT format, _Out_ ScratchImage& normalMap) noexcept;
     HRESULT __cdecl ComputeNormalMap(
         _In_reads_(nimages) const Image* srcImages, _In_ size_t nimages, _In_ const TexMetadata& metadata,
-        _In_ CNMAP_FLAGS flags, _In_ float amplitude, _In_ DXGI_FORMAT format, _Out_ ScratchImage& normalMaps) noexcept;
+        _In_ CNMAP_FLAGS flags, _In_ float amplitude_, _In_ DXGI_FORMAT format, _Out_ ScratchImage& normalMaps) noexcept;
 
     //---------------------------------------------------------------------------------
     // Misc image operations

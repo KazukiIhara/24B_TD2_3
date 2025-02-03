@@ -38,7 +38,7 @@ public:
 	void SetIsRepeat(const bool& isRepeat);
 
 	// 発生頻度のセット
-	void SetFrequency(const float& frequency);
+	void SetFrequency(const float& frequency_);
 
 	// 発生タイプのセット
 	void SetEmitType(const EmitType& emitType);
