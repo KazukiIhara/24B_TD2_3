@@ -39,7 +39,7 @@ private:
 
 	int32_t popTimer_ = 0;
 
-	int32_t popIntervalTime_ = 900;
+	int32_t popIntervalTime_ = 1200;
 
 	uint32_t currentSerialNumber_ = 0;
 
