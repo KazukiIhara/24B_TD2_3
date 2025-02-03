@@ -71,3 +71,7 @@ void UFO::SetVelocity(const Vector3& velocity) {
 	initVelocity_ = velocity;
 	velocity_ = initVelocity_;
 }
+
+void UFO::SetUFOBulletManager(UFOBulletManager* ufoBulletManager) {
+	ufoBulletManager_ = ufoBulletManager;
+}
