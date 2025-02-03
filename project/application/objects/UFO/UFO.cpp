@@ -1,5 +1,7 @@
 #include "UFO.h"
 
+#include "framework/SUGER.h"
+
 UFO::UFO() {}
 
 UFO::~UFO() {}
@@ -17,18 +19,18 @@ void UFO::Update() {
 	if (behaviorRequest_) {
 		behavior_ = behaviorRequest_.value();
 		switch (behavior_) {
-			case UFO::Behavior::kRoot:
-				RootInitialize();
-				break;
+		case UFO::Behavior::kRoot:
+			RootInitialize();
+			break;
 		}
 		behaviorRequest_ = std::nullopt;
 	}
 
 	// ふるまい
 	switch (behavior_) {
-		case UFO::Behavior::kRoot:
-			RootUpdate();
-			break;
+	case UFO::Behavior::kRoot:
+		RootUpdate();
+		break;
 	}
 }
 
@@ -42,5 +44,11 @@ void UFO::RootInitialize() {
 }
 
 void UFO::RootUpdate() {
+	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 
+	GetCollider()->SetVelocity(velocity_);
+}
+
+void UFO::SetVelocity(const Vector3& velocity) {
+	velocity_ = velocity;
 }

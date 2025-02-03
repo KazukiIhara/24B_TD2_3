@@ -23,11 +23,17 @@ public:
 	void OnCollision([[maybe_unused]] Collider* other)override;
 
 	void RootInitialize();
+
 	void RootUpdate();
+
+	void SetVelocity(const Vector3& velocity);
+
 private:
 	// 
 	// パラメータ
 	// 
+
+	Vector3 velocity_ = {};
 
 	// 速度
 	float speed_ = 0.001f;

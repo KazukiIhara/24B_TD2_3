@@ -93,18 +93,18 @@ void MeteoriteManager::PopMateorites() {
 	} else {
 		for (int32_t i = 0; i < popNum_; i++) {
 			Vector3 popPosition = {
-				popPosition_[static_cast<uint32_t>(popPlace_)].x + Random::GenerateFloat(-10.0f,10.0f),
-				popPosition_[static_cast<uint32_t>(popPlace_)].y + Random::GenerateFloat(-10.0f,10.0f),
+				popPosition_[static_cast<uint32_t>(popPlace_)].x,
+				popPosition_[static_cast<uint32_t>(popPlace_)].y + Random::GenerateFloat(-12.0f,12.0f),
 				0.0f
 			};
 
 			switch (popPlace_) {
-				case MeteoritePopPlace::Left:
-					AddMeteorite(popPosition, Vector3(1.0f, 0.0f, 0.0f));
-					break;
-				case MeteoritePopPlace::Right:
-					AddMeteorite(popPosition, Vector3(-1.0f, 0.0f, 0.0f));
-					break;
+			case MeteoritePopPlace::Left:
+				AddMeteorite(popPosition, Vector3(1.0f, 0.0f, 0.0f));
+				break;
+			case MeteoritePopPlace::Right:
+				AddMeteorite(popPosition, Vector3(-1.0f, 0.0f, 0.0f));
+				break;
 			}
 
 

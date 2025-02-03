@@ -121,6 +121,12 @@ void GameScene::Initialize() {
 	player_->SetBumpManager(bumpManager_.get());
 
 
+	// 
+	// UFOマネージャの初期化処理
+	// 
+	ufoManager_ = std::make_unique<UFOManager>();
+	ufoManager_->Initialize();
+
 
 	// 板ポリパーティクルの作成
 	SUGER::CreateParticle("dustParticle", ParticleType::kPlane, "circle.png");
@@ -404,6 +410,9 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// かけらマネージャの更新
 	fragmentManager_->Update();
+
+	// UFOマネージャの更新
+	ufoManager_->Update();
 
 	// ダメージ破片の更新
 	damagePieceManager_->Update();
