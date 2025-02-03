@@ -50,5 +50,6 @@ void UFO::RootUpdate() {
 }
 
 void UFO::SetVelocity(const Vector3& velocity) {
-	velocity_ = velocity;
+	initVelocity_ = velocity;
+	velocity_ = initVelocity_;
 }

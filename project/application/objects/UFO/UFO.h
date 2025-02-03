@@ -4,7 +4,7 @@
 
 #include <optional>
 
-class UFO: public EntityController {
+class UFO : public EntityController {
 	enum class Behavior {
 		kRoot,
 	};
@@ -33,6 +33,7 @@ private:
 	// パラメータ
 	// 
 
+	Vector3 initVelocity_ = {};
 	Vector3 velocity_ = {};
 
 	// 速度
