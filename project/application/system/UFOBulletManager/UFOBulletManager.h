@@ -20,7 +20,7 @@ public:
 private:
 	std::list<std::unique_ptr<UFOBullet>> ufoBullets_;
 	uint32_t currentSerialNumber_ = 0;
-	float speed_ = 1.0f;
+	float speed_ = 5.0f;
 private:
 	Player* player_ = nullptr;
 };
