@@ -3,6 +3,7 @@
 #include "framework/SUGER.h"
 
 #include "objects/player/Player.h"
+#include "system/DamagePieceManager/DamagePieceManager.h"
 
 void UFOBulletManager::Initialize(Player* player) {
 	player_ = player;
@@ -36,6 +37,7 @@ void UFOBulletManager::AddUFOBullet(const Vector3& translate) {
 	newBulet->SetVelocity(velocity);
 	newBulet->SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 	newBulet->SetSerialNumber(currentSerialNumber_);
+	newBulet->SetDamagePieceManager(damagePieceManager_);
 	newBulet->UpdateWorldTransform();
 	ufoBullets_.push_back(std::move(newBulet));
 
@@ -52,4 +54,9 @@ void UFOBulletManager::AddColliderList() {
 
 void UFOBulletManager::SetPlayer(Player* player) {
 	player_ = player;
+}
+
+void UFOBulletManager::SetDamagePieceManager(DamagePieceManager* damagePieceManager)
+{
+	damagePieceManager_ = damagePieceManager;
 }

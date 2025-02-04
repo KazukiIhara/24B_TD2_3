@@ -5,6 +5,7 @@
 #include <list>
 
 class Player;
+class DamagePieceManager;
 
 class UFOBulletManager {
 public:
@@ -16,6 +17,7 @@ public:
 	void AddColliderList();
 
 	void SetPlayer(Player* player);
+	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
 
 private:
 	std::list<std::unique_ptr<UFOBullet>> ufoBullets_;
@@ -23,4 +25,5 @@ private:
 	float speed_ = 5.0f;
 private:
 	Player* player_ = nullptr;
+	DamagePieceManager* damagePieceManager_ = nullptr;
 };

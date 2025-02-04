@@ -5,6 +5,7 @@
 #include <optional>
 
 class UFOBulletManager;
+class DamagePieceManager;
 
 class UFO : public EntityController {
 	enum class Behavior {
@@ -33,6 +34,8 @@ public:
 	void SetUFOBulletManager(UFOBulletManager* ufoBulletManager);
 
 	void MoveLimit();
+
+	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
 
 private:
 	// 
@@ -69,4 +72,5 @@ private:
 private:
 	UFOBulletManager* ufoBulletManager_ = nullptr;
 
+	DamagePieceManager* damagePieceManager_ = nullptr;
 };

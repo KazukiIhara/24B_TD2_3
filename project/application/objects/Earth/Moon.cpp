@@ -37,24 +37,24 @@ void Moon::Update() {
 	if (behaviorRequest_) {
 		behavior_ = behaviorRequest_.value();
 		switch (behavior_) {
-			case Moon::Behavior::kRoot:
-				RootInitialize();
-				break;
-			case Moon::Behavior::kAttack:
-				AttackInitialize();
-				break;
+		case Moon::Behavior::kRoot:
+			RootInitialize();
+			break;
+		case Moon::Behavior::kAttack:
+			AttackInitialize();
+			break;
 		}
 		behaviorRequest_ = std::nullopt;
 	}
 
 	// ふるまい
 	switch (behavior_) {
-		case Moon::Behavior::kRoot:
-			RootUpdate();
-			break;
-		case Moon::Behavior::kAttack:
-			AttackUpdate();
-			break;
+	case Moon::Behavior::kRoot:
+		RootUpdate();
+		break;
+	case Moon::Behavior::kAttack:
+		AttackUpdate();
+		break;
 	}
 
 	MoveLimit();
@@ -94,56 +94,70 @@ void Moon::OnCollision(Collider* other) {
 	float fragmentMass{};
 	HitParticleTimer_ -= SUGER::kDeltaTime_;
 	switch (category) {
-		case ColliderCategory::Player:
-		{
-			earthMass = GetCollider()->GetMass();
-			Vector3 earthVelocity = GetCollider()->GetVelocity();
-			playerMass = other->GetMass();
-			Vector3 playerVelocity = other->GetVelocity();
-			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-			Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
-			velocity_ = velocity;
-			returnMoveTimer_ = kReturnMoveTime_;
+	case ColliderCategory::Player:
+	{
+		earthMass = GetCollider()->GetMass();
+		Vector3 earthVelocity = GetCollider()->GetVelocity();
+		playerMass = other->GetMass();
+		Vector3 playerVelocity = other->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+		velocity_ = velocity;
+		returnMoveTimer_ = kReturnMoveTime_;
 
-			for (int i = 0; i < 5; i++) {
-				EmitDamegePiece2(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_);
-			}
+		for (int i = 0; i < 5; i++) {
+			EmitDamegePiece2(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_);
 		}
+	}
+	break;
+	case ColliderCategory::Fragment:
+		earthMass = GetCollider()->GetMass();
+		Vector3 earthVelocity = GetCollider()->GetVelocity();
+		fragmentMass = other->GetMass();
+		Vector3 fragmentVelocity = other->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
+
+
+		EmitDust(normal, normal);
+
+
+
 		break;
-		case ColliderCategory::Fragment:
-			earthMass = GetCollider()->GetMass();
-			Vector3 earthVelocity = GetCollider()->GetVelocity();
-			fragmentMass = other->GetMass();
-			Vector3 fragmentVelocity = other->GetVelocity();
-			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-			Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
+	case ColliderCategory::Meteorite:
+	{
+		earthMass = GetCollider()->GetMass();
+		Vector3 earthVelocity = GetCollider()->GetVelocity();
+		playerMass = other->GetMass();
+		Vector3 playerVelocity = other->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+		velocity_ = velocity;
+		returnMoveTimer_ = kReturnMoveTime_;
 
-
+		if (HitParticleTimer_ <= 0) {
 			EmitDust(normal, normal);
-
-
-
-			break;
-		case ColliderCategory::Meteorite:
-		{
-			earthMass = GetCollider()->GetMass();
-			Vector3 earthVelocity = GetCollider()->GetVelocity();
-			playerMass = other->GetMass();
-			Vector3 playerVelocity = other->GetVelocity();
-			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-			Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
-			velocity_ = velocity;
-			returnMoveTimer_ = kReturnMoveTime_;
-
-			if (HitParticleTimer_ <= 0) {
-				EmitDust(normal, normal);
-				HitParticleTimer_ = 1;
-			}
-
-
+			HitParticleTimer_ = 1;
 		}
 
-		break;
+
+	}
+	break;
+	case ColliderCategory::UFOBullet:
+	{
+		earthMass = GetCollider()->GetMass();
+		Vector3 earthVelocity = GetCollider()->GetVelocity();
+		fragmentMass = other->GetMass();
+		Vector3 fragmentVelocity = other->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
+
+
+		EmitDust(normal, normal);
+
+
+	}
+	break;
 	}
 }
 

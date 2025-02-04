@@ -1,6 +1,7 @@
 #include "UFOBullet.h"
 
 #include "framework/SUGER.h"
+#include "system/DamagePieceManager/DamagePieceManager.h"
 
 UFOBullet::UFOBullet() {
 }
@@ -23,6 +24,7 @@ void UFOBullet::Update() {
 }
 
 void UFOBullet::OnCollision(Collider* other) {
+	
 
 }
 
@@ -40,4 +42,9 @@ void UFOBullet::MoveLimit() {
 		isAlive_ = false;
 		SetIsDelete(true);
 	}
+}
+
+void UFOBullet::SetDamagePieceManager(DamagePieceManager* damagePieceManager)
+{
+	damagePieceManager_ = damagePieceManager;
 }

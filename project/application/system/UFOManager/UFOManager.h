@@ -12,6 +12,7 @@ enum class UFOPopPlace {
 };
 
 class UFOBulletManager;
+class DamagePieceManager;
 
 class UFOManager {
 public:
@@ -27,6 +28,9 @@ public:
 	void PopUFOs();
 
 	void SetPopIntervalTime(const uint32_t& popInterval);
+
+	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
+
 
 private:
 	// UFOリスト
@@ -50,5 +54,5 @@ private:
 	int count = 0;
 private:
 	UFOBulletManager* ufoBulletManager_ = nullptr;
-
+	DamagePieceManager* damagePieceManager_ = nullptr;
 };
