@@ -77,6 +77,16 @@ private:
 	int32_t shotTimer_ = 0;
 	int32_t shotInterval_ = 360;
 
+	// ダメージ時間定数
+	const int32_t kDamageTime_ = 30;
+	// ダメージタイマー
+	int32_t damageTimer_ = 0;
+
+	// 破壊時間定数
+	const int32_t kBreakTime_ = 30;
+	// 破壊タイマー
+	int32_t breakTimer_ = 0;
+
 private:
 	UFOBulletManager* ufoBulletManager_ = nullptr;
 

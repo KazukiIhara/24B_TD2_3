@@ -271,7 +271,7 @@ void Player::OnCollision(Collider* other) {
 		break;
 		case ColliderCategory::Fragment:
 		{
-			HP_ -= 5;
+			HP_ -= 2;
 
 			isObjectHit = true;
 			objectHitLevel = 1;

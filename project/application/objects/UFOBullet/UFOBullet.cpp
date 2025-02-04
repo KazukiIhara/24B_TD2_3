@@ -35,6 +35,10 @@ void UFOBullet::OnCollision(Collider* other) {
 		isAlive_ = false;
 		SetIsDelete(true);
 		break;
+	case ColliderCategory::Meteorite:
+		isAlive_ = false;
+		SetIsDelete(true);
+		break;
 	}
 
 }
