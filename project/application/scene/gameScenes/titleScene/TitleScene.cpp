@@ -33,12 +33,13 @@ void TitleScene::Initialize() {
 	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.0f);
 	player_->SetScale(2.0f);
 	player_->GetCollider()->SetMass(20.0f);
-	player_->SetTranslate(Vector3{ -10.5f, -0.5f, 0 });
-
+	player_->SetTranslate({ 1.5f,0.0f,5.0f });
 
 	// 
 	// 月の初期化処理
 	// 
+
+	float dir = DegreesToRadians(inclination_);
 
 	moon_ = std::make_unique<Moon>();
 	moon_->Initialize(SUGER::CreateEntity("Moon", "Earth"));
@@ -46,7 +47,9 @@ void TitleScene::Initialize() {
 	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 2.0f);
 	moon_->GetCollider()->SetMass(200.0f);
 	moon_->SetDamagePieceManager(damagePieceManager_.get());
-	moon_->SetTranslate({ 0,0,3 });
+	moon_->SetTranslate(Vector3{ -10.5f, -0.5f, 0 });
+	moon_->SetRotateZ(dir);
+	moon_->SetScale(1.5f);
 
 
 	//
@@ -77,6 +80,23 @@ void TitleScene::Initialize() {
 	startUI_->Initialize(SUGER::Create2DObject("A", "TitleText/StartUI.png"));
 	startUI_->SetAnchorPoint({ 0.5f,0.5f });
 	startUI_->SetPosition({ 1920 / 2,870 });
+
+	titleTextAni_ = std::make_unique<Object2DController>();
+	titleTextAni_->Initialize(SUGER::Create2DObject("TitleTexAni", "TitleText/StartUI.png"));
+	titleTextAni_->SetAnchorPoint({ 0.5f,0.5f });
+	titleTextAni_->SetPosition({ 1920 / 2,870 });
+
+	constAniSize_ = titleTextAni_->GetSize();
+	anisize_ = constAniSize_;
+
+	titleText_ = std::make_unique<Object2DController>();
+	titleText_->Initialize(SUGER::Create2DObject("TitleTex", "TitleText/TitleText.png"));
+	titleText_->SetAnchorPoint({ 0.5f,0.5f });
+	titleText_->SetPosition(Vector2(960.0f, 300.0f));
+	titleText_->SetSize(titleText_->GetSize() * 1.5f);
+
+
+	aniTimer_ = aniTime_;
 }
 
 
@@ -100,33 +120,19 @@ void TitleScene::SceneStatePlayUpdate() {
 	// 地球の更新
 	moon_->UpdateTitle();
 
-	if (player_->GetIsHit()) {
-		if (player_->GetHitLevel() == 1) {
-			sceneCamera_->Shake(15.0f, 0.5f);
-		} else if (player_->GetHitLevel() == 2) {
-			sceneCamera_->Shake(25.0f, 1.5f);
-		}
-		player_->SetIsHit(false);
-	}
-
-
-	if (++time_ >= 40) {
-		time_ = 0;
-		clock_ *= -1;
-	}
-	if (clock_ == 1) {
-		startUI_->SetIsActive(true);
+	if (aniTimer_ > 0) {
+		aniTimer_--;
+		anisize_.x += 4.0f;
+		anisize_.y += 4.0f;
+		aniAlpha_ -= 0.05f;
 	} else {
-		startUI_->SetIsActive(false);
+		anisize_ = constAniSize_;
+		aniAlpha_ = 1.0f;
+		aniTimer_ = aniTime_;
 	}
 
-	// ライトの座標
-	//light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
-	//light_->GetPunctualLight().spotLight.direction = Normalize(player_->GetTranslate() - sceneCamera_->GetWorldPos());
-
-
-	// プレイヤーの更新処理
-	//player_->Update();
+	titleTextAni_->SetColor(Vector4(1.0f, 1.0f, 1.0f, aniAlpha_));
+	titleTextAni_->SetSize(anisize_);
 
 	// ダメージ破片の更新
 	damagePieceManager_->Update();

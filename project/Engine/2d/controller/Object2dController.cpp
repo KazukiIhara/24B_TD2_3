@@ -56,6 +56,10 @@ void Object2DController::SetIsActive(const bool& isActive) {
 	object2d_->SetIsActive(isActive);
 }
 
+void Object2DController::SetBlendMode(BlendMode blendmode) {
+	object2d_->SetBlendMode(blendmode);
+}
+
 // 座標の取得(スクリーン座標系)
 const Vector2& Object2DController::GetPosition() const {
 	return object2d_->GetPosition();

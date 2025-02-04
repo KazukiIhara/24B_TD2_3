@@ -119,11 +119,11 @@ void Sprite::Update() {
 
 }
 
-void Sprite::Draw(BlendMode blendMode) {
+void Sprite::Draw() {
 	// コマンドリストを取得
 	ID3D12GraphicsCommandList* commandList = SUGER::GetDirectXCommandList();
 	// PSOを設定
-	commandList->SetPipelineState(SUGER::GetPipelineState(kObject2d, blendMode));
+	commandList->SetPipelineState(SUGER::GetPipelineState(kObject2d, blendMode_));
 	// VBVの設定
 	commandList->IASetVertexBuffers(0, 1, &vertexBufferView_);
 	// IBVの設定

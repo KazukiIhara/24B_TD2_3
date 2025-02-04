@@ -34,18 +34,30 @@ private:
 	// 地球
 	std::unique_ptr<Moon> moon_ = nullptr;
 
+	float inclination_ = 23.4f;
+
 	// 天球
 	std::unique_ptr<Skydome> skydome_ = nullptr;
 	// ダメージ破片
 	std::unique_ptr<DamagePieceManager> damagePieceManager_ = nullptr;
 
 	// title
-	
+	std::unique_ptr<Object2DController> titleText_;
+	Vector2 titleTextPosition_ = { 0.0f,0.0f };
 
 	// Aボタン
 	std::unique_ptr<Object2DController> startUI_;
 	Vector2 A_UIPosition_ = { 0.0f,0.0f };
 	Vector2 A_UISize_ = { 0.0f,0.0f };
+
+	// titleani
+	std::unique_ptr<Object2DController> titleTextAni_;
+
+	int32_t aniTimer_ = 0;
+	int32_t aniTime_ = 110;
+	Vector2 constAniSize_{};
+	Vector2 anisize_{};
+	float aniAlpha_ = 1.0f;
 
 	float time_ = 0;
 	int clock_ = 1;
