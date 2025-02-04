@@ -34,7 +34,9 @@ void LoadScene::SceneStateFadeOutUpdate() {
 	fade_->Update();
 
 	if (fade_->IsFinished()) {
+
 		ChangeScene("TITLE");
+
 		fade_->Stop();
 	}
 }
@@ -89,6 +91,12 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	// サウンド読み込み
 	SUGER::LoadWaveSound("Alarm01.wav");
 	SUGER::LoadWaveSound("BGM.wav");
+	SUGER::LoadWaveSound("EarthDanger.wav");
+	SUGER::LoadWaveSound("EarthToFragmentDamage.wav");
+	SUGER::LoadWaveSound("GameScene.wav");
+	SUGER::LoadWaveSound("MeteoriteBreak.wav");
+	SUGER::LoadWaveSound("Result.wav");
+	SUGER::LoadWaveSound("Title.wav");
 
 	// テクスチャ読み込み
 	// テクスチャの規定ディレクトリパス

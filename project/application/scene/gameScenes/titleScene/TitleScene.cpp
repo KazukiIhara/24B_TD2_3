@@ -101,11 +101,13 @@ void TitleScene::Initialize() {
 
 
 void TitleScene::Finalize() {
-
+	//BGMの停止
+	SUGER::StopWaveLoopSound("Title.wav");
 }
 
 void TitleScene::SceneStatePlayInitialize() {
-
+	// BGMの再生
+	SUGER::PlayWaveLoopSound("Title.wav");
 }
 
 void TitleScene::SceneStatePlayUpdate() {

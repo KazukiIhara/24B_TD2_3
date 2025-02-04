@@ -23,7 +23,9 @@ void MyGame::Initialize() {
 
 void MyGame::Finalize() {
 	// ゲーム固有の終了処理
-
+	if (sceneManager_) {
+		sceneManager_.reset();
+	}
 	// 基底システムの終了
 	SUGER::Finalize();
 }
