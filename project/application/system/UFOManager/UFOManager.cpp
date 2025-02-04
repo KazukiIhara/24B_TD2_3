@@ -43,11 +43,11 @@ void UFOManager::AddUFO(const Vector3& popTranslate, const Vector3 velocity) {
 
 	std::unique_ptr<UFO> newUfo = std::make_unique<UFO>();
 	newUfo->Initialize(SUGER::CreateEntity("UFO", "UFO", popTransform));
-	newUfo->CreateCollider(ColliderCategory::UFO, kSphere, 1.0f);
+	newUfo->CreateCollider(ColliderCategory::UFO, kSphere, 2.0f);
 	newUfo->SetUFOBulletManager(ufoBulletManager_);
 	newUfo->UpdateWorldTransform();
 	newUfo->SetVelocity(velocity);
-	newUfo->GetCollider()->SetMass(2000.0f);
+	newUfo->GetCollider()->SetMass(20000.0f);
 
 	ufos_.push_back(std::move(newUfo));
 

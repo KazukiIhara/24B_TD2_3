@@ -106,8 +106,6 @@ void Meteorite::OnCollision(Collider* other) {
 
 			behaviorRequest_ = Behavior::kDagame;
 
-
-
 			earthMass = GetCollider()->GetMass();
 			Vector3 earthVelocity = GetCollider()->GetVelocity();
 			fragmentMass = other->GetMass();
