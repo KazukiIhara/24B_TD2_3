@@ -23,6 +23,8 @@ public:
 	void SceneStatePlayUpdate()override;
 
 	void InitializeUI(std::array<std::unique_ptr<Object2DController>, 5>& ui,const std::string& name, const std::string& filePath,Vector2 textureSize);
+	void InitializeUI(std::array<std::unique_ptr<Object2DController>, 4>& ui,const std::string& name, const std::string& filePath,Vector2 textureSize);
+	void InitializeUI(std::array<std::unique_ptr<Object2DController>, 3>& ui,const std::string& name, const std::string& filePath,Vector2 textureSize);
 
 	void UpdateUI();
 
@@ -34,38 +36,110 @@ public:
 	void ActiveUI(std::array<std::unique_ptr<Object2DController>, 3>& ui, std::array<int32_t, 3>& num, Vector2 position,int number, float numGap);
 
 private:
-	Vector2 numberTextureSize_ = { 128.0f,192.0f };
-	float numGap_ = 64.0f;
+
+	// バックグラウンド
+	std::unique_ptr<Object2DController> resultBg_;
+	// リザルト(テキスト)
+	std::unique_ptr<Object2DController> result_;
+	// リトライ(テキスト)
+	std::unique_ptr<Object2DController> resultRetry_;
+	// タイトル(テキスト)
+	std::unique_ptr<Object2DController> resultTitle_;
+	// 耐えた日(テキスト)
+	std::unique_ptr<Object2DController> resultDay_;
+	// スコア(テキスト)
+	std::unique_ptr<Object2DController> resultScore_;
+
+
+	Vector2 symbolTextureSize_ = { 128.0f,96.0f };
+	// イコール(テキスト)
+	std::array<std::unique_ptr<Object2DController>, 3> resultEqual_;
+	// ×(テキスト)
+	std::array<std::unique_ptr<Object2DController>, 4> resultMultiplication_;
+
+
+private:
+	Vector2 numberTextureSize_ = { 48.0f,96.0f };
+	float numGap_ = 48.0f;
+
+	float scoreXpos = (1980.0f * 3 / 5) + 100;
+	float kScoreXpos = 1980.0f * 8 / 17;
+	float numXpos = 1980.0f * 15 / 40;
+	float equalXpos = 1980.0f / 2;
+	float multiplicationXpos = 1980.0f * 2 / 5;
 
 	// 全体スコア
 	std::array<std::unique_ptr<Object2DController>, 5> allScoreUI_;
 	std::array<int32_t, 5> allScoreNum_;
-	Vector2 allScorePosition_{ 1980.0f / 2 ,820.0f };
+	Vector2 allScorePosition_{ scoreXpos ,700.0f };
 	uint32_t totalScore_ = 0;
+
+	float y = 80;
 
 	// 欠片スコア
 	std::array<std::unique_ptr<Object2DController>, 5> fragmentScoreUI_;
 	std::array<int32_t, 5> fragmentScoreNum_;
-	Vector2 fragmentScorePosition_{ 1980.0f / 2 ,420.0f };
+	Vector2 fragmentScorePosition_{ scoreXpos,300.0f };
 	uint32_t fragmentScore_;
 
 	// 隕石スコア
 	std::array<std::unique_ptr<Object2DController>, 5> meteoriteScoreUI_;
 	std::array<int32_t, 5> meteoriteScoreNum_;
-	Vector2 meteoriteScorePosition_{ 1980.0f / 2 ,520.0f };
+	Vector2 meteoriteScorePosition_{ scoreXpos ,300.0f + (y * 1.0f) };
 	uint32_t meteoriteScore_;
 
 	// UFOスコア
 	std::array<std::unique_ptr<Object2DController>, 5> ufoScoreUI_;
 	std::array<int32_t, 5> ufoScoreNum_;
-	Vector2 ufoScorePosition_{ 1980.0f / 2 ,620.0f };
+	Vector2 ufoScorePosition_{ scoreXpos,300.0f + (y * 2.0f) };
 	uint32_t ufoScore_;
 
-	// UFOスコア
-	std::array<std::unique_ptr<Object2DController>, 5> bossScoreUI_;
-	std::array<int32_t, 5> bossScoreNum_;
-	Vector2 bossScorePosition_{ 1980.0f / 2 ,720.0f };
-	uint32_t bossScore_;
 
+
+
+	// 欠片スコア
+	std::array<std::unique_ptr<Object2DController>, 3> kFragmentScoreUI_;
+	std::array<int32_t, 3> kFragmentScoreNum_;
+	Vector2 kFragmentScorePosition_{ kScoreXpos,300.0f };
+	uint32_t kFragmentScore_ = 100;
+
+	// 隕石スコア
+	std::array<std::unique_ptr<Object2DController>, 3> kMeteoriteScoreUI_;
+	std::array<int32_t, 3> kMeteoriteScoreNum_;
+	Vector2 kMeteoriteScorePosition_{ kScoreXpos ,300.0f + (y * 1.0f) };
+	uint32_t kMeteoriteScore_ = 500;
+
+	// UFOスコア
+	std::array<std::unique_ptr<Object2DController>, 3> kUfoScoreUI_;
+	std::array<int32_t, 3> kUfoScoreNum_;
+	Vector2 kUfoScorePosition_{ kScoreXpos,300.0f + (y * 2.0f) };
+	uint32_t kUfoScore_ = 200;
+	
+	
+
+
+	// 欠片数
+	std::array<std::unique_ptr<Object2DController>, 5> fragmentNumUI_;
+	std::array<int32_t, 5> fragmentNumNum_;
+	Vector2 fragmentNumPosition_{ numXpos,300.0f };
+	uint32_t fragmentNum_;
+
+	// 隕石数
+	std::array<std::unique_ptr<Object2DController>, 5> meteoriteNumUI_;
+	std::array<int32_t, 5> meteoriteNumNum_;
+	Vector2 meteoriteNumPosition_{ numXpos ,300.0f + (y * 1.0f) };
+	uint32_t meteoriteNum_;
+
+	// UFO数
+	std::array<std::unique_ptr<Object2DController>, 5> ufoNumUI_;
+	std::array<int32_t, 5> ufoNumNum_;
+	Vector2 ufoNumPosition_{ numXpos,300.0f + (y * 2.0f) };
+	uint32_t ufoNum_;
+
+	// 耐えた日数
+	std::array<std::unique_ptr<Object2DController>, 5> dayUI_;
+	std::array<int32_t, 5> dayNumNum_;
+	Vector2 dayPosition_{ scoreXpos,300.0f + (y * 3.0f) };
+	uint32_t dayNum_;
 
 };
