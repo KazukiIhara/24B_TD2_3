@@ -92,6 +92,7 @@ void Moon::OnCollision(Collider* other) {
 	float moonMass{};
 	float playerMass{};
 	float fragmentMass{};
+	float earthMass{};
 	HitParticleTimer_ -= SUGER::kDeltaTime_;
 	switch (category) {
 	case ColliderCategory::Player:
@@ -113,7 +114,7 @@ void Moon::OnCollision(Collider* other) {
 	}
 	break;
 	case ColliderCategory::Fragment:
-
+	{
 		moonMass = GetCollider()->GetMass();
 
 		Vector3 earthVelocity = GetCollider()->GetVelocity();
@@ -136,7 +137,9 @@ void Moon::OnCollision(Collider* other) {
 		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
 		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
 
-		break;
+
+	}
+	break;
 	case ColliderCategory::Meteorite:
 	{
 		moonMass = GetCollider()->GetMass();
@@ -195,6 +198,8 @@ void Moon::OnCollision(Collider* other) {
 	break;
 	}
 }
+
+
 
 void Moon::MoveLimit() {
 	Vector3 translate_ = GetTranslate();
