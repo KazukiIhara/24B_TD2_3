@@ -421,7 +421,7 @@ void Moon::EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy,DamagePie
 		damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.12f,0.17f }, { 0.604f, 0.384f, 0.161f ,1.0f }, { 1.5f,2.5f },true);
 	}
 	else {
-		damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.12f,0.17f }, { 0.1f, 0.1f, 0.1f ,1.0f }, { 1.5f,2.5f },true,num);
+		damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.12f,0.17f }, { 0.1f, 0.1f, 0.1f ,1.0f }, { 1.5f,2.5f },false,num);
 	}
 
 	
@@ -439,7 +439,7 @@ void Moon::EmitDamegePiece2(const Vector3& pos, const Vector3& veloctiy, DamageP
 
 	Vector3 pospos = (pos);
 
-	damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.05f,0.10f }, {}, { 0.5f,1.0f });
+	damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.05f,0.10f }, {}, { 0.5f,1.0f },true);
 }
 
 void Moon::EmitDust(const Vector3& pos, const Vector3& veloctiy) {
