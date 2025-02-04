@@ -33,7 +33,7 @@ void TitleScene::Initialize() {
 	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.0f);
 	player_->SetScale(2.0f);
 	player_->GetCollider()->SetMass(20.0f);
-	player_->SetTranslate({ 1.5f,0.0f,5.0f });
+	player_->SetTranslate({ 6.0f,-1.0f,7.0f });
 
 	// 
 	// 月の初期化処理
