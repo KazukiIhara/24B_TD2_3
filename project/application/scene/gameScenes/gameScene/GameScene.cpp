@@ -62,7 +62,7 @@ void GameScene::Initialize() {
 	moon_ = std::make_unique<Moon>();
 	moon_->Initialize(SUGER::CreateEntity("Moon", "Moon"));
 	moon_->SetPlayer(player_.get());
-	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 1.0f);
+	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 1.2f);
 	moon_->GetCollider()->SetMass(200.0f);
 	moon_->SetDamagePieceManager(damagePieceManager_.get());
 	moon_->UpdateWorldTransform();

@@ -17,6 +17,7 @@ void UFOBullet::Initialize(const std::string& name) {
 void UFOBullet::Update() {
 	// 位置を更新
 	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
+	SetRotate(GetRotate() + velocity_ * SUGER::kDeltaTime_);
 	// コライダーに速度を適用
 	GetCollider()->SetVelocity(velocity_);
 
