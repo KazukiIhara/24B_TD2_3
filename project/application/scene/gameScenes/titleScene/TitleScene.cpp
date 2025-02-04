@@ -73,11 +73,10 @@ void TitleScene::Initialize() {
 	sceneCamera_->SetRotate({ 0.0f,0.6f,0 });
 
 
-	A_UI_ = std::make_unique<Object2DController>();
-	A_UI_->Initialize(SUGER::Create2DObject("A", "A.png"));
-	A_UI_->SetAnchorPoint({ 0.5f,0.5f });
-	A_UI_->SetPosition({ 1920 / 2,870 });
-	A_UI_->SetSize({ 64 * 3,64 * 3 });
+	startUI_ = std::make_unique<Object2DController>();
+	startUI_->Initialize(SUGER::Create2DObject("A", "TitleText/StartUI.png"));
+	startUI_->SetAnchorPoint({ 0.5f,0.5f });
+	startUI_->SetPosition({ 1920 / 2,870 });
 }
 
 
@@ -116,9 +115,9 @@ void TitleScene::SceneStatePlayUpdate() {
 		clock_ *= -1;
 	}
 	if (clock_ == 1) {
-		A_UI_->SetIsActive(true);
+		startUI_->SetIsActive(true);
 	} else {
-		A_UI_->SetIsActive(false);
+		startUI_->SetIsActive(false);
 	}
 
 	// ライトの座標
@@ -138,7 +137,7 @@ void TitleScene::SceneStatePlayUpdate() {
 
 	if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
 		sceneStateRequest_ = SceneState::kFadeOut;
-		A_UI_->SetIsActive(false);
+		startUI_->SetIsActive(false);
 	}
 }
 
