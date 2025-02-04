@@ -101,6 +101,7 @@ void Fragment::OnCollision(Collider* other) {
 		player_->GetScoreData().fragmentNum_++;
 		break;
 	case ColliderCategory::Bump:
+	{
 		float fragmentMass = GetCollider()->GetMass();
 		Vector3 fragmentVelocity = GetCollider()->GetVelocity();
 		float playerMass = player_->GetCollider()->GetMass();
@@ -116,9 +117,13 @@ void Fragment::OnCollision(Collider* other) {
 
 		// 反射の比率を固定
 		velocity_ = (velocity_ * 20) * bounceFactor;
-
-
 		isBumpHit = true;
+	}
+	break;
+
+	case ColliderCategory::UFOBullet:
+		HP_ -= 3;
+		UpdateLifeState();
 		break;
 	}
 }

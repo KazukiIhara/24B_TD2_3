@@ -36,8 +36,10 @@ void UFO::Update() {
 			RootInitialize();
 			break;
 		case UFO::Behavior::kDamage:
+			DamageInitialize();
 			break;
 		case UFO::Behavior::kBreak:
+			BreakInitialize();
 			break;
 		}
 
@@ -51,8 +53,10 @@ void UFO::Update() {
 		RootUpdate();
 		break;
 	case UFO::Behavior::kDamage:
+		DamageUpdate();
 		break;
 	case UFO::Behavior::kBreak:
+		BreakUpdate();
 		break;
 	}
 }
@@ -63,7 +67,9 @@ void UFO::OnCollision(Collider* other) {
 	ColliderCategory category = other->GetColliderCategory();
 	switch (category) {
 	case ColliderCategory::Moon:
-		behaviorRequest_ = Behavior::kDamage;
+		if (behavior_ == Behavior::kRoot) {
+			behaviorRequest_ = Behavior::kDamage;
+		}
 		break;
 	}
 
@@ -105,21 +111,32 @@ void UFO::RootUpdate() {
 
 void UFO::DamageInitialize() {
 	hp_--;
+	damageTimer_ = kDamageTime_;
 }
 
 void UFO::DamageUpdate() {
-	if (hp_ <= 0) {
-		behaviorRequest_ = Behavior::kBreak;
+	damageTimer_--;
+	SetColor(Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+	if (damageTimer_ == 0) {
+		if (hp_ <= 0) {
+			behaviorRequest_ = Behavior::kBreak;
+		} else {
+			behaviorRequest_ = Behavior::kRoot;
+		}
 	}
 }
 
 void UFO::BreakInitialize() {
-
+	breakTimer_ = kBreakTime_;
 }
 
 void UFO::BreakUpdate() {
-	isAlive_ = false;
-	SetIsDelete(true);
+	SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+	breakTimer_--;
+	if (breakTimer_ == 0) {
+		isAlive_ = false;
+		SetIsDelete(true);
+	}
 }
 
 void UFO::SetVelocity(const Vector3& velocity) {
@@ -139,7 +156,6 @@ void UFO::MoveLimit() {
 	}
 }
 
-void UFO::SetDamagePieceManager(DamagePieceManager* damagePieceManager)
-{
+void UFO::SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 	damagePieceManager_ = damagePieceManager;
 }

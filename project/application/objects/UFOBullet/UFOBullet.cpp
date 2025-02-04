@@ -24,7 +24,22 @@ void UFOBullet::Update() {
 }
 
 void UFOBullet::OnCollision(Collider* other) {
-	
+	// 衝突相手のカテゴリーを取得
+	ColliderCategory category = other->GetColliderCategory();
+	switch (category) {
+	case ColliderCategory::Player:
+		isAlive_ = false;
+		SetIsDelete(true);
+		break;
+	case ColliderCategory::Moon:
+		isAlive_ = false;
+		SetIsDelete(true);
+		break;
+	case ColliderCategory::Meteorite:
+		isAlive_ = false;
+		SetIsDelete(true);
+		break;
+	}
 
 }
 
@@ -44,7 +59,6 @@ void UFOBullet::MoveLimit() {
 	}
 }
 
-void UFOBullet::SetDamagePieceManager(DamagePieceManager* damagePieceManager)
-{
+void UFOBullet::SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 	damagePieceManager_ = damagePieceManager;
 }
