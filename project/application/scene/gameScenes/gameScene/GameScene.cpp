@@ -125,13 +125,14 @@ void GameScene::Initialize() {
 	// 
 	ufoBulletManager_ = std::make_unique<UFOBulletManager>();
 	ufoBulletManager_->Initialize(player_.get());
+	ufoBulletManager_->SetDamagePieceManager(damagePieceManager_.get());
 
 	// 
 	// UFOマネージャの初期化処理
 	// 
 	ufoManager_ = std::make_unique<UFOManager>();
 	ufoManager_->Initialize(ufoBulletManager_.get());
-
+	ufoManager_->SetDamagePieceManager(damagePieceManager_.get());
 
 	// 板ポリパーティクルの作成
 	SUGER::CreateParticle("dustParticle", ParticleType::kPlane, "circle.png");

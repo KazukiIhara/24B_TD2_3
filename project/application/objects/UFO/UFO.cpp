@@ -6,6 +6,8 @@
 #include "random/Random.h"
 
 #include "system/UFOBulletManager/UFOBulletManager.h"
+#include "system/DamagePieceManager/DamagePieceManager.h"
+
 
 UFO::UFO() {
 }
@@ -56,6 +58,7 @@ void UFO::Update() {
 }
 
 void UFO::OnCollision(Collider* other) {
+
 	// 衝突相手のカテゴリーを取得
 	ColliderCategory category = other->GetColliderCategory();
 	switch (category) {
@@ -63,6 +66,7 @@ void UFO::OnCollision(Collider* other) {
 		behaviorRequest_ = Behavior::kDamage;
 		break;
 	}
+
 }
 
 void UFO::RootInitialize() {
@@ -133,4 +137,9 @@ void UFO::MoveLimit() {
 		isAlive_ = false;
 		SetIsDelete(true);
 	}
+}
+
+void UFO::SetDamagePieceManager(DamagePieceManager* damagePieceManager)
+{
+	damagePieceManager_ = damagePieceManager;
 }
