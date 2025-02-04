@@ -101,7 +101,9 @@ void Moon::OnCollision(Collider* other) {
 		playerMass = other->GetMass();
 		Vector3 playerVelocity = other->GetVelocity();
 		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+
 		Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+
 		velocity_ = velocity;
 		returnMoveTimer_ = kReturnMoveTime_;
 
@@ -111,17 +113,28 @@ void Moon::OnCollision(Collider* other) {
 	}
 	break;
 	case ColliderCategory::Fragment:
+
 		moonMass = GetCollider()->GetMass();
+
 		Vector3 earthVelocity = GetCollider()->GetVelocity();
 		fragmentMass = other->GetMass();
 		Vector3 fragmentVelocity = other->GetVelocity();
 		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+
 		Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
 
 
 		EmitDust(normal, normal);
-
-
+	}
+	break;
+	case ColliderCategory::UFOBullet:
+	{
+		earthMass = GetCollider()->GetMass();
+		Vector3 earthVelocity = GetCollider()->GetVelocity();
+		fragmentMass = other->GetMass();
+		Vector3 fragmentVelocity = other->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
 
 		break;
 	case ColliderCategory::Meteorite:
@@ -176,6 +189,7 @@ void Moon::OnCollision(Collider* other) {
 			EmitDust(normal, normal);
 			HitParticleTimer_ = 1;
 		}
+
 
 	}
 	break;

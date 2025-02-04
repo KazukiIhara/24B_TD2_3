@@ -47,7 +47,9 @@ void UFOManager::AddUFO(const Vector3& popTranslate, const Vector3 velocity) {
 	newUfo->SetUFOBulletManager(ufoBulletManager_);
 	newUfo->UpdateWorldTransform();
 	newUfo->SetVelocity(velocity);
+	newUfo->SetDamagePieceManager(damagePieceManager_);
 	newUfo->GetCollider()->SetMass(2000.0f);
+
 
 	ufos_.push_back(std::move(newUfo));
 
@@ -101,4 +103,9 @@ void UFOManager::PopUFOs() {
 
 void UFOManager::SetPopIntervalTime(const uint32_t& popInterval) {
 	popIntervalTime_ = popInterval;
+}
+
+void UFOManager::SetDamagePieceManager(DamagePieceManager* damagePieceManager)
+{
+	damagePieceManager_ = damagePieceManager;
 }

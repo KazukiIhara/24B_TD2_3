@@ -277,6 +277,14 @@ void Player::OnCollision(Collider* other) {
 			objectHitLevel = 1;
 		}
 		break;
+		case ColliderCategory::UFOBullet:
+		{
+			HP_ -= 5;
+
+			isObjectHit = true;
+			objectHitLevel = 1;
+		}
+		break;
 	}
 
 }

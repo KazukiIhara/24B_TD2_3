@@ -6,6 +6,8 @@
 #include "random/Random.h"
 
 #include "system/UFOBulletManager/UFOBulletManager.h"
+#include "system/DamagePieceManager/DamagePieceManager.h"
+
 
 UFO::UFO() {
 }
@@ -56,6 +58,8 @@ void UFO::Update() {
 }
 
 void UFO::OnCollision(Collider* other) {
+
+
 }
 
 void UFO::RootInitialize() {
@@ -107,4 +111,9 @@ void UFO::MoveLimit() {
 		isAlive_ = false;
 		SetIsDelete(true);
 	}
+}
+
+void UFO::SetDamagePieceManager(DamagePieceManager* damagePieceManager)
+{
+	damagePieceManager_ = damagePieceManager;
 }
