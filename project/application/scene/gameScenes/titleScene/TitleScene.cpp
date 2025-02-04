@@ -28,7 +28,7 @@ void TitleScene::Initialize() {
 	//
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize(SUGER::CreateEntity("Player", "Earth"));
+	player_->Initialize(SUGER::CreateEntity("Player", "Moon"));
 	// プレイヤーのコライダーを作成
 	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.0f);
 	player_->SetScale(2.0f);
@@ -41,7 +41,7 @@ void TitleScene::Initialize() {
 	// 
 
 	moon_ = std::make_unique<Moon>();
-	moon_->Initialize(SUGER::CreateEntity("Moon", "Moon"));
+	moon_->Initialize(SUGER::CreateEntity("Moon", "Earth"));
 	moon_->SetParent(player_->GetLocalTransform());
 	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 2.0f);
 	moon_->GetCollider()->SetMass(200.0f);
