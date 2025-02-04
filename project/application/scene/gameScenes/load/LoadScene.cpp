@@ -109,6 +109,7 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	SUGER::LoadTexture(textureDirectoryPath + "Earth_HP_UI/Earth_HP_UI_50%.png");
 	SUGER::LoadTexture(textureDirectoryPath + "Earth_HP_UI/Earth_HP_UI_75%.png");
 	SUGER::LoadTexture(textureDirectoryPath + "Earth_HP_UI/Earth_HP_UI_100%.png");
+	SUGER::LoadTexture(textureDirectoryPath + "TitleText/TitleText.png");
 
 	// モデル読み込み
 	SUGER::LoadModel("teapot");

@@ -55,6 +55,8 @@ public:
 	// 有効フラグのセッター
 	void SetIsActive(const bool& isActive);
 
+	void SetBlendMode(BlendMode blendmode);
+
 
 	// 
 	// ゲッター

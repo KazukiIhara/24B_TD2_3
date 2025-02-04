@@ -16,7 +16,7 @@ public: // メンバ関数
 	// 更新
 	void Update();
 	// 描画
-	void Draw(BlendMode blendMode = kBlendModeNormal);
+	void Draw();
 
 	// ゲッター
 	// textureHandle_
@@ -121,6 +121,11 @@ public: // メンバ関数
 		this->isActive_ = isActive;
 	}
 
+	void SetBlendMode(BlendMode blendmode) {
+		this->blendMode_ = blendmode;
+	}
+
+
 private: // メンバ関数
 #pragma region Vertex
 	/*頂点リソースの作成*/
@@ -185,6 +190,8 @@ private:/*メンバ変数*/
 	Vector2	cutOutSize = { 100.0f,100.0f };
 	// uvTransform
 	UVTransform uvTransform = { {1.0f,1.0f},0.0f,{0.0f,0.0f} };
+
+	BlendMode blendMode_ = BlendMode::kBlendModeNormal;
 
 #pragma region 頂点
 	/*頂点リソース*/
