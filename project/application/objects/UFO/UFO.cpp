@@ -33,7 +33,13 @@ void UFO::Update() {
 		case UFO::Behavior::kRoot:
 			RootInitialize();
 			break;
+		case UFO::Behavior::kDamage:
+			break;
+		case UFO::Behavior::kBreak:
+			break;
 		}
+
+
 		behaviorRequest_ = std::nullopt;
 	}
 
@@ -41,6 +47,10 @@ void UFO::Update() {
 	switch (behavior_) {
 	case UFO::Behavior::kRoot:
 		RootUpdate();
+		break;
+	case UFO::Behavior::kDamage:
+		break;
+	case UFO::Behavior::kBreak:
 		break;
 	}
 }
@@ -67,8 +77,8 @@ void UFO::RootUpdate() {
 	time_ += SUGER::kDeltaTime_;
 
 	// 上下の揺れの速度を算出（位相を考慮）
-	float waveVelocity = amplitude_ * frequency_ * (std::numbers::pi_v<float> * 2.0f) *
-		std::cos(time_ * frequency_ * (std::numbers::pi_v<float> * 2.0f) + phase_);
+	float waveVelocity = amplitude_ * frequency_ * (std::numbers::pi_v<float> *2.0f) *
+		std::cos(time_ * frequency_ * (std::numbers::pi_v<float> *2.0f) + phase_);
 
 	// 速度を計算（初期速度に揺れの速度を加算）
 	velocity_ = initVelocity_ + Vector3(0.0f, waveVelocity, 0.0f);

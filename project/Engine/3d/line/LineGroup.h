@@ -45,7 +45,7 @@ private:
 	void MapViewProjectionData();
 private:
 	// ラインの最大数
-	static const uint32_t kNumMaxInstance = 4096;
+	static const uint32_t kNumMaxInstance = 4096 * 8;
 	// ライン
 	std::vector<LineData3D> lines_;
 	// ブレンドモード
