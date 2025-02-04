@@ -34,7 +34,7 @@ void LoadScene::SceneStateFadeOutUpdate() {
 	fade_->Update();
 
 	if (fade_->IsFinished()) {
-		ChangeScene("GAME");
+		ChangeScene("RESULT");
 		fade_->Stop();
 	}
 }
