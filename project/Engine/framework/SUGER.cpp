@@ -204,6 +204,8 @@ void SUGER::Finalize() {
 
 	// 各オブジェクトの終了処理を生成した順番とは逆に行う
 
+	
+
 	// LineSystemの終了処理
 	if (lineSystem_) {
 		lineSystem_.reset();
