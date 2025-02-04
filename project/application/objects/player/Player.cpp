@@ -352,7 +352,7 @@ void Player::RootUpdate() {
 }
 
 void Player::ChargeInitialize() {
-
+	moon_->ChargeRequest();
 }
 
 void Player::ChargeUpdate() {

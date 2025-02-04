@@ -28,8 +28,13 @@ public:
 	void OnCollision([[maybe_unused]] Collider* other)override;
 
 	void RootInitialize();
-
 	void RootUpdate();
+
+	void DamageInitialize();
+	void DamageUpdate();
+
+	void BreakInitialize();
+	void BreakUpdate();
 
 	void SetVelocity(const Vector3& velocity);
 
@@ -62,6 +67,7 @@ private:
 
 	bool isAlive_ = true;
 
+	uint32_t hp_ = 2;
 
 	// 現在のふるまい
 	Behavior behavior_ = Behavior::kRoot;

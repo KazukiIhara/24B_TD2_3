@@ -59,6 +59,13 @@ void UFO::Update() {
 
 void UFO::OnCollision(Collider* other) {
 
+	// 衝突相手のカテゴリーを取得
+	ColliderCategory category = other->GetColliderCategory();
+	switch (category) {
+	case ColliderCategory::Moon:
+		behaviorRequest_ = Behavior::kDamage;
+		break;
+	}
 
 }
 
@@ -94,6 +101,25 @@ void UFO::RootUpdate() {
 	GetCollider()->SetVelocity(velocity_);
 
 	MoveLimit();
+}
+
+void UFO::DamageInitialize() {
+	hp_--;
+}
+
+void UFO::DamageUpdate() {
+	if (hp_ <= 0) {
+		behaviorRequest_ = Behavior::kBreak;
+	}
+}
+
+void UFO::BreakInitialize() {
+
+}
+
+void UFO::BreakUpdate() {
+	isAlive_ = false;
+	SetIsDelete(true);
 }
 
 void UFO::SetVelocity(const Vector3& velocity) {

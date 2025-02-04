@@ -12,6 +12,7 @@ class Moon: public EntityController {
 public:
 	enum class Behavior {
 		kRoot,
+		kCharge,
 		kAttack,
 	};
 public:
@@ -39,8 +40,6 @@ public:
 	
 	void SetPraticle();
 
-	
-
 	void SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 		damagePieceManager_ = damagePieceManager;
 	}
@@ -50,10 +49,13 @@ public:
 	float GetAroundFrame() const;
 
 	void RootRequest();
+	void ChargeRequest();
 	void AttackRequest();
 
 	void RootInitialize();
 	void RootUpdate();
+	void ChargeInitialize();
+	void ChargeUpdate();
 	void AttackInitialize();
 	void AttackUpdate();
 
@@ -130,4 +132,5 @@ private:
 	Player* player_ = nullptr;
 
 	Vector3 targetPos_ = { 0.0f,0.0f,0.0f };
+
 };
