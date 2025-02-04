@@ -32,10 +32,10 @@ void UFOBulletManager::AddUFOBullet(const Vector3& translate) {
 	Vector3 velocity = direction * speed_;
 
 	std::unique_ptr<UFOBullet> newBulet = std::make_unique<UFOBullet>();
-	newBulet->Initialize(SUGER::CreateEntity("UFOBullet", "Fragment", popTransform));
+	newBulet->Initialize(SUGER::CreateEntity("UFOBullet", "UFO_Bullet", popTransform));
 	newBulet->CreateCollider(ColliderCategory::UFOBullet, kSphere, 0.8f);
 	newBulet->SetVelocity(velocity);
-	newBulet->SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+	newBulet->SetScale(0.8f);
 	newBulet->SetSerialNumber(currentSerialNumber_);
 	newBulet->SetDamagePieceManager(damagePieceManager_);
 	newBulet->UpdateWorldTransform();
