@@ -25,9 +25,14 @@ void ResultScene::Initialize() {
 
 }
 
-void ResultScene::Finalize() {}
+void ResultScene::Finalize() {
+	
+}
 
-void ResultScene::SceneStatePlayInitialize() {}
+void ResultScene::SceneStatePlayInitialize() {
+	// BGMの再生
+	SUGER::PlayWaveLoopSound("Result.wav");
+}
 
 void ResultScene::SceneStatePlayUpdate() {
 	
