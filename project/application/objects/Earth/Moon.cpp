@@ -146,11 +146,28 @@ void Moon::OnCollision(Collider* other) {
 
 	case ColliderCategory::UFO:
 	{
+
+		// 位置ベクトルを取得
+		Vector3 posA = GetCollider()->GetWorldPosition();
+		Vector3 posB = other->GetWorldPosition();
+		// 各オブジェクトの「半径」相当の値を取得 (球体などの場合)
+		float radiusA = GetCollider()->GetSize();
+		float radiusB = other->GetSize();
+		// 合計半径
+		float sumRadius = radiusA + radiusB;
+		// ２つのオブジェクト間の距離
+		Vector3 diff = posA - posB;
+		float distance = Length(diff);
+
+		Vector3 normal = Normalize(posA - posB);
+		if (distance < sumRadius) {
+			SetTranslate(other->GetWorldPosition() + normal * (sumRadius + 0.1f));
+		}
+
 		moonMass = GetCollider()->GetMass();
 		Vector3 moonVelocity = GetCollider()->GetVelocity();
 		playerMass = other->GetMass();
 		Vector3 playerVelocity = other->GetVelocity();
-		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
 		Vector3 velocity = ComputeCollisionVelocity(moonMass, moonVelocity, playerMass, playerVelocity, 1.0f, normal);
 		velocity_ = velocity;
 		returnMoveTimer_ = kReturnMoveTime_;

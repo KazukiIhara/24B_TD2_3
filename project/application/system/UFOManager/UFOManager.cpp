@@ -47,6 +47,7 @@ void UFOManager::AddUFO(const Vector3& popTranslate, const Vector3 velocity) {
 	newUfo->SetUFOBulletManager(ufoBulletManager_);
 	newUfo->UpdateWorldTransform();
 	newUfo->SetVelocity(velocity);
+	newUfo->GetCollider()->SetMass(2000.0f);
 
 	ufos_.push_back(std::move(newUfo));
 
