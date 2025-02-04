@@ -18,7 +18,7 @@ public:
 	void AddDamagePiece(const Vector3& popTranslate, const Vector3& velo = {},
 		const float& renge = {}, const bool& isReduction = false,
 		const Vector2& scaleMinMax = {},const Vector4& color = {}, 
-		const Vector2& lifeMInMaxTime = {});
+		const Vector2& lifeMInMaxTime = {}, const bool isRand = true, const int numPiece = {});
 
 private:
 	// かけらのリスト

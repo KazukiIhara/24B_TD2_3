@@ -197,8 +197,9 @@ void Moon::OnCollision(Collider* other) {
 		if (HitParticleTimer_ <= 0) {
 			EmitDust(normal, normal);
 			HitParticleTimer_ = 1;
+			
 		}
-
+		EmitDamegePiece(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_,2);
 
 	}
 	break;
@@ -405,7 +406,7 @@ void Moon::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterContro
 	emit->Emit();
 }
 
-void Moon::EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager) {
+void Moon::EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy,DamagePieceManager* damagePieceManager, const int num ) {
 	Vector3 velocity = (veloctiy);
 
 
@@ -416,8 +417,14 @@ void Moon::EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamagePi
 	radomVelo.z = 0;
 
 	Vector3 pospos = (pos);
+	if (num == 0) {
+		damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.12f,0.17f }, { 0.604f, 0.384f, 0.161f ,1.0f }, { 1.5f,2.5f },true);
+	}
+	else {
+		damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.12f,0.17f }, { 0.1f, 0.1f, 0.1f ,1.0f }, { 1.5f,2.5f },true,num);
+	}
 
-	damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.12f,0.17f }, { 0.604f, 0.384f, 0.161f ,1.0f }, { 1.5f,2.5f });
+	
 }
 
 void Moon::EmitDamegePiece2(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager) {
@@ -442,8 +449,9 @@ void Moon::EmitDust(const Vector3& pos, const Vector3& veloctiy) {
 	EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterDustBlack_.get());
 
 	for (int i = 0; i < 15; i++) {
-		EmitDamegePiece(-GetCollider()->GetWorldPosition() + pos * 1.5f, Normalize(veloctiy) * 2.5f, damagePieceManager_);
+		EmitDamegePiece(-GetCollider()->GetWorldPosition() + pos * 1.5f, Normalize(veloctiy) * 2.5f, damagePieceManager_, {});
 	}
+	EmitDamegePiece(-GetCollider()->GetWorldPosition() + pos * 1.5f, Normalize(veloctiy) * 2.5f,damagePieceManager_,2);
 }
 
 void Moon::ReturnPosition() {

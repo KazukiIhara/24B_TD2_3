@@ -24,7 +24,7 @@ void DamagePieceManager::Update()
 
 }
 
-void DamagePieceManager::AddDamagePiece(const Vector3& popTranslate, const Vector3& velo, const float& renge, const bool& isReduction, const Vector2& scaleMinMax, const Vector4& color,const Vector2& lifeMInMaxTime)
+void DamagePieceManager::AddDamagePiece(const Vector3& popTranslate, const Vector3& velo, const float& renge, const bool& isReduction, const Vector2& scaleMinMax, const Vector4& color, const Vector2& lifeMInMaxTime, const bool isRand, const int numPiece)
 {
 	EulerTransform3D popTransform{};
 	popTransform.translate = popTranslate;
@@ -47,12 +47,43 @@ void DamagePieceManager::AddDamagePiece(const Vector3& popTranslate, const Vecto
 		newDamagePiece->SetLifeMinMax(lifeMInMaxTime);
 	}
 
-	if (rand == 0) {
-		newDamagePiece->Initialize(SUGER::CreateEntity("DamagePiece", "DamagePiece", popTransform));
+	if (isRand) {
+		if (rand == 0) {
+			newDamagePiece->Initialize(SUGER::CreateEntity("DamagePiece", "DamagePiece", popTransform));
+		}
+		else {
+			newDamagePiece->Initialize(SUGER::CreateEntity("DamagePiece2", "DamagePiece2", popTransform));
+		}
 	}
 	else {
-		newDamagePiece->Initialize(SUGER::CreateEntity("DamagePiece2", "DamagePiece2", popTransform));
+		switch (numPiece)
+		{
+		case 0:
+			newDamagePiece->Initialize(SUGER::CreateEntity("DamagePiece", "DamagePiece", popTransform));
+			break;
+		case 1:
+			newDamagePiece->Initialize(SUGER::CreateEntity("DamagePiece2", "DamagePiece2", popTransform));
+			break;
+		case 2:
+			newDamagePiece->Initialize(SUGER::CreateEntity("DamagePiece3", "DamagePiece3", popTransform));
+
+			break;
+		case 3:
+
+			break;
+		case 4:
+
+			break;
+		case 5:
+
+			break;
+		default:
+			newDamagePiece->Initialize(SUGER::CreateEntity("DamagePiece", "DamagePiece", popTransform));
+			break;
+		}
 	}
+
+
 	if (0.0f != Length(velo)) {
 		newDamagePiece->InitVelocity(velo);
 	}
@@ -61,16 +92,16 @@ void DamagePieceManager::AddDamagePiece(const Vector3& popTranslate, const Vecto
 	}
 
 	newDamagePiece->CreateCollider(ColliderCategory::DamagePiece, kSphere, 0.01f);
-	
+
 	newDamagePiece->GetCollider()->SetMass(1.0f);
-	
+
 	// 色
 	if (0 != Length(color)) {
 		newDamagePiece->SetColor(color);
 	}
 
-	
-	
+
+
 	newDamagePiece->UpdateWorldTransform();
 
 	// 追加

@@ -78,7 +78,7 @@ private:
 	void CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit);
 
 	void EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit);
-	void EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager_);
+	void EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager_, const int num = 0);
 	void EmitDamegePiece2(const Vector3& pos, const Vector3& veloctiy, DamagePieceManager* damagePieceManager_);
 
 	void EmitDust(const Vector3& pos, const Vector3& veloctiy);
