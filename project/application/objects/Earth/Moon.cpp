@@ -96,6 +96,10 @@ void Moon::OnCollision(Collider* other) {
 	switch (category) {
 	case ColliderCategory::Player:
 	{
+		if (behavior_ == Behavior::kRoot) {
+			break;
+		}
+
 		moonMass = GetCollider()->GetMass();
 		Vector3 earthVelocity = GetCollider()->GetVelocity();
 		playerMass = other->GetMass();
@@ -111,6 +115,10 @@ void Moon::OnCollision(Collider* other) {
 	}
 	break;
 	case ColliderCategory::Fragment:
+
+		if (behavior_ == Behavior::kRoot) {
+			break;
+		}
 
 		if (behavior_ == Behavior::kCharge) {
 			break;
@@ -130,6 +138,11 @@ void Moon::OnCollision(Collider* other) {
 		break;
 	case ColliderCategory::Meteorite:
 	{
+
+		if (behavior_ == Behavior::kRoot) {
+			break;
+		}
+
 		if (behavior_ == Behavior::kCharge) {
 			break;
 		}
@@ -171,6 +184,10 @@ void Moon::OnCollision(Collider* other) {
 
 	case ColliderCategory::UFO:
 	{
+		if (behavior_ == Behavior::kRoot) {
+			break;
+		}
+
 		if (behavior_ == Behavior::kCharge) {
 			break;
 		}
