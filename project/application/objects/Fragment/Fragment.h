@@ -64,7 +64,7 @@ private:
 	/// <param name="size"></param> 大きさ(float)
 	/// <param name="color"></param> カラー(Vector)　
 	/// <param name="emit"></param> エミッタークラス
-	void CreateEmit(const std::string emitPraticle,const std::string emitName,int count, float size,Vector3 color,EmitterController* emit);
+	void CreateEmit(const std::string emitPraticle, const std::string emitName, int count, float size, Vector3 color, EmitterController* emit);
 
 	void DustEmit();
 
@@ -104,15 +104,15 @@ private:
 	Vector3 velocity_{};
 
 	// 移動できる範囲
-	float stageWidth_ = 48.0f;
-	float stageHeight_ = 27.0;
+	float stageWidth_ = 65.0f;
+	float stageHeight_ = 35.0;
 
 	// シリアルナンバー
 	uint32_t serialNumber_ = 0;
 
 	//
 	uint32_t particleNumber_ = 0;
-	
+
 	// HP
 	float HP_ = 3;
 	// Alive_
@@ -134,7 +134,7 @@ private:
 	// Emitterコントローラ
 	std::unique_ptr<EmitterController> emitter_;
 	std::unique_ptr<EmitterController> emitterDust_;
-	
+
 	std::unique_ptr<EmitterController> emitterFragment_;
 
 	int score_ = 100;
