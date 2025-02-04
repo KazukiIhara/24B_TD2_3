@@ -89,19 +89,21 @@ void Moon::OnCollision(Collider* other) {
 	// 衝突相手のカテゴリーを取得
 	ColliderCategory category = other->GetColliderCategory();
 	// カテゴリごとに衝突判定を書く
-	float earthMass{};
+	float moonMass{};
 	float playerMass{};
 	float fragmentMass{};
 	HitParticleTimer_ -= SUGER::kDeltaTime_;
 	switch (category) {
 	case ColliderCategory::Player:
 	{
-		earthMass = GetCollider()->GetMass();
+		moonMass = GetCollider()->GetMass();
 		Vector3 earthVelocity = GetCollider()->GetVelocity();
 		playerMass = other->GetMass();
 		Vector3 playerVelocity = other->GetVelocity();
 		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+
+		Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+
 		velocity_ = velocity;
 		returnMoveTimer_ = kReturnMoveTime_;
 
@@ -111,36 +113,18 @@ void Moon::OnCollision(Collider* other) {
 	}
 	break;
 	case ColliderCategory::Fragment:
-		earthMass = GetCollider()->GetMass();
+
+		moonMass = GetCollider()->GetMass();
+
 		Vector3 earthVelocity = GetCollider()->GetVelocity();
 		fragmentMass = other->GetMass();
 		Vector3 fragmentVelocity = other->GetVelocity();
 		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
+
+		Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
 
 
 		EmitDust(normal, normal);
-
-
-
-		break;
-	case ColliderCategory::Meteorite:
-	{
-		earthMass = GetCollider()->GetMass();
-		Vector3 earthVelocity = GetCollider()->GetVelocity();
-		playerMass = other->GetMass();
-		Vector3 playerVelocity = other->GetVelocity();
-		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
-		velocity_ = velocity;
-		returnMoveTimer_ = kReturnMoveTime_;
-
-		if (HitParticleTimer_ <= 0) {
-			EmitDust(normal, normal);
-			HitParticleTimer_ = 1;
-		}
-
-
 	}
 	break;
 	case ColliderCategory::UFOBullet:
@@ -152,8 +136,59 @@ void Moon::OnCollision(Collider* other) {
 		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
 		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
 
+		break;
+	case ColliderCategory::Meteorite:
+	{
+		moonMass = GetCollider()->GetMass();
+		Vector3 earthVelocity = GetCollider()->GetVelocity();
+		playerMass = other->GetMass();
+		Vector3 playerVelocity = other->GetVelocity();
+		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+		Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+		velocity_ = velocity;
+		returnMoveTimer_ = kReturnMoveTime_;
 
-		EmitDust(normal, normal);
+		if (HitParticleTimer_ <= 0) {
+			EmitDust(normal, normal);
+			HitParticleTimer_ = 1;
+		}
+
+
+	}
+	break;
+
+	case ColliderCategory::UFO:
+	{
+
+		// 位置ベクトルを取得
+		Vector3 posA = GetCollider()->GetWorldPosition();
+		Vector3 posB = other->GetWorldPosition();
+		// 各オブジェクトの「半径」相当の値を取得 (球体などの場合)
+		float radiusA = GetCollider()->GetSize();
+		float radiusB = other->GetSize();
+		// 合計半径
+		float sumRadius = radiusA + radiusB;
+		// ２つのオブジェクト間の距離
+		Vector3 diff = posA - posB;
+		float distance = Length(diff);
+
+		Vector3 normal = Normalize(posA - posB);
+		if (distance < sumRadius) {
+			SetTranslate(other->GetWorldPosition() + normal * (sumRadius + 0.1f));
+		}
+
+		moonMass = GetCollider()->GetMass();
+		Vector3 moonVelocity = GetCollider()->GetVelocity();
+		playerMass = other->GetMass();
+		Vector3 playerVelocity = other->GetVelocity();
+		Vector3 velocity = ComputeCollisionVelocity(moonMass, moonVelocity, playerMass, playerVelocity, 1.0f, normal);
+		velocity_ = velocity;
+		returnMoveTimer_ = kReturnMoveTime_;
+
+		if (HitParticleTimer_ <= 0) {
+			EmitDust(normal, normal);
+			HitParticleTimer_ = 1;
+		}
 
 
 	}

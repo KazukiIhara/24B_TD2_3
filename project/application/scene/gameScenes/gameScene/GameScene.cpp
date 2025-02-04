@@ -575,6 +575,8 @@ void GameScene::SceneStatePlayUpdate() {
 	meteoriteManager_->AddColliderList();
 	fragmentManager_->AddColliderList();
 	bumpManager_->AddColliderList();
+	ufoManager_->AddColliderList();
+	ufoBulletManager_->AddColliderList();
 }
 
 void GameScene::SceneStateFadeOutUpdate() {

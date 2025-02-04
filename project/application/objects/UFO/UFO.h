@@ -10,6 +10,8 @@ class DamagePieceManager;
 class UFO : public EntityController {
 	enum class Behavior {
 		kRoot,
+		kDamage,
+		kBreak,
 	};
 public:
 	UFO();
@@ -54,8 +56,8 @@ private:
 	float amplitude_ = 3.0f;  // 揺れの大きさ
 	float frequency_ = 0.5f;  // 揺れの速さ
 
-	float stageWidth_ = 48.0f;
-	float stageHeight_ = 27.0;
+	float stageWidth_ = 65.0f;
+	float stageHeight_ = 35.0;
 
 
 	bool isAlive_ = true;
@@ -64,10 +66,10 @@ private:
 	// 現在のふるまい
 	Behavior behavior_ = Behavior::kRoot;
 	// 次のふるまいリクエスト
-	std::optional<Behavior> behaviorRequest_ = std::nullopt;
+	std::optional<Behavior> behaviorRequest_ = Behavior::kRoot;
 
 	int32_t shotTimer_ = 0;
-	int32_t shotInterval_ = 180;
+	int32_t shotInterval_ = 360;
 
 private:
 	UFOBulletManager* ufoBulletManager_ = nullptr;
