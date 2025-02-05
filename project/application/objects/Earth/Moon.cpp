@@ -525,6 +525,7 @@ void Moon::EmitMoon() {
 		emitterMoon_->SetMaxPosition({ 0,0,0 });
 		emitterMoon_->SetMinPosition({ 0,0,0 });
 
+		emitterMoon_->SetIsAlpha(false);
 		emitterMoon_->SetAlpha(0.5f);
 
 		emitterMoon_->SetMaxColor({ 1,1,0 });

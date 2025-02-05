@@ -155,6 +155,7 @@ void GameScene::Initialize() {
 	SUGER::CreateParticle("bumpParticle", ParticleType::kPlane, "circle.png");
 	SUGER::CreateParticle("ShotDustParticle", ParticleType::kPlane, "dust.png");
 	SUGER::CreateParticle("MoonParticle", ParticleType::kModel, "Moon");
+	SUGER::CreateParticle("UFOBulletParticle", ParticleType::kModel, "UFO_Bullet");
 
 
 	moon_->SetPraticle();

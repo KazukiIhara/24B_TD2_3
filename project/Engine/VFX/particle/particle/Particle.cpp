@@ -57,7 +57,7 @@ void Particle::Update() {
 			alpha = 1.0f - ((*particleIterator).currentTime / (*particleIterator).lifeTime);
 		}
 		else {
-			alpha = 1.0f;
+			alpha = (*particleIterator).maxAlpha * (1.0f - ((*particleIterator).currentTime / (*particleIterator).lifeTime));
 		}
 
 
@@ -133,6 +133,9 @@ void Particle::AddNewParticle(const EmitParamater& emitSetting) {
 	// 色の設定
 	particle.color = emitSetting.color;
 	particle.isAlpha = emitSetting.isAlpha;
+	
+	particle.maxAlpha = particle.color.w;
+	
 	// 生存時間の設定
 	particle.lifeTime = emitSetting.lifeTime;
 	particle.currentTime = 0;
