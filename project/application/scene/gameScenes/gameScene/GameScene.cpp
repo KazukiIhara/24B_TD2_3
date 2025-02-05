@@ -306,7 +306,7 @@ void GameScene::Initialize() {
 	moonMajarSprite_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	moonMajarSprite_->SetPosition(moonMajarPosition_);
 
-	currentDays_ = 360;
+	currentDays_ = 0;
 }
 
 void GameScene::Finalize() {
