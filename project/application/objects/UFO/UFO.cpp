@@ -113,6 +113,7 @@ void UFO::RootUpdate() {
 void UFO::DamageInitialize() {
 	hp_--;
 	damageTimer_ = kDamageTime_;
+	SUGER::PlayWaveSound("MoonDamage.wav");
 }
 
 void UFO::DamageUpdate() {

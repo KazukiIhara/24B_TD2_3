@@ -164,7 +164,6 @@ void Moon::OnCollision(Collider* other) {
 		break;
 		case ColliderCategory::Meteorite:
 		{
-
 			if (behavior_ == Behavior::kRoot) {
 				break;
 			}
@@ -206,6 +205,8 @@ void Moon::OnCollision(Collider* other) {
 			}
 
 			EmitDamegePiece(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_, 2);
+
+
 
 		}
 		break;
@@ -251,6 +252,7 @@ void Moon::OnCollision(Collider* other) {
 				HitParticleTimer_ = 1;
 			}
 
+
 		}
 		break;
 		case ColliderCategory::Boss:
@@ -295,6 +297,7 @@ void Moon::OnCollision(Collider* other) {
 				EmitDust(normal, normal);
 				HitParticleTimer_ = 1;
 			}
+
 
 			break;
 		}
@@ -400,8 +403,7 @@ void Moon::SetVelocity(const Vector3& velocity) {
 	velocity_ = velocity;
 }
 
-bool Moon::GetIsParent()
-{
+bool Moon::GetIsParent() {
 	if (GetWorldTransformPtr()->parent_ != nullptr) {
 		return true;
 	}

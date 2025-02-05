@@ -370,7 +370,6 @@ void GameScene::SceneStatePlayUpdate() {
 		ChangeScene("GAME");
 	}
 
-
 	ImGui::Begin("PointLightSetting");
 	PointLightForGPU& pointLight = light_->GetPunctualLight().pointLight;
 	ImGui::ColorEdit3("color", &pointLight.color.x);

@@ -163,6 +163,7 @@ void Boss::RootUpdate() {
 void Boss::DamageInitialize() {
 	hp_--;
 	damageTimer_ = 0;
+	SUGER::PlayWaveSound("MoonDamage.wav");
 }
 
 void Boss::DamageUpdate() {
