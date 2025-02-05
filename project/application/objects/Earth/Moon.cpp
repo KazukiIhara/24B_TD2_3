@@ -252,7 +252,7 @@ void Moon::OnCollision(Collider* other) {
 
 
 		case ColliderCategory::Boss:
-
+		{
 			if (behavior_ == Behavior::kRoot) {
 				break;
 			}
@@ -291,8 +291,8 @@ void Moon::OnCollision(Collider* other) {
 				EmitDust(normal, normal);
 				HitParticleTimer_ = 1;
 			}
-
-			break;
+		}
+		break;
 		}
 	}
 

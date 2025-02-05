@@ -9,8 +9,7 @@
 #include "system/DamagePieceManager/DamagePieceManager.h"
 #include "objects/player/Player.h"
 
-UFO::UFO() {
-}
+UFO::UFO() {}
 
 UFO::~UFO() {}
 
@@ -32,15 +31,15 @@ void UFO::Update() {
 	if (behaviorRequest_) {
 		behavior_ = behaviorRequest_.value();
 		switch (behavior_) {
-		case UFO::Behavior::kRoot:
-			RootInitialize();
-			break;
-		case UFO::Behavior::kDamage:
-			DamageInitialize();
-			break;
-		case UFO::Behavior::kBreak:
-			BreakInitialize();
-			break;
+			case UFO::Behavior::kRoot:
+				RootInitialize();
+				break;
+			case UFO::Behavior::kDamage:
+				DamageInitialize();
+				break;
+			case UFO::Behavior::kBreak:
+				BreakInitialize();
+				break;
 		}
 
 
@@ -49,15 +48,15 @@ void UFO::Update() {
 
 	// ふるまい
 	switch (behavior_) {
-	case UFO::Behavior::kRoot:
-		RootUpdate();
-		break;
-	case UFO::Behavior::kDamage:
-		DamageUpdate();
-		break;
-	case UFO::Behavior::kBreak:
-		BreakUpdate();
-		break;
+		case UFO::Behavior::kRoot:
+			RootUpdate();
+			break;
+		case UFO::Behavior::kDamage:
+			DamageUpdate();
+			break;
+		case UFO::Behavior::kBreak:
+			BreakUpdate();
+			break;
 	}
 }
 
@@ -66,11 +65,11 @@ void UFO::OnCollision(Collider* other) {
 	// 衝突相手のカテゴリーを取得
 	ColliderCategory category = other->GetColliderCategory();
 	switch (category) {
-	case ColliderCategory::Moon:
-		if (behavior_ == Behavior::kRoot) {
-			behaviorRequest_ = Behavior::kDamage;
-		}
-		break;
+		case ColliderCategory::Moon:
+			if (behavior_ == Behavior::kRoot) {
+				behaviorRequest_ = Behavior::kDamage;
+			}
+			break;
 	}
 
 }
@@ -159,7 +158,7 @@ void UFO::BreakUpdate() {
 
 
 		isAlive_ = false;
-		SetIsDelete(true);		
+		SetIsDelete(true);
 	}
 }
 
@@ -195,8 +194,7 @@ void UFO::SetPlayer(Player* player) {
 
 }
 
-void UFO::SetPraticle(int count)
-{
+void UFO::SetPraticle(int count) {
 	particleNumber_ = count;
 
 	// 爆発
@@ -207,7 +205,7 @@ void UFO::SetPraticle(int count)
 	CreateEmit("explosionDustParticle", "ufoDustExplosion", 40, 1.8f, { 0.75f, 1.5f }, { 0.039f, 0.039f, 0.039f }, emitterExplosionFire_.get());
 	CreateEmit("dustParticle", "ufoDustExplosionFire", 40, 2.0f, { 0.75f, 1.5f }, { 1,0,0 }, emitterExplosionDust_.get());
 	CreateEmit("dustParticle", "ufoDustExplosionFireYellow", 40, 1.5f, { 0.75f, 1.5f }, { 1,1,0 }, emitterExplosionFireYellow_.get());
-	
+
 	// 発射硝煙
 	emitterShotDust_ = std::make_unique<EmitterController>();
 
@@ -216,8 +214,7 @@ void UFO::SetPraticle(int count)
 
 }
 
-void UFO::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit)
-{
+void UFO::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit) {
 	std::string name_ = emitName + std::to_string(particleNumber_);
 	// エミッターの作成
 	SUGER::CreateEmitter(name_);
@@ -253,16 +250,14 @@ void UFO::CreateEmit(const std::string praticleName, const std::string emitName,
 	emit->SetMinColor(color);
 }
 
-void UFO::EmitDust(const Vector3& pos, const Vector3& veloctiy)
-{
+void UFO::EmitDust(const Vector3& pos, const Vector3& veloctiy) {
 	EmitMinMax(pos, Normalize(veloctiy) * 3, emitterExplosionFire_.get()); // 赤
 	EmitMinMax(pos, Normalize(veloctiy) * 2, emitterExplosionFireYellow_.get()); //黄色
 	EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterExplosionDust_.get());
 	//EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterDustBlack_.get());
 }
 
-void UFO::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit)
-{
+void UFO::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit) {
 	Vector3 velocity = (veloctiy);
 
 	Vector3 min = (velocity * 0.25f);
@@ -311,8 +306,8 @@ void UFO::ShotEllipseEmit() {
 	up = Normalize(up);
 
 	// 楕円状にパーティクルを発射
-	emitterShotDust_->SetMaxPosition({0,0,0});
-	emitterShotDust_->SetMinPosition({0,0,0});
+	emitterShotDust_->SetMaxPosition({ 0,0,0 });
+	emitterShotDust_->SetMinPosition({ 0,0,0 });
 	for (int i = 0; i < numShots; ++i) {
 		float theta = i * (2.0f * 3.14159f / numShots); // 各弾の角度
 
@@ -335,8 +330,7 @@ void UFO::ShotEllipseEmit() {
 	}
 }
 
-void UFO::ShotEmit()
-{
+void UFO::ShotEmit() {
 	// UFO からプレイヤーへの法線ベクトルを取得
 	Vector3 normal = player_->GetCollider()->GetWorldPosition() - GetCollider()->GetWorldPosition();
 	normal = Normalize(normal); // 法線ベクトルを正規化
@@ -344,7 +338,7 @@ void UFO::ShotEmit()
 	float size = 1.0f;
 	int numShots = 1;  // 発射する弾の数
 	for (int i = 0; i < numShots; ++i) {
-		Vector3 pos = normal * numShots;
+		Vector3 pos = normal * static_cast<float>(numShots);
 
 		emitterShotDust_->SetMaxSize(size);
 		emitterShotDust_->SetMinSize(size);
@@ -353,8 +347,3 @@ void UFO::ShotEmit()
 		emitterShotDust_->Emit();
 	}
 }
-
-
-
-
-
