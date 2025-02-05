@@ -50,7 +50,7 @@ void UFOManager::AddUFO(const Vector3& popTranslate, const Vector3 velocity) {
 	newUfo->SetPlayer(player_);
 	newUfo->GetCollider()->SetMass(20000.0f);
 	newUfo->SetDamagePieceManager(damagePieceManager_);
-
+	newUfo->SetPraticle(currentSerialNumber_);
 
 
 	ufos_.push_back(std::move(newUfo));

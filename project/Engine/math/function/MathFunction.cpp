@@ -23,6 +23,9 @@ float Length(const Vector4& a) {
 float Length(const Vector3& a) {
 	return std::sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
 }
+float LengthSquared(const Vector3& a) {
+	return a.x * a.x + a.y * a.y + a.z * a.z;
+}
 float Length(const Vector2& a) {
 	return std::sqrt(a.x * a.x + a.y * a.y);
 }

@@ -86,6 +86,7 @@ void UFO::RootUpdate() {
 	}
 
 	if (shotTimer_ == 0) {
+		ShotEmit();
 		ufoBulletManager_->AddUFOBullet(GetTranslate());
 		shotTimer_ = shotInterval_;
 	}
@@ -136,6 +137,19 @@ void UFO::BreakUpdate() {
 		player_->GetScoreData().ufoNum_++;
 		isAlive_ = false;
 		SetIsDelete(true);
+
+
+
+
+		Vector3 min = Vector3(-2, -2, 0);
+		Vector3 max = Vector3(2, 2, 0);
+
+		Vector3 maxVelo = ElementWiseMax(min, max);
+		Vector3 minVelo = ElementWiseMin(min, max);
+
+		emitterExplosionFire_->Emit();
+		emitterExplosionDust_->Emit();
+		emitterExplosionFireYellow_->Emit();
 	}
 }
 
@@ -170,3 +184,145 @@ void UFO::SetPlayer(Player* player) {
 	player_ = player;
 
 }
+
+void UFO::SetPraticle(int count)
+{
+	particleNumber_ = count;
+
+	// 爆発
+	emitterExplosionFire_ = std::make_unique<EmitterController>();
+	emitterExplosionFireYellow_ = std::make_unique<EmitterController>();
+	emitterExplosionDust_ = std::make_unique<EmitterController>();
+
+	CreateEmit("explosionDustParticle", "ufoDustExplosion", 40, 1.8f, { 0.75f, 1.5f }, { 0.039f, 0.039f, 0.039f }, emitterExplosionFire_.get());
+	CreateEmit("dustParticle", "ufoDustExplosionFire", 40, 2.0f, { 0.75f, 1.5f }, { 1,0,0 }, emitterExplosionDust_.get());
+	CreateEmit("dustParticle", "ufoDustExplosionFireYellow", 40, 1.5f, { 0.75f, 1.5f }, { 1,1,0 }, emitterExplosionFireYellow_.get());
+	
+	// 発射硝煙
+	emitterShotDust_ = std::make_unique<EmitterController>();
+
+	CreateEmit("ShotDustParticle", "shotDustParticle", 10, 0.2f, { 0.75f, 1.5f }, { 0.039f, 0.039f, 0.039f }, emitterShotDust_.get());
+
+
+}
+
+void UFO::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit)
+{
+	std::string name_ = emitName + std::to_string(particleNumber_);
+	// エミッターの作成
+	SUGER::CreateEmitter(name_);
+	emit->Initialize(name_);
+	emit->SetParent(GetCollider()->GetWorldTransformPtr());
+
+	// エミッターにパーティクルをセット
+	emit->SetParticle(praticleName);
+	// エミッターの発生個数を変更
+	emit->SetCount(count);
+	// エミッターの発生タイプを設定
+	emit->SetEmitType(kRandom);
+	// 繰り返し発生オフ
+	emit->SetIsRepeat(false);
+	// 
+	emit->SetFrequency(0.01f);
+
+	// 速度
+	emit->SetMaxVelocity(Vector3(0.0f, 0.0f, 0.0f));
+	emit->SetMinVelocity(Vector3(-0.0f, -0.0f, -0.0f));
+
+	// サイズ
+	emit->SetMaxSize(size);
+	emit->SetMinSize(size);
+
+	// 生存時間
+	emit->SetMinLifeTime(lifeTime.x);
+	emit->SetMaxLifeTime(lifeTime.y);
+
+
+	// カラー
+	emit->SetMaxColor(color);
+	emit->SetMinColor(color);
+}
+
+void UFO::EmitDust(const Vector3& pos, const Vector3& veloctiy)
+{
+	EmitMinMax(pos, Normalize(veloctiy) * 3, emitterExplosionFire_.get()); // 赤
+	EmitMinMax(pos, Normalize(veloctiy) * 2, emitterExplosionFireYellow_.get()); //黄色
+	EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterExplosionDust_.get());
+	//EmitMinMax(pos * 1.5f, Normalize(veloctiy) * 2.5f, emitterDustBlack_.get());
+}
+
+void UFO::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterController* emit)
+{
+	Vector3 velocity = (veloctiy);
+
+	Vector3 min = (velocity * 0.25f);
+	Vector3 max = (velocity * 2.5f);
+
+	Vector3 maxVelo = ElementWiseMax(min, max);
+	Vector3 minVelo = ElementWiseMin(min, max);
+
+	Vector3 pospos = (pos);
+
+	min = (pospos * 0.25f);
+	max = (pospos * 2.5f);
+
+	Vector3 maxPos = ElementWiseMax(-min, -max);
+	Vector3 minPos = ElementWiseMin(-min, -max);
+
+	emit->SetMinPosition(minPos);
+	emit->SetMaxPosition(maxPos);
+
+	emit->SetMaxVelocity(maxPos);
+	emit->SetMinVelocity(minPos);
+	emit->Emit();
+}
+
+#include <cmath> // cos(), sin()
+
+void UFO::ShotEmit() {
+	int numShots = 8;  // 発射する弾の数
+	float baseSpeed = 2.0f;  // 基本速度
+
+	float a = 3.0f;  // 長径の半径
+	float b = 1.5f;  // 短径の半径
+
+	// UFO からプレイヤーへの法線ベクトルを取得
+	Vector3 normal = player_->GetCollider()->GetWorldPosition() - GetCollider()->GetWorldPosition();
+	normal = Normalize(normal); // 法線ベクトルを正規化
+
+	// 法線に直交するベクトルを求める
+	Vector3 worldUp(0, 1, 0);
+	Vector3 right = Cross(worldUp, normal); // 法線に直交するベクトル
+	if (LengthSquared(right) < 0.001f) {
+		// 万が一 right ベクトルがゼロになった場合は、別の軸を基準にする
+		right = Vector3(1, 0, 0);
+	}
+	right = Normalize(right);
+
+	Vector3 up = Cross(normal, right); // `up` は `right` と `normal` の外積
+	up = Normalize(up);
+
+	// 楕円状にパーティクルを発射
+	for (int i = 0; i < numShots; ++i) {
+		float theta = i * (2.0f * 3.14159f / numShots); // 各弾の角度
+
+		// 楕円状のオフセット
+		Vector3 velocity = (right * (a * cosf(theta))) + (up * (b * sinf(theta)));
+
+		// 基本速度を適用
+		velocity = Normalize(velocity) * baseSpeed;
+
+		// 法線方向のオフセットを適用（流れを持たせる）
+		velocity += normal * baseSpeed;
+
+		// パーティクルを発射
+		emitterShotDust_->SetMaxVelocity(velocity);
+		emitterShotDust_->SetMinVelocity(velocity * 0.95f);
+		emitterShotDust_->Emit();
+	}
+}
+
+
+
+
+

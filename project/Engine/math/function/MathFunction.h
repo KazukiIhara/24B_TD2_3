@@ -44,6 +44,8 @@ static float Distance(const Vector3& point1, const Vector3& point2)
 float Length(const Vector4& a);
 float Length(const Vector3& a);
 float Length(const Vector2& a);
+
+float LengthSquared(const Vector3& a);
 // 正規化
 Vector3 Normalize(const Vector3& a);
 
