@@ -275,9 +275,9 @@ void ResultScene::SceneStatePlayUpdate() {
 	SplitDecimalInteger(magnificationNum_, decimalPointNum_, integerNum_);
 	magnificationNum_ = formatNumber(magnificationNum_);
 
-
-	GetGameData().totalScore_ = score_ * static_cast<int>(magnificationNum_);
-	totalScore_ = GetGameData().totalScore_;
+	float aa = static_cast<float>(score_);
+	float bb = aa * magnificationNum_;
+	totalScore_ = static_cast<int>(bb);
 
 	decimalPointUI_->SetLeftTop({ numberTextureSize_.x * decimalPointNum_ ,0 });
 	integerUI_->SetLeftTop({ numberTextureSize_.x * integerNum_,0 });
