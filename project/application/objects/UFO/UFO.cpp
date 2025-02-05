@@ -164,9 +164,9 @@ void UFO::SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 void UFO::KillMe() {
 	hp_ = 1;
 	behaviorRequest_ = Behavior::kDamage;
+}
 
-void UFO::SetPlayer(Player* player)
-{
+void UFO::SetPlayer(Player* player) {
 	player_ = player;
 
 }
