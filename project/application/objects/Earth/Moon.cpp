@@ -121,6 +121,7 @@ void Moon::OnCollision(Collider* other) {
 		velocity_ = velocity;
 		returnMoveTimer_ = kReturnMoveTime_;
 
+
 		if (damegePiecePlayer_ <= 0) {
 			for (int i = 0; i < 5; i++) {
 				EmitDamegePiece2(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_);
@@ -258,9 +259,16 @@ void Moon::OnCollision(Collider* other) {
 			break;
 		}
 
-		if (behavior_ == Behavior::kCharge) {
-			break;
-		}
+		case ColliderCategory::Boss:
+		{
+			if (behavior_ == Behavior::kRoot) {
+				break;
+			}
+
+			if (behavior_ == Behavior::kCharge) {
+				break;
+			}
+
 
 		// 位置ベクトルを取得
 		Vector3 posA = GetCollider()->GetWorldPosition();
@@ -288,6 +296,7 @@ void Moon::OnCollision(Collider* other) {
 		velocity_ = velocity;
 		returnMoveTimer_ = kReturnMoveTime_;
 
+
 		if (HitParticleTimer_ <= 0) {
 			EmitDust(normal, normal);
 			HitParticleTimer_ = 1;
@@ -296,9 +305,8 @@ void Moon::OnCollision(Collider* other) {
 		break;
 	}
 	}
+
 }
-
-
 
 void Moon::MoveLimit() {
 	Vector3 translate_ = GetTranslate();

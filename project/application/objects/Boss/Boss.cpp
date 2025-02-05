@@ -14,6 +14,15 @@ void Boss::Initialize(const std::string& name) {
 }
 
 void Boss::Update() {
+
+#ifdef _DEBUG
+	ImGui::Begin("Boss");
+	ImGui::DragFloat("amplitude", &amplitude_, 0.01f);
+	ImGui::DragFloat("frequency", &frequency_, 0.01f);
+	ImGui::End();
+#endif // _DEBUG
+
+
 	// ふるまい変更
 	if (behaviorRequest_) {
 		behavior_ = behaviorRequest_.value();
@@ -108,6 +117,17 @@ void Boss::RootInitialize() {
 
 void Boss::RootUpdate() {
 	SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+
+	// 時間経過を取得
+	time_ += SUGER::kDeltaTime_;
+
+	// 上下の揺れの速度を算出（位相を考慮）
+	float waveVelocity = amplitude_ * frequency_ * (std::numbers::pi_v<float> *2.0f) *
+		std::cos(time_ * frequency_ * (std::numbers::pi_v<float> *2.0f));
+	velocity_ = { 0.0f,waveVelocity,0.0f };
+	SetTranslate(GetTranslate() + velocity_);
+
+	GetCollider()->SetVelocity(velocity_);
 }
 
 void Boss::DamageInitialize() {
