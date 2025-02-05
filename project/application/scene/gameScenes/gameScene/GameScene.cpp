@@ -59,6 +59,7 @@ void GameScene::Initialize() {
 	boss_->Initialize(SUGER::CreateEntity("Boss", "Boss"));
 	boss_->CreateCollider(ColliderCategory::Boss, kSphere, 3.0f);
 	boss_->UpdateWorldTransform();
+	boss_->SetIsActive(false);
 
 	// 
 	// 月の初期化処理
