@@ -22,7 +22,7 @@ void ResultScene::Initialize() {
 	resultFragment_->SetSize(iconTextureSize_ * 0.75f);
 	resultFragment_->SetPosition({ xPos,300.0f + (y * 0.0f) });
 	resultFragment_->SetLeftTop(Vector2(0 * iconTextureSize_.x, 0.0f));
-	
+
 	resultMeteorite_ = std::make_unique<Object2DController>();
 	resultMeteorite_->Initialize(SUGER::Create2DObject("resultM", "ResultText/ObjectIcoms_x128y128.png"));
 	resultMeteorite_->SetAnchorPoint(Vector2{ 0.5f,0.5f });
@@ -37,7 +37,7 @@ void ResultScene::Initialize() {
 	resultUfo_->SetAnchorPoint(Vector2{ 0.5f,0.5f });
 	resultUfo_->SetCutOutSize(iconTextureSize_);
 	resultUfo_->SetSize(iconTextureSize_ * 0.75f);
-	resultUfo_->SetPosition({ xPos,300.0f + (y * 2.0f)});
+	resultUfo_->SetPosition({ xPos,300.0f + (y * 2.0f) });
 	resultUfo_->SetLeftTop(Vector2(2 * iconTextureSize_.x, 0.0f));
 
 	// バックグラウンド
@@ -128,12 +128,39 @@ void ResultScene::Initialize() {
 	// 耐えた日数
 	InitializeUI(dayUI_, "dayNum", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
 
+	
 	// 倍率(少数)
-	InitializeUI(decimalPointUI_, "decimalPoint", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
-
-	// 倍率(少数)
-	InitializeUI(integerUI_, "integer", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
-
+	decimalPointUI_ = std::make_unique<Object2DController>();
+	decimalPointUI_->Initialize(SUGER::Create2DObject("decimalPoint", "ResultText/ResultNumber_x48y96.png"));
+	decimalPointUI_->SetCutOutSize(numberTextureSize_);
+	decimalPointUI_->SetSize(numberTextureSize_);
+	decimalPointUI_->SetAnchorPoint(Vector2(0.5f, 0.5f));
+	decimalPointUI_->SetPosition(decimalPointPosition_);
+	// 倍率(整数)
+	integerUI_ = std::make_unique<Object2DController>();
+	integerUI_->Initialize(SUGER::Create2DObject("decimalPoint", "ResultText/ResultNumber_x48y96.png"));
+	integerUI_->SetCutOutSize(numberTextureSize_);
+	integerUI_->SetSize(numberTextureSize_);
+	integerUI_->SetAnchorPoint(Vector2(0.5f, 0.5f));
+	integerUI_->SetPosition(integerPosition_);
+	
+	
+	pointUI_ = std::make_unique<Object2DController>();
+	pointUI_->Initialize(SUGER::Create2DObject("decimalPoint", "ResultText/ResultSymbol_x128y96.png"));
+	pointUI_->SetCutOutSize(symbolTextureSize_);
+	pointUI_->SetSize(symbolTextureSize_);
+	pointUI_->SetAnchorPoint(Vector2(0.5f, 0.5f));
+	pointUI_->SetPosition(pointPosition_);
+	pointUI_->SetLeftTop({ symbolTextureSize_.x * 2.0f,0.0f });
+	
+	baiUI_ = std::make_unique<Object2DController>();
+	baiUI_->Initialize(SUGER::Create2DObject("decimalPoint", "ResultText/ResultSymbol_x128y96.png"));
+	baiUI_->SetCutOutSize(symbolTextureSize_);
+	baiUI_->SetSize(symbolTextureSize_);
+	baiUI_->SetAnchorPoint(Vector2(0.5f, 0.5f));
+	baiUI_->SetPosition(baiosition_);
+	baiUI_->SetLeftTop({ symbolTextureSize_.x * 3.0f,0.0f });
+	
 
 }
 
@@ -155,7 +182,7 @@ void ResultScene::Operation()
 			moveScene_ = 0;
 		}
 	}
-  if (moveScene_ == 0) {
+	if (moveScene_ == 0) {
 		resultRetry_->SetColor({ 1,1,0,1 });
 		resultTitle_->SetColor({ 1,1,1,1 });
 
@@ -194,7 +221,7 @@ void ResultScene::SceneStatePlayUpdate() {
 
 #endif // _DEBUG
 
-	
+
 
 
 	fragmentScore_ = GetGameData().fragmentNum_ * 100;
@@ -206,22 +233,23 @@ void ResultScene::SceneStatePlayUpdate() {
 
 
 	int score = fragmentScore_ + meteoriteScore_ + ufoScore_;
-	int allScore = int(float(score) * (1.0f + float(GetGameData().years_) + float(float(GetGameData().days_) / float(365))));
 	dayNum_ = uint32_t((float(GetGameData().years_) * 365) + float(GetGameData().days_));
 	if (GetGameData().bossDeath_) {
-		GetGameData().totalScore_ = allScore * 2;
 		magnificationNum_ = (1.0f + float(GetGameData().years_) + float(float(GetGameData().days_) / float(365))) * 2;
 	}
 	else {
-		GetGameData().totalScore_ = allScore;
 		magnificationNum_ = (1.0f + float(GetGameData().years_) + float(float(GetGameData().days_) / float(365)));
 	}
-	totalScore_ = GetGameData().totalScore_;
-	
-
 	SplitDecimalInteger(magnificationNum_, decimalPointNum_, integerNum_);
+	magnificationNum_ = formatNumber(magnificationNum_);
 
-	//magnificationNum_ = 10.12345f;
+
+	GetGameData().totalScore_ = score * static_cast<int>(magnificationNum_);
+	totalScore_ = GetGameData().totalScore_;
+
+	decimalPointUI_->SetLeftTop({ numberTextureSize_.x * decimalPointNum_ ,0});
+	integerUI_->SetLeftTop({ numberTextureSize_.x * integerNum_,0});
+	
 	// UI関係更新
 	UpdateUI();
 
@@ -398,13 +426,32 @@ std::array<float, 5> ResultScene::SplitDigits5(float number) {
 
 
 void ResultScene::SplitDecimalInteger(float num, int32_t& Decimal, int32_t& integer) {
-	// 整数部分を取得
-	integer = static_cast<int32_t>(num);
+	// 整数部分を1桁に丸めて取得
+	integer = static_cast<int32_t>(num) % 10;
 
-	// 小数部分を取得
-	float decimalPart = num - integer;
-	Decimal = static_cast<int32_t>(decimalPart * 100000); // 小数点以下5桁を整数化
+	// 小数部分を1桁に丸めて取得
+	float decimalPart = num - static_cast<int32_t>(num);
+	Decimal = static_cast<int32_t>(decimalPart * 10) % 10;
+
+	num = integer + Decimal / 10.0f;
 }
+
+float ResultScene::formatNumber(float value)
+{
+	if (value == 0.0f) return 0.0f; // 特例: 0 の場合はそのまま
+
+	bool isNegative = (value < 0); // 符号を保持
+	value = fabs(value); // 絶対値に変換
+
+	// 最上位桁を取得
+	int highestDigit = static_cast<int>(value / powf(10, floorf(log10(value))));
+
+	// 小数点以下1桁までに丸める
+	float result = highestDigit + (floorf((value - highestDigit * powf(10, floorf(log10(value)))) * 10) / 10);
+
+	return isNegative ? -result : result; // 元の符号を戻す
+}
+
 
 
 

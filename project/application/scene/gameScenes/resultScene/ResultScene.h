@@ -38,6 +38,9 @@ public:
 
 	void SplitDecimalInteger(float num, int32_t& Decimal, int32_t& integer);
 
+	float formatNumber(float value);
+
+
 	void ActiveUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, std::array<int32_t, 5>& num, Vector2 position, int number, float numGap);
 	void ActiveUI(std::array<std::unique_ptr<Object2DController>, 4>& ui, std::array<int32_t, 4>& num, Vector2 position, int number, float numGap);
 	void ActiveUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, std::array<float, 5>& num, Vector2 position, float number, float numGap);
@@ -159,22 +162,29 @@ private:
 	uint32_t dayNum_;
 
 	// 倍率
-	std::array<std::unique_ptr<Object2DController>, 5> magnificationUI_;
+	/*std::array<std::unique_ptr<Object2DController>, 5> magnificationUI_;
 	std::array<float, 5> magnificationNumNum_;
-	Vector2 magnificationPosition_{ scoreXpos,300.0f + (y * 4.0f) };
+	Vector2 magnificationPosition_{ scoreXpos,300.0f + (y * 4.0f) };*/
 	float magnificationNum_;
 
 	// 倍率小数点
-	std::array<std::unique_ptr<Object2DController>, 4> decimalPointUI_;
-	std::array<int32_t, 4> decimalPointNumNum_;
-	Vector3 decimalPointPosition_{ scoreXpos,300.0f + (y * 4.0f) };
+	std::unique_ptr<Object2DController> decimalPointUI_;
+	Vector2 decimalPointPosition_{ scoreXpos,300.0f + (y * 4.0f) };
 	int32_t decimalPointNum_;
 
 	// 倍率整数
-	std::array<std::unique_ptr<Object2DController>, 4> integerUI_;
-	std::array<int32_t, 4> integerNumNum_;
-	Vector3 integerPosition_{ scoreXpos + 10 ,300.0f + (y * 4.0f) };
+	std::unique_ptr<Object2DController> integerUI_;
+	Vector2 integerPosition_{ scoreXpos - 48 ,300.0f + (y * 4.0f) };
 	int32_t integerNum_;
+
+	// 点
+	std::unique_ptr<Object2DController> pointUI_;
+	Vector2 pointPosition_{ scoreXpos - 24 ,300.0f + (y * 4.0f) };
+	
+	// 倍
+	std::unique_ptr<Object2DController> baiUI_;
+	Vector2 baiosition_{ scoreXpos + 48 ,300.0f + (y * 4.0f) };
+
 private:
 	int moveScene_ = 0;
 	float direction_;
