@@ -50,7 +50,7 @@ public:
 
 private:
 
-	int32_t hp_ = 15;
+	int32_t hp_ = 10;
 
 	Behavior behavior_ = Behavior::kNone;
 
