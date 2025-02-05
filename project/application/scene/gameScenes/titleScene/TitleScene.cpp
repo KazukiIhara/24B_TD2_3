@@ -77,12 +77,12 @@ void TitleScene::Initialize() {
 
 
 	startUI_ = std::make_unique<Object2DController>();
-	startUI_->Initialize(SUGER::Create2DObject("A", "TitleText/StartUI.png"));
+	startUI_->Initialize(SUGER::Create2DObject("0_A", "TitleText/StartUI.png"));
 	startUI_->SetAnchorPoint({ 0.5f,0.5f });
 	startUI_->SetPosition({ 1920 / 2,870 });
 
 	titleTextAni_ = std::make_unique<Object2DController>();
-	titleTextAni_->Initialize(SUGER::Create2DObject("TitleTexAni", "TitleText/StartUI.png"));
+	titleTextAni_->Initialize(SUGER::Create2DObject("0_TitleTexAni", "TitleText/StartUI.png"));
 	titleTextAni_->SetAnchorPoint({ 0.5f,0.5f });
 	titleTextAni_->SetPosition({ 1920 / 2,870 });
 
@@ -90,7 +90,7 @@ void TitleScene::Initialize() {
 	anisize_ = constAniSize_;
 
 	titleText_ = std::make_unique<Object2DController>();
-	titleText_->Initialize(SUGER::Create2DObject("TitleTex", "TitleText/TitleText.png"));
+	titleText_->Initialize(SUGER::Create2DObject("0_TitleTex", "TitleText/TitleText.png"));
 	titleText_->SetAnchorPoint({ 0.5f,0.5f });
 	titleText_->SetPosition(Vector2(960.0f, 300.0f));
 	titleText_->SetSize(titleText_->GetSize() * 1.5f);
