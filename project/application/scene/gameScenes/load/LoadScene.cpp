@@ -91,12 +91,26 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	// サウンド読み込み
 	SUGER::LoadWaveSound("Alarm01.wav");
 	SUGER::LoadWaveSound("BGM.wav");
-	SUGER::LoadWaveSound("EarthDanger.wav");
-	SUGER::LoadWaveSound("EarthToFragmentDamage.wav");
-	SUGER::LoadWaveSound("GameScene.wav");
-	SUGER::LoadWaveSound("MeteoriteBreak.wav");
-	SUGER::LoadWaveSound("Result.wav");
-	SUGER::LoadWaveSound("Title.wav");
+	SUGER::LoadWaveSound("Title.wav");  //TitleSceneで流すBGM
+	SUGER::LoadWaveSound("GameScene.wav");  //GameSceneで流すBGM
+	SUGER::LoadWaveSound("BossBGM.wav");  //Bossと戦っている時に流すBGM
+	SUGER::LoadWaveSound("Result.wav");  //ResultSceneで流すBGM
+
+	SUGER::LoadWaveSound("Decision.wav");  //TitleやResultで使う決定音
+	SUGER::LoadWaveSound("Selection.wav");  //少佐のテキストを進める時やリザルトの選択の時のSE
+
+	SUGER::LoadWaveSound("EarthDanger.wav");  //地球のHPが25%以下になった時に流すSE
+	SUGER::LoadWaveSound("EarthToFragmentDamage.wav"); //地球が欠片とぶつかった時のSE
+	SUGER::LoadWaveSound("EarthHitDamage.wav");  //地球が隕石・UFOとぶつかった時のSE
+
+	SUGER::LoadWaveSound("MoonDamage.wav");  //月が他のオブジェクト(欠片・隕石・UFO・ボス)にダメージを与えた時のSE
+
+	SUGER::LoadWaveSound("MeteoriteBreak.wav");  //隕石・UFOが壊れた時のSE
+	SUGER::LoadWaveSound("UFO_Attack.wav");  //UFOが攻撃する時のSE
+	
+	SUGER::LoadWaveSound("Boss_Attack.wav");  //ボスが攻撃する時のSE
+	
+	
 
 	// テクスチャ読み込み
 	// テクスチャの規定ディレクトリパス
