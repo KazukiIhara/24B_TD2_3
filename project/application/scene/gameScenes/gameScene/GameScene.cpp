@@ -310,6 +310,9 @@ void GameScene::Initialize() {
 	moonMajarSprite_->SetPosition(moonMajarPosition_);
 
 
+	currentDays_ = 0;
+
+
 	//
 	// ボタンUI
 	//
@@ -322,8 +325,7 @@ void GameScene::Initialize() {
 	buttomUI_->SetLeftTop(Vector2(0.0f, 0.0f));
 	buttomUI_->SetColor({ 1,1,1,0.8f });
 
-	currentDays_ = 360;
-
+	
 }
 
 void GameScene::Finalize() {
