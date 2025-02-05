@@ -400,6 +400,14 @@ void Moon::SetVelocity(const Vector3& velocity) {
 	velocity_ = velocity;
 }
 
+bool Moon::GetIsParent()
+{
+	if (GetWorldTransformPtr()->parent_ != nullptr) {
+		return true;
+	}
+	return false;
+}
+
 void Moon::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit) {
 	std::string name_ = emitName;
 	// エミッターの作成
@@ -517,6 +525,7 @@ void Moon::EmitMoon() {
 		emitterMoon_->SetMaxPosition({ 0,0,0 });
 		emitterMoon_->SetMinPosition({ 0,0,0 });
 
+		emitterMoon_->SetIsAlpha(false);
 		emitterMoon_->SetAlpha(0.5f);
 
 		emitterMoon_->SetMaxColor({ 1,1,0 });

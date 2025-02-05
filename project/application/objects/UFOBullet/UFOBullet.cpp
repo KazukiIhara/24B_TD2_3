@@ -22,6 +22,8 @@ void UFOBullet::Update() {
 	GetCollider()->SetVelocity(velocity_);
 
 	MoveLimit();
+
+	MoveEmit();
 }
 
 void UFOBullet::OnCollision(Collider* other) {
@@ -95,6 +97,13 @@ void UFOBullet::SetPraticle(int count)
 	emitterShotDust_ = std::make_unique<EmitterController>();
 
 	CreateEmit("ShotDustParticle", "shotBulletDustParticle", 5, 1.2f, { 0.75f, 1.5f }, { 0.039f, 0.039f, 0.039f }, emitterShotDust_.get());
+
+	//
+	emitterBullet_ = std::make_unique<EmitterController>();
+	CreateEmit("UFOBulletParticle", "shotBulletDustParticle", 1, 1.0f, { 0.5f, 0.5f }, {1,0,0 }, emitterBullet_.get());
+
+	
+
 
 }
 
@@ -186,6 +195,17 @@ void UFOBullet::ShotEmit()
 		emitterShotDust_->SetMaxVelocity(normal);
 		emitterShotDust_->SetMinVelocity(normal);
 		emitterShotDust_->Emit();
+	}
+}
+
+void UFOBullet::MoveEmit()
+{
+	emitBulletTimer_ -= SUGER::kDeltaTime_;
+	if (emitBulletTimer_ <= 0.0f) {
+		emitBulletTimer_ = 1.0f;
+		emitterBullet_->SetAlpha(0.1f);
+		emitterBullet_->SetIsAlpha(false);
+		emitterBullet_->Emit();
 	}
 }
 

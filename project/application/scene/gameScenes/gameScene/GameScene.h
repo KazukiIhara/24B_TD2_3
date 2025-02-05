@@ -116,6 +116,12 @@ private:
 	Vector2 yearPosition_ = { 0.0f,0.0f };
 	Vector2	daysPosition_ = { 0.0f,0.0f };
 
+	// シンボル
+	std::unique_ptr<Object2DController> buttomUI_;
+	Vector2 buttomUIPosition_ = { 512.0f / 2 ,990.0f };
+	Vector2 buttomUiSize_ = { 512,96  * 2};
+
+
 	// 経過日数
 	uint32_t currentDays_ = 0;
 	// 経過年数
