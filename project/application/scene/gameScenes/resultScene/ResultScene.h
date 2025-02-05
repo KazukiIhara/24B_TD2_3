@@ -57,6 +57,13 @@ private:
 	std::unique_ptr<Object2DController> resultDay_;
 	// スコア(テキスト)
 	std::unique_ptr<Object2DController> resultScore_;
+	
+	// タイトル(テキスト)
+	std::unique_ptr<Object2DController> resultFragment_;
+	// 耐えた日(テキスト)
+	std::unique_ptr<Object2DController> resultMeteorite_;
+	// スコア(テキスト)
+	std::unique_ptr<Object2DController> resultUfo_;
 
 
 	Vector2 symbolTextureSize_ = { 128.0f,96.0f };
@@ -67,6 +74,7 @@ private:
 
 
 private:
+	Vector2 iconTextureSize_ = { 128.0f,128.0f };
 	Vector2 numberTextureSize_ = { 48.0f,96.0f };
 	float numGap_ = 48.0f;
 

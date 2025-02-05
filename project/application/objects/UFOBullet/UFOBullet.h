@@ -52,6 +52,8 @@ private:
 		return Vector3((std::min)(a.x, b.x), (std::min)(a.y, b.y), (std::min)(a.z, b.z));
 	}
 	void ShotEmit();
+
+	void MoveEmit();
 private:
 	Vector3 velocity_ = {};
 	bool isAlive_ = true;
@@ -70,5 +72,8 @@ private:
 	std::unique_ptr<EmitterController> emitterExplosionDust_;
 
 	std::unique_ptr<EmitterController> emitterShotDust_;
+	
+	std::unique_ptr<EmitterController> emitterBullet_;
+	float emitBulletTimer_ = 0.1f;
 
 };

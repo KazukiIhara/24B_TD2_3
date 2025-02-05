@@ -64,6 +64,8 @@ public:
 
 	void SetVelocity(const Vector3& velocity);
 
+	bool GetIsParent();
+
 private:
 	/// <summary>
 	/// 

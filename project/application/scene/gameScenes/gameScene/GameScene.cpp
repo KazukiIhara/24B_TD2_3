@@ -155,6 +155,7 @@ void GameScene::Initialize() {
 	SUGER::CreateParticle("bumpParticle", ParticleType::kPlane, "circle.png");
 	SUGER::CreateParticle("ShotDustParticle", ParticleType::kPlane, "dust.png");
 	SUGER::CreateParticle("MoonParticle", ParticleType::kModel, "Moon");
+	SUGER::CreateParticle("UFOBulletParticle", ParticleType::kModel, "UFO_Bullet");
 
 
 	moon_->SetPraticle();
@@ -297,6 +298,8 @@ void GameScene::Initialize() {
 	symbolUI_[1]->SetLeftTop(Vector2(9 * numberTextureSize_.x, 0.0f));
 	symbolUI_[1]->SetPosition(currentYearsPosition_ + Vector2(numGap_ * 2.0f, 8.0f));
 
+
+
 	//
 	// ムーン少佐
 	// 
@@ -306,7 +309,23 @@ void GameScene::Initialize() {
 	moonMajarSprite_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	moonMajarSprite_->SetPosition(moonMajarPosition_);
 
-	currentDays_ = 360;
+
+	currentDays_ = 0;
+
+
+	//
+	// ボタンUI
+	//
+	buttomUI_ = std::make_unique<Object2DController>();
+	buttomUI_->Initialize(SUGER::Create2DObject("Botton", "ButtonUI/ShotUI_x512y96.png"));
+	buttomUI_->SetAnchorPoint(Vector2(0.5f, 0.5f));
+	buttomUI_->SetPosition(buttomUIPosition_);
+	buttomUI_->SetSize(buttomUiSize_);
+	buttomUI_->SetCutOutSize(buttomUiSize_);
+	buttomUI_->SetLeftTop(Vector2(0.0f, 0.0f));
+	buttomUI_->SetColor({ 1,1,1,0.8f });
+
+	
 }
 
 void GameScene::Finalize() {
@@ -425,7 +444,8 @@ void GameScene::SceneStatePlayUpdate() {
 	if (player_->GetIsHit()) {
 		if (player_->GetHitLevel() == 1) {
 			sceneCamera_->Shake(15.0f, 0.5f);
-		} else if (player_->GetHitLevel() == 2) {
+		}
+		else if (player_->GetHitLevel() == 2) {
 			sceneCamera_->Shake(25.0f, 1.5f);
 		}
 		player_->SetIsHit(false);
@@ -524,17 +544,20 @@ void GameScene::SceneStatePlayUpdate() {
 		earthHPUI_[1]->SetIsActive(false);
 		earthHPUI_[2]->SetIsActive(false);
 		earthHPUI_[3]->SetIsActive(true);
-	} else if (player_->GetHp() <= 50.0f) {
+	}
+	else if (player_->GetHp() <= 50.0f) {
 		earthHPUI_[0]->SetIsActive(false);
 		earthHPUI_[1]->SetIsActive(false);
 		earthHPUI_[2]->SetIsActive(true);
 		earthHPUI_[3]->SetIsActive(false);
-	} else if (player_->GetHp() <= 75.0f) {
+	}
+	else if (player_->GetHp() <= 75.0f) {
 		earthHPUI_[0]->SetIsActive(false);
 		earthHPUI_[1]->SetIsActive(true);
 		earthHPUI_[2]->SetIsActive(false);
 		earthHPUI_[3]->SetIsActive(false);
-	} else {
+	}
+	else {
 		earthHPUI_[0]->SetIsActive(true);
 		earthHPUI_[1]->SetIsActive(false);
 		earthHPUI_[2]->SetIsActive(false);
@@ -543,7 +566,8 @@ void GameScene::SceneStatePlayUpdate() {
 
 	if (player_->GetHp() < 10.0f) {
 		earthHpNumUI_[1]->SetIsActive(false);
-	} else if (player_->GetHp() < 100.0f) {
+	}
+	else if (player_->GetHp() < 100.0f) {
 		earthHpNumUI_[0]->SetIsActive(false);
 	}
 
@@ -574,16 +598,19 @@ void GameScene::SceneStatePlayUpdate() {
 			currentDaysNumUI_[0]->SetIsActive(false);
 			currentDaysNumUI_[1]->SetIsActive(false);
 			currentDaysNumUI_[2]->SetIsActive(true);
-		} else if (currentDays_ < 100) {
+		}
+		else if (currentDays_ < 100) {
 			currentDaysNumUI_[0]->SetIsActive(false);
 			currentDaysNumUI_[1]->SetIsActive(true);
 			currentDaysNumUI_[2]->SetIsActive(true);
-		} else {
+		}
+		else {
 			currentDaysNumUI_[0]->SetIsActive(true);
 			currentDaysNumUI_[1]->SetIsActive(true);
 			currentDaysNumUI_[2]->SetIsActive(true);
 		}
-	} else {
+	}
+	else {
 		currentDaysNumUI_[0]->SetIsActive(false);
 		currentDaysNumUI_[1]->SetIsActive(false);
 		currentDaysNumUI_[2]->SetIsActive(false);
@@ -617,16 +644,19 @@ void GameScene::SceneStatePlayUpdate() {
 			currentYearsNumUI_[0]->SetIsActive(false);
 			currentYearsNumUI_[1]->SetIsActive(false);
 			currentYearsNumUI_[2]->SetIsActive(true);
-		} else if (currentYears_ < 100) {
+		}
+		else if (currentYears_ < 100) {
 			currentYearsNumUI_[0]->SetIsActive(false);
 			currentYearsNumUI_[1]->SetIsActive(true);
 			currentYearsNumUI_[2]->SetIsActive(true);
-		} else {
+		}
+		else {
 			currentYearsNumUI_[0]->SetIsActive(true);
 			currentYearsNumUI_[1]->SetIsActive(true);
 			currentYearsNumUI_[2]->SetIsActive(true);
 		}
-	} else {
+	}
+	else {
 		currentYearsNumUI_[0]->SetIsActive(false);
 		currentYearsNumUI_[1]->SetIsActive(false);
 		currentYearsNumUI_[2]->SetIsActive(false);
@@ -666,6 +696,14 @@ void GameScene::SceneStatePlayUpdate() {
 	}
 
 	moonMajarSprite_->SetColor(Vector4(1.0f, 1.0f, 1.0f, moonMajarAlpha_));
+
+	//
+	if (moon_->GetIsParent()) {
+		buttomUI_->SetLeftTop({ 0,0.0f });
+	}
+	else {
+		buttomUI_->SetLeftTop({ 0,1.0f * buttomUiSize_.y });
+	}
 
 
 	//
