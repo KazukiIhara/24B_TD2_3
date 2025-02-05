@@ -171,10 +171,6 @@ private:
 	Vector2 dayPosition_{ scoreXpos,300.0f + (y * 3.0f) };
 	uint32_t dayNum_;
 
-	// 倍率
-	/*std::array<std::unique_ptr<Object2DController>, 5> magnificationUI_;
-	std::array<float, 5> magnificationNumNum_;
-	Vector2 magnificationPosition_{ scoreXpos,300.0f + (y * 4.0f) };*/
 	float magnificationNum_;
 
 	// 倍率小数点
@@ -194,6 +190,12 @@ private:
 	// 倍
 	std::unique_ptr<Object2DController> baiUI_;
 	Vector2 baiosition_{ scoreXpos3 + 48 ,300.0f + (y * 4.0f) };
+
+	// ボss
+	std::unique_ptr<Object2DController> bossUI_;
+	Vector2 bossPoition_{ scoreXpos3 + 48 * 3 ,300.0f + (y * 4.0f) };
+
+	//
 
 private:
 	int moveScene_ = 0;

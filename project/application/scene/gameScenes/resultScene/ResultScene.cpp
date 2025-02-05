@@ -164,6 +164,15 @@ void ResultScene::Initialize() {
 	baiUI_->SetPosition(baiosition_);
 	baiUI_->SetLeftTop({ symbolTextureSize_.x * 3.0f,0.0f });
 	
+	bossUI_ = std::make_unique<Object2DController>();
+	bossUI_->Initialize(SUGER::Create2DObject("decimalPoint", "ResultText/ObjectIcoms_x128y128.png"));
+	bossUI_->SetCutOutSize(iconTextureSize_);
+	bossUI_->SetSize(iconTextureSize_ * 0.75f);
+	bossUI_->SetAnchorPoint(Vector2(0.5f, 0.5f));
+	bossUI_->SetPosition(bossPoition_);
+	bossUI_->SetLeftTop({ iconTextureSize_.x * 3.0f,0.0f });
+	
+	
 
 }
 
@@ -246,9 +255,11 @@ void ResultScene::SceneStatePlayUpdate() {
 	score_ = fragmentScore_ + meteoriteScore_ + ufoScore_;
 	dayNum_ = uint32_t((float(GetGameData().years_) * 365) + float(GetGameData().days_));
 	if (GetGameData().bossDeath_) {
+		bossUI_->SetIsActive(true);
 		magnificationNum_ = (1.0f + float(GetGameData().years_) + float(float(GetGameData().days_) / float(365))) * 2;
 	}
 	else {
+		bossUI_->SetIsActive(false);
 		magnificationNum_ = (1.0f + float(GetGameData().years_) + float(float(GetGameData().days_) / float(365)));
 	}
 	SplitDecimalInteger(magnificationNum_, decimalPointNum_, integerNum_);
