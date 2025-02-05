@@ -160,12 +160,12 @@ private:
 	Vector2 numberTextureSize2_ = { 48.0f,96.0f };
 	std::array<std::unique_ptr<Object2DController>, 5> scoreUI_;
 	std::array<int32_t, 5> scoreNum_;
-	Vector2 scorePosition_{1700,30};
+	Vector2 scorePosition_{1700 - 32,30 + 32};
 	uint32_t score_ = 0;
 
 	//
 	// スコア(テキスト)
 	std::unique_ptr<Object2DController> resultScore_;
-	Vector2 resultScorePos_{ 1820,30 };
+	Vector2 resultScorePos_{ 1820 - 32,30 +32 };
 	Vector2 scoreSize{ 256,96 };
 };
