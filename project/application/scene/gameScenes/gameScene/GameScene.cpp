@@ -256,10 +256,10 @@ void GameScene::Initialize() {
 	//
 
 	for (uint32_t i = 0; i < 3; i++) {
-		currentYearsNumUI_[i] = std::make_unique<Object2DController>();
-		currentYearsNumUI_[i]->Initialize(SUGER::Create2DObject("0_currentYears", "Number/Number_x128y192.png"));
-		currentYearsNumUI_[i]->SetCutOutSize(numberTextureSize_);
-		currentYearsNumUI_[i]->SetSize(numberTextureSize_ / 2.0f);
+		currentBossBattleNumUI_[i] = std::make_unique<Object2DController>();
+		currentBossBattleNumUI_[i]->Initialize(SUGER::Create2DObject("0_currentYears", "Number/Number_x128y192.png"));
+		currentBossBattleNumUI_[i]->SetCutOutSize(numberTextureSize_);
+		currentBossBattleNumUI_[i]->SetSize(numberTextureSize_ / 2.0f);
 	}
 
 	SUGER::AddGrobalDataItem("UI", "CurrentYearsNumPosX", currentYearsPosition_.x);
@@ -268,14 +268,14 @@ void GameScene::Initialize() {
 	currentYearsPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "CurrentYearsNumPosX");
 	currentYearsPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "CurrentYearsNumPosY");
 
-	currentYearsNumUI_[0]->SetPosition(currentYearsPosition_ - Vector2(numGap_, 0.0f));
-	currentYearsNumUI_[1]->SetPosition(currentYearsPosition_);
-	currentYearsNumUI_[2]->SetPosition(currentYearsPosition_ + Vector2(numGap_, 0.0f));
+	currentBossBattleNumUI_[0]->SetPosition(currentYearsPosition_ - Vector2(numGap_, 0.0f));
+	currentBossBattleNumUI_[1]->SetPosition(currentYearsPosition_);
+	currentBossBattleNumUI_[2]->SetPosition(currentYearsPosition_ + Vector2(numGap_, 0.0f));
 
 	// 描画フラグ初期化
-	currentYearsNumUI_[0]->SetIsActive(false);
-	currentYearsNumUI_[1]->SetIsActive(false);
-	currentYearsNumUI_[2]->SetIsActive(false);
+	currentBossBattleNumUI_[0]->SetIsActive(false);
+	currentBossBattleNumUI_[1]->SetIsActive(false);
+	currentBossBattleNumUI_[2]->SetIsActive(false);
 
 	// 
 	// シンボル
@@ -311,7 +311,7 @@ void GameScene::Initialize() {
 	moonMajarSprite_->SetPosition(moonMajarPosition_);
 
 
-	currentDays_ = 0;
+	currentDays_ = 360;
 
 
 	//
@@ -392,7 +392,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 
 	// ゲームオーバー確認処理
-	if (player_->GetHp() <= 0) {
+	if (player_->GetHp() <= 0 || bossBattleTimer_ == 0) {
 		// スコアを保存
 		GetGameData().days_ = currentDays_;
 		GetGameData().years_ = currentYears_;
@@ -401,7 +401,6 @@ void GameScene::SceneStatePlayUpdate() {
 		GetGameData().meteoriteNum_ = player_->GetScoreData().meteoriteNum_;
 		GetGameData().ufoNum_ = player_->GetScoreData().ufoNum_;
 		GetGameData().bossDeath_ = false;
-
 
 		// フェードリクエスト
 		sceneStateRequest_ = SceneState::kFadeOut;
@@ -460,6 +459,8 @@ void GameScene::SceneStatePlayUpdate() {
 			SUGER::StopWaveLoopSound("Warning.wav");
 			// ボスBGM
 			SUGER::PlayWaveLoopSound("BossBGM.wav");
+
+			bossBattleTimer_ = 120;
 		}
 		Vector3 bossPos = Lerp(bossPopPosition_, bossBattleBeginPosition_, bossFightStartTimer_ / bossFightStartTime_);
 		boss_->SetTranslate(bossPos);
@@ -507,6 +508,17 @@ void GameScene::SceneStatePlayUpdate() {
 		}
 
 	}
+
+
+	// ボス戦固有の処理
+	if (isBossFight_) {
+		bossBattleframeCount_++;
+		if (bossBattleframeCount_ == 60) {
+			bossBattleTimer_--;
+			bossBattleframeCount_ = 0;
+		}
+	}
+
 
 	// ダメージ破片の更新
 	damagePieceManager_->Update();
@@ -654,25 +666,25 @@ void GameScene::SceneStatePlayUpdate() {
 	//	currentYearsNumUI_[2]->SetIsActive(false);
 	//}
 
-	//if (isBossFight_) {
-	//	currentYearsNumUI_[0]->SetIsActive(false);
-	//	currentYearsNumUI_[1]->SetIsActive(false);
-	//	currentYearsNumUI_[2]->SetIsActive(false);
-	//}
+	if (isBossFight_) {
+		currentBossBattleNumUI_[0]->SetIsActive(true);
+		currentBossBattleNumUI_[1]->SetIsActive(true);
+		currentBossBattleNumUI_[2]->SetIsActive(true);
+	}
 
 
-	//// ポジションをセット
-	//currentYearsNumUI_[0]->SetPosition(currentYearsPosition_ - Vector2(numGap_, 0.0f));
-	//currentYearsNumUI_[1]->SetPosition(currentYearsPosition_);
-	//currentYearsNumUI_[2]->SetPosition(currentYearsPosition_ + Vector2(numGap_, 0.0f));
+	// ポジションをセット
+	currentBossBattleNumUI_[0]->SetPosition(currentYearsPosition_ - Vector2(numGap_, 0.0f));
+	currentBossBattleNumUI_[1]->SetPosition(currentYearsPosition_);
+	currentBossBattleNumUI_[2]->SetPosition(currentYearsPosition_ + Vector2(numGap_, 0.0f));
 
-	//// 数字分割処理
-	//currentYearsNum_ = SplitDigits(currentYears_);
+	// 数字分割処理
+	currentBossBattleNum_ = SplitDigits(bossBattleTimer_);
 
-	//// 分割した数字をもとにずらして描画
-	//for (uint32_t i = 0; i < 3; i++) {
-	//	currentYearsNumUI_[i]->SetLeftTop(Vector2(currentYearsNum_[i] * numberTextureSize_.x, 0.0f));
-	//}
+	// 分割した数字をもとにずらして描画
+	for (uint32_t i = 0; i < 3; i++) {
+		currentBossBattleNumUI_[i]->SetLeftTop(Vector2(currentBossBattleNum_[i] * numberTextureSize_.x, 0.0f));
+	}
 
 	if (isBossFightStart_) {
 		symbolUI_[0]->SetIsActive(false);

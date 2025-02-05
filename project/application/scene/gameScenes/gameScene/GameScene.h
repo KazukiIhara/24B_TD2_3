@@ -107,8 +107,8 @@ private:
 	Vector2 currentDaysPosition_{ 0.0f,0.0f };
 
 	// 経過年数UI
-	std::array<std::unique_ptr<Object2DController>, 3> currentYearsNumUI_;
-	std::array<int32_t, 3> currentYearsNum_;
+	std::array<std::unique_ptr<Object2DController>, 3> currentBossBattleNumUI_;
+	std::array<int32_t, 3> currentBossBattleNum_;
 	Vector2 currentYearsPosition_{ 0.0f,0.0f };
 
 	// シンボル
@@ -132,7 +132,7 @@ private:
 	float bossFightStartTime_ = 300.0f;
 
 	bool isBossFight_ = false;
-
-	uint32_t bossBattleTimer_ = 0;
-	uint32_t bossBattleTime_ = 120;
+	
+	uint32_t bossBattleframeCount_ = 0;
+	uint32_t bossBattleTimer_ = 120;
 };
