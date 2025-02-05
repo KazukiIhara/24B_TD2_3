@@ -119,4 +119,8 @@ private:
 	uint32_t currentDays_ = 0;
 	// 経過年数
 	uint32_t currentYears_ = 0;
+
+
+	bool bossFight_ = false;
+
 };
