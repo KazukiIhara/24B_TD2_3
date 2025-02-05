@@ -58,6 +58,7 @@ void GameScene::Initialize() {
 	boss_ = std::make_unique<Boss>();
 	boss_->Initialize(SUGER::CreateEntity("Boss", "Boss"));
 	boss_->CreateCollider(ColliderCategory::Boss, kSphere, 3.0f);
+	boss_->SetTranslate(bossPopPosition_);
 	boss_->UpdateWorldTransform();
 	boss_->SetIsActive(false);
 
@@ -399,19 +400,24 @@ void GameScene::SceneStatePlayUpdate() {
 		player_->SetIsHit(false);
 	}
 
+	// ボス登場時
 	if (isBossFightStart_) {
 		bossFightStartTimer_--;
 		if (bossFightStartTimer_ == 0) {
 			isBossFight_ = true;
+			isBossFightStart_ = false;
 		}
+		boss_->SetTranslate(boss_->GetTranslate() + Vector3(-1.0f, 0.0f, 0.0f));
 	}
 
+	// 通常戦
 	if (!isBossFight_) {
 		// 経過日数を加算
 		if (scoreTimer_ == moon_->GetAroundFrame() / 10.0f) {
 			currentDays_++;
 			scoreTimer_ = 0.0f;
 		}
+
 		if (currentDays_ == 365) {
 			currentYears_++;
 			currentDays_ = 0;
@@ -429,8 +435,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 			ufoBulletManager_->KillAll();
 
-			
-
+			boss_->SetIsActive(true);
 		}
 
 		// たんこぶマネージャーの更新

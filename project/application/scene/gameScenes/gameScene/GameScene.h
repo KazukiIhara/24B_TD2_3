@@ -116,7 +116,7 @@ private:
 	Vector2	daysPosition_ = { 0.0f,0.0f };
 
 	// 経過日数
-	uint32_t currentDays_ = 280;
+	uint32_t currentDays_ = 360;
 	// 経過年数
 	uint32_t currentYears_ = 0;
 
