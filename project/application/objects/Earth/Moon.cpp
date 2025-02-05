@@ -285,10 +285,8 @@ void Moon::OnCollision(Collider* other) {
 			velocity_ = velocity;
 			returnMoveTimer_ = kReturnMoveTime_;
 
-			if (HitParticleTimer_ <= 0) {
-				EmitDust(normal, normal);
-				HitParticleTimer_ = 1;
-			}
+			EmitDust(normal, normal);
+
 
 			break;
 	}
