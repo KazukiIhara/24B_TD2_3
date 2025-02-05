@@ -38,6 +38,7 @@ void UFOBulletManager::AddUFOBullet(const Vector3& translate) {
 	newBulet->SetScale(0.8f);
 	newBulet->SetSerialNumber(currentSerialNumber_);
 	newBulet->SetDamagePieceManager(damagePieceManager_);
+	newBulet->SetPraticle(currentSerialNumber_);
 	newBulet->UpdateWorldTransform();
 	ufoBullets_.push_back(std::move(newBulet));
 
