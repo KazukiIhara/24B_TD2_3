@@ -11,4 +11,5 @@ enum class ColliderCategory {
 	DamagePiece, // 破損片
 	UFO,
 	UFOBullet,
+	Boss,
 };

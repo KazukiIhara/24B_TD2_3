@@ -107,12 +107,24 @@ void UFOManager::SetPopIntervalTime(const uint32_t& popInterval) {
 	popIntervalTime_ = popInterval;
 }
 
-void UFOManager::SetDamagePieceManager(DamagePieceManager* damagePieceManager)
-{
+void UFOManager::SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 	damagePieceManager_ = damagePieceManager;
 }
+
+
+void UFOManager::KillAll() {
+	for (auto& ufo : ufos_) {
+		if (ufo->GetIsAlive()) {
+			ufo->KillMe();
+		}
+	}
+}
+
+void UFOManager::SetIsPop(bool isPop) {
+	isPop_ = isPop;
 
 void UFOManager::SetPlayer(Player* player)
 {
 	player_ = player;
+
 }

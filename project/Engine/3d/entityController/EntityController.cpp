@@ -80,9 +80,12 @@ void EntityController::SetShinness(float shinness) {
 	entity_->SetShininess(shinness);
 }
 
-void EntityController::SetModel(const std::string& name)
-{
+void EntityController::SetModel(const std::string& name) {
 	entity_->SetModel(name);
+}
+
+void EntityController::SetIsActive(bool isActive) {
+	entity_->SetIsActive(isActive);
 }
 
 

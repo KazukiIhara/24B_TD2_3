@@ -63,3 +63,8 @@ void UFOBullet::MoveLimit() {
 void UFOBullet::SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 	damagePieceManager_ = damagePieceManager;
 }
+
+void UFOBullet::KillMe() {
+	isAlive_ = false;
+	SetIsDelete(true);
+}

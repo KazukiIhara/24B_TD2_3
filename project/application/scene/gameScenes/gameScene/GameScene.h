@@ -11,6 +11,7 @@
 #include "objects/player/Player.h"
 #include "objects/Earth/Moon.h"
 #include "objects/Skydome/Skydome.h"
+#include "objects/Boss/Boss.h"
 
 #include "system/MeteoriteManager/MeteoriteManager.h"
 #include "system/FragmentManager/FragmentManager.h"
@@ -59,6 +60,10 @@ private:
 
 	// 天球
 	std::unique_ptr<Skydome> skydome_ = nullptr;
+
+	// ボス
+	std::unique_ptr<Boss> boss_ = nullptr;
+	Vector3 bossPopPosition_ = { 0.0f,0.0f,0.0f };
 
 	// 隕石マネージャ
 	std::unique_ptr<MeteoriteManager> meteoriteManager_ = nullptr;
@@ -111,7 +116,14 @@ private:
 	Vector2	daysPosition_ = { 0.0f,0.0f };
 
 	// 経過日数
-	uint32_t currentDays_ = 0;
+	uint32_t currentDays_ = 280;
 	// 経過年数
 	uint32_t currentYears_ = 0;
+
+	bool isBossFightStart_ = false;
+	int32_t bossFightStartTimer_ = 0;
+	int32_t bossFightStartTime_ = 300;
+
+	bool isBossFight_ = false;
+
 };

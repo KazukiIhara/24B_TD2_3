@@ -117,12 +117,11 @@ void UFO::DamageInitialize() {
 void UFO::DamageUpdate() {
 	damageTimer_--;
 	SetColor(Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+	if (hp_ <= 0) {
+		behaviorRequest_ = Behavior::kBreak;
+	}
 	if (damageTimer_ == 0) {
-		if (hp_ <= 0) {
-			behaviorRequest_ = Behavior::kBreak;
-		} else {
-			behaviorRequest_ = Behavior::kRoot;
-		}
+		behaviorRequest_ = Behavior::kRoot;
 	}
 }
 
@@ -161,7 +160,13 @@ void UFO::SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 	damagePieceManager_ = damagePieceManager;
 }
 
+
+void UFO::KillMe() {
+	hp_ = 1;
+	behaviorRequest_ = Behavior::kDamage;
+
 void UFO::SetPlayer(Player* player)
 {
 	player_ = player;
+
 }

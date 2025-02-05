@@ -45,7 +45,11 @@ public:
 
 	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
 
+
+	void KillMe();
+
 	void SetPlayer(Player* player);
+
 
 private:
 	// 

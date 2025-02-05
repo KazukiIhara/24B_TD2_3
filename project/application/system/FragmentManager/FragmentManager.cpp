@@ -35,7 +35,9 @@ void FragmentManager::Update() {
 	ImGui::End();
 #endif // _DEBUG
 
-	PopFragments();
+	if (isPop_) {
+		PopFragments();
+	}
 
 	fragments_.remove_if([](const std::unique_ptr<Fragment>& fragment) {
 		return !fragment->GetAlive();
@@ -74,6 +76,14 @@ void FragmentManager::AddFragment(const Vector3& popTranslate) {
 	currentSerialNumber_++;
 }
 
+void FragmentManager::KillAllFragment() {
+	for (auto& fragment : fragments_) {
+		if (fragment->GetAlive()) {
+			fragment->KillMe();
+		}
+	}
+}
+
 void FragmentManager::AddColliderList() {
 	for (auto& fragment : fragments_) {
 		if (fragment->GetAlive()) {
@@ -110,4 +120,8 @@ void FragmentManager::PopFragments() {
 		}
 
 	}
+}
+
+void FragmentManager::SetIsPop(bool isPop) {
+	isPop_ = isPop;
 }
