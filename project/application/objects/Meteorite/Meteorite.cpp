@@ -155,6 +155,8 @@ void Meteorite::DamageInitialize(float damage) {
 	SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 
 	SwitchingHPModel();
+
+	SUGER::PlayWaveSound("MoonDamage.wav");
 }
 
 void Meteorite::DamageUpdate() {

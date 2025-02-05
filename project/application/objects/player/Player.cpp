@@ -101,24 +101,10 @@ void Player::Operation() {
 		moveVector_.x += 1.0f;
 	}
 
-	if (SUGER::PushKey(DIK_J)) {
-		rotateDirection_ += 1.0f;
-	}
-	if (SUGER::PushKey(DIK_K)) {
-		rotateDirection_ -= 1.0f;
-	}
-
 	if (SUGER::IsGamepadConnected(0)) {
 		// パッド操作
 		moveVector_.x = static_cast<float>(SUGER::GetLeftStickX(0));
 		moveVector_.y = static_cast<float>(SUGER::GetLeftStickY(0));
-
-		if (SUGER::PushButton(0, ButtonR)) {
-			rotateDirection_ -= 1.0f;
-		}
-		if (SUGER::PushButton(0, ButtonL)) {
-			rotateDirection_ += 1.0f;
-		}
 	}
 
 	// 移動ベクトル正規化
@@ -144,10 +130,6 @@ void Player::Move() {
 	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 	// 現在の移動量をセット
 	GetCollider()->SetVelocity(velocity_);
-
-	// 回転
-	localTransform_.rotate_.z += +rotateDirection_ * rotationSpeed_;
-
 }
 
 void Player::MoveLimit() {

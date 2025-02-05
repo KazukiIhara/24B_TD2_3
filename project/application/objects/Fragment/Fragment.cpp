@@ -44,87 +44,89 @@ void Fragment::OnCollision(Collider* other) {
 	ColliderCategory category = other->GetColliderCategory();
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
-	case ColliderCategory::Player:
-		HP_ -= 3;
-		UpdateLifeState(); // 生死処理
-
-		EmitFragment(velocity_);
-
-		// スコア関係
-		player_->GetScoreData().score_ += score_;
-		player_->GetScoreData().fragmentNum_++;
-		break;
-	case ColliderCategory::Meteorite:
-
-		HP_ -= 3;
-		UpdateLifeState(); // 生死処理
-
-		EmitFragment(velocity_);
-
-
-		emitter_->SetMaxSize(1.8f);
-		emitter_->SetMinSize(1.8f);
-		emitter_->SetCount(10);
-		emitter_->SetMaxVelocity({});
-		emitter_->SetMinVelocity({});
-		emitterDust_->SetMaxSize(2.0f);
-		emitterDust_->SetMinSize(2.0f);
-		emitterDust_->SetCount(10);
-		emitterDust_->SetMaxVelocity({});
-		emitterDust_->SetMinVelocity({});
-
-		emitter_->Emit();
-		emitterDust_->Emit();
-		break;
-	case ColliderCategory::Moon:
-		if (playerHitTimer_ > 0) {
-			break;
-		}
-		{
-			float fragmentMass = GetCollider()->GetMass();
-			Vector3 fragmentVelocity = GetCollider()->GetVelocity();
-			float playerMass = other->GetMass();
-			Vector3 playerVelocity = other->GetVelocity();
-			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-			Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f, normal);
-			velocity_ = velocity;
-			GetCollider()->SetDamage(1.0f);
+		case ColliderCategory::Player:
+			HP_ -= 3;
+			UpdateLifeState(); // 生死処理
 
 			EmitFragment(velocity_);
 
-			playerHitTimer_ = 0.5f;
+			// スコア関係
+			player_->GetScoreData().score_ += score_;
+			player_->GetScoreData().fragmentNum_++;
+			break;
+		case ColliderCategory::Meteorite:
+
+			HP_ -= 3;
+			UpdateLifeState(); // 生死処理
+
+			EmitFragment(velocity_);
+
+
+			emitter_->SetMaxSize(1.8f);
+			emitter_->SetMinSize(1.8f);
+			emitter_->SetCount(10);
+			emitter_->SetMaxVelocity({});
+			emitter_->SetMinVelocity({});
+			emitterDust_->SetMaxSize(2.0f);
+			emitterDust_->SetMinSize(2.0f);
+			emitterDust_->SetCount(10);
+			emitterDust_->SetMaxVelocity({});
+			emitterDust_->SetMinVelocity({});
+
+			emitter_->Emit();
+			emitterDust_->Emit();
+			break;
+		case ColliderCategory::Moon:
+			if (playerHitTimer_ > 0) {
+				break;
+			}
+			{
+				float fragmentMass = GetCollider()->GetMass();
+				Vector3 fragmentVelocity = GetCollider()->GetVelocity();
+				float playerMass = other->GetMass();
+				Vector3 playerVelocity = other->GetVelocity();
+				Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+				Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f, normal);
+				velocity_ = velocity;
+				GetCollider()->SetDamage(1.0f);
+
+				EmitFragment(velocity_);
+
+				playerHitTimer_ = 0.5f;
+
+				SUGER::PlayWaveSound("MoonDamage.wav");
+			}
+			HP_ -= 3;
+			UpdateLifeState(); // 
+			// スコア関係
+			player_->GetScoreData().score_ += score_;
+			player_->GetScoreData().fragmentNum_++;
+			break;
+		case ColliderCategory::Bump:
+		{
+			float fragmentMass = GetCollider()->GetMass();
+			Vector3 fragmentVelocity = GetCollider()->GetVelocity();
+			float playerMass = player_->GetCollider()->GetMass();
+			Vector3 playerVelocity = player_->GetCollider()->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition());
+
+			float bounceFactor = other->GetBounceFactor();
+
+			GetCollider()->SetDamage(1.0f * other->GetDamageMultiplier());
+
+			Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f * bounceFactor, normal);
+			velocity_ = Normalize(velocity);
+
+			// 反射の比率を固定
+			velocity_ = (velocity_ * 20) * bounceFactor;
+			isBumpHit = true;
 		}
-		HP_ -= 3;
-		UpdateLifeState(); // 
-		// スコア関係
-		player_->GetScoreData().score_ += score_;
-		player_->GetScoreData().fragmentNum_++;
 		break;
-	case ColliderCategory::Bump:
-	{
-		float fragmentMass = GetCollider()->GetMass();
-		Vector3 fragmentVelocity = GetCollider()->GetVelocity();
-		float playerMass = player_->GetCollider()->GetMass();
-		Vector3 playerVelocity = player_->GetCollider()->GetVelocity();
-		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition());
 
-		float bounceFactor = other->GetBounceFactor();
-
-		GetCollider()->SetDamage(1.0f * other->GetDamageMultiplier());
-
-		Vector3 velocity = ComputeCollisionVelocity(fragmentMass, fragmentVelocity, playerMass, playerVelocity, 10.0f * bounceFactor, normal);
-		velocity_ = Normalize(velocity);
-
-		// 反射の比率を固定
-		velocity_ = (velocity_ * 20) * bounceFactor;
-		isBumpHit = true;
-	}
-	break;
-
-	case ColliderCategory::UFOBullet:
-		HP_ -= 3;
-		UpdateLifeState();
-		break;
+		case ColliderCategory::UFOBullet:
+			HP_ -= 3;
+			UpdateLifeState();
+			break;
 	}
 }
 
@@ -139,9 +141,9 @@ void Fragment::BehaviorChange() {
 	if (behaviorRequest_) {
 		behavior_ = behaviorRequest_.value();
 		switch (behavior_) {
-		case Fragment::Behavior::kRoot:
-			RootInitialize();
-			break;
+			case Fragment::Behavior::kRoot:
+				RootInitialize();
+				break;
 		}
 		behaviorRequest_ = std::nullopt;
 	}
@@ -150,9 +152,9 @@ void Fragment::BehaviorChange() {
 void Fragment::BehaviorUpdate() {
 	// ふるまい
 	switch (behavior_) {
-	case Fragment::Behavior::kRoot:
-		RootUpdate();
-		break;
+		case Fragment::Behavior::kRoot:
+			RootUpdate();
+			break;
 	}
 }
 
