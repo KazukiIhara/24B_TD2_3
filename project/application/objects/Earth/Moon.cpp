@@ -30,6 +30,8 @@ void Moon::Update() {
 #ifdef _DEBUG
 	ImGui::Begin("EarthVelo");
 	ImGui::DragFloat3("Velocity", &velocity_.x, 0.0f);
+	float qdwnjas = Length(velocity_);
+	ImGui::DragFloat("Length", &qdwnjas, 0.0f);
 	ImGui::End();
 #endif // _DEBUG
 
@@ -320,7 +322,12 @@ void Moon::SetPraticle() {
 	CreateEmit("earthDustParticle", "earthDustFire2", 10, 0.7f, { 1.0f, 1.5f }, { 1, 1, 0 }, emitterDustYellow_.get());
 	CreateEmit("earthDustParticle", "earthDustFire3", 55, 0.7f, { 1.5f, 2.5f }, { 0.412f, 0.412f, 0.412f }, emitterDustGray_.get());
 	CreateEmit("earthDustParticle", "earthDustFire4", 55, 0.7f, { 1.5f, 2.5f }, { 0.039f, 0.039f, 0.039f }, emitterDustBlack_.get());
+	CreateEmit("MoonParticle", "MoonParticle", 55, 0.7f, { 1.5f, 2.5f }, { 0.039f, 0.039f, 0.039f }, emitterDustBlack_.get());
 
+	emitterMoon_ = std::make_unique<EmitterController>();
+	CreateEmit("MoonParticle", "MoonParticle", 1, 0.9f, { 0.2f, 0.2f }, {1,1,0 }, emitterMoon_.get());
+	emitterMoon_->SetMaxVelocity({0,0,0});
+	emitterMoon_->SetMinVelocity({0,0,0});
 
 }
 
@@ -371,6 +378,8 @@ void Moon::AttackUpdate() {
 	SetTranslate(GetTranslate() + velocity_ * SUGER::kDeltaTime_);
 	// コライダーに移動量をセット
 	GetCollider()->SetVelocity(velocity_);
+
+	EmitMoon();
 }
 
 void Moon::BackUpdate() {
@@ -497,6 +506,31 @@ void Moon::EmitDust(const Vector3& pos, const Vector3& veloctiy) {
 		EmitDamegePiece(-GetCollider()->GetWorldPosition() + pos * 1.5f, Normalize(veloctiy) * 2.5f, damagePieceManager_, {});
 	}
 	EmitDamegePiece(-GetCollider()->GetWorldPosition() + pos * 1.5f, Normalize(veloctiy) * 2.5f, damagePieceManager_, 2);
+}
+
+void Moon::EmitMoon()
+{
+	if (Length(velocity_) >= 7) {
+		emitterMoon_->SetMaxVelocity({ 0,0,0 });
+		emitterMoon_->SetMinVelocity({ 0,0,0 });
+		emitterMoon_->SetMaxPosition({ 0,0,0 });
+		emitterMoon_->SetMinPosition({ 0,0,0 });
+
+		emitterMoon_->SetMaxColor({ 1,1,0 });
+		emitterMoon_->SetMinColor({ 1,1,0 });
+		if (Length(velocity_) > 20) {
+			emitterMoon_->SetMaxColor({ 1,0.5f,0 });
+			emitterMoon_->SetMinColor({ 1,0.5f,0 });
+		}
+		if (Length(velocity_) >= 25) {
+
+			emitterMoon_->SetMaxColor({ 1,0.2f,0 });
+			emitterMoon_->SetMinColor({ 1,0.2f,0 });
+		}
+
+
+		emitterMoon_->Emit();
+	}
 }
 
 void Moon::ReturnPosition() {

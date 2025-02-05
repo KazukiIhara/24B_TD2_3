@@ -344,7 +344,7 @@ void UFO::ShotEmit()
 	float size = 1.0f;
 	int numShots = 1;  // 発射する弾の数
 	for (int i = 0; i < numShots; ++i) {
-		Vector3 pos = normal * numShots;
+		Vector3 pos = normal * (float)numShots;
 
 		emitterShotDust_->SetMaxSize(size);
 		emitterShotDust_->SetMinSize(size);

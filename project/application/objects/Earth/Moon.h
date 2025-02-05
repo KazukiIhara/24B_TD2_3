@@ -90,11 +90,15 @@ private:
 	static Vector3 ElementWiseMin(const Vector3& a, const Vector3& b) {
 		return Vector3((std::min)(a.x, b.x), (std::min)(a.y, b.y), (std::min)(a.z, b.z));
 	}
+	void EmitMoon();
+
 private:
 	std::unique_ptr<EmitterController> emitterDustRed_; // 赤
 	std::unique_ptr<EmitterController> emitterDustYellow_; // 黄色
 	std::unique_ptr<EmitterController> emitterDustGray_; // 灰色
 	std::unique_ptr<EmitterController> emitterDustBlack_; // 黒っぽい色
+
+	std::unique_ptr<EmitterController> emitterMoon_; // 
 
 
 	float HitParticleTimer_ = 0;
