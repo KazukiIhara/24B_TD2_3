@@ -37,7 +37,7 @@ void Boss::Update() {
 		hpGage_->SetIsActive(false);
 	}
 
-	hpGage_->SetSize(Vector2(hp_ * 10.0f, 25.0f));
+	hpGage_->SetSize(Vector2(hp_ * 100.0f, 25.0f));
 
 	// ふるまい変更
 	if (behaviorRequest_) {
