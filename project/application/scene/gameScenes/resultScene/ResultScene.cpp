@@ -13,6 +13,33 @@ void ResultScene::Initialize() {
 	skydome_->SetScale(100.0f);
 	skydome_->GetUVTransform().scale = { 10.0f,10.0f };
 
+	float xPos = (static_cast<float>(1920) / 5) + 200;
+
+	resultFragment_ = std::make_unique<Object2DController>();
+	resultFragment_->Initialize(SUGER::Create2DObject("resultF", "ResultText/ObjectIcoms_x128y128.png"));
+	resultFragment_->SetAnchorPoint(Vector2{ 0.5f,0.5f });
+	resultFragment_->SetCutOutSize(iconTextureSize_);
+	resultFragment_->SetSize(iconTextureSize_ * 0.75f);
+	resultFragment_->SetPosition({ xPos,300.0f + (y * 0.0f) });
+	resultFragment_->SetLeftTop(Vector2(0 * iconTextureSize_.x, 0.0f));
+	
+	resultMeteorite_ = std::make_unique<Object2DController>();
+	resultMeteorite_->Initialize(SUGER::Create2DObject("resultM", "ResultText/ObjectIcoms_x128y128.png"));
+	resultMeteorite_->SetAnchorPoint(Vector2{ 0.5f,0.5f });
+	resultMeteorite_->SetCutOutSize(iconTextureSize_);
+	resultMeteorite_->SetSize(iconTextureSize_ * 0.75f);
+	resultMeteorite_->SetPosition({ xPos,300.0f + (y * 1.0f) });
+	resultMeteorite_->SetLeftTop(Vector2(1 * iconTextureSize_.x, 0.0f));
+
+
+	resultUfo_ = std::make_unique<Object2DController>();
+	resultUfo_->Initialize(SUGER::Create2DObject("resultU", "ResultText/ObjectIcoms_x128y128.png"));
+	resultUfo_->SetAnchorPoint(Vector2{ 0.5f,0.5f });
+	resultUfo_->SetCutOutSize(iconTextureSize_);
+	resultUfo_->SetSize(iconTextureSize_ * 0.75f);
+	resultUfo_->SetPosition({ xPos,300.0f + (y * 2.0f)});
+	resultUfo_->SetLeftTop(Vector2(2 * iconTextureSize_.x, 0.0f));
+
 	// バックグラウンド
 	resultBg_ = std::make_unique<Object2DController>();
 	resultBg_->Initialize(SUGER::Create2DObject("0_resultBg", "ResultText/ResultBg.png"));
