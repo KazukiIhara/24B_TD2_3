@@ -40,9 +40,9 @@ void MeteoriteManager::Update() {
 	// グローバルデータクラスからデータを取得
 	speed_ = SUGER::GetGrobalDataValueFloat(kParamaterString_, "Speed");
 
-	if (isPop_) {
-		PopMateorites();
-	}
+
+	PopMateorites();
+
 
 	// 削除フラグの立った隕石を削除
 	meteorites_.remove_if([](const std::unique_ptr<Meteorite>& meteorite) {
@@ -83,7 +83,7 @@ void MeteoriteManager::AddMeteorite(const Vector3& popTranslate, const Vector3& 
 	newMeteorite->UpdateWorldTransform();
 
 	newMeteorite->SetPraticle(currentSerialNumber_);
-	
+
 	// 追加
 	meteorites_.push_back(std::move(newMeteorite));
 
@@ -110,12 +110,12 @@ void MeteoriteManager::PopMateorites() {
 			};
 
 			switch (popPlace_) {
-			case MeteoritePopPlace::Left:
-				AddMeteorite(popPosition, Vector3(0.8f, 0.0f, 0.0f));
-				break;
-			case MeteoritePopPlace::Right:
-				AddMeteorite(popPosition, Vector3(-0.8f, 0.0f, 0.0f));
-				break;
+				case MeteoritePopPlace::Left:
+					AddMeteorite(popPosition, Vector3(0.8f, 0.0f, 0.0f));
+					break;
+				case MeteoritePopPlace::Right:
+					AddMeteorite(popPosition, Vector3(-0.8f, 0.0f, 0.0f));
+					break;
 			}
 
 

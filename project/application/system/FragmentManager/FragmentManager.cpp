@@ -35,9 +35,8 @@ void FragmentManager::Update() {
 	ImGui::End();
 #endif // _DEBUG
 
-	if (isPop_) {
-		PopFragments();
-	}
+	PopFragments();
+
 
 	fragments_.remove_if([](const std::unique_ptr<Fragment>& fragment) {
 		return !fragment->GetAlive();
