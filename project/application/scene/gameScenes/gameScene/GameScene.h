@@ -116,9 +116,13 @@ private:
 	Vector2	daysPosition_ = { 0.0f,0.0f };
 
 	// 経過日数
-	uint32_t currentDays_ = 350;
+	uint32_t currentDays_ = 280;
 	// 経過年数
 	uint32_t currentYears_ = 0;
+
+	bool isBossFightStart_ = false;
+	int32_t bossFightStartTimer_ = 0;
+	int32_t bossFightStartTime_ = 300;
 
 	bool isBossFight_ = false;
 

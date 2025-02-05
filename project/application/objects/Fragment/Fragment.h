@@ -46,6 +46,8 @@ public:
 	// 大気圏内処理
 	void Atmosphere();
 
+	void KillMe();
+
 
 	void SetSpeed(float speed);
 

@@ -155,6 +155,7 @@ void Meteorite::DamageInitialize(float damage) {
 void Meteorite::DamageUpdate() {
 	if (hp_ <= 0) {
 		behaviorRequest_ = Meteorite::Behavior::kBreak;
+		return;
 	}
 
 	damageTimer_--;
@@ -176,8 +177,11 @@ void Meteorite::BreakUpdate() {
 		SetIsDelete(true);
 
 		isAlive_ = false;
-		for (int i = 0; i < 10; i++) {
-			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition());
+
+		if (isPop_) {
+			for (int i = 0; i < 10; i++) {
+				damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition());
+			}
 		}
 
 		// スコア関係
@@ -189,8 +193,6 @@ void Meteorite::BreakUpdate() {
 
 		Vector3 maxVelo = ElementWiseMax(min, max);
 		Vector3 minVelo = ElementWiseMin(min, max);
-
-
 
 		emitterExplosionFire_->SetMaxVelocity(maxVelo);
 		emitterExplosionFire_->SetMinVelocity(minVelo);
@@ -275,6 +277,15 @@ void Meteorite::SetPraticle(int count) {
 
 void Meteorite::SetVelocity(const Vector3& velocity) {
 	velocity_ = velocity;
+}
+
+void Meteorite::KillMe() {
+	hp_ = 0;
+	behaviorRequest_ = Behavior::kDagame;
+}
+
+void Meteorite::SetIsPop(bool isPop) {
+	isPop_ = isPop;
 }
 
 void Meteorite::SwitchingHPModel() {

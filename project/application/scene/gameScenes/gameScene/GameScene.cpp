@@ -398,6 +398,12 @@ void GameScene::SceneStatePlayUpdate() {
 		player_->SetIsHit(false);
 	}
 
+	if (isBossFightStart_) {
+		bossFightStartTimer_--;
+		if (bossFightStartTimer_ == 0) {
+			isBossFight_ = true;
+		}
+	}
 
 	if (!isBossFight_) {
 		// 経過日数を加算
@@ -408,12 +414,19 @@ void GameScene::SceneStatePlayUpdate() {
 		if (currentDays_ == 365) {
 			currentYears_++;
 			currentDays_ = 0;
-			isBossFight_ = true;
+			bossFightStartTimer_ = bossFightStartTime_;
+			isBossFightStart_ = true;
+
+			fragmentManager_->KillAllFragment();
+			fragmentManager_->SetIsPop(false);
+
+			meteoriteManager_->KillAll();
+			meteoriteManager_->SetIsPop(false);
+
 		}
 
 		// たんこぶマネージャーの更新
 		bumpManager_->Update();
-
 
 		// 隕石マネージャの更新
 		meteoriteManager_->Update();
@@ -506,7 +519,7 @@ void GameScene::SceneStatePlayUpdate() {
 	// スコアUI 日数編
 	// 
 
-	if (!isBossFight_) {
+	if (!isBossFightStart_) {
 		// 日数によって桁を描画するかどうかの処理
 		if (currentDays_ < 10) {
 			currentDaysNumUI_[0]->SetIsActive(false);
@@ -543,7 +556,7 @@ void GameScene::SceneStatePlayUpdate() {
 	// スコアUI 年数編
 	//
 
-	if (!isBossFight_) {
+	if (!isBossFightStart_) {
 		// 日数によって桁を描画するかどうかの処理
 		if (currentYears_ < 10) {
 			currentYearsNumUI_[0]->SetIsActive(false);
@@ -578,7 +591,7 @@ void GameScene::SceneStatePlayUpdate() {
 		currentYearsNumUI_[i]->SetLeftTop(Vector2(currentYearsNum_[i] * numberTextureSize_.x, 0.0f));
 	}
 
-	if (isBossFight_) {
+	if (isBossFightStart_) {
 		symbolUI_[0]->SetIsActive(false);
 		symbolUI_[1]->SetIsActive(false);
 	}

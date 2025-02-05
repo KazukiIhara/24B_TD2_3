@@ -28,12 +28,16 @@ public:
 
 	void AddFragment(const Vector3& popTranslate);
 
+	void KillAllFragment();
+
 	void AddColliderList();
 
 	void SetEarth(Moon* earth);
 	void SetPlayer(Player* player);
 
 	void PopFragments();
+
+	void SetIsPop(bool isPop);
 
 private:
 	// 沸く場所の種類
@@ -55,6 +59,7 @@ private:
 	uint32_t currentSerialNumber_ = 0;
 
 	int count = 0;
+	bool isPop_ = true;
 
 private:
 	Moon* moon_ = nullptr;

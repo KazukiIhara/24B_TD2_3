@@ -20,10 +20,11 @@ public:
 		const Vector2& scaleMinMax = {},const Vector4& color = {}, 
 		const Vector2& lifeMInMaxTime = {}, const bool isRand = true, const int numPiece = {});
 
+	
+
 private:
 	// かけらのリスト
 	std::list<std::unique_ptr<DamagePiece>> damagePiece_;
-
 
 };
 

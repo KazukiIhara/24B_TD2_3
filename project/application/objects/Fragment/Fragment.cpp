@@ -222,6 +222,25 @@ void Fragment::Atmosphere() {
 	SetColor({ 1, color, color, 1 });
 }
 
+void Fragment::KillMe() {
+	HP_ = 0;
+	UpdateLifeState(); // 生死処理
+	EmitFragment(velocity_);
+	emitter_->SetMaxSize(1.8f);
+	emitter_->SetMinSize(1.8f);
+	emitter_->SetCount(10);
+	emitter_->SetMaxVelocity({});
+	emitter_->SetMinVelocity({});
+	emitterDust_->SetMaxSize(2.0f);
+	emitterDust_->SetMinSize(2.0f);
+	emitterDust_->SetCount(10);
+	emitterDust_->SetMaxVelocity({});
+	emitterDust_->SetMinVelocity({});
+
+	emitter_->Emit();
+	emitterDust_->Emit();
+}
+
 void Fragment::SetSpeed(float speed) {
 	speed_ = speed;
 }

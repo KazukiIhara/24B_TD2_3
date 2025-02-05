@@ -60,6 +60,10 @@ public:
 
 	void SetVelocity(const Vector3& velocity);
 
+	void KillMe();
+
+	void SetIsPop(bool isPop);
+
 private:
 
 	void SwitchingHPModel();
@@ -141,6 +145,8 @@ private:
 
 	// 番号
 	uint32_t particleNumber_ = 0;
+
+	bool isPop_ = true;
 
 private:
 	Moon* moon_ = nullptr;

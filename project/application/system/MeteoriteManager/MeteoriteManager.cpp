@@ -40,7 +40,9 @@ void MeteoriteManager::Update() {
 	// グローバルデータクラスからデータを取得
 	speed_ = SUGER::GetGrobalDataValueFloat(kParamaterString_, "Speed");
 
-	PopMateorites();
+	if (isPop_) {
+		PopMateorites();
+	}
 
 	// 削除フラグの立った隕石を削除
 	meteorites_.remove_if([](const std::unique_ptr<Meteorite>& meteorite) {
@@ -51,6 +53,7 @@ void MeteoriteManager::Update() {
 	for (auto& meteorite : meteorites_) {
 		meteorite->Update();
 		meteorite->SetSpeed(speed_);
+		meteorite->SetIsPop(isPop_);
 	}
 
 #ifdef _DEBUG
@@ -120,5 +123,17 @@ void MeteoriteManager::PopMateorites() {
 			popTimer_ = popIntervalTime_;
 		}
 
+	}
+}
+
+void MeteoriteManager::SetIsPop(bool isPop) {
+	isPop_ = isPop;
+}
+
+void MeteoriteManager::KillAll() {
+	for (auto& meteorite : meteorites_) {
+		if (meteorite->GetIsAlive()) {
+			meteorite->KillMe();
+		}
 	}
 }

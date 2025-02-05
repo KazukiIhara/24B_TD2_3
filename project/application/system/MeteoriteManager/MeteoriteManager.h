@@ -30,6 +30,10 @@ public:
 
 	void PopMateorites();
 
+	void SetIsPop(bool isPop);
+
+	void KillAll();
+
 private:
 
 	// 
@@ -60,6 +64,8 @@ private:
 	uint32_t currentSerialNumber_ = 0;
 
 	int count = 0;
+
+	bool isPop_ = true;
 
 private:
 	// 地球クラスのインスタンスを受け取る
