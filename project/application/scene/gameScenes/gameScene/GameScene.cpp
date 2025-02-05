@@ -57,10 +57,10 @@ void GameScene::Initialize() {
 	// ボスの初期化処理
 	boss_ = std::make_unique<Boss>();
 	boss_->Initialize(SUGER::CreateEntity("Boss", "Boss"));
-	boss_->CreateCollider(ColliderCategory::Boss, kSphere, 3.0f);
+	boss_->CreateCollider(ColliderCategory::Boss, kSphere, 6.0f);
+	boss_->GetCollider()->SetMass(20000.0f);
 	boss_->SetTranslate(bossPopPosition_);
 	boss_->UpdateWorldTransform();
-	boss_->SetIsActive(false);
 
 	// 
 	// 月の初期化処理
@@ -407,6 +407,7 @@ void GameScene::SceneStatePlayUpdate() {
 		if (bossFightStartTimer_ == bossFightStartTime_) {
 			isBossFight_ = true;
 			isBossFightStart_ = false;
+			boss_->RequestRoot();
 		}
 		Vector3 bossPos = Lerp(bossPopPosition_, bossBattleBeginPosition_, bossFightStartTimer_ / bossFightStartTime_);
 		boss_->SetTranslate(bossPos);
@@ -437,7 +438,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 			ufoBulletManager_->KillAll();
 
-			boss_->SetIsActive(true);
+			boss_->RequestIn();
 		}
 
 		// たんこぶマネージャーの更新
@@ -469,7 +470,9 @@ void GameScene::SceneStatePlayUpdate() {
 	// プレイヤーの更新処理
 	player_->Update();
 
-
+	// ボスの更新処理
+	boss_->Update();
+	
 	// 天球の更新
 	skydome_->Update();
 
@@ -645,6 +648,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 	SUGER::AddColliderList(player_.get());
 	SUGER::AddColliderList(moon_.get());
+	boss_->AddColliderList();
 	meteoriteManager_->AddColliderList();
 	fragmentManager_->AddColliderList();
 	bumpManager_->AddColliderList();
