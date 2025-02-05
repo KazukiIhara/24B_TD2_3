@@ -4,15 +4,13 @@
 
 #include "random/Random.h"
 
-void DamagePieceManager::Initialize()
-{
+void DamagePieceManager::Initialize() {
 	// コンテナをクリア
 	damagePiece_.clear();
 
 }
 
-void DamagePieceManager::Update()
-{
+void DamagePieceManager::Update() {
 	// コンテナ内のかけらすべてを更新
 	for (auto& fragment : damagePiece_) {
 		fragment->Update();
@@ -24,8 +22,7 @@ void DamagePieceManager::Update()
 
 }
 
-void DamagePieceManager::AddDamagePiece(const Vector3& popTranslate, const Vector3& velo, const float& renge, const bool& isReduction, const Vector2& scaleMinMax, const Vector4& color, const Vector2& lifeMInMaxTime, const bool isRand, const int numPiece)
-{
+void DamagePieceManager::AddDamagePiece(const Vector3& popTranslate, const Vector3& velo, const float& renge, const bool& isReduction, const Vector2& scaleMinMax, const Vector4& color, const Vector2& lifeMInMaxTime, const bool isRand, const int numPiece) {
 	EulerTransform3D popTransform{};
 	popTransform.translate = popTranslate;
 
@@ -50,14 +47,11 @@ void DamagePieceManager::AddDamagePiece(const Vector3& popTranslate, const Vecto
 	if (isRand) {
 		if (rand == 0) {
 			newDamagePiece->Initialize(SUGER::CreateEntity("DamagePiece", "DamagePiece", popTransform));
-		}
-		else {
+		} else {
 			newDamagePiece->Initialize(SUGER::CreateEntity("DamagePiece2", "DamagePiece2", popTransform));
 		}
-	}
-	else {
-		switch (numPiece)
-		{
+	} else {
+		switch (numPiece) {
 		case 0:
 			newDamagePiece->Initialize(SUGER::CreateEntity("DamagePiece", "DamagePiece", popTransform));
 			break;
@@ -106,4 +100,11 @@ void DamagePieceManager::AddDamagePiece(const Vector3& popTranslate, const Vecto
 
 	// 追加
 	damagePiece_.push_back(std::move(newDamagePiece));
+}
+
+void DamagePieceManager::AllKill() {
+	// コンテナ内のかけらすべてを削除
+	for (auto& fragment : damagePiece_) {
+		fragment->SetIsActive(false);
+	}
 }

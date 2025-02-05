@@ -57,7 +57,14 @@ void UFOBulletManager::SetPlayer(Player* player) {
 	player_ = player;
 }
 
-void UFOBulletManager::SetDamagePieceManager(DamagePieceManager* damagePieceManager)
-{
+void UFOBulletManager::SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 	damagePieceManager_ = damagePieceManager;
+}
+
+void UFOBulletManager::KillAll() {
+	for (auto& ufoBullet : ufoBullets_) {
+		if (ufoBullet->GetIsAlive()) {
+			ufoBullet->KillMe();
+		}
+	}
 }

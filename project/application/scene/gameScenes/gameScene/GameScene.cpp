@@ -54,6 +54,13 @@ void GameScene::Initialize() {
 	player_->SetScale(2.0f);
 	player_->UpdateWorldTransform();
 
+	// ボスの初期化処理
+	boss_ = std::make_unique<Boss>();
+	boss_->Initialize(SUGER::CreateEntity("Boss", "Boss"));
+	boss_->CreateCollider(ColliderCategory::Boss, kSphere, 3.0f);
+	boss_->SetTranslate(bossPopPosition_);
+	boss_->UpdateWorldTransform();
+	boss_->SetIsActive(false);
 
 	// 
 	// 月の初期化処理
@@ -271,6 +278,7 @@ void GameScene::Initialize() {
 	for (uint32_t i = 0; i < 2; i++) {
 		symbolUI_[i] = std::make_unique<Object2DController>();
 	}
+
 	symbolUI_[0]->Initialize(SUGER::Create2DObject("0_Days", "Number/Symbol_x128y192.png"));
 	symbolUI_[1]->Initialize(SUGER::Create2DObject("0_Years", "Number/Symbol_x128y192.png"));
 
@@ -393,15 +401,65 @@ void GameScene::SceneStatePlayUpdate() {
 		player_->SetIsHit(false);
 	}
 
-	// 経過日数を加算
-	if (scoreTimer_ == moon_->GetAroundFrame() / 10.0f) {
-		currentDays_++;
-		scoreTimer_ = 0.0f;
+	// ボス登場時pr
+	if (isBossFightStart_) {
+		bossFightStartTimer_++;
+		if (bossFightStartTimer_ == bossFightStartTime_) {
+			isBossFight_ = true;
+			isBossFightStart_ = false;
+		}
+		Vector3 bossPos = Lerp(bossPopPosition_, bossBattleBeginPosition_, bossFightStartTimer_ / bossFightStartTime_);
+		boss_->SetTranslate(bossPos);
 	}
-	if (currentDays_ == 365) {
-		currentYears_++;
-		currentDays_ = 0;
+
+	// 通常戦
+	if (!isBossFight_) {
+		// 経過日数を加算
+		if (scoreTimer_ == moon_->GetAroundFrame() / 10.0f) {
+			currentDays_++;
+			scoreTimer_ = 0.0f;
+		}
+
+		if (currentDays_ == 365) {
+			currentYears_++;
+			currentDays_ = 0;
+			bossFightStartTimer_ = 0;
+			isBossFightStart_ = true;
+
+			fragmentManager_->KillAllFragment();
+			fragmentManager_->SetIsPop(false);
+
+			meteoriteManager_->KillAll();
+			meteoriteManager_->SetIsPop(false);
+
+			ufoManager_->KillAll();
+			ufoManager_->SetIsPop(false);
+
+			ufoBulletManager_->KillAll();
+
+			boss_->SetIsActive(true);
+		}
+
+		// たんこぶマネージャーの更新
+		bumpManager_->Update();
+
+		// 隕石マネージャの更新
+		meteoriteManager_->Update();
+
+		// かけらマネージャの更新
+		fragmentManager_->Update();
+
+		// UFOマネージャの更新
+		ufoManager_->Update();
+
+		// UFOの弾マネージャの更新
+		ufoBulletManager_->Update();
+
+		// ダメージ破片の更新
+		damagePieceManager_->Update();
+
 	}
+
 
 	// ライトの座標
 	light_->GetPunctualLight().pointLight.position = ExtractionWorldPos(moon_->GetWorldTransformPtr()->worldMatrix_);
@@ -411,24 +469,6 @@ void GameScene::SceneStatePlayUpdate() {
 	// プレイヤーの更新処理
 	player_->Update();
 
-	// たんこぶマネージャーの更新
-	bumpManager_->Update();
-
-
-	// 隕石マネージャの更新
-	meteoriteManager_->Update();
-
-	// かけらマネージャの更新
-	fragmentManager_->Update();
-
-	// UFOマネージャの更新
-	ufoManager_->Update();
-
-	// UFOの弾マネージャの更新
-	ufoBulletManager_->Update();
-
-	// ダメージ破片の更新
-	damagePieceManager_->Update();
 
 	// 天球の更新
 	skydome_->Update();
@@ -465,8 +505,6 @@ void GameScene::SceneStatePlayUpdate() {
 		earthHPUI_[3]->SetIsActive(false);
 	}
 
-
-
 	if (player_->GetHp() < 10.0f) {
 		earthHpNumUI_[1]->SetIsActive(false);
 	} else if (player_->GetHp() < 100.0f) {
@@ -494,19 +532,31 @@ void GameScene::SceneStatePlayUpdate() {
 	// スコアUI 日数編
 	// 
 
-	// 日数によって桁を描画するかどうかの処理
-	if (currentDays_ < 10) {
+	if (!isBossFightStart_) {
+		// 日数によって桁を描画するかどうかの処理
+		if (currentDays_ < 10) {
+			currentDaysNumUI_[0]->SetIsActive(false);
+			currentDaysNumUI_[1]->SetIsActive(false);
+			currentDaysNumUI_[2]->SetIsActive(true);
+		} else if (currentDays_ < 100) {
+			currentDaysNumUI_[0]->SetIsActive(false);
+			currentDaysNumUI_[1]->SetIsActive(true);
+			currentDaysNumUI_[2]->SetIsActive(true);
+		} else {
+			currentDaysNumUI_[0]->SetIsActive(true);
+			currentDaysNumUI_[1]->SetIsActive(true);
+			currentDaysNumUI_[2]->SetIsActive(true);
+		}
+	} else {
 		currentDaysNumUI_[0]->SetIsActive(false);
 		currentDaysNumUI_[1]->SetIsActive(false);
-		currentDaysNumUI_[2]->SetIsActive(true);
-	} else if (currentDays_ < 100) {
+		currentDaysNumUI_[2]->SetIsActive(false);
+	}
+
+	if (isBossFight_) {
 		currentDaysNumUI_[0]->SetIsActive(false);
-		currentDaysNumUI_[1]->SetIsActive(true);
-		currentDaysNumUI_[2]->SetIsActive(true);
-	} else {
-		currentDaysNumUI_[0]->SetIsActive(true);
-		currentDaysNumUI_[1]->SetIsActive(true);
-		currentDaysNumUI_[2]->SetIsActive(true);
+		currentDaysNumUI_[1]->SetIsActive(false);
+		currentDaysNumUI_[2]->SetIsActive(false);
 	}
 
 	// ポジションをセット
@@ -525,20 +575,33 @@ void GameScene::SceneStatePlayUpdate() {
 	// スコアUI 年数編
 	//
 
-	// 日数によって桁を描画するかどうかの処理
-	if (currentYears_ < 10) {
+	if (!isBossFightStart_) {
+		// 日数によって桁を描画するかどうかの処理
+		if (currentYears_ < 10) {
+			currentYearsNumUI_[0]->SetIsActive(false);
+			currentYearsNumUI_[1]->SetIsActive(false);
+			currentYearsNumUI_[2]->SetIsActive(true);
+		} else if (currentYears_ < 100) {
+			currentYearsNumUI_[0]->SetIsActive(false);
+			currentYearsNumUI_[1]->SetIsActive(true);
+			currentYearsNumUI_[2]->SetIsActive(true);
+		} else {
+			currentYearsNumUI_[0]->SetIsActive(true);
+			currentYearsNumUI_[1]->SetIsActive(true);
+			currentYearsNumUI_[2]->SetIsActive(true);
+		}
+	} else {
 		currentYearsNumUI_[0]->SetIsActive(false);
 		currentYearsNumUI_[1]->SetIsActive(false);
-		currentYearsNumUI_[2]->SetIsActive(true);
-	} else if (currentYears_ < 100) {
-		currentYearsNumUI_[0]->SetIsActive(false);
-		currentYearsNumUI_[1]->SetIsActive(true);
-		currentYearsNumUI_[2]->SetIsActive(true);
-	} else {
-		currentYearsNumUI_[0]->SetIsActive(true);
-		currentYearsNumUI_[1]->SetIsActive(true);
-		currentYearsNumUI_[2]->SetIsActive(true);
+		currentYearsNumUI_[2]->SetIsActive(false);
 	}
+
+	if (isBossFight_) {
+		currentYearsNumUI_[0]->SetIsActive(false);
+		currentYearsNumUI_[1]->SetIsActive(false);
+		currentYearsNumUI_[2]->SetIsActive(false);
+	}
+
 
 	// ポジションをセット
 	currentYearsNumUI_[0]->SetPosition(currentYearsPosition_ - Vector2(numGap_, 0.0f));
@@ -547,9 +610,15 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// 数字分割処理
 	currentYearsNum_ = SplitDigits(currentYears_);
+
 	// 分割した数字をもとにずらして描画
 	for (uint32_t i = 0; i < 3; i++) {
 		currentYearsNumUI_[i]->SetLeftTop(Vector2(currentYearsNum_[i] * numberTextureSize_.x, 0.0f));
+	}
+
+	if (isBossFightStart_) {
+		symbolUI_[0]->SetIsActive(false);
+		symbolUI_[1]->SetIsActive(false);
 	}
 
 	// 

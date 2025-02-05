@@ -12,6 +12,8 @@ public:
 	Boss();
 	~Boss();
 
+	void Initialize(const std::string& name)override;
+
 private:
 
 };

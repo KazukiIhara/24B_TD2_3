@@ -20,6 +20,7 @@ public:
 	void MoveLimit();
 	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
 
+
 	void SetPraticle(int count);
 
 
@@ -52,6 +53,9 @@ private:
 	}
 
 
+
+
+	void KillMe();
 
 
 private:

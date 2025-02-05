@@ -70,6 +70,7 @@ void UFOBullet::SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 	damagePieceManager_ = damagePieceManager;
 }
 
+
 void UFOBullet::SetPraticle(int count)
 {
 	particleNumber_ = count;
@@ -158,5 +159,11 @@ void UFOBullet::EmitDie()
 	emitterExplosionFire_->Emit();
 	emitterExplosionDust_->Emit();
 	emitterExplosionFireYellow_->Emit();
+}
+
+
+void UFOBullet::KillMe() {
+	isAlive_ = false;
+	SetIsDelete(true);
 }
 

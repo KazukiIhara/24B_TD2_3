@@ -47,7 +47,11 @@ public:
 
 	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
 
+
+	void KillMe();
+
 	void SetPlayer(Player* player);
+
 
 	void SetPraticle(int count);
 
@@ -78,6 +82,7 @@ private:
 	}
 
 	void ShotEmit();
+
 
 private:
 	// 

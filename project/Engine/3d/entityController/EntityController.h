@@ -60,6 +60,8 @@ public:
 	//
 	void SetModel(const std::string& name);
 
+	void SetIsActive(bool isActive);
+
 	//
 	// Getter
 	//

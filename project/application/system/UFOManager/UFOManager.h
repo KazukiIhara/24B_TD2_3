@@ -17,7 +17,6 @@ class Player;
 
 class UFOManager {
 public:
-
 	void Initialize(UFOBulletManager* ufoBulletManager);
 
 	void Update();
@@ -32,7 +31,13 @@ public:
 
 	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
 
+
+	void KillAll();
+
+	void SetIsPop(bool isPop);
+
 	void SetPlayer(Player* player);
+
 
 private:
 	// UFOリスト
@@ -54,6 +59,9 @@ private:
 	uint32_t currentSerialNumber_ = 0;
 
 	int count = 0;
+
+	bool isPop_ = true;
+
 private:
 	UFOBulletManager* ufoBulletManager_ = nullptr;
 	DamagePieceManager* damagePieceManager_ = nullptr;

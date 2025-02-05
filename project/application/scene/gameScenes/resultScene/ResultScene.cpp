@@ -111,7 +111,8 @@ void ResultScene::Initialize() {
 }
 
 void ResultScene::Finalize() {
-	
+	// BGMの停止
+	SUGER::StopWaveLoopSound("Result.wav");
 }
 
 
