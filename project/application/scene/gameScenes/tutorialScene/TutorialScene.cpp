@@ -195,7 +195,7 @@ void TutorialScene::SceneStatePlayUpdate() {
 
 	moonMajarTurorial_->SetLeftTop(Vector2(0.0f, static_cast<float>(currentPage_) * moonMajarTextCutSize_.y));
 	// ボタンでページ送り
-	if (SUGER::TriggerButton(0, ButtonB) || SUGER::TriggerKey(DIK_SPACE)) {
+	if (SUGER::TriggerButton(0, ButtonB) || SUGER::TriggerKey(DIK_Z)) {
 		currentPage_++;
 	}
 
