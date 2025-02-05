@@ -306,12 +306,13 @@ void GameScene::Initialize() {
 	moonMajarSprite_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	moonMajarSprite_->SetPosition(moonMajarPosition_);
 
-	currentDays_ = 0;
+	currentDays_ = 360;
 }
 
 void GameScene::Finalize() {
 	// BGMの停止
 	SUGER::StopWaveLoopSound("GameScene.wav");
+	SUGER::StopWaveLoopSound("BossBGM.wav");
 }
 
 void GameScene::SceneStatePlayInitialize() {
@@ -437,6 +438,9 @@ void GameScene::SceneStatePlayUpdate() {
 			isBossFight_ = true;
 			isBossFightStart_ = false;
 			boss_->RequestRoot();
+
+			// ボスBGM
+			SUGER::PlayWaveLoopSound("BossBGM.wav");
 		}
 		Vector3 bossPos = Lerp(bossPopPosition_, bossBattleBeginPosition_, bossFightStartTimer_ / bossFightStartTime_);
 		boss_->SetTranslate(bossPos);
@@ -457,7 +461,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 
 	// 通常戦
-	if (!isBossFight_) {
+	if (!isBossFight_ && !isBossFightStart_) {
 
 		if (currentDays_ == 365) {
 			currentYears_++;
@@ -477,6 +481,10 @@ void GameScene::SceneStatePlayUpdate() {
 			ufoBulletManager_->KillAll();
 
 			boss_->RequestIn();
+
+			// BGMストップ
+			SUGER::StopWaveLoopSound("GameScene.wav");
+
 		}
 
 	}

@@ -48,30 +48,30 @@ void Meteorite::Update() {
 	if (behaviorRequest_) {
 		behavior_ = behaviorRequest_.value();
 		switch (behavior_) {
-		case Meteorite::Behavior::kRoot:
-			RootInitialize();
-			break;
-		case Meteorite::Behavior::kDagame:
-			DamageInitialize(damege_);
-			break;
-		case Meteorite::Behavior::kBreak:
-			BreakInitialize();
-			break;
+			case Meteorite::Behavior::kRoot:
+				RootInitialize();
+				break;
+			case Meteorite::Behavior::kDagame:
+				DamageInitialize(damege_);
+				break;
+			case Meteorite::Behavior::kBreak:
+				BreakInitialize();
+				break;
 		}
 		behaviorRequest_ = std::nullopt;
 	}
 
 	// ふるまい
 	switch (behavior_) {
-	case Meteorite::Behavior::kRoot:
-		RootUpdate();
-		break;
-	case Meteorite::Behavior::kDagame:
-		DamageUpdate();
-		break;
-	case Meteorite::Behavior::kBreak:
-		BreakUpdate();
-		break;
+		case Meteorite::Behavior::kRoot:
+			RootUpdate();
+			break;
+		case Meteorite::Behavior::kDagame:
+			DamageUpdate();
+			break;
+		case Meteorite::Behavior::kBreak:
+			BreakUpdate();
+			break;
 	}
 	Atmosphere();
 }
@@ -92,39 +92,44 @@ void Meteorite::OnCollision(Collider* other) {
 	float playerMass{};
 	float fragmentMass{};
 	switch (category) {
-	case ColliderCategory::None:
+		case ColliderCategory::None:
 
-		break;
-	case ColliderCategory::Fragment:
+			break;
+		case ColliderCategory::Fragment:
 
-		if (behavior_ == Behavior::kRoot) {
-			damege_ = other->GetDamage();
+			if (behavior_ == Behavior::kRoot) {
+				damege_ = other->GetDamage();
 
-			if (damege_ == 0) {
-				return;
+				if (damege_ == 0) {
+					return;
+				}
+
+				behaviorRequest_ = Behavior::kDagame;
+
+				earthMass = GetCollider()->GetMass();
+				Vector3 earthVelocity = GetCollider()->GetVelocity();
+				fragmentMass = other->GetMass();
+				Vector3 fragmentVelocity = other->GetVelocity();
+				Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+
+				EmitDust(normal, normal);
 			}
-
-			behaviorRequest_ = Behavior::kDagame;
-
-			earthMass = GetCollider()->GetMass();
-			Vector3 earthVelocity = GetCollider()->GetVelocity();
-			fragmentMass = other->GetMass();
-			Vector3 fragmentVelocity = other->GetVelocity();
-			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-
-			EmitDust(normal, normal);
-		}
-		break;
-	case ColliderCategory::Moon:
-		if (behavior_ == Behavior::kRoot) {
-			behaviorRequest_ = Behavior::kDagame;
-		}
-		break;
-	case ColliderCategory::Player:
-		if (behavior_ == Behavior::kRoot) {
-			behaviorRequest_ = Behavior::kDagame;
-		}
-		break;
+			break;
+		case ColliderCategory::Moon:
+			if (behavior_ == Behavior::kRoot) {
+				behaviorRequest_ = Behavior::kDagame;
+			}
+			break;
+		case ColliderCategory::Player:
+			if (behavior_ == Behavior::kRoot) {
+				behaviorRequest_ = Behavior::kDagame;
+			}
+			break;
+		case ColliderCategory::UFOBullet:
+			if (behavior_ == Behavior::kRoot) {
+				behaviorRequest_ = Behavior::kDagame;
+			}
+			break;
 	}
 
 }

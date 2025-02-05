@@ -138,7 +138,13 @@ void Boss::RootUpdate() {
 	shotTimer_++;
 
 	if (shotTimer_ == shotTime_) {
-		ufoBulletManager_->AddBossBullet(GetTranslate(), 30.0f);
+		// Bossの現在位置
+		Vector3 bossPos = GetTranslate();
+
+		// Boss → プレイヤー への方向ベクトルを計算
+		Vector3 direction = Normalize(player_->GetTranslate() - bossPos);
+
+		ufoBulletManager_->AddBossBullet(GetTranslate() + (direction * 5.0f) - Vector3(0.0f, 2.0f, 0.0f), 30.0f);
 		shotTimer_ = 0;
 	}
 
