@@ -56,4 +56,6 @@ private:
 	uint32_t breakTimer_ = 0;
 	uint32_t breakTime_ = 30;
 
+	bool isBossKill_ = false;
+
 };

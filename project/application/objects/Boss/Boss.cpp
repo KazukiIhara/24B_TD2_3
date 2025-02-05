@@ -134,12 +134,13 @@ void Boss::BreakUpdate() {
 	breakTimer_++;
 	SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 	if (breakTimer_ == breakTime_) {
+		isBossKill_ = true;
 		SetIsActive(false);
 	}
 }
 
 bool Boss::IsBossKill() const {
-	return behavior_ == Behavior::kBreak;
+	return isBossKill_;
 }
 
 void Boss::AddColliderList() {
