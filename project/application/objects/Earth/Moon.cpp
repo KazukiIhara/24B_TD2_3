@@ -44,24 +44,24 @@ void Moon::Update() {
 	if (behaviorRequest_) {
 		behavior_ = behaviorRequest_.value();
 		switch (behavior_) {
-		case Moon::Behavior::kRoot:
-			RootInitialize();
-			break;
-		case Moon::Behavior::kAttack:
-			AttackInitialize();
-			break;
+			case Moon::Behavior::kRoot:
+				RootInitialize();
+				break;
+			case Moon::Behavior::kAttack:
+				AttackInitialize();
+				break;
 		}
 		behaviorRequest_ = std::nullopt;
 	}
 
 	// ふるまい
 	switch (behavior_) {
-	case Moon::Behavior::kRoot:
-		RootUpdate();
-		break;
-	case Moon::Behavior::kAttack:
-		AttackUpdate();
-		break;
+		case Moon::Behavior::kRoot:
+			RootUpdate();
+			break;
+		case Moon::Behavior::kAttack:
+			AttackUpdate();
+			break;
 	}
 
 	MoveLimit();
@@ -104,161 +104,155 @@ void Moon::OnCollision(Collider* other) {
 	damegePiecePlayer_ -= SUGER::kDeltaTime_;
 	HitParticleTimer_ -= SUGER::kDeltaTime_;
 	switch (category) {
-	case ColliderCategory::Player:
-	{
-		if (behavior_ == Behavior::kRoot) {
-			break;
-		}
-
-		moonMass = GetCollider()->GetMass();
-		Vector3 earthVelocity = GetCollider()->GetVelocity();
-		playerMass = other->GetMass();
-		Vector3 playerVelocity = other->GetVelocity();
-		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-
-		Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
-
-		velocity_ = velocity;
-		returnMoveTimer_ = kReturnMoveTime_;
-
-
-		if (damegePiecePlayer_ <= 0) {
-			for (int i = 0; i < 5; i++) {
-				EmitDamegePiece2(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_);
+		case ColliderCategory::Player:
+		{
+			if (behavior_ == Behavior::kRoot) {
+				break;
 			}
-			damegePiecePlayer_ = 0.5f;
+
+			moonMass = GetCollider()->GetMass();
+			Vector3 earthVelocity = GetCollider()->GetVelocity();
+			playerMass = other->GetMass();
+			Vector3 playerVelocity = other->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+
+			Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+
+			velocity_ = velocity;
+			returnMoveTimer_ = kReturnMoveTime_;
+
+
+			if (damegePiecePlayer_ <= 0) {
+				for (int i = 0; i < 5; i++) {
+					EmitDamegePiece2(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_);
+				}
+				damegePiecePlayer_ = 0.5f;
+			}
+
 		}
-		
-	}
-	break;
-	case ColliderCategory::Fragment:
-	{
-		moonMass = GetCollider()->GetMass();
+		break;
+		case ColliderCategory::Fragment:
+		{
+			moonMass = GetCollider()->GetMass();
 
-		Vector3 earthVelocity = GetCollider()->GetVelocity();
-		fragmentMass = other->GetMass();
-		Vector3 fragmentVelocity = other->GetVelocity();
-		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+			Vector3 earthVelocity = GetCollider()->GetVelocity();
+			fragmentMass = other->GetMass();
+			Vector3 fragmentVelocity = other->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
 
-		Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
+			Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
 
 
-		EmitDust(normal, normal);
-	}
-	break;
-	case ColliderCategory::UFOBullet:
-	{
-		earthMass = GetCollider()->GetMass();
-		Vector3 earthVelocity = GetCollider()->GetVelocity();
-		fragmentMass = other->GetMass();
-		Vector3 fragmentVelocity = other->GetVelocity();
-		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
-
-
-		//if (HitParticleTimer_ <= 0) {
-		EmitDust(normal, normal);
-		//	HitParticleTimer_ = 1;
-		//}
-	}
-	break;
-	case ColliderCategory::Meteorite:
-	{
-
-		if (behavior_ == Behavior::kRoot) {
-			break;
-		}
-
-		if (behavior_ == Behavior::kCharge) {
-			break;
-		}
-
-		// 位置ベクトルを取得
-		Vector3 posA = GetCollider()->GetWorldPosition();
-		Vector3 posB = other->GetWorldPosition();
-		// 各オブジェクトの「半径」相当の値を取得 (球体などの場合)
-		float radiusA = GetCollider()->GetSize();
-		float radiusB = other->GetSize();
-		// 合計半径
-		float sumRadius = radiusA + radiusB;
-		// ２つのオブジェクト間の距離
-		Vector3 diff = posA - posB;
-		float distance = Length(diff);
-
-		Vector3 normal = Normalize(posA - posB);
-		if (distance < sumRadius) {
-			SetTranslate(other->GetWorldPosition() + normal * (sumRadius + 0.1f));
-		}
-
-
-		moonMass = GetCollider()->GetMass();
-		Vector3 earthVelocity = GetCollider()->GetVelocity();
-		playerMass = other->GetMass();
-		Vector3 playerVelocity = other->GetVelocity();
-		Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
-		velocity_ = velocity;
-		returnMoveTimer_ = kReturnMoveTime_;
-
-
-		if (HitParticleTimer_ <= 0) {
 			EmitDust(normal, normal);
-			HitParticleTimer_ = 1;
 		}
-
-		EmitDamegePiece(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_, 2);
-
-	}
-	break;
-
-	case ColliderCategory::UFO:
-	{
-		if (behavior_ == Behavior::kRoot) {
-			break;
-		}
-
-		if (behavior_ == Behavior::kCharge) {
-			break;
-		}
-
-		// 位置ベクトルを取得
-		Vector3 posA = GetCollider()->GetWorldPosition();
-		Vector3 posB = other->GetWorldPosition();
-		// 各オブジェクトの「半径」相当の値を取得 (球体などの場合)
-		float radiusA = GetCollider()->GetSize();
-		float radiusB = other->GetSize();
-		// 合計半径
-		float sumRadius = radiusA + radiusB;
-		// ２つのオブジェクト間の距離
-		Vector3 diff = posA - posB;
-		float distance = Length(diff);
-
-		Vector3 normal = Normalize(posA - posB);
-		if (distance < sumRadius) {
-			SetTranslate(other->GetWorldPosition() + normal * (sumRadius + 0.1f));
-		}
+		break;
+		case ColliderCategory::UFOBullet:
+		{
+			earthMass = GetCollider()->GetMass();
+			Vector3 earthVelocity = GetCollider()->GetVelocity();
+			fragmentMass = other->GetMass();
+			Vector3 fragmentVelocity = other->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+			Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
 
 
-		moonMass = GetCollider()->GetMass();
-		Vector3 moonVelocity = GetCollider()->GetVelocity();
-		playerMass = other->GetMass();
-		Vector3 playerVelocity = other->GetVelocity();
-		Vector3 velocity = ComputeCollisionVelocity(moonMass, moonVelocity, playerMass, playerVelocity, 1.0f, normal);
-		velocity_ = velocity;
-		returnMoveTimer_ = kReturnMoveTime_;
-
-		if (HitParticleTimer_ <= 0) {
+			//if (HitParticleTimer_ <= 0) {
 			EmitDust(normal, normal);
-			HitParticleTimer_ = 1;
+			//	HitParticleTimer_ = 1;
+			//}
 		}
+		break;
+		case ColliderCategory::Meteorite:
+		{
 
-	}
-	break;
-	case ColliderCategory::Boss:
-	{
-		if (behavior_ == Behavior::kRoot) {
-			break;
+			if (behavior_ == Behavior::kRoot) {
+				break;
+			}
+
+			if (behavior_ == Behavior::kCharge) {
+				break;
+			}
+
+			// 位置ベクトルを取得
+			Vector3 posA = GetCollider()->GetWorldPosition();
+			Vector3 posB = other->GetWorldPosition();
+			// 各オブジェクトの「半径」相当の値を取得 (球体などの場合)
+			float radiusA = GetCollider()->GetSize();
+			float radiusB = other->GetSize();
+			// 合計半径
+			float sumRadius = radiusA + radiusB;
+			// ２つのオブジェクト間の距離
+			Vector3 diff = posA - posB;
+			float distance = Length(diff);
+
+			Vector3 normal = Normalize(posA - posB);
+			if (distance < sumRadius) {
+				SetTranslate(other->GetWorldPosition() + normal * (sumRadius + 0.1f));
+			}
+
+
+			moonMass = GetCollider()->GetMass();
+			Vector3 earthVelocity = GetCollider()->GetVelocity();
+			playerMass = other->GetMass();
+			Vector3 playerVelocity = other->GetVelocity();
+			Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, playerMass, playerVelocity, 1.0f, normal);
+			velocity_ = velocity;
+			returnMoveTimer_ = kReturnMoveTime_;
+
+
+			if (HitParticleTimer_ <= 0) {
+				EmitDust(normal, normal);
+				HitParticleTimer_ = 1;
+			}
+
+			EmitDamegePiece(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_, 2);
+
 		}
+		break;
 
+		case ColliderCategory::UFO:
+		{
+			if (behavior_ == Behavior::kRoot) {
+				break;
+			}
+
+			if (behavior_ == Behavior::kCharge) {
+				break;
+			}
+
+			// 位置ベクトルを取得
+			Vector3 posA = GetCollider()->GetWorldPosition();
+			Vector3 posB = other->GetWorldPosition();
+			// 各オブジェクトの「半径」相当の値を取得 (球体などの場合)
+			float radiusA = GetCollider()->GetSize();
+			float radiusB = other->GetSize();
+			// 合計半径
+			float sumRadius = radiusA + radiusB;
+			// ２つのオブジェクト間の距離
+			Vector3 diff = posA - posB;
+			float distance = Length(diff);
+
+			Vector3 normal = Normalize(posA - posB);
+			if (distance < sumRadius) {
+				SetTranslate(other->GetWorldPosition() + normal * (sumRadius + 0.1f));
+			}
+
+
+			moonMass = GetCollider()->GetMass();
+			Vector3 moonVelocity = GetCollider()->GetVelocity();
+			playerMass = other->GetMass();
+			Vector3 playerVelocity = other->GetVelocity();
+			Vector3 velocity = ComputeCollisionVelocity(moonMass, moonVelocity, playerMass, playerVelocity, 1.0f, normal);
+			velocity_ = velocity;
+			returnMoveTimer_ = kReturnMoveTime_;
+
+			if (HitParticleTimer_ <= 0) {
+				EmitDust(normal, normal);
+				HitParticleTimer_ = 1;
+			}
+
+		}
+		break;
 		case ColliderCategory::Boss:
 		{
 			if (behavior_ == Behavior::kRoot) {
@@ -270,43 +264,44 @@ void Moon::OnCollision(Collider* other) {
 			}
 
 
-		// 位置ベクトルを取得
-		Vector3 posA = GetCollider()->GetWorldPosition();
-		Vector3 posB = other->GetWorldPosition();
-		// 各オブジェクトの「半径」相当の値を取得 (球体などの場合)
-		float radiusA = GetCollider()->GetSize();
-		float radiusB = other->GetSize();
-		// 合計半径
-		float sumRadius = radiusA + radiusB;
-		// ２つのオブジェクト間の距離
-		Vector3 diff = posA - posB;
-		float distance = Length(diff);
+			// 位置ベクトルを取得
+			Vector3 posA = GetCollider()->GetWorldPosition();
+			Vector3 posB = other->GetWorldPosition();
+			// 各オブジェクトの「半径」相当の値を取得 (球体などの場合)
+			float radiusA = GetCollider()->GetSize();
+			float radiusB = other->GetSize();
+			// 合計半径
+			float sumRadius = radiusA + radiusB;
+			// ２つのオブジェクト間の距離
+			Vector3 diff = posA - posB;
+			float distance = Length(diff);
 
-		Vector3 normal = Normalize(posA - posB);
-		if (distance < sumRadius) {
-			SetTranslate(other->GetWorldPosition() + normal * (sumRadius + 0.1f));
+			Vector3 normal = Normalize(posA - posB);
+			if (distance < sumRadius) {
+				SetTranslate(other->GetWorldPosition() + normal * (sumRadius + 0.1f));
+			}
+
+
+			moonMass = GetCollider()->GetMass();
+			Vector3 moonVelocity = GetCollider()->GetVelocity();
+			playerMass = other->GetMass();
+			Vector3 playerVelocity = other->GetVelocity();
+			Vector3 velocity = ComputeCollisionVelocity(moonMass, moonVelocity, playerMass, playerVelocity, 1.0f, normal);
+			velocity_ = velocity;
+			returnMoveTimer_ = kReturnMoveTime_;
+
+
+			if (HitParticleTimer_ <= 0) {
+				EmitDust(normal, normal);
+				HitParticleTimer_ = 1;
+			}
+
+			break;
 		}
-
-
-		moonMass = GetCollider()->GetMass();
-		Vector3 moonVelocity = GetCollider()->GetVelocity();
-		playerMass = other->GetMass();
-		Vector3 playerVelocity = other->GetVelocity();
-		Vector3 velocity = ComputeCollisionVelocity(moonMass, moonVelocity, playerMass, playerVelocity, 1.0f, normal);
-		velocity_ = velocity;
-		returnMoveTimer_ = kReturnMoveTime_;
-
-
-		if (HitParticleTimer_ <= 0) {
-			EmitDust(normal, normal);
-			HitParticleTimer_ = 1;
-		}
-
-		break;
-	}
 	}
 
 }
+
 
 void Moon::MoveLimit() {
 	Vector3 translate_ = GetTranslate();
@@ -333,9 +328,9 @@ void Moon::SetPraticle() {
 	CreateEmit("MoonParticle", "MoonParticle", 55, 0.7f, { 1.5f, 2.5f }, { 0.039f, 0.039f, 0.039f }, emitterDustBlack_.get());
 
 	emitterMoon_ = std::make_unique<EmitterController>();
-	CreateEmit("MoonParticle", "MoonParticle", 1, 0.9f, { 0.2f, 0.2f }, {1,1,0 }, emitterMoon_.get());
-	emitterMoon_->SetMaxVelocity({0,0,0});
-	emitterMoon_->SetMinVelocity({0,0,0});
+	CreateEmit("MoonParticle", "MoonParticle", 1, 0.9f, { 0.2f, 0.2f }, { 1,1,0 }, emitterMoon_.get());
+	emitterMoon_->SetMaxVelocity({ 0,0,0 });
+	emitterMoon_->SetMinVelocity({ 0,0,0 });
 
 }
 
@@ -481,8 +476,7 @@ void Moon::EmitDamegePiece(const Vector3& pos, const Vector3& veloctiy, DamagePi
 	Vector3 pospos = (pos);
 	if (num == 0) {
 		damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.12f,0.17f }, { 0.604f, 0.384f, 0.161f ,1.0f }, { 1.5f,2.5f }, true);
-	}
-	else {
+	} else {
 		damagePieceManager->AddDamagePiece(-pospos, -Normalize(radomVelo), 0.8f, false, { 0.12f,0.17f }, { 0.1f, 0.1f, 0.1f ,1.0f }, { 1.5f,2.5f }, false, num);
 	}
 
@@ -516,8 +510,7 @@ void Moon::EmitDust(const Vector3& pos, const Vector3& veloctiy) {
 	EmitDamegePiece(-GetCollider()->GetWorldPosition() + pos * 1.5f, Normalize(veloctiy) * 2.5f, damagePieceManager_, 2);
 }
 
-void Moon::EmitMoon()
-{
+void Moon::EmitMoon() {
 	if (Length(velocity_) >= 7) {
 		emitterMoon_->SetMaxVelocity({ 0,0,0 });
 		emitterMoon_->SetMinVelocity({ 0,0,0 });
