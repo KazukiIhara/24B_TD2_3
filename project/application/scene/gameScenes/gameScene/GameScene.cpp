@@ -504,8 +504,6 @@ void GameScene::SceneStatePlayUpdate() {
 		earthHPUI_[3]->SetIsActive(false);
 	}
 
-
-
 	if (player_->GetHp() < 10.0f) {
 		earthHpNumUI_[1]->SetIsActive(false);
 	} else if (player_->GetHp() < 100.0f) {
