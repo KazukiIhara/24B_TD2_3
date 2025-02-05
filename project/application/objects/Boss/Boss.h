@@ -28,6 +28,9 @@ public:
 
 	void AddColliderList();
 private:
+
+	int32_t hp_ = 30;
+
 	Behavior behavior_ = Behavior::kNone;
 
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
