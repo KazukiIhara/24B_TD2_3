@@ -155,7 +155,7 @@ void SoundManager::PlayWaveLoop(const std::string& filename, uint32_t loopCount)
 	buf.pAudioData = soundData->pBuffer;
 	buf.AudioBytes = soundData->bufferSize;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
-	buf.LoopCount = loopCount;
+	buf.LoopCount = loopCount - 1;
 
 	// 再生開始
 	result = pSourceVoice->SubmitSourceBuffer(&buf);

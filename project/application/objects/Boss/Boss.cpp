@@ -144,7 +144,7 @@ void Boss::RootUpdate() {
 		// Boss → プレイヤー への方向ベクトルを計算
 		Vector3 direction = Normalize(player_->GetTranslate() - bossPos);
 
-		ufoBulletManager_->AddBossBullet(GetTranslate() + (direction * 5.0f) - Vector3(0.0f, 2.0f, 0.0f), 30.0f);
+		ufoBulletManager_->AddBossBullet(GetTranslate() + (direction * 6.0f) - Vector3(0.0f, 1.0f, 0.0f), 30.0f);
 		shotTimer_ = 0;
 
 		SUGER::PlayWaveSound("Boss_Attack.wav");

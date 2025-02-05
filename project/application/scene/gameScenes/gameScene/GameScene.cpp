@@ -311,7 +311,7 @@ void GameScene::Initialize() {
 	moonMajarSprite_->SetPosition(moonMajarPosition_);
 
 
-	currentDays_ = 0;
+	currentDays_ = 360;
 
 
 	//
@@ -457,7 +457,7 @@ void GameScene::SceneStatePlayUpdate() {
 			isBossFight_ = true;
 			isBossFightStart_ = false;
 			boss_->RequestRoot();
-
+			SUGER::StopWaveLoopSound("Warning.wav");
 			// ボスBGM
 			SUGER::PlayWaveLoopSound("BossBGM.wav");
 		}
@@ -503,7 +503,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 			// BGMストップ
 			SUGER::StopWaveLoopSound("GameScene.wav");
-
+			SUGER::PlayWaveLoopSound("Warning.wav", 3);
 		}
 
 	}
