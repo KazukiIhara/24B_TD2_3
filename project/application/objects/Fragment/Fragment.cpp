@@ -43,7 +43,7 @@ void Fragment::OnCollision(Collider* other) {
 	// 衝突相手のカテゴリーを取得
 	ColliderCategory category = other->GetColliderCategory();
 
-	if (player_->GetHp() >= 0) {
+	if (player_->GetHp() <= 0) {
 		return;
 	}
 
