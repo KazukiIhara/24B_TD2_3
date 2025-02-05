@@ -64,29 +64,29 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":5704,
+			"count":5722,
 			"max":[
-				0.9999997615814209,
+				1.4386357069015503,
 				1.1811631917953491,
-				1.4386357069015503
+				0.9999990463256836
 			],
 			"min":[
-				-0.9999990463256836,
+				-0.9999999403953552,
 				-1,
-				-0.9999999403953552
+				-0.9999997615814209
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":5704,
+			"count":5722,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":5704,
+			"count":5722,
 			"type":"VEC2"
 		},
 		{
@@ -99,26 +99,26 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":68448,
+			"byteLength":68664,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":68448,
-			"byteOffset":68448,
+			"byteLength":68664,
+			"byteOffset":68664,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":45632,
-			"byteOffset":136896,
+			"byteLength":45776,
+			"byteOffset":137328,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":26568,
-			"byteOffset":182528,
+			"byteOffset":183104,
 			"target":34963
 		}
 	],
@@ -130,7 +130,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":209096,
+			"byteLength":209672,
 			"uri":"Boss.bin"
 		}
 	]
