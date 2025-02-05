@@ -9,6 +9,7 @@ struct EmitParamater {
 	Vector3 velocity;
 	Vector4 color;
 	float lifeTime;
+	bool isAlpha = true;
 };
 
 struct ParticleData {
@@ -17,6 +18,8 @@ struct ParticleData {
 	Vector4 color;
 	float lifeTime;
 	float currentTime;
+	bool isAlpha = true;
+	float maxAlpha;
 };
 
 struct ParticleForGPU {

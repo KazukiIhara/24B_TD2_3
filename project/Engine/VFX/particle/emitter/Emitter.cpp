@@ -164,7 +164,6 @@ void Emitter::Emit() {
 				emitParamater_.color.x = Random::GenerateFloat(emitterSetting_.minColor.x, emitterSetting_.maxColor.x);
 				emitParamater_.color.y = Random::GenerateFloat(emitterSetting_.minColor.y, emitterSetting_.maxColor.y);
 				emitParamater_.color.z = Random::GenerateFloat(emitterSetting_.minColor.z, emitterSetting_.maxColor.z);
-
 				// 生存時間
 				emitParamater_.lifeTime = Random::GenerateFloat(emitterSetting_.minLifeTime, emitterSetting_.maxLifeTime);
 
@@ -255,4 +254,14 @@ void Emitter::SetMinLifeTime(float minLifeTime) {
 
 void Emitter::SetMaxLifeTime(float maxLifeTime) {
 	emitterSetting_.maxLifeTime = maxLifeTime;
+}
+
+void Emitter::SetAlpha(float alpha)
+{
+	emitParamater_.color.w = alpha;
+}
+
+void Emitter::SetIsAlpha(bool is)
+{
+	emitParamater_.isAlpha = is;
 }

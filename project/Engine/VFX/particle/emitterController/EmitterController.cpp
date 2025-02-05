@@ -95,6 +95,16 @@ void EmitterController::SetMaxLifeTime(float maxLifeTime) {
 	emitter_->SetMaxLifeTime(maxLifeTime);
 }
 
+void EmitterController::SetAlpha(float alpha)
+{
+	emitter_->SetAlpha(alpha);
+}
+
+void EmitterController::SetIsAlpha(bool alpha)
+{
+	emitter_->SetIsAlpha(alpha);
+}
+
 const Vector3& EmitterController::GetScale() const {
 	return emitter_->GetScale();
 }

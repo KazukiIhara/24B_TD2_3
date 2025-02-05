@@ -60,6 +60,10 @@ public:
 	// 生存時間最大値
 	void SetMaxLifeTime(float randomMaxLifeTime);
 
+	void SetAlpha(float alpha);
+
+	void SetIsAlpha(bool is);
+
 protected:
 	// 
 	// 基本的な変数
