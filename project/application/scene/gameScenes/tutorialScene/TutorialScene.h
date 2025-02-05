@@ -25,7 +25,7 @@ enum class MMTutorial {
 	num,
 };
 
-class TutorialScene :public BaseScene {
+class TutorialScene:public BaseScene {
 public:
 	TutorialScene() = default;
 	~TutorialScene() = default;
@@ -48,15 +48,13 @@ private:
 	//
 
 	// チュートリアル
-	std::array<std::unique_ptr<Object2DController>, 3> moonMajarTurorials_;
+	std::unique_ptr<Object2DController> moonMajarTurorial_;
 	// 少佐のテキストの座標
 	Vector2 moonMajarTextPosition_ = { 960.0f,951.0f };
 	// 少佐のテキストの切り取りサイズ
 	const Vector2 moonMajarTextCutSize_ = { 1025.0f,192.0f };
-	// 現在のチュートリアル
-	MMTutorial currentTutorial_ = MMTutorial::Operation;
 	// チュートリアルごとのページ数
-	uint32_t tutorialPages_[static_cast<uint32_t>(MMTutorial::num)];
+	uint32_t tutorialPages_ = 15;
 	// 現在のページ
 	uint32_t currentPage_ = 0;
 };

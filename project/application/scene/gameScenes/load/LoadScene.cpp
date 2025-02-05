@@ -35,7 +35,7 @@ void LoadScene::SceneStateFadeOutUpdate() {
 
 	if (fade_->IsFinished()) {
 
-		ChangeScene("GAME");
+		ChangeScene("TITLE");
 
 		fade_->Stop();
 	}
@@ -125,7 +125,6 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	SUGER::LoadTexture(textureDirectoryPath + "Earth_HP_UI/Earth_HP_UI_75%.png");
 	SUGER::LoadTexture(textureDirectoryPath + "Earth_HP_UI/Earth_HP_UI_100%.png");
 	SUGER::LoadTexture(textureDirectoryPath + "TitleText/TitleText.png");
-	SUGER::LoadTexture(textureDirectoryPath + "MoonMajorText/TutorialText_x1025y192.png");
 	SUGER::LoadTexture(textureDirectoryPath + "TutorialImages/TutorialImage_00.png");
 	SUGER::LoadTexture(textureDirectoryPath + "TutorialImages/TutorialImage_01.png");
 	SUGER::LoadTexture(textureDirectoryPath + "TutorialImages/TutorialImage_02.png");
