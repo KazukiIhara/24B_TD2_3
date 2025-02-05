@@ -40,6 +40,13 @@ public:
 	std::array<int32_t, 3> SplitDigits(int32_t number);
 
 private:
+
+	void InitializeUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize);
+	std::array<int32_t, 5> SplitDigits5(int32_t number);
+	void ActiveUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, std::array<int32_t, 5>& num, Vector2 position, int number, float numGap);
+
+
+private:
 	// 日数加算用タイマー
 	float scoreTimer_ = 0.0f;
 
@@ -99,6 +106,7 @@ private:
 	Vector2 earthHpNumUIPosition_ = { 0.0f,0.0f };
 	Vector2 numberTextureSize_ = { 128.0f,192.0f };
 	float numGap_ = 64.0f;
+	float numGap2_ = 48.0f;
 
 
 	// 経過日数UI
@@ -146,4 +154,18 @@ private:
 
 	float playerBangTime_ = 180.0f;
 	float playerBangTimer_ = 0.0f;
+
+
+	//
+	Vector2 numberTextureSize2_ = { 48.0f,96.0f };
+	std::array<std::unique_ptr<Object2DController>, 5> scoreUI_;
+	std::array<int32_t, 5> scoreNum_;
+	Vector2 scorePosition_{1700,30};
+	uint32_t score_ = 0;
+
+	//
+	// スコア(テキスト)
+	std::unique_ptr<Object2DController> resultScore_;
+	Vector2 resultScorePos_{ 1820,30 };
+	Vector2 scoreSize{ 256,96 };
 };
