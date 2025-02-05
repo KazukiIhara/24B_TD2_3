@@ -66,13 +66,13 @@ void Boss::Update() {
 	Vector3 bossPos = GetTranslate();
 
 	// Boss → プレイヤー への方向ベクトルを計算
-	Vector3 direction = Normalize(player_->GetTranslate() - bossPos);
+	Vector3 direction = Normalize(bossPos - player_->GetTranslate());
 
 	// z軸回転角度を求める (ラジアン)
 	float rotationZ = std::atan2(direction.y, direction.x);
 
 	// Bossの回転を更新 (Z軸回転のみ適用)
-	SetRotateZ(rotationZ);
+	SetRotate(Vector3(0.0f, 0.0f, Lerp(GetRotate().z, rotationZ, 0.1f)));
 
 
 }
