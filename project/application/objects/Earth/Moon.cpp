@@ -120,27 +120,27 @@ void Moon::OnCollision(Collider* other) {
 			returnMoveTimer_ = kReturnMoveTime_;
 
 			if (damegePiecePlayer_ <= 0) {
-			for (int i = 0; i < 5; i++) {
-				EmitDamegePiece2(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_);
-			}
-			damegePiecePlayer_ = 0.5f;
-		}
-		break;
-	case ColliderCategory::Fragment:
-			{
-				moonMass = GetCollider()->GetMass();
-
-				Vector3 earthVelocity = GetCollider()->GetVelocity();
-				fragmentMass = other->GetMass();
-				Vector3 fragmentVelocity = other->GetVelocity();
-				Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
-
-				Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
-
-
-				EmitDust(normal, normal);
+				for (int i = 0; i < 5; i++) {
+					EmitDamegePiece2(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_);
+				}
+				damegePiecePlayer_ = 0.5f;
 			}
 			break;
+		case ColliderCategory::Fragment:
+		{
+			moonMass = GetCollider()->GetMass();
+
+			Vector3 earthVelocity = GetCollider()->GetVelocity();
+			fragmentMass = other->GetMass();
+			Vector3 fragmentVelocity = other->GetVelocity();
+			Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
+
+			Vector3 velocity = ComputeCollisionVelocity(moonMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
+
+
+			EmitDust(normal, normal);
+		}
+		break;
 		case ColliderCategory::UFOBullet:
 		{
 			earthMass = GetCollider()->GetMass();
@@ -293,10 +293,10 @@ void Moon::OnCollision(Collider* other) {
 			}
 
 			break;
+		}
 	}
+
 }
-
-
 
 void Moon::MoveLimit() {
 	Vector3 translate_ = GetTranslate();
