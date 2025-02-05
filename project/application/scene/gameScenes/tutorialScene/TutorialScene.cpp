@@ -9,26 +9,17 @@ void TutorialScene::Initialize() {
 	//
 	// ムーン少佐スプライト作成
 	//
-
-	// 操作テキスト
-	for (uint32_t i = 0; i < static_cast<uint32_t>(MMTutorial::num); i++) {
-		moonMajarTurorials_[i] = std::make_unique<Object2DController>();
-	}
+	moonMajarTurorial_ = std::make_unique<Object2DController>();
 	// オブジェクト作成
-	moonMajarTurorials_[0]->Initialize(SUGER::Create2DObject("0_MM_Operation", "MoonMajorText/OperationTutorialText_x1025y192.png"));
-	moonMajarTurorials_[1]->Initialize(SUGER::Create2DObject("0_MM_Fragment", "MoonMajorText/FragmentTutorialText_x1025y192.png"));
-	moonMajarTurorials_[2]->Initialize(SUGER::Create2DObject("0_MM_Bump", "MoonMajorText/BumpTutorialText_x1025y192.png"));
+	moonMajarTurorial_->Initialize(SUGER::Create2DObject("0_MM_Operation", "MoonMajorText/TutorialText_x1025y192.png"));
 	// 各種設定
-	for (uint32_t i = 0; i < static_cast<uint32_t>(MMTutorial::num); i++) {
-		tutorialPages_[i] = static_cast<uint32_t>(moonMajarTurorials_[i]->GetSize().y / moonMajarTextCutSize_.y);
-		moonMajarTurorials_[i]->SetCutOutSize(moonMajarTextCutSize_);
-		moonMajarTurorials_[i]->SetSize(moonMajarTextCutSize_);
-		moonMajarTurorials_[i]->SetAnchorPoint(Vector2(0.5f, 0.5f));
-		moonMajarTurorials_[i]->SetPosition(moonMajarTextPosition_);
-		moonMajarTurorials_[i]->SetIsActive(false);
-	}
+	moonMajarTurorial_->SetCutOutSize(moonMajarTextCutSize_);
+	moonMajarTurorial_->SetSize(moonMajarTextCutSize_);
+	moonMajarTurorial_->SetAnchorPoint(Vector2(0.5f, 0.5f));
+	moonMajarTurorial_->SetPosition(moonMajarTextPosition_);
+	moonMajarTurorial_->SetIsActive(false);
 
-	moonMajarTurorials_[0]->SetIsActive(true);
+	moonMajarTurorial_->SetIsActive(true);
 
 }
 
@@ -41,45 +32,16 @@ void TutorialScene::SceneStatePlayInitialize() {
 }
 
 void TutorialScene::SceneStatePlayUpdate() {
-	switch (currentTutorial_) {
-	case MMTutorial::Operation:
-		moonMajarTurorials_[0]->SetIsActive(true);
-		moonMajarTurorials_[1]->SetIsActive(false);
-		moonMajarTurorials_[2]->SetIsActive(false);
-		break;
-	case MMTutorial::Fragment:
-		moonMajarTurorials_[0]->SetIsActive(false);
-		moonMajarTurorials_[1]->SetIsActive(true);
-		moonMajarTurorials_[2]->SetIsActive(false);
-		break;
-	case MMTutorial::Bump:
-		moonMajarTurorials_[0]->SetIsActive(false);
-		moonMajarTurorials_[1]->SetIsActive(false);
-		moonMajarTurorials_[2]->SetIsActive(true);
-		break;
-	}
 
-	// ムーン少佐ページ管理
-	for (uint32_t i = 0; i < static_cast<uint32_t>(MMTutorial::num); i++) {
-		moonMajarTurorials_[i]->SetLeftTop(Vector2(0.0f, static_cast<float>(currentPage_) * moonMajarTextCutSize_.y));
-	}
-
+	moonMajarTurorial_->SetLeftTop(Vector2(0.0f, static_cast<float>(currentPage_) * moonMajarTextCutSize_.y));
 	// ボタンでページ送り
 	if (SUGER::TriggerButton(0, ButtonA) || SUGER::TriggerKey(DIK_SPACE)) {
-
 		currentPage_++;
-		if (currentPage_ == tutorialPages_[static_cast<uint32_t>(currentTutorial_)]) {
-			currentPage_ = 0;
-			uint32_t current = static_cast<uint32_t>(currentTutorial_);
-			current++;
-			currentTutorial_ = static_cast<MMTutorial>(current);
-		}
 	}
 
-	if (static_cast<uint32_t>(currentTutorial_) == 3) {
+	if (currentPage_ == 15) {
 		sceneStateRequest_ = SceneState::kFadeOut;
 	}
-
 
 }
 
