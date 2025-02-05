@@ -330,7 +330,7 @@ void UFO::ShotEllipseEmit() {
 		emitterShotDust_->SetMinSize(1.2f);
 
 		emitterShotDust_->SetMaxVelocity(velocity);
-		emitterShotDust_->SetMinVelocity(velocity * 0.95f);
+		emitterShotDust_->SetMinVelocity(velocity);
 		emitterShotDust_->Emit();
 	}
 }
