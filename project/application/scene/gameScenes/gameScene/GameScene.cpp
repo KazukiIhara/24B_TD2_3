@@ -400,14 +400,15 @@ void GameScene::SceneStatePlayUpdate() {
 		player_->SetIsHit(false);
 	}
 
-	// ボス登場時
+	// ボス登場時pr
 	if (isBossFightStart_) {
-		bossFightStartTimer_--;
-		if (bossFightStartTimer_ == 0) {
+		bossFightStartTimer_++;
+		if (bossFightStartTimer_ == bossFightStartTime_) {
 			isBossFight_ = true;
 			isBossFightStart_ = false;
 		}
-		boss_->SetTranslate(boss_->GetTranslate() + Vector3(-1.0f, 0.0f, 0.0f));
+		Vector3 bossPos = Lerp(bossPopPosition_, bossBattleBeginPosition_, bossFightStartTimer_ / bossFightStartTime_);
+		boss_->SetTranslate(bossPos);
 	}
 
 	// 通常戦
@@ -421,7 +422,7 @@ void GameScene::SceneStatePlayUpdate() {
 		if (currentDays_ == 365) {
 			currentYears_++;
 			currentDays_ = 0;
-			bossFightStartTimer_ = bossFightStartTime_;
+			bossFightStartTimer_ = 0;
 			isBossFightStart_ = true;
 
 			fragmentManager_->KillAllFragment();

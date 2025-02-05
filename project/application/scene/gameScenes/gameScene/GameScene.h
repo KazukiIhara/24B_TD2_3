@@ -63,7 +63,8 @@ private:
 
 	// ボス
 	std::unique_ptr<Boss> boss_ = nullptr;
-	Vector3 bossPopPosition_ = { 35.0f,0.0f,0.0f };
+	Vector3 bossPopPosition_ = { 45.0f,0.0f,0.0f };
+	Vector3 bossBattleBeginPosition_ = { 25.0f,0.0f,0.0f };
 
 	// 隕石マネージャ
 	std::unique_ptr<MeteoriteManager> meteoriteManager_ = nullptr;
@@ -121,8 +122,8 @@ private:
 	uint32_t currentYears_ = 0;
 
 	bool isBossFightStart_ = false;
-	int32_t bossFightStartTimer_ = 0;
-	int32_t bossFightStartTime_ = 300;
+	float bossFightStartTimer_ = 0.0f;
+	float bossFightStartTime_ = 300.0f;
 
 	bool isBossFight_ = false;
 
