@@ -554,6 +554,12 @@ void GameScene::SceneStatePlayUpdate() {
 		currentDaysNumUI_[2]->SetIsActive(false);
 	}
 
+	if (isBossFight_) {
+		currentDaysNumUI_[0]->SetIsActive(false);
+		currentDaysNumUI_[1]->SetIsActive(false);
+		currentDaysNumUI_[2]->SetIsActive(false);
+	}
+
 	// ポジションをセット
 	currentDaysNumUI_[0]->SetPosition(currentDaysPosition_ - Vector2(numGap_, 0.0f));
 	currentDaysNumUI_[1]->SetPosition(currentDaysPosition_);
@@ -586,6 +592,12 @@ void GameScene::SceneStatePlayUpdate() {
 			currentYearsNumUI_[2]->SetIsActive(true);
 		}
 	} else {
+		currentYearsNumUI_[0]->SetIsActive(false);
+		currentYearsNumUI_[1]->SetIsActive(false);
+		currentYearsNumUI_[2]->SetIsActive(false);
+	}
+
+	if (isBossFight_) {
 		currentYearsNumUI_[0]->SetIsActive(false);
 		currentYearsNumUI_[1]->SetIsActive(false);
 		currentYearsNumUI_[2]->SetIsActive(false);
