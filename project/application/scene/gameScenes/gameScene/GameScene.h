@@ -133,5 +133,6 @@ private:
 
 	bool isBossFight_ = false;
 
-
+	uint32_t bossBattleTimer_ = 0;
+	uint32_t bossBattleTime_ = 120;
 };

@@ -311,7 +311,7 @@ void GameScene::Initialize() {
 	moonMajarSprite_->SetPosition(moonMajarPosition_);
 
 
-	currentDays_ = 360;
+	currentDays_ = 0;
 
 
 	//
@@ -435,7 +435,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 	if (!isBossFightStart_ && !isBossFight_) {
 		// 経過日数を加算
-		if (scoreTimer_ == moon_->GetAroundFrame() / 10.0f) {
+		if (scoreTimer_ == moon_->GetAroundFrame() / 15.0f) {
 			currentDays_++;
 			scoreTimer_ = 0.0f;
 		}
