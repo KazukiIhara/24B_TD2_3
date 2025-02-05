@@ -103,7 +103,10 @@ void ResultScene::Initialize() {
 
 }
 
-void ResultScene::Finalize() {}
+void ResultScene::Finalize() {
+	
+}
+
 
 void ResultScene::Operation()
 {
@@ -117,8 +120,7 @@ void ResultScene::Operation()
 			moveScene_ = 0;
 		}
 	}
-
-	if (moveScene_ == 0) {
+  if (moveScene_ == 0) {
 		resultRetry_->SetColor({ 1,1,0,1 });
 		resultTitle_->SetColor({ 1,1,1,1 });
 
@@ -136,10 +138,12 @@ void ResultScene::Operation()
 			ChangeScene("TITLE");
 		}
 	}
-
 }
 
-void ResultScene::SceneStatePlayInitialize() {}
+void ResultScene::SceneStatePlayInitialize() {
+	// BGMの再生
+	SUGER::PlayWaveLoopSound("Result.wav");
+}
 
 void ResultScene::SceneStatePlayUpdate() {
 	ImGui::Begin("Result");

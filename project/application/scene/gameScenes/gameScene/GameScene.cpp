@@ -295,11 +295,13 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Finalize() {
-
+	// BGMの停止
+	SUGER::StopWaveLoopSound("GameScene.wav");
 }
 
 void GameScene::SceneStatePlayInitialize() {
-
+	// BGMの再生
+	SUGER::PlayWaveLoopSound("GameScene.wav");
 }
 
 void GameScene::SceneStatePlayUpdate() {

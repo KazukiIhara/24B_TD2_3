@@ -33,12 +33,13 @@ void TitleScene::Initialize() {
 	player_->CreateCollider(ColliderCategory::Player, kSphere, 1.0f);
 	player_->SetScale(2.0f);
 	player_->GetCollider()->SetMass(20.0f);
-	player_->SetTranslate(Vector3{ -10.5f, -0.5f, 0 });
-
+	player_->SetTranslate({ 6.0f,-1.0f,7.0f });
 
 	// 
 	// 月の初期化処理
 	// 
+
+	float dir = DegreesToRadians(inclination_);
 
 	moon_ = std::make_unique<Moon>();
 	moon_->Initialize(SUGER::CreateEntity("Moon", "Earth"));
@@ -46,7 +47,9 @@ void TitleScene::Initialize() {
 	moon_->CreateCollider(ColliderCategory::Moon, kSphere, 2.0f);
 	moon_->GetCollider()->SetMass(200.0f);
 	moon_->SetDamagePieceManager(damagePieceManager_.get());
-	moon_->SetTranslate({ 0,0,3 });
+	moon_->SetTranslate(Vector3{ -10.5f, -0.5f, 0 });
+	moon_->SetRotateZ(dir);
+	moon_->SetScale(1.5f);
 
 
 	//
@@ -73,20 +76,38 @@ void TitleScene::Initialize() {
 	sceneCamera_->SetRotate({ 0.0f,0.6f,0 });
 
 
-	A_UI_ = std::make_unique<Object2DController>();
-	A_UI_->Initialize(SUGER::Create2DObject("A", "A.png"));
-	A_UI_->SetAnchorPoint({ 0.5f,0.5f });
-	A_UI_->SetPosition({ 1920 / 2,870 });
-	A_UI_->SetSize({ 64 * 3,64 * 3 });
+	startUI_ = std::make_unique<Object2DController>();
+	startUI_->Initialize(SUGER::Create2DObject("0_A", "TitleText/StartUI.png"));
+	startUI_->SetAnchorPoint({ 0.5f,0.5f });
+	startUI_->SetPosition({ 1920 / 2,870 });
+
+	titleTextAni_ = std::make_unique<Object2DController>();
+	titleTextAni_->Initialize(SUGER::Create2DObject("0_TitleTexAni", "TitleText/StartUI.png"));
+	titleTextAni_->SetAnchorPoint({ 0.5f,0.5f });
+	titleTextAni_->SetPosition({ 1920 / 2,870 });
+
+	constAniSize_ = titleTextAni_->GetSize();
+	anisize_ = constAniSize_;
+
+	titleText_ = std::make_unique<Object2DController>();
+	titleText_->Initialize(SUGER::Create2DObject("0_TitleTex", "TitleText/TitleText.png"));
+	titleText_->SetAnchorPoint({ 0.5f,0.5f });
+	titleText_->SetPosition(Vector2(960.0f, 300.0f));
+	titleText_->SetSize(titleText_->GetSize() * 1.5f);
+
+
+	aniTimer_ = aniTime_;
 }
 
 
 void TitleScene::Finalize() {
-
+	//BGMの停止
+	SUGER::StopWaveLoopSound("Title.wav");
 }
 
 void TitleScene::SceneStatePlayInitialize() {
-
+	// BGMの再生
+	SUGER::PlayWaveLoopSound("Title.wav");
 }
 
 void TitleScene::SceneStatePlayUpdate() {
@@ -101,33 +122,19 @@ void TitleScene::SceneStatePlayUpdate() {
 	// 地球の更新
 	moon_->UpdateTitle();
 
-	if (player_->GetIsHit()) {
-		if (player_->GetHitLevel() == 1) {
-			sceneCamera_->Shake(15.0f, 0.5f);
-		} else if (player_->GetHitLevel() == 2) {
-			sceneCamera_->Shake(25.0f, 1.5f);
-		}
-		player_->SetIsHit(false);
-	}
-
-
-	if (++time_ >= 40) {
-		time_ = 0;
-		clock_ *= -1;
-	}
-	if (clock_ == 1) {
-		A_UI_->SetIsActive(true);
+	if (aniTimer_ > 0) {
+		aniTimer_--;
+		anisize_.x += 4.0f;
+		anisize_.y += 4.0f;
+		aniAlpha_ -= 0.05f;
 	} else {
-		A_UI_->SetIsActive(false);
+		anisize_ = constAniSize_;
+		aniAlpha_ = 1.0f;
+		aniTimer_ = aniTime_;
 	}
 
-	// ライトの座標
-	//light_->GetPunctualLight().pointLight.position = player_->GetTranslate();
-	//light_->GetPunctualLight().spotLight.direction = Normalize(player_->GetTranslate() - sceneCamera_->GetWorldPos());
-
-
-	// プレイヤーの更新処理
-	//player_->Update();
+	titleTextAni_->SetColor(Vector4(1.0f, 1.0f, 1.0f, aniAlpha_));
+	titleTextAni_->SetSize(anisize_);
 
 	// ダメージ破片の更新
 	damagePieceManager_->Update();
@@ -138,7 +145,7 @@ void TitleScene::SceneStatePlayUpdate() {
 
 	if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
 		sceneStateRequest_ = SceneState::kFadeOut;
-		A_UI_->SetIsActive(false);
+		startUI_->SetIsActive(false);
 	}
 }
 
