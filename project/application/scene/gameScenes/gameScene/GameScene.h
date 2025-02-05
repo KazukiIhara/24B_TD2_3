@@ -63,7 +63,7 @@ private:
 
 	// ボス
 	std::unique_ptr<Boss> boss_ = nullptr;
-	Vector3 bossPopPosition_ = { 0.0f,0.0f,0.0f };
+	Vector3 bossPopPosition_ = { 35.0f,0.0f,0.0f };
 
 	// 隕石マネージャ
 	std::unique_ptr<MeteoriteManager> meteoriteManager_ = nullptr;
