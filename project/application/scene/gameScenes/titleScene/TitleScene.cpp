@@ -95,6 +95,11 @@ void TitleScene::Initialize() {
 	titleText_->SetPosition(Vector2(960.0f, 300.0f));
 	titleText_->SetSize(titleText_->GetSize() * 1.5f);
 
+	F11UI_ = std::make_unique<Object2DController>();
+	F11UI_->Initialize(SUGER::Create2DObject("0_TitleTex", "ButtonUI/F11.png"));
+	//F11UI_->SetAnchorPoint({ 0.5f,0.5f });
+	//F11UI_->SetPosition(Vector2(960.0f, 300.0f));
+	//titleText_->SetSize(titleText_->GetSize() * 1.5f);
 
 	aniTimer_ = aniTime_;
 }

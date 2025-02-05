@@ -53,6 +53,11 @@ private:
 	// titleani
 	std::unique_ptr<Object2DController> titleTextAni_;
 
+	// Aボタン
+	std::unique_ptr<Object2DController> F11UI_;
+
+
+
 	int32_t aniTimer_ = 0;
 	int32_t aniTime_ = 110;
 	Vector2 constAniSize_{};

@@ -93,4 +93,9 @@ private:
 
 	std::array<std::unique_ptr<Object2DController>, 5> tutorialTexs_;
 
+	
+	std::unique_ptr<Object2DController> Z_BText_;
+	Vector2 posZ_B_ = { 1920 - 400, 950 };
+
+
 };

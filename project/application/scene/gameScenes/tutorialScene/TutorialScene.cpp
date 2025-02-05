@@ -170,6 +170,13 @@ void TutorialScene::Initialize() {
 	//tutorialTexs_[0]->SetIsActive(true);
 
 
+	Vector2 size{96,96 *2};
+	Z_BText_ = std::make_unique<Object2DController>();
+	Z_BText_->Initialize(SUGER::Create2DObject("Z_B", "ButtonUI/Z&BbuttonUI_x96y96.png"));
+	Z_BText_->SetCutOutSize(size);
+	Z_BText_->SetSize(size);
+	Z_BText_->SetAnchorPoint(Vector2(0.5f, 0.5f));
+	Z_BText_->SetPosition(posZ_B_);
 }
 
 void TutorialScene::Finalize() {
