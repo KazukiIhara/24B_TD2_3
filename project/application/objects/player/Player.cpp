@@ -166,7 +166,7 @@ void Player::OnCollision(Collider* other) {
 	ColliderCategory category = other->GetColliderCategory();
 
 
-	if (!isAlive_) {
+	if (HP_ <= 0) {
 		return;
 	}
 
