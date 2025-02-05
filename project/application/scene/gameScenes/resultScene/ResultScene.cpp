@@ -85,7 +85,7 @@ void ResultScene::Initialize() {
 	moonMajar_->SetIsActive(false);
 
 	// イコール
-	InitializeUI(resultEqual_, "equalUI", "ResultText/ResultSymbol_x128y96.png", symbolTextureSize_);
+	InitializeUI(resultEqual_, "equalUI", "ResultText/ResultSymbol_x128y96.png", symbolTextureSize_,{});
 
 	for (int i = 0; i < resultEqual_.size(); i++) {
 		resultEqual_[i]->SetLeftTop({ symbolTextureSize_.x,0 });
@@ -94,52 +94,52 @@ void ResultScene::Initialize() {
 	resultEqual_[1]->SetPosition({ equalXpos ,meteoriteScorePosition_.y });
 	resultEqual_[2]->SetPosition({ equalXpos ,ufoScorePosition_.y });
 	// かける
-	InitializeUI(resultMultiplication_, "equalUI", "ResultText/ResultSymbol_x128y96.png", symbolTextureSize_);
+	InitializeUI(resultMultiplication_, "equalUI", "ResultText/ResultSymbol_x128y96.png", symbolTextureSize_,{});
 
 	resultMultiplication_[0]->SetPosition({ multiplicationXpos ,fragmentScorePosition_.y });
 	resultMultiplication_[1]->SetPosition({ multiplicationXpos ,meteoriteScorePosition_.y });
 	resultMultiplication_[2]->SetPosition({ multiplicationXpos ,ufoScorePosition_.y });
 	resultMultiplication_[3]->SetPosition({ 1920 / 2,300.0f + (y * 4.0f) });
-
+	resultMultiplication_[3]->SetIsActive(true);
 
 
 	// 全体スコア
-	InitializeUI(allScoreUI_, "AllScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+	InitializeUI(allScoreUI_, "AllScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,allScorePosition_);
 
 	// スコア
-	InitializeUI(scoreUI_, "score", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+	InitializeUI(scoreUI_, "score", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,scorePosition_);
 
 	// 欠片スコア
-	InitializeUI(fragmentScoreUI_, "fragmentScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+	InitializeUI(fragmentScoreUI_, "fragmentScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,fragmentScorePosition_);
 
 	// 隕石スコア
-	InitializeUI(meteoriteScoreUI_, "meteoriteScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+	InitializeUI(meteoriteScoreUI_, "meteoriteScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,meteoriteScorePosition_);
 
 	// UFOスコア
-	InitializeUI(ufoScoreUI_, "ufoScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+	InitializeUI(ufoScoreUI_, "ufoScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,ufoScorePosition_);
 
 
 	// 欠片スコア
-	InitializeUI(kFragmentScoreUI_, "kfragmentScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+	InitializeUI(kFragmentScoreUI_, "kfragmentScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,kFragmentScorePosition_);
 
 	// 隕石スコア
-	InitializeUI(kMeteoriteScoreUI_, "kmeteoriteScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+	InitializeUI(kMeteoriteScoreUI_, "kmeteoriteScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,kMeteoriteScorePosition_);
 
 	// UFOスコア
-	InitializeUI(kUfoScoreUI_, "kufoScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+	InitializeUI(kUfoScoreUI_, "kufoScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,kUfoScorePosition_);
 
 
 	// 欠片数
-	InitializeUI(fragmentNumUI_, "fragmentNum", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+	InitializeUI(fragmentNumUI_, "fragmentNum", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,fragmentNumPosition_);
 
 	// 隕石数
-	InitializeUI(meteoriteNumUI_, "meteoriteNum", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+	InitializeUI(meteoriteNumUI_, "meteoriteNum", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,meteoriteNumPosition_);
 
 	// UFO数
-	InitializeUI(ufoNumUI_, "ufoNum", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+	InitializeUI(ufoNumUI_, "ufoNum", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,ufoNumPosition_);
 
 	// 耐えた日数
-	InitializeUI(dayUI_, "dayNum", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+	InitializeUI(dayUI_, "dayNum", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,dayPosition_);
 
 
 	// 倍率(少数)
@@ -275,9 +275,9 @@ void ResultScene::SceneStatePlayUpdate() {
 	SplitDecimalInteger(magnificationNum_, decimalPointNum_, integerNum_);
 	magnificationNum_ = formatNumber(magnificationNum_);
 
-
-	GetGameData().totalScore_ = score_ * static_cast<int>(magnificationNum_);
-	totalScore_ = GetGameData().totalScore_;
+	float aa = static_cast<float>(score_);
+	float bb = aa * magnificationNum_;
+	totalScore_ = static_cast<int>(bb);
 
 	decimalPointUI_->SetLeftTop({ numberTextureSize_.x * decimalPointNum_ ,0 });
 	integerUI_->SetLeftTop({ numberTextureSize_.x * integerNum_,0 });
@@ -306,35 +306,39 @@ void ResultScene::SceneStatePlayUpdate() {
 	skydome_->Update();
 }
 
-void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize) {
+void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize, Vector2 pos) {
 	for (uint32_t i = 0; i < ui.size(); i++) {
 		ui[i] = std::make_unique<Object2DController>();
 		ui[i]->Initialize(SUGER::Create2DObject(name, filePath));
 		ui[i]->SetCutOutSize(textureSize);
 		ui[i]->SetSize(textureSize);
 		ui[i]->SetAnchorPoint(Vector2(0.5f, 0.5f));
-		ui[i]->SetIsActive(false);
-	}
-}
-void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 4>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize) {
-	for (uint32_t i = 0; i < ui.size(); i++) {
-		ui[i] = std::make_unique<Object2DController>();
-		ui[i]->Initialize(SUGER::Create2DObject(name, filePath));
-		ui[i]->SetCutOutSize(textureSize);
-		ui[i]->SetSize(textureSize);
-		ui[i]->SetAnchorPoint(Vector2(0.5f, 0.5f));
-		ui[i]->SetIsActive(false);
+		ui[i]->SetIsActive(true);
+		ui[i]->SetPosition(pos);
 
 	}
 }
-void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 3>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize) {
+void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 4>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize, Vector2 pos) {
 	for (uint32_t i = 0; i < ui.size(); i++) {
 		ui[i] = std::make_unique<Object2DController>();
 		ui[i]->Initialize(SUGER::Create2DObject(name, filePath));
 		ui[i]->SetCutOutSize(textureSize);
 		ui[i]->SetSize(textureSize);
 		ui[i]->SetAnchorPoint(Vector2(0.5f, 0.5f));
-		ui[i]->SetIsActive(false);
+		ui[i]->SetIsActive(true);
+		ui[i]->SetPosition(pos);
+
+	}
+}
+void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 3>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize, Vector2 pos) {
+	for (uint32_t i = 0; i < ui.size(); i++) {
+		ui[i] = std::make_unique<Object2DController>();
+		ui[i]->Initialize(SUGER::Create2DObject(name, filePath));
+		ui[i]->SetCutOutSize(textureSize);
+		ui[i]->SetSize(textureSize);
+		ui[i]->SetAnchorPoint(Vector2(0.5f, 0.5f));
+		ui[i]->SetIsActive(true);
+		ui[i]->SetPosition(pos);
 
 	}
 }
