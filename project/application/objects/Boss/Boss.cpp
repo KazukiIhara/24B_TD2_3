@@ -13,6 +13,13 @@ void Boss::Initialize(const std::string& name) {
 
 	SetScale(5.0f);
 	SetRotateY(-std::numbers::pi_v<float> / 2.0f);
+
+	hpGage_ = std::make_unique<Object2DController>();
+	hpGage_->Initialize(SUGER::Create2DObject("0_hp", "white.png"));
+	hpGage_->SetColor(Vector4(0.0f, 1.0f, 0.0f, 0.85f));
+	hpGage_->SetPosition(Vector2(460.0f, 32.0f));
+	hpGage_->SetSize(Vector2(1000.0f, 25.0f));
+	hpGage_->SetIsActive(false);
 }
 
 void Boss::Update() {
@@ -24,6 +31,13 @@ void Boss::Update() {
 	ImGui::End();
 #endif // _DEBUG
 
+	if (behavior_ == Behavior::kRoot || behavior_ == Behavior::kDamage) {
+		hpGage_->SetIsActive(true);
+	} else {
+		hpGage_->SetIsActive(false);
+	}
+
+	hpGage_->SetSize(Vector2(hp_ * 10.0f, 25.0f));
 
 	// ふるまい変更
 	if (behaviorRequest_) {

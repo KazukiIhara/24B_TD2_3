@@ -1,6 +1,7 @@
 #pragma once
 
 #include "3d/entityController/EntityController.h"
+#include "2d/controller/Object2dController.h"
 
 #include <optional>
 class UFOBulletManager;
@@ -56,6 +57,8 @@ private:
 
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 	Vector3 velocity_{};
+
+	std::unique_ptr<Object2DController> hpGage_;
 
 	uint32_t damageTimer_ = 0;
 	uint32_t damageTime_ = 30;
