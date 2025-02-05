@@ -142,4 +142,8 @@ private:
 	bool gameOverAnimation_ = false;
 	float gameOverAnimationTime_ = 180.0f;
 	float gameOverAnimationTimer_ = 0.0f;
+
+
+	float playerBangTime_ = 180.0f;
+	float playerBangTimer_ = 0.0f;
 };

@@ -399,7 +399,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 
 	// ゲームオーバー確認処理
-	if (player_->GetHp() <= 0 || gameOverAnimationTimer_ == 180.0f) {
+	if (gameOverAnimationTimer_ == 180.0f) {
 		// スコアを保存
 		GetGameData().days_ = currentDays_;
 		GetGameData().years_ = currentYears_;
@@ -431,6 +431,11 @@ void GameScene::SceneStatePlayUpdate() {
 	// シェイクテスト用
 	if (SUGER::TriggerKey(DIK_SPACE)) {
 		//	sceneCamera_->Shake(15.0f, 0.5f);
+	}
+
+	if (player_->GetHp() <= 0) {
+		gameOverAnimation_ = true;
+		sceneCamera_->Shake(3.0f, 1.0f);
 	}
 
 
