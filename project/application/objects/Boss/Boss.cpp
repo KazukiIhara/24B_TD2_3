@@ -47,22 +47,35 @@ void Boss::RequestRoot() {
 	behaviorRequest_ = Behavior::kRoot;
 }
 
-void Boss::RootInitialize() {
-
-}
-
-void Boss::RootUpdate() {
-	AddColliderList();
-}
-
 void Boss::InInitialize() {
 
 }
 
 void Boss::InUpdate() {
-	AddColliderList();
+	GetCollider()->SetVelocity(Vector3(-4.0f, 0.0f, 0.0f));
+}
+
+void Boss::RootInitialize() {
+
+}
+
+void Boss::RootUpdate() {}
+
+void Boss::DamageInitialize() {
+	hp_--;
+	damageTimer_ = 0;
+}
+
+void Boss::DamageUpdate() {
+	damageTimer_++;
+
+	if (damageTimer_ == damageTime_) {
+		behaviorRequest_ = Behavior::kRoot;
+	}
 }
 
 void Boss::AddColliderList() {
-	SUGER::AddColliderList(this);
+	if (behavior_ != Behavior::kNone) {
+		SUGER::AddColliderList(this);
+	}
 }

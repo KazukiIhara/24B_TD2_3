@@ -9,6 +9,7 @@ class Boss: public EntityController {
 		kNone,
 		kIn,
 		kRoot,
+		kDamage,
 	};
 public:
 	Boss();
@@ -20,19 +21,28 @@ public:
 	void RequestIn();
 	void RequestRoot();
 
+	void InInitialize();
+	void InUpdate();
+
 	void RootInitialize();
 	void RootUpdate();
 
-	void InInitialize();
-	void InUpdate();
+	void DamageInitialize();
+	void DamageUpdate();
+
 
 	void AddColliderList();
 private:
 
-	int32_t hp_ = 30;
+	int32_t hp_ = 3;
 
 	Behavior behavior_ = Behavior::kNone;
 
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
+	Vector3 velocity_{};
+
+	uint32_t damageTimer_ = 0;
+	uint32_t damageTime_ = 30;
+
 
 };

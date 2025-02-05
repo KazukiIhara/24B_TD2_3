@@ -61,7 +61,6 @@ void GameScene::Initialize() {
 	boss_->GetCollider()->SetMass(20000.0f);
 	boss_->SetTranslate(bossPopPosition_);
 	boss_->UpdateWorldTransform();
-	boss_->SetIsActive(false);
 
 	// 
 	// 月の初期化処理
@@ -407,6 +406,7 @@ void GameScene::SceneStatePlayUpdate() {
 		if (bossFightStartTimer_ == bossFightStartTime_) {
 			isBossFight_ = true;
 			isBossFightStart_ = false;
+			boss_->RequestRoot();
 		}
 		Vector3 bossPos = Lerp(bossPopPosition_, bossBattleBeginPosition_, bossFightStartTimer_ / bossFightStartTime_);
 		boss_->SetTranslate(bossPos);
@@ -437,7 +437,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 			ufoBulletManager_->KillAll();
 
-			boss_->SetIsActive(true);
+			boss_->RequestIn();
 		}
 
 		// たんこぶマネージャーの更新
@@ -469,7 +469,9 @@ void GameScene::SceneStatePlayUpdate() {
 	// プレイヤーの更新処理
 	player_->Update();
 
-
+	// ボスの更新処理
+	boss_->Update();
+	
 	// 天球の更新
 	skydome_->Update();
 
