@@ -149,6 +149,7 @@ void TitleScene::SceneStatePlayUpdate() {
 
 
 	if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
+		SUGER::PlayWaveSound("Selection.wav");
 		sceneStateRequest_ = SceneState::kFadeOut;
 		startUI_->SetIsActive(false);
 	}

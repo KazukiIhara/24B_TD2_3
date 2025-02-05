@@ -194,18 +194,22 @@ void ResultScene::Operation() {
 	if (SUGER::IsGamepadConnected(0)) {
 		// パッド操作
 		direction_ = static_cast<float>(SUGER::GetLeftStickX(0));
-		if (direction_ > 0) {
+		if (direction_ > 0 && moveScene_ == 0) {
 			moveScene_ = 1;
-		} else if (direction_ < 0) {
+			SUGER::PlayWaveSound("Selection.wav");
+		} else if (direction_ < 0 && moveScene_ == 1) {
 			moveScene_ = 0;
+			SUGER::PlayWaveSound("Selection.wav");
 		}
 	}
 	if (SUGER::PushKey(DIK_A)) {
 		moveScene_ = 0;
+		SUGER::PlayWaveSound("Selection.wav");
 	}
 
 	if (SUGER::PushKey(DIK_D)) {
 		moveScene_ = 1;
+		SUGER::PlayWaveSound("Selection.wav");
 	}
 
 	if (moveScene_ == 0) {
@@ -214,6 +218,7 @@ void ResultScene::Operation() {
 
 
 		if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
+			SUGER::PlayWaveSound("Decision.wav");
 			ChangeScene("GAME");
 		}
 	} else {
@@ -222,6 +227,7 @@ void ResultScene::Operation() {
 
 
 		if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
+			SUGER::PlayWaveSound("Decision.wav");
 			ChangeScene("TITLE");
 		}
 	}
