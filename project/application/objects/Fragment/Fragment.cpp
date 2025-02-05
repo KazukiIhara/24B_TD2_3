@@ -42,6 +42,11 @@ void Fragment::Update() {
 void Fragment::OnCollision(Collider* other) {
 	// 衝突相手のカテゴリーを取得
 	ColliderCategory category = other->GetColliderCategory();
+
+	if (player_->GetHp() >= 0) {
+		return;
+	}
+
 	// カテゴリごとに衝突判定を書く
 	switch (category) {
 		case ColliderCategory::Player:
