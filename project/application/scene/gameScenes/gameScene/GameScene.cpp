@@ -456,11 +456,11 @@ void GameScene::SceneStatePlayUpdate() {
 		// UFOの弾マネージャの更新
 		ufoBulletManager_->Update();
 
-		// ダメージ破片の更新
-		damagePieceManager_->Update();
 
 	}
 
+	// ダメージ破片の更新
+	damagePieceManager_->Update();
 
 	// ライトの座標
 	light_->GetPunctualLight().pointLight.position = ExtractionWorldPos(moon_->GetWorldTransformPtr()->worldMatrix_);
@@ -472,7 +472,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// ボスの更新処理
 	boss_->Update();
-	
+
 	// 天球の更新
 	skydome_->Update();
 
