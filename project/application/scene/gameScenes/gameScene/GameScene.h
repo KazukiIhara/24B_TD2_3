@@ -11,6 +11,7 @@
 #include "objects/player/Player.h"
 #include "objects/Earth/Moon.h"
 #include "objects/Skydome/Skydome.h"
+#include "objects/Boss/Boss.h"
 
 #include "system/MeteoriteManager/MeteoriteManager.h"
 #include "system/FragmentManager/FragmentManager.h"
@@ -59,6 +60,10 @@ private:
 
 	// 天球
 	std::unique_ptr<Skydome> skydome_ = nullptr;
+
+	// ボス
+	std::unique_ptr<Boss> boss_ = nullptr;
+	Vector3 bossPopPosition_ = { 0.0f,0.0f,0.0f };
 
 	// 隕石マネージャ
 	std::unique_ptr<MeteoriteManager> meteoriteManager_ = nullptr;

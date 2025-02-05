@@ -54,6 +54,11 @@ void GameScene::Initialize() {
 	player_->SetScale(2.0f);
 	player_->UpdateWorldTransform();
 
+	// ボスの初期化処理
+	boss_ = std::make_unique<Boss>();
+	boss_->Initialize(SUGER::CreateEntity("Boss", "Boss"));
+	boss_->CreateCollider(ColliderCategory::Boss, kSphere, 3.0f);
+	boss_->UpdateWorldTransform();
 
 	// 
 	// 月の初期化処理
