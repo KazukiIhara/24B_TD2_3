@@ -334,6 +334,17 @@ void GameScene::Initialize() {
 	whiteFade_->Initialize(SUGER::Create2DObject("200_White", "white.png"));
 	whiteFade_->SetColor(Vector4(1.0f, 1.0f, 1.0f, alpha_));
 	whiteFade_->SetSize(Vector2(1920, 1080));
+
+	InitializeUI(scoreUI_, "decimalPoint", "ResultText/ResultNumber_x48y96.png", numberTextureSize2_);
+
+
+	// スコア(テキスト)
+	resultScore_ = std::make_unique<Object2DController>();
+	resultScore_->Initialize(SUGER::Create2DObject("12_result", "ResultText/ResultScore.png"));
+	resultScore_->SetAnchorPoint(Vector2{ 0.5f,0.5f });
+	resultScore_->SetPosition(resultScorePos_);
+	resultScore_->SetSize(scoreSize * 0.8f);
+
 }
 
 void GameScene::Finalize() {
@@ -737,6 +748,13 @@ void GameScene::SceneStatePlayUpdate() {
 			buttomUI_->SetLeftTop({ 0,1.0f * buttomUiSize_.y });
 		}
 
+		int fragmentNum = player_->GetScoreData().fragmentNum_ * 100;
+		int meteoriteNum = player_->GetScoreData().meteoriteNum_ * 500;
+		int ufoNum = player_->GetScoreData().ufoNum_ * 200;
+		score_ = fragmentNum + meteoriteNum + ufoNum;
+
+		// ScoreUI
+		ActiveUI(scoreUI_, scoreNum_, scorePosition_, score_, numGap2_);
 
 		//
 		// コライダーの処理ここから
@@ -788,5 +806,89 @@ std::array<int32_t, 3> GameScene::SplitDigits(int32_t number) {
 	}
 
 	return digits;
+}
+
+void GameScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize)
+{
+	for (uint32_t i = 0; i < ui.size(); i++) {
+		ui[i] = std::make_unique<Object2DController>();
+		ui[i]->Initialize(SUGER::Create2DObject(name, filePath));
+		ui[i]->SetCutOutSize(textureSize);
+		ui[i]->SetSize(textureSize);
+		ui[i]->SetAnchorPoint(Vector2(0.5f, 0.5f));
+	}
+}
+
+std::array<int32_t, 5> GameScene::SplitDigits5(int32_t number)
+{
+	std::array<int32_t, 5> digits = { 0, 0, 0,0,0 };
+
+	if (number > 99999) {
+		for (uint32_t i = 0; i < 5; i++) {
+			digits[i] = 9;
+		}
+		return digits;
+	}
+
+	// 一桁ずつ取り出して配列に格納
+	for (int i = 4; i >= 0; --i) {
+		digits[i] = number % 10;
+		number /= 10;
+	}
+
+	return digits;
+}
+
+void GameScene::ActiveUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, std::array<int32_t, 5>& num, Vector2 position, int number, float numGap)
+{
+	if (number < 10) {
+		ui[0]->SetIsActive(false);
+		ui[1]->SetIsActive(false);
+		ui[2]->SetIsActive(false);
+		ui[3]->SetIsActive(false);
+		ui[4]->SetIsActive(true);
+	}
+	else if (number < 100) {
+		ui[0]->SetIsActive(false);
+		ui[1]->SetIsActive(false);
+		ui[2]->SetIsActive(false);
+		ui[3]->SetIsActive(true);
+		ui[4]->SetIsActive(true);
+	}
+	else if (number < 1000) {
+		ui[0]->SetIsActive(false);
+		ui[1]->SetIsActive(false);
+		ui[2]->SetIsActive(true);
+		ui[3]->SetIsActive(true);
+		ui[4]->SetIsActive(true);
+	}
+	else if (number < 10000) {
+		ui[0]->SetIsActive(false);
+		ui[1]->SetIsActive(true);
+		ui[2]->SetIsActive(true);
+		ui[3]->SetIsActive(true);
+		ui[4]->SetIsActive(true);
+	}
+	else {
+		ui[0]->SetIsActive(true);
+		ui[1]->SetIsActive(true);
+		ui[2]->SetIsActive(true);
+		ui[3]->SetIsActive(true);
+		ui[4]->SetIsActive(true);
+	}
+
+	// ポジションをセット
+	ui[0]->SetPosition(position - Vector2(numGap * 4, 0.0f));
+	ui[1]->SetPosition(position - Vector2(numGap * 3, 0.0f));
+	ui[2]->SetPosition(position - Vector2(numGap * 2, 0.0f));
+	ui[3]->SetPosition(position - Vector2(numGap * 1, 0.0f));
+	ui[4]->SetPosition(position);
+
+	// 数字分割処理
+	num = SplitDigits5(number);
+	// 分割した数字をもとにずらして描画
+	for (uint32_t i = 0; i < ui.size(); i++) {
+		ui[i]->SetLeftTop(Vector2(num[i] * numberTextureSize2_.x, 0.0f));
+	}
 }
 
