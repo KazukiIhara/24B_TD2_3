@@ -80,9 +80,10 @@ void MeteoriteManager::AddMeteorite(const Vector3& popTranslate, const Vector3& 
 	newMeteorite->SetVelocity(velocity);
 
 	newMeteorite->GetCollider()->SetMass(20000.0f);
-	newMeteorite->SetPraticle(currentSerialNumber_);
 	newMeteorite->UpdateWorldTransform();
 
+	newMeteorite->SetPraticle(currentSerialNumber_);
+	
 	// 追加
 	meteorites_.push_back(std::move(newMeteorite));
 

@@ -87,6 +87,7 @@ void UFO::RootUpdate() {
 
 	if (shotTimer_ == 0) {
 		ShotEmit();
+		ShotEllipseEmit();
 		ufoBulletManager_->AddUFOBullet(GetTranslate());
 		shotTimer_ = shotInterval_;
 	}
@@ -135,11 +136,14 @@ void UFO::BreakUpdate() {
 	breakTimer_--;
 	if (breakTimer_ == 0) {
 		player_->GetScoreData().ufoNum_++;
-		isAlive_ = false;
-		SetIsDelete(true);
 
 
 
+
+		for (int i = 0; i < 4; i++) {
+			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition(), {}, {}, {}, { 0.9f,1.0f }, {}, {}, false, 2);
+			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition(), {}, {}, {}, { 0.5f,0.6f }, {}, {}, false, 3);
+		}
 
 		Vector3 min = Vector3(-2, -2, 0);
 		Vector3 max = Vector3(2, 2, 0);
@@ -150,6 +154,12 @@ void UFO::BreakUpdate() {
 		emitterExplosionFire_->Emit();
 		emitterExplosionDust_->Emit();
 		emitterExplosionFireYellow_->Emit();
+
+
+
+
+		isAlive_ = false;
+		SetIsDelete(true);		
 	}
 }
 
@@ -201,7 +211,7 @@ void UFO::SetPraticle(int count)
 	// 発射硝煙
 	emitterShotDust_ = std::make_unique<EmitterController>();
 
-	CreateEmit("ShotDustParticle", "shotDustParticle", 10, 0.2f, { 0.75f, 1.5f }, { 0.039f, 0.039f, 0.039f }, emitterShotDust_.get());
+	CreateEmit("ShotDustParticle", "shotDustParticle", 5, 1.2f, { 0.75f, 1.5f }, { 0.039f, 0.039f, 0.039f }, emitterShotDust_.get());
 
 
 }
@@ -277,11 +287,9 @@ void UFO::EmitMinMax(const Vector3& pos, const Vector3& veloctiy, EmitterControl
 	emit->Emit();
 }
 
-#include <cmath> // cos(), sin()
-
-void UFO::ShotEmit() {
-	int numShots = 8;  // 発射する弾の数
-	float baseSpeed = 2.0f;  // 基本速度
+void UFO::ShotEllipseEmit() {
+	int numShots = 16;  // 発射する弾の数
+	float baseSpeed = 2.5f;  // 基本速度
 
 	float a = 3.0f;  // 長径の半径
 	float b = 1.5f;  // 短径の半径
@@ -303,6 +311,8 @@ void UFO::ShotEmit() {
 	up = Normalize(up);
 
 	// 楕円状にパーティクルを発射
+	emitterShotDust_->SetMaxPosition({0,0,0});
+	emitterShotDust_->SetMinPosition({0,0,0});
 	for (int i = 0; i < numShots; ++i) {
 		float theta = i * (2.0f * 3.14159f / numShots); // 各弾の角度
 
@@ -316,8 +326,30 @@ void UFO::ShotEmit() {
 		velocity += normal * baseSpeed;
 
 		// パーティクルを発射
+		emitterShotDust_->SetMaxSize(1.2f);
+		emitterShotDust_->SetMinSize(1.2f);
+
 		emitterShotDust_->SetMaxVelocity(velocity);
 		emitterShotDust_->SetMinVelocity(velocity * 0.95f);
+		emitterShotDust_->Emit();
+	}
+}
+
+void UFO::ShotEmit()
+{
+	// UFO からプレイヤーへの法線ベクトルを取得
+	Vector3 normal = player_->GetCollider()->GetWorldPosition() - GetCollider()->GetWorldPosition();
+	normal = Normalize(normal); // 法線ベクトルを正規化
+
+	float size = 1.0f;
+	int numShots = 1;  // 発射する弾の数
+	for (int i = 0; i < numShots; ++i) {
+		Vector3 pos = normal * numShots;
+
+		emitterShotDust_->SetMaxSize(size);
+		emitterShotDust_->SetMinSize(size);
+		emitterShotDust_->SetMaxVelocity(-normal);
+		emitterShotDust_->SetMinVelocity(-normal);
 		emitterShotDust_->Emit();
 	}
 }

@@ -51,7 +51,7 @@ private:
 	static Vector3 ElementWiseMin(const Vector3& a, const Vector3& b) {
 		return Vector3((std::min)(a.x, b.x), (std::min)(a.y, b.y), (std::min)(a.z, b.z));
 	}
-
+	void ShotEmit();
 private:
 	Vector3 velocity_ = {};
 	bool isAlive_ = true;
@@ -68,4 +68,7 @@ private:
 	std::unique_ptr<EmitterController> emitterExplosionFire_;
 	std::unique_ptr<EmitterController> emitterExplosionFireYellow_;
 	std::unique_ptr<EmitterController> emitterExplosionDust_;
+
+	std::unique_ptr<EmitterController> emitterShotDust_;
+
 };

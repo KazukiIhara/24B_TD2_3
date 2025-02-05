@@ -36,8 +36,8 @@ void UFOBulletManager::AddUFOBullet(const Vector3& translate) {
 	newBulet->CreateCollider(ColliderCategory::UFOBullet, kSphere, 0.8f);
 	newBulet->SetVelocity(velocity);
 	newBulet->SetScale(0.8f);
-	newBulet->SetSerialNumber(currentSerialNumber_);
 	newBulet->SetDamagePieceManager(damagePieceManager_);
+	newBulet->SetSerialNumber(currentSerialNumber_);
 	newBulet->SetPraticle(currentSerialNumber_);
 	newBulet->UpdateWorldTransform();
 	ufoBullets_.push_back(std::move(newBulet));

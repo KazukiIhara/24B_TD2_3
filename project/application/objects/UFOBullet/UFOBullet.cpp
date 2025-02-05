@@ -89,6 +89,13 @@ void UFOBullet::SetPraticle(int count)
 	emitterExplosionDust_->SetMinVelocity({ 0,0,0 });
 	emitterExplosionFire_->SetMaxVelocity({ 0,0,0 });
 	emitterExplosionFire_->SetMinVelocity({ 0,0,0 });
+
+
+	// 発射硝煙
+	emitterShotDust_ = std::make_unique<EmitterController>();
+
+	CreateEmit("ShotDustParticle", "shotBulletDustParticle", 5, 1.2f, { 0.75f, 1.5f }, { 0.039f, 0.039f, 0.039f }, emitterShotDust_.get());
+
 }
 
 void UFOBullet::CreateEmit(const std::string praticleName, const std::string emitName, int count, float size, Vector2 lifeTime, Vector3 color, EmitterController* emit)
@@ -159,6 +166,27 @@ void UFOBullet::EmitDie()
 	emitterExplosionFire_->Emit();
 	emitterExplosionDust_->Emit();
 	emitterExplosionFireYellow_->Emit();
+}
+
+void UFOBullet::ShotEmit()
+{
+	// UFO からプレイヤーへの法線ベクトルを取得
+	Vector3 normal = velocity_;
+	normal = Normalize(normal); // 法線ベクトルを正規化
+
+	float size = 1.5f;
+	int numShots = 8;  // 発射する弾の数
+	for (int i = 0; i < numShots; ++i) {
+		Vector3 pos = normal * (float)numShots;
+
+		emitterShotDust_->SetMaxPosition(pos);
+		emitterShotDust_->SetMinPosition(pos);
+		emitterShotDust_->SetMaxSize(size);
+		emitterShotDust_->SetMinSize(size);
+		emitterShotDust_->SetMaxVelocity(normal);
+		emitterShotDust_->SetMinVelocity(normal);
+		emitterShotDust_->Emit();
+	}
 }
 
 
