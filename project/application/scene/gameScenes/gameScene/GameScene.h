@@ -21,7 +21,7 @@
 #include "system/UFOBulletManager/UFOBulletManager.h"
 
 
-class GameScene :public BaseScene {
+class GameScene:public BaseScene {
 public:
 	GameScene() = default;
 	~GameScene() = default;
@@ -119,8 +119,11 @@ private:
 	// シンボル
 	std::unique_ptr<Object2DController> buttomUI_;
 	Vector2 buttomUIPosition_ = { 512.0f / 2 ,990.0f };
-	Vector2 buttomUiSize_ = { 512,96  * 2};
+	Vector2 buttomUiSize_ = { 512,96 * 2 };
 
+	// フェード用テクスチャ
+	std::unique_ptr<Object2DController> whiteFade_;
+	float alpha_ = 0.0f;
 
 	// 経過日数
 	uint32_t currentDays_ = 0;
@@ -132,7 +135,11 @@ private:
 	float bossFightStartTime_ = 300.0f;
 
 	bool isBossFight_ = false;
-	
+
 	uint32_t bossBattleframeCount_ = 0;
 	uint32_t bossBattleTimer_ = 120;
+
+	bool gameOverAnimation_ = false;
+	float gameOverAnimationTime_ = 180.0f;
+	float gameOverAnimationTimer_ = 0.0f;
 };

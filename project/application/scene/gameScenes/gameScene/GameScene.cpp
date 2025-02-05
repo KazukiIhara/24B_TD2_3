@@ -318,7 +318,7 @@ void GameScene::Initialize() {
 	// ボタンUI
 	//
 	buttomUI_ = std::make_unique<Object2DController>();
-	buttomUI_->Initialize(SUGER::Create2DObject("Botton", "ButtonUI/ShotUI_x512y96.png"));
+	buttomUI_->Initialize(SUGER::Create2DObject("0_Botton", "ButtonUI/ShotUI_x512y96.png"));
 	buttomUI_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	buttomUI_->SetPosition(buttomUIPosition_);
 	buttomUI_->SetSize(buttomUiSize_);
@@ -326,7 +326,14 @@ void GameScene::Initialize() {
 	buttomUI_->SetLeftTop(Vector2(0.0f, 0.0f));
 	buttomUI_->SetColor({ 1,1,1,0.8f });
 
+	// 
+	// ホワイトフェード
+	// 
 
+	whiteFade_ = std::make_unique<Object2DController>();
+	whiteFade_->Initialize(SUGER::Create2DObject("200_White", "white.png"));
+	whiteFade_->SetColor(Vector4(1.0f, 1.0f, 1.0f, alpha_));
+	whiteFade_->SetSize(Vector2(1920, 1080));
 }
 
 void GameScene::Finalize() {
@@ -392,7 +399,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 
 	// ゲームオーバー確認処理
-	if (player_->GetHp() <= 0 || bossBattleTimer_ == 0) {
+	if (player_->GetHp() <= 0 || gameOverAnimationTimer_ == 180.0f) {
 		// スコアを保存
 		GetGameData().days_ = currentDays_;
 		GetGameData().years_ = currentYears_;
@@ -426,308 +433,327 @@ void GameScene::SceneStatePlayUpdate() {
 		//	sceneCamera_->Shake(15.0f, 0.5f);
 	}
 
-	// スコア用のタイマー更新
-	scoreTimer_++;
 
-	// 地球の更新
-	moon_->Update();
+	if (gameOverAnimation_) {
+		gameOverAnimationTimer_++;
 
-	if (!isBossFightStart_ && !isBossFight_) {
-		// 経過日数を加算
-		if (scoreTimer_ == moon_->GetAroundFrame() / 15.0f) {
-			currentDays_++;
-			scoreTimer_ = 0.0f;
+		if (gameOverAnimationTimer_ > 180) {
+			gameOverAnimationTimer_ = 180;
 		}
-	}
+		alpha_ = gameOverAnimationTimer_ / gameOverAnimationTime_;
+		whiteFade_->SetColor(Vector4(Vector4(1.0f, 1.0f, 1.0f, alpha_)));
 
-	if (player_->GetIsHit()) {
-		if (player_->GetHitLevel() == 1) {
-			sceneCamera_->Shake(15.0f, 0.5f);
-		} else if (player_->GetHitLevel() == 2) {
-			sceneCamera_->Shake(25.0f, 1.5f);
-		}
-		player_->SetIsHit(false);
-	}
-
-	// ボス登場時pr
-	if (isBossFightStart_) {
-		bossFightStartTimer_++;
-		if (bossFightStartTimer_ == bossFightStartTime_) {
-			isBossFight_ = true;
-			isBossFightStart_ = false;
-			boss_->RequestRoot();
-			SUGER::StopWaveLoopSound("Warning.wav");
-			// ボスBGM
-			SUGER::PlayWaveLoopSound("BossBGM.wav");
-
-			bossBattleTimer_ = 120;
-		}
-		Vector3 bossPos = Lerp(bossPopPosition_, bossBattleBeginPosition_, bossFightStartTimer_ / bossFightStartTime_);
-		boss_->SetTranslate(bossPos);
 	} else {
-		// たんこぶマネージャーの更新
-		bumpManager_->Update();
 
-		// 隕石マネージャの更新
-		meteoriteManager_->Update();
+		// スコア用のタイマー更新
+		scoreTimer_++;
 
-		// かけらマネージャの更新
-		fragmentManager_->Update();
+		// 地球の更新
+		moon_->Update();
 
-		// UFOマネージャの更新
-		ufoManager_->Update();
-	}
-
-
-
-	// 通常戦
-	if (!isBossFight_ && !isBossFightStart_) {
-
-		if (currentDays_ == 365) {
-			currentYears_++;
-			currentDays_ = 0;
-			bossFightStartTimer_ = 0;
-			isBossFightStart_ = true;
-
-			fragmentManager_->KillAllFragment();
-			fragmentManager_->SetIsPop(false);
-
-			meteoriteManager_->KillAll();
-			meteoriteManager_->SetIsPop(false);
-
-			ufoManager_->KillAll();
-			ufoManager_->SetIsPop(false);
-
-			ufoBulletManager_->KillAll();
-
-			boss_->RequestIn();
-
-			// BGMストップ
-			SUGER::StopWaveLoopSound("GameScene.wav");
-			SUGER::PlayWaveLoopSound("Warning.wav", 3);
+		if (!isBossFightStart_ && !isBossFight_) {
+			// 経過日数を加算
+			if (scoreTimer_ == moon_->GetAroundFrame() / 15.0f) {
+				currentDays_++;
+				scoreTimer_ = 0.0f;
+			}
 		}
 
-	}
-
-
-	// ボス戦固有の処理
-	if (isBossFight_) {
-		bossBattleframeCount_++;
-		if (bossBattleframeCount_ == 60) {
-			bossBattleTimer_--;
-			bossBattleframeCount_ = 0;
+		if (player_->GetIsHit()) {
+			if (player_->GetHitLevel() == 1) {
+				sceneCamera_->Shake(15.0f, 0.5f);
+			} else if (player_->GetHitLevel() == 2) {
+				sceneCamera_->Shake(25.0f, 1.5f);
+			}
+			player_->SetIsHit(false);
 		}
-	}
+
+		// ボス登場時pr
+		if (isBossFightStart_) {
+			bossFightStartTimer_++;
+			if (bossFightStartTimer_ == bossFightStartTime_) {
+				isBossFight_ = true;
+				isBossFightStart_ = false;
+				boss_->RequestRoot();
+				SUGER::StopWaveLoopSound("Warning.wav");
+				// ボスBGM
+				SUGER::PlayWaveLoopSound("BossBGM.wav");
+
+				bossBattleTimer_ = 120;
+			}
+			Vector3 bossPos = Lerp(bossPopPosition_, bossBattleBeginPosition_, bossFightStartTimer_ / bossFightStartTime_);
+			boss_->SetTranslate(bossPos);
+		} else {
+			// たんこぶマネージャーの更新
+			bumpManager_->Update();
+
+			// 隕石マネージャの更新
+			meteoriteManager_->Update();
+
+			// かけらマネージャの更新
+			fragmentManager_->Update();
+
+			// UFOマネージャの更新
+			ufoManager_->Update();
+		}
 
 
-	// ダメージ破片の更新
-	damagePieceManager_->Update();
 
-	// ライトの座標
-	light_->GetPunctualLight().pointLight.position = ExtractionWorldPos(moon_->GetWorldTransformPtr()->worldMatrix_);
-	light_->GetPunctualLight().spotLight.direction = Normalize(ExtractionWorldPos(moon_->GetWorldTransformPtr()->worldMatrix_) - sceneCamera_->GetWorldPos());
+		// 通常戦
+		if (!isBossFight_ && !isBossFightStart_) {
 
+			if (currentDays_ == 365) {
+				currentYears_++;
+				currentDays_ = 0;
+				bossFightStartTimer_ = 0;
+				isBossFightStart_ = true;
 
-	// プレイヤーの更新処理
-	player_->Update();
+				fragmentManager_->KillAllFragment();
+				fragmentManager_->SetIsPop(false);
 
-	// ボスの更新処理
-	boss_->Update();
+				meteoriteManager_->KillAll();
+				meteoriteManager_->SetIsPop(false);
 
-	// UFOの弾マネージャの更新
-	ufoBulletManager_->Update();
+				ufoManager_->KillAll();
+				ufoManager_->SetIsPop(false);
 
-	// 天球の更新
-	skydome_->Update();
+				ufoBulletManager_->KillAll();
 
+				boss_->RequestIn();
 
-	// 
-	// 地球UI
-	// 
+				// BGMストップ
+				SUGER::StopWaveLoopSound("GameScene.wav");
+				SUGER::PlayWaveLoopSound("Warning.wav", 3);
+			}
 
-	for (uint32_t i = 0; i < 4; i++) {
-		earthHPUI_[i]->SetPosition(earthUIPosition_);
-		earthHPUI_[i]->SetSize(earthUISize_);
-	}
-
-	if (player_->GetHp() <= 25.0f) {
-		earthHPUI_[0]->SetIsActive(false);
-		earthHPUI_[1]->SetIsActive(false);
-		earthHPUI_[2]->SetIsActive(false);
-		earthHPUI_[3]->SetIsActive(true);
-	} else if (player_->GetHp() <= 50.0f) {
-		earthHPUI_[0]->SetIsActive(false);
-		earthHPUI_[1]->SetIsActive(false);
-		earthHPUI_[2]->SetIsActive(true);
-		earthHPUI_[3]->SetIsActive(false);
-	} else if (player_->GetHp() <= 75.0f) {
-		earthHPUI_[0]->SetIsActive(false);
-		earthHPUI_[1]->SetIsActive(true);
-		earthHPUI_[2]->SetIsActive(false);
-		earthHPUI_[3]->SetIsActive(false);
-	} else {
-		earthHPUI_[0]->SetIsActive(true);
-		earthHPUI_[1]->SetIsActive(false);
-		earthHPUI_[2]->SetIsActive(false);
-		earthHPUI_[3]->SetIsActive(false);
-	}
-
-	if (player_->GetHp() < 10.0f) {
-		earthHpNumUI_[1]->SetIsActive(false);
-	} else if (player_->GetHp() < 100.0f) {
-		earthHpNumUI_[0]->SetIsActive(false);
-	}
-
-	// 
-	// 地球HPUI
-	// 
-
-	// UIのポジションを決定
-	earthHpNumUI_[0]->SetPosition(earthHpNumUIPosition_ - Vector2(numGap_, 0.0f));
-	earthHpNumUI_[1]->SetPosition(earthHpNumUIPosition_);
-	earthHpNumUI_[2]->SetPosition(earthHpNumUIPosition_ + Vector2(numGap_, 0.0f));
-
-	// HPの数字を桁ごとに分割
-	earthHpNum_ = SplitDigits(static_cast<uint32_t>(player_->GetHp()));
-	// 数字を基に左上をずらして描画
-	for (uint32_t i = 0; i < 3; i++) {
-		earthHpNumUI_[i]->SetLeftTop(Vector2(earthHpNum_[i] * numberTextureSize_.x, 0.0f));
-	}
+		}
 
 
-	// 
-	// スコアUI 日数編
-	// 
+		// ボス戦固有の処理
+		if (isBossFight_) {
+			bossBattleframeCount_++;
+			if (bossBattleframeCount_ == 60) {
+				bossBattleTimer_--;
+				bossBattleframeCount_ = 0;
+			}
 
-	if (!isBossFightStart_) {
-		// 日数によって桁を描画するかどうかの処理
-		if (currentDays_ < 10) {
+			if (bossBattleTimer_ == 0) {
+				gameOverAnimation_ = true;
+			}
+
+		}
+
+
+		// ダメージ破片の更新
+		damagePieceManager_->Update();
+
+		// ライトの座標
+		light_->GetPunctualLight().pointLight.position = ExtractionWorldPos(moon_->GetWorldTransformPtr()->worldMatrix_);
+		light_->GetPunctualLight().spotLight.direction = Normalize(ExtractionWorldPos(moon_->GetWorldTransformPtr()->worldMatrix_) - sceneCamera_->GetWorldPos());
+
+
+		// プレイヤーの更新処理
+		player_->Update();
+
+		// ボスの更新処理
+		boss_->Update();
+
+		// UFOの弾マネージャの更新
+		ufoBulletManager_->Update();
+
+		// 天球の更新
+		skydome_->Update();
+
+
+		// 
+		// 地球UI
+		// 
+
+		for (uint32_t i = 0; i < 4; i++) {
+			earthHPUI_[i]->SetPosition(earthUIPosition_);
+			earthHPUI_[i]->SetSize(earthUISize_);
+		}
+
+		if (player_->GetHp() <= 25.0f) {
+			earthHPUI_[0]->SetIsActive(false);
+			earthHPUI_[1]->SetIsActive(false);
+			earthHPUI_[2]->SetIsActive(false);
+			earthHPUI_[3]->SetIsActive(true);
+		} else if (player_->GetHp() <= 50.0f) {
+			earthHPUI_[0]->SetIsActive(false);
+			earthHPUI_[1]->SetIsActive(false);
+			earthHPUI_[2]->SetIsActive(true);
+			earthHPUI_[3]->SetIsActive(false);
+		} else if (player_->GetHp() <= 75.0f) {
+			earthHPUI_[0]->SetIsActive(false);
+			earthHPUI_[1]->SetIsActive(true);
+			earthHPUI_[2]->SetIsActive(false);
+			earthHPUI_[3]->SetIsActive(false);
+		} else {
+			earthHPUI_[0]->SetIsActive(true);
+			earthHPUI_[1]->SetIsActive(false);
+			earthHPUI_[2]->SetIsActive(false);
+			earthHPUI_[3]->SetIsActive(false);
+		}
+
+		if (player_->GetHp() < 10.0f) {
+			earthHpNumUI_[1]->SetIsActive(false);
+		} else if (player_->GetHp() < 100.0f) {
+			earthHpNumUI_[0]->SetIsActive(false);
+		}
+
+		// 
+		// 地球HPUI
+		// 
+
+		// UIのポジションを決定
+		earthHpNumUI_[0]->SetPosition(earthHpNumUIPosition_ - Vector2(numGap_, 0.0f));
+		earthHpNumUI_[1]->SetPosition(earthHpNumUIPosition_);
+		earthHpNumUI_[2]->SetPosition(earthHpNumUIPosition_ + Vector2(numGap_, 0.0f));
+
+		// HPの数字を桁ごとに分割
+		earthHpNum_ = SplitDigits(static_cast<uint32_t>(player_->GetHp()));
+		// 数字を基に左上をずらして描画
+		for (uint32_t i = 0; i < 3; i++) {
+			earthHpNumUI_[i]->SetLeftTop(Vector2(earthHpNum_[i] * numberTextureSize_.x, 0.0f));
+		}
+
+
+		// 
+		// スコアUI 日数編
+		// 
+
+		if (!isBossFightStart_) {
+			// 日数によって桁を描画するかどうかの処理
+			if (currentDays_ < 10) {
+				currentDaysNumUI_[0]->SetIsActive(false);
+				currentDaysNumUI_[1]->SetIsActive(false);
+				currentDaysNumUI_[2]->SetIsActive(true);
+			} else if (currentDays_ < 100) {
+				currentDaysNumUI_[0]->SetIsActive(false);
+				currentDaysNumUI_[1]->SetIsActive(true);
+				currentDaysNumUI_[2]->SetIsActive(true);
+			} else {
+				currentDaysNumUI_[0]->SetIsActive(true);
+				currentDaysNumUI_[1]->SetIsActive(true);
+				currentDaysNumUI_[2]->SetIsActive(true);
+			}
+		} else {
 			currentDaysNumUI_[0]->SetIsActive(false);
 			currentDaysNumUI_[1]->SetIsActive(false);
-			currentDaysNumUI_[2]->SetIsActive(true);
-		} else if (currentDays_ < 100) {
-			currentDaysNumUI_[0]->SetIsActive(false);
-			currentDaysNumUI_[1]->SetIsActive(true);
-			currentDaysNumUI_[2]->SetIsActive(true);
-		} else {
-			currentDaysNumUI_[0]->SetIsActive(true);
-			currentDaysNumUI_[1]->SetIsActive(true);
-			currentDaysNumUI_[2]->SetIsActive(true);
+			currentDaysNumUI_[2]->SetIsActive(false);
 		}
-	} else {
-		currentDaysNumUI_[0]->SetIsActive(false);
-		currentDaysNumUI_[1]->SetIsActive(false);
-		currentDaysNumUI_[2]->SetIsActive(false);
+
+		if (isBossFight_) {
+			currentDaysNumUI_[0]->SetIsActive(false);
+			currentDaysNumUI_[1]->SetIsActive(false);
+			currentDaysNumUI_[2]->SetIsActive(false);
+		}
+
+		// ポジションをセット
+		currentDaysNumUI_[0]->SetPosition(currentDaysPosition_ - Vector2(numGap_, 0.0f));
+		currentDaysNumUI_[1]->SetPosition(currentDaysPosition_);
+		currentDaysNumUI_[2]->SetPosition(currentDaysPosition_ + Vector2(numGap_, 0.0f));
+
+		// 数字分割処理
+		currentDaysNum_ = SplitDigits(currentDays_);
+		// 分割した数字をもとにずらして描画
+		for (uint32_t i = 0; i < 3; i++) {
+			currentDaysNumUI_[i]->SetLeftTop(Vector2(currentDaysNum_[i] * numberTextureSize_.x, 0.0f));
+		}
+
+		//
+		// スコアUI 年数編
+		//
+
+		//if (!isBossFightStart_) {
+		//	// 日数によって桁を描画するかどうかの処理
+		//	if (currentYears_ < 10) {
+		//		currentYearsNumUI_[0]->SetIsActive(false);
+		//		currentYearsNumUI_[1]->SetIsActive(false);
+		//		currentYearsNumUI_[2]->SetIsActive(true);
+		//	}
+		//	else if (currentYears_ < 100) {
+		//		currentYearsNumUI_[0]->SetIsActive(false);
+		//		currentYearsNumUI_[1]->SetIsActive(true);
+		//		currentYearsNumUI_[2]->SetIsActive(true);
+		//	}
+		//	else {
+		//		currentYearsNumUI_[0]->SetIsActive(true);
+		//		currentYearsNumUI_[1]->SetIsActive(true);
+		//		currentYearsNumUI_[2]->SetIsActive(true);
+		//	}
+		//}
+		//else {
+		//	currentYearsNumUI_[0]->SetIsActive(false);
+		//	currentYearsNumUI_[1]->SetIsActive(false);
+		//	currentYearsNumUI_[2]->SetIsActive(false);
+		//}
+
+		if (isBossFight_) {
+			currentBossBattleNumUI_[0]->SetIsActive(true);
+			currentBossBattleNumUI_[1]->SetIsActive(true);
+			currentBossBattleNumUI_[2]->SetIsActive(true);
+		}
+
+
+		// ポジションをセット
+		currentBossBattleNumUI_[0]->SetPosition(currentYearsPosition_ - Vector2(numGap_, 0.0f));
+		currentBossBattleNumUI_[1]->SetPosition(currentYearsPosition_);
+		currentBossBattleNumUI_[2]->SetPosition(currentYearsPosition_ + Vector2(numGap_, 0.0f));
+
+		// 数字分割処理
+		currentBossBattleNum_ = SplitDigits(bossBattleTimer_);
+
+		// 分割した数字をもとにずらして描画
+		for (uint32_t i = 0; i < 3; i++) {
+			currentBossBattleNumUI_[i]->SetLeftTop(Vector2(currentBossBattleNum_[i] * numberTextureSize_.x, 0.0f));
+		}
+
+		if (isBossFightStart_) {
+			symbolUI_[0]->SetIsActive(false);
+			symbolUI_[1]->SetIsActive(false);
+		}
+
+		// 
+		// ムーン少佐
+		// 
+
+		if (currentDays_ > 10 && moonMajarAlpha_ > 0.0f) {
+			moonMajarAlpha_ -= 0.05f;
+		}
+
+		moonMajarSprite_->SetColor(Vector4(1.0f, 1.0f, 1.0f, moonMajarAlpha_));
+
+		//
+		if (moon_->GetIsParent()) {
+			buttomUI_->SetLeftTop({ 0,0.0f });
+		} else {
+			buttomUI_->SetLeftTop({ 0,1.0f * buttomUiSize_.y });
+		}
+
+
+		//
+		// コライダーの処理ここから
+		//
+
+		// コライダーコンテナをリセット
+		SUGER::ClearColliderContainer();
+
+		// 
+		// コライダーリスト追加処理
+		// 
+
+		SUGER::AddColliderList(player_.get());
+		SUGER::AddColliderList(moon_.get());
+		boss_->AddColliderList();
+		meteoriteManager_->AddColliderList();
+		fragmentManager_->AddColliderList();
+		bumpManager_->AddColliderList();
+		ufoManager_->AddColliderList();
+		ufoBulletManager_->AddColliderList();
+
 	}
-
-	if (isBossFight_) {
-		currentDaysNumUI_[0]->SetIsActive(false);
-		currentDaysNumUI_[1]->SetIsActive(false);
-		currentDaysNumUI_[2]->SetIsActive(false);
-	}
-
-	// ポジションをセット
-	currentDaysNumUI_[0]->SetPosition(currentDaysPosition_ - Vector2(numGap_, 0.0f));
-	currentDaysNumUI_[1]->SetPosition(currentDaysPosition_);
-	currentDaysNumUI_[2]->SetPosition(currentDaysPosition_ + Vector2(numGap_, 0.0f));
-
-	// 数字分割処理
-	currentDaysNum_ = SplitDigits(currentDays_);
-	// 分割した数字をもとにずらして描画
-	for (uint32_t i = 0; i < 3; i++) {
-		currentDaysNumUI_[i]->SetLeftTop(Vector2(currentDaysNum_[i] * numberTextureSize_.x, 0.0f));
-	}
-
-	//
-	// スコアUI 年数編
-	//
-
-	//if (!isBossFightStart_) {
-	//	// 日数によって桁を描画するかどうかの処理
-	//	if (currentYears_ < 10) {
-	//		currentYearsNumUI_[0]->SetIsActive(false);
-	//		currentYearsNumUI_[1]->SetIsActive(false);
-	//		currentYearsNumUI_[2]->SetIsActive(true);
-	//	}
-	//	else if (currentYears_ < 100) {
-	//		currentYearsNumUI_[0]->SetIsActive(false);
-	//		currentYearsNumUI_[1]->SetIsActive(true);
-	//		currentYearsNumUI_[2]->SetIsActive(true);
-	//	}
-	//	else {
-	//		currentYearsNumUI_[0]->SetIsActive(true);
-	//		currentYearsNumUI_[1]->SetIsActive(true);
-	//		currentYearsNumUI_[2]->SetIsActive(true);
-	//	}
-	//}
-	//else {
-	//	currentYearsNumUI_[0]->SetIsActive(false);
-	//	currentYearsNumUI_[1]->SetIsActive(false);
-	//	currentYearsNumUI_[2]->SetIsActive(false);
-	//}
-
-	if (isBossFight_) {
-		currentBossBattleNumUI_[0]->SetIsActive(true);
-		currentBossBattleNumUI_[1]->SetIsActive(true);
-		currentBossBattleNumUI_[2]->SetIsActive(true);
-	}
-
-
-	// ポジションをセット
-	currentBossBattleNumUI_[0]->SetPosition(currentYearsPosition_ - Vector2(numGap_, 0.0f));
-	currentBossBattleNumUI_[1]->SetPosition(currentYearsPosition_);
-	currentBossBattleNumUI_[2]->SetPosition(currentYearsPosition_ + Vector2(numGap_, 0.0f));
-
-	// 数字分割処理
-	currentBossBattleNum_ = SplitDigits(bossBattleTimer_);
-
-	// 分割した数字をもとにずらして描画
-	for (uint32_t i = 0; i < 3; i++) {
-		currentBossBattleNumUI_[i]->SetLeftTop(Vector2(currentBossBattleNum_[i] * numberTextureSize_.x, 0.0f));
-	}
-
-	if (isBossFightStart_) {
-		symbolUI_[0]->SetIsActive(false);
-		symbolUI_[1]->SetIsActive(false);
-	}
-
-	// 
-	// ムーン少佐
-	// 
-
-	if (currentDays_ > 10 && moonMajarAlpha_ > 0.0f) {
-		moonMajarAlpha_ -= 0.05f;
-	}
-
-	moonMajarSprite_->SetColor(Vector4(1.0f, 1.0f, 1.0f, moonMajarAlpha_));
-
-	//
-	if (moon_->GetIsParent()) {
-		buttomUI_->SetLeftTop({ 0,0.0f });
-	} else {
-		buttomUI_->SetLeftTop({ 0,1.0f * buttomUiSize_.y });
-	}
-
-
-	//
-	// コライダーの処理ここから
-	//
-
-	// コライダーコンテナをリセット
-	SUGER::ClearColliderContainer();
-
-	// 
-	// コライダーリスト追加処理
-	// 
-
-	SUGER::AddColliderList(player_.get());
-	SUGER::AddColliderList(moon_.get());
-	boss_->AddColliderList();
-	meteoriteManager_->AddColliderList();
-	fragmentManager_->AddColliderList();
-	bumpManager_->AddColliderList();
-	ufoManager_->AddColliderList();
-	ufoBulletManager_->AddColliderList();
 }
 
 void GameScene::SceneStateFadeOutUpdate() {
