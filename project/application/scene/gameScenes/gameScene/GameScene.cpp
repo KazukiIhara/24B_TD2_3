@@ -335,12 +335,12 @@ void GameScene::Initialize() {
 	whiteFade_->SetColor(Vector4(1.0f, 1.0f, 1.0f, alpha_));
 	whiteFade_->SetSize(Vector2(1920, 1080));
 
-	InitializeUI(scoreUI_, "decimalPoint", "ResultText/ResultNumber_x48y96.png", numberTextureSize2_);
+	InitializeUI(scoreUI_, "0decimalPoint", "ResultText/ResultNumber_x48y96.png", numberTextureSize2_);
 
 
 	// スコア(テキスト)
 	resultScore_ = std::make_unique<Object2DController>();
-	resultScore_->Initialize(SUGER::Create2DObject("12_result", "ResultText/ResultScore.png"));
+	resultScore_->Initialize(SUGER::Create2DObject("0result", "ResultText/ResultScore.png"));
 	resultScore_->SetAnchorPoint(Vector2{ 0.5f,0.5f });
 	resultScore_->SetPosition(resultScorePos_);
 	resultScore_->SetSize(scoreSize * 0.8f);
