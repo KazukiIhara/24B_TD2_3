@@ -81,6 +81,8 @@ private:
 		return Vector3((std::min)(a.x, b.x), (std::min)(a.y, b.y), (std::min)(a.z, b.z));
 	}
 
+	void ShotEllipseEmit();
+
 	void ShotEmit();
 
 

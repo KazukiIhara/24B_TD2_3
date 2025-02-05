@@ -63,6 +63,8 @@ void DamagePieceManager::AddDamagePiece(const Vector3& popTranslate, const Vecto
 
 			break;
 		case 3:
+			newDamagePiece->Initialize(SUGER::CreateEntity("DamagePiece4", "DamagePiece4", popTransform));
+
 
 			break;
 		case 4:

@@ -46,12 +46,13 @@ void UFOManager::AddUFO(const Vector3& popTranslate, const Vector3 velocity) {
 	newUfo->CreateCollider(ColliderCategory::UFO, kSphere, 2.0f);
 	newUfo->SetUFOBulletManager(ufoBulletManager_);
 	newUfo->UpdateWorldTransform();
-	newUfo->SetVelocity(velocity);
+	newUfo->SetPraticle(currentSerialNumber_);
 	newUfo->SetPlayer(player_);
+
+	newUfo->SetVelocity(velocity);
 	newUfo->GetCollider()->SetMass(20000.0f);
 	newUfo->SetDamagePieceManager(damagePieceManager_);
-	newUfo->SetPraticle(currentSerialNumber_);
-
+	
 
 	ufos_.push_back(std::move(newUfo));
 

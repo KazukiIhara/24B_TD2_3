@@ -1,6 +1,6 @@
 # Blender 3.6.0
 # www.blender.org
-mtllib DamagePiece.mtl
+mtllib DamagePiece3.mtl
 o 立方体
 v -0.457386 0.075518 0.458969
 v -0.457386 0.166995 0.458969

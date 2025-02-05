@@ -148,6 +148,7 @@ private:
 
 	bool isPop_ = true;
 
+	int timerP_ = 0;
 private:
 	Moon* moon_ = nullptr;
 

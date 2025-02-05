@@ -139,6 +139,7 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	SUGER::LoadModel("DamagePiece");
 	SUGER::LoadModel("DamagePiece2");
 	SUGER::LoadModel("DamagePiece3");
+	SUGER::LoadModel("DamagePiece4");
 	SUGER::LoadModel("UFO");
 	SUGER::LoadModel("UFO_Bullet");
 	SUGER::LoadModel("Boss");

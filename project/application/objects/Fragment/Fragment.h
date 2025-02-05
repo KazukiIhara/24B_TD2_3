@@ -140,4 +140,6 @@ private:
 	std::unique_ptr<EmitterController> emitterFragment_;
 
 	int score_ = 100;
+
+	int timerP_ = 0;
 };

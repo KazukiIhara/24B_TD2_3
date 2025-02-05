@@ -133,4 +133,6 @@ private:
 
 	Vector3 targetPos_ = { 0.0f,0.0f,0.0f };
 
+
+	float damegePiecePlayer_;
 };

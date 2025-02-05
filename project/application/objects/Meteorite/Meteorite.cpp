@@ -210,39 +210,42 @@ void Meteorite::BreakUpdate() {
 
 void Meteorite::Atmosphere() {
 	float color = 1.0f; // 初期カラー値
+	timerP_++;
+	if (timerP_ >= 2) {
+		timerP_ = 2;
+		if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition())) {
+			damagePieceTime_ -= SUGER::kDeltaTime_;
 
-	if (atmosphereRenge >= Length(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition())) {
-		damagePieceTime_ -= SUGER::kDeltaTime_;
+			// 対象が地球の大気圏内にいる場合、カラーを変化させます
+			color = (Length(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
 
-		// 対象が地球の大気圏内にいる場合、カラーを変化させます
-		color = (Length(GetCollider()->GetWorldPosition() - player_->GetCollider()->GetWorldPosition()) / atmosphereRenge);
+			Vector3 min = -(velocity_ * 0.85f);
+			Vector3 max = -(velocity_ * 1.15f);
 
-		Vector3 min = -(velocity_ * 0.85f);
-		Vector3 max = -(velocity_ * 1.15f);
-
-		Vector3 maxVelo = ElementWiseMax(min, max);
-		Vector3 minVelo = ElementWiseMin(min, max);
+			Vector3 maxVelo = ElementWiseMax(min, max);
+			Vector3 minVelo = ElementWiseMin(min, max);
 
 
 
-		emitter_->SetMaxVelocity(maxVelo);
-		emitter_->SetMinVelocity(minVelo);
-		emitterDust_->SetMaxVelocity(maxVelo);
-		emitterDust_->SetMinVelocity(minVelo);
+			emitter_->SetMaxVelocity(maxVelo);
+			emitter_->SetMinVelocity(minVelo);
+			emitterDust_->SetMaxVelocity(maxVelo);
+			emitterDust_->SetMinVelocity(minVelo);
 
-		emitter_->Emit();
-		emitterDust_->Emit();
+			emitter_->Emit();
+			emitterDust_->Emit();
 
-		// 欠片
-		if (damagePieceTime_ <= 0) {
-			damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition(), -velocity_ * 3, 4.0f, true);
-			damagePieceTime_ = kDamagePieceTime_;
+			// 欠片
+			if (damagePieceTime_ <= 0) {
+				damagePieceManager_->AddDamagePiece(GetCollider()->GetWorldPosition(), -velocity_ * 3, 4.0f, true);
+				damagePieceTime_ = kDamagePieceTime_;
+			}
 		}
-	}
 
-	color = (std::clamp)(color, 0.0f, 1.0f);
-	// カラーを設定します（1.0 - 赤色, 0.0 - 黒色）
-	SetColor({ 1, color, color, 1 });
+		color = (std::clamp)(color, 0.0f, 1.0f);
+		// カラーを設定します（1.0 - 赤色, 0.0 - 黒色）
+		SetColor({ 1, color, color, 1 });
+	}
 }
 
 void Meteorite::SetSpeed(float speed) {

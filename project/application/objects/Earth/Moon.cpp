@@ -98,6 +98,9 @@ void Moon::OnCollision(Collider* other) {
 	float playerMass{};
 	float fragmentMass{};
 	float earthMass{};
+
+	damegePiecePlayer_ -= SUGER::kDeltaTime_;
+	HitParticleTimer_ -= SUGER::kDeltaTime_;
 	switch (category) {
 		case ColliderCategory::Player:
 		{
@@ -116,26 +119,15 @@ void Moon::OnCollision(Collider* other) {
 			velocity_ = velocity;
 			returnMoveTimer_ = kReturnMoveTime_;
 
+			if (damegePiecePlayer_ <= 0) {
 			for (int i = 0; i < 5; i++) {
 				EmitDamegePiece2(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_);
 			}
+			damegePiecePlayer_ = 0.5f;
 		}
 		break;
-		case ColliderCategory::Fragment:
-
-
-			if (behavior_ == Behavior::kRoot) {
-				break;
-			}
-
-			if (behavior_ == Behavior::kCharge) {
-				break;
-			}
-
-
-
+	case ColliderCategory::Fragment:
 			{
-
 				moonMass = GetCollider()->GetMass();
 
 				Vector3 earthVelocity = GetCollider()->GetVelocity();
