@@ -275,7 +275,7 @@ void GameScene::Initialize() {
 	// 描画フラグ初期化
 	currentYearsNumUI_[0]->SetIsActive(false);
 	currentYearsNumUI_[1]->SetIsActive(false);
-	currentYearsNumUI_[2]->SetIsActive(true);
+	currentYearsNumUI_[2]->SetIsActive(false);
 
 	// 
 	// シンボル
@@ -297,6 +297,7 @@ void GameScene::Initialize() {
 	symbolUI_[0]->SetPosition(currentDaysPosition_ + Vector2(numGap_ * 2.0f, 8.0f));
 	symbolUI_[1]->SetLeftTop(Vector2(9 * numberTextureSize_.x, 0.0f));
 	symbolUI_[1]->SetPosition(currentYearsPosition_ + Vector2(numGap_ * 2.0f, 8.0f));
+	symbolUI_[1]->SetIsActive(false);
 
 
 
@@ -325,7 +326,7 @@ void GameScene::Initialize() {
 	buttomUI_->SetLeftTop(Vector2(0.0f, 0.0f));
 	buttomUI_->SetColor({ 1,1,1,0.8f });
 
-	
+
 }
 
 void GameScene::Finalize() {
@@ -443,8 +444,7 @@ void GameScene::SceneStatePlayUpdate() {
 	if (player_->GetIsHit()) {
 		if (player_->GetHitLevel() == 1) {
 			sceneCamera_->Shake(15.0f, 0.5f);
-		}
-		else if (player_->GetHitLevel() == 2) {
+		} else if (player_->GetHitLevel() == 2) {
 			sceneCamera_->Shake(25.0f, 1.5f);
 		}
 		player_->SetIsHit(false);
@@ -543,20 +543,17 @@ void GameScene::SceneStatePlayUpdate() {
 		earthHPUI_[1]->SetIsActive(false);
 		earthHPUI_[2]->SetIsActive(false);
 		earthHPUI_[3]->SetIsActive(true);
-	}
-	else if (player_->GetHp() <= 50.0f) {
+	} else if (player_->GetHp() <= 50.0f) {
 		earthHPUI_[0]->SetIsActive(false);
 		earthHPUI_[1]->SetIsActive(false);
 		earthHPUI_[2]->SetIsActive(true);
 		earthHPUI_[3]->SetIsActive(false);
-	}
-	else if (player_->GetHp() <= 75.0f) {
+	} else if (player_->GetHp() <= 75.0f) {
 		earthHPUI_[0]->SetIsActive(false);
 		earthHPUI_[1]->SetIsActive(true);
 		earthHPUI_[2]->SetIsActive(false);
 		earthHPUI_[3]->SetIsActive(false);
-	}
-	else {
+	} else {
 		earthHPUI_[0]->SetIsActive(true);
 		earthHPUI_[1]->SetIsActive(false);
 		earthHPUI_[2]->SetIsActive(false);
@@ -565,8 +562,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 	if (player_->GetHp() < 10.0f) {
 		earthHpNumUI_[1]->SetIsActive(false);
-	}
-	else if (player_->GetHp() < 100.0f) {
+	} else if (player_->GetHp() < 100.0f) {
 		earthHpNumUI_[0]->SetIsActive(false);
 	}
 
@@ -597,19 +593,16 @@ void GameScene::SceneStatePlayUpdate() {
 			currentDaysNumUI_[0]->SetIsActive(false);
 			currentDaysNumUI_[1]->SetIsActive(false);
 			currentDaysNumUI_[2]->SetIsActive(true);
-		}
-		else if (currentDays_ < 100) {
+		} else if (currentDays_ < 100) {
 			currentDaysNumUI_[0]->SetIsActive(false);
 			currentDaysNumUI_[1]->SetIsActive(true);
 			currentDaysNumUI_[2]->SetIsActive(true);
-		}
-		else {
+		} else {
 			currentDaysNumUI_[0]->SetIsActive(true);
 			currentDaysNumUI_[1]->SetIsActive(true);
 			currentDaysNumUI_[2]->SetIsActive(true);
 		}
-	}
-	else {
+	} else {
 		currentDaysNumUI_[0]->SetIsActive(false);
 		currentDaysNumUI_[1]->SetIsActive(false);
 		currentDaysNumUI_[2]->SetIsActive(false);
@@ -637,49 +630,49 @@ void GameScene::SceneStatePlayUpdate() {
 	// スコアUI 年数編
 	//
 
-	if (!isBossFightStart_) {
-		// 日数によって桁を描画するかどうかの処理
-		if (currentYears_ < 10) {
-			currentYearsNumUI_[0]->SetIsActive(false);
-			currentYearsNumUI_[1]->SetIsActive(false);
-			currentYearsNumUI_[2]->SetIsActive(true);
-		}
-		else if (currentYears_ < 100) {
-			currentYearsNumUI_[0]->SetIsActive(false);
-			currentYearsNumUI_[1]->SetIsActive(true);
-			currentYearsNumUI_[2]->SetIsActive(true);
-		}
-		else {
-			currentYearsNumUI_[0]->SetIsActive(true);
-			currentYearsNumUI_[1]->SetIsActive(true);
-			currentYearsNumUI_[2]->SetIsActive(true);
-		}
-	}
-	else {
-		currentYearsNumUI_[0]->SetIsActive(false);
-		currentYearsNumUI_[1]->SetIsActive(false);
-		currentYearsNumUI_[2]->SetIsActive(false);
-	}
+	//if (!isBossFightStart_) {
+	//	// 日数によって桁を描画するかどうかの処理
+	//	if (currentYears_ < 10) {
+	//		currentYearsNumUI_[0]->SetIsActive(false);
+	//		currentYearsNumUI_[1]->SetIsActive(false);
+	//		currentYearsNumUI_[2]->SetIsActive(true);
+	//	}
+	//	else if (currentYears_ < 100) {
+	//		currentYearsNumUI_[0]->SetIsActive(false);
+	//		currentYearsNumUI_[1]->SetIsActive(true);
+	//		currentYearsNumUI_[2]->SetIsActive(true);
+	//	}
+	//	else {
+	//		currentYearsNumUI_[0]->SetIsActive(true);
+	//		currentYearsNumUI_[1]->SetIsActive(true);
+	//		currentYearsNumUI_[2]->SetIsActive(true);
+	//	}
+	//}
+	//else {
+	//	currentYearsNumUI_[0]->SetIsActive(false);
+	//	currentYearsNumUI_[1]->SetIsActive(false);
+	//	currentYearsNumUI_[2]->SetIsActive(false);
+	//}
 
-	if (isBossFight_) {
-		currentYearsNumUI_[0]->SetIsActive(false);
-		currentYearsNumUI_[1]->SetIsActive(false);
-		currentYearsNumUI_[2]->SetIsActive(false);
-	}
+	//if (isBossFight_) {
+	//	currentYearsNumUI_[0]->SetIsActive(false);
+	//	currentYearsNumUI_[1]->SetIsActive(false);
+	//	currentYearsNumUI_[2]->SetIsActive(false);
+	//}
 
 
-	// ポジションをセット
-	currentYearsNumUI_[0]->SetPosition(currentYearsPosition_ - Vector2(numGap_, 0.0f));
-	currentYearsNumUI_[1]->SetPosition(currentYearsPosition_);
-	currentYearsNumUI_[2]->SetPosition(currentYearsPosition_ + Vector2(numGap_, 0.0f));
+	//// ポジションをセット
+	//currentYearsNumUI_[0]->SetPosition(currentYearsPosition_ - Vector2(numGap_, 0.0f));
+	//currentYearsNumUI_[1]->SetPosition(currentYearsPosition_);
+	//currentYearsNumUI_[2]->SetPosition(currentYearsPosition_ + Vector2(numGap_, 0.0f));
 
-	// 数字分割処理
-	currentYearsNum_ = SplitDigits(currentYears_);
+	//// 数字分割処理
+	//currentYearsNum_ = SplitDigits(currentYears_);
 
-	// 分割した数字をもとにずらして描画
-	for (uint32_t i = 0; i < 3; i++) {
-		currentYearsNumUI_[i]->SetLeftTop(Vector2(currentYearsNum_[i] * numberTextureSize_.x, 0.0f));
-	}
+	//// 分割した数字をもとにずらして描画
+	//for (uint32_t i = 0; i < 3; i++) {
+	//	currentYearsNumUI_[i]->SetLeftTop(Vector2(currentYearsNum_[i] * numberTextureSize_.x, 0.0f));
+	//}
 
 	if (isBossFightStart_) {
 		symbolUI_[0]->SetIsActive(false);
@@ -699,8 +692,7 @@ void GameScene::SceneStatePlayUpdate() {
 	//
 	if (moon_->GetIsParent()) {
 		buttomUI_->SetLeftTop({ 0,0.0f });
-	}
-	else {
+	} else {
 		buttomUI_->SetLeftTop({ 0,1.0f * buttomUiSize_.y });
 	}
 

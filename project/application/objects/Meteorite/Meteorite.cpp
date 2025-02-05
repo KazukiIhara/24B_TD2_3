@@ -175,6 +175,7 @@ void Meteorite::BreakInitialize() {
 	// 破壊時色
 	SetColor(Vector4(0.0f, 1.0f, 1.0f, 1.0f));
 	breakTimer_ = kBreakTime_;
+	SUGER::PlayWaveSound("MeteoriteBreak.wav");
 }
 
 void Meteorite::BreakUpdate() {
