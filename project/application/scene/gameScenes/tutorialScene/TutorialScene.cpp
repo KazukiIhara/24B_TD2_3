@@ -204,6 +204,7 @@ void TutorialScene::SceneStatePlayUpdate() {
 	// ボタンでページ送り
 	if (SUGER::TriggerButton(0, ButtonB) || SUGER::TriggerKey(DIK_Z)) {
 		currentPage_++;
+		SUGER::PlayWaveSound("Selection.wav");
 	}
 
 	if (currentPage_ == 15) {

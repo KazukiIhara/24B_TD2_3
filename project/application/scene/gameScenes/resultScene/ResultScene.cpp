@@ -181,6 +181,7 @@ void ResultScene::Initialize() {
 	bossUI_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	bossUI_->SetPosition(bossPoition_);
 	bossUI_->SetLeftTop({ iconTextureSize_.x * 3.0f,0.0f });
+	bossUI_->SetIsActive(false);
 }
 
 void ResultScene::Finalize() {
@@ -277,13 +278,13 @@ void ResultScene::SceneStatePlayUpdate() {
 
 	// UI関係更新
 	UpdateUI();
-	
+
 
 	if (totalScore_ > 45000) {
 		currentPage_ = 0;
-	} else if (totalScore_>30000) {
+	} else if (totalScore_ > 30000) {
 		currentPage_ = 1;
-	} else if (totalScore_>10000) {
+	} else if (totalScore_ > 10000) {
 		currentPage_ = 2;
 	} else {
 		currentPage_ = 3;
@@ -306,6 +307,7 @@ void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 5
 		ui[i]->SetCutOutSize(textureSize);
 		ui[i]->SetSize(textureSize);
 		ui[i]->SetAnchorPoint(Vector2(0.5f, 0.5f));
+		ui[i]->SetIsActive(false);
 	}
 }
 void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 4>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize) {
@@ -315,6 +317,8 @@ void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 4
 		ui[i]->SetCutOutSize(textureSize);
 		ui[i]->SetSize(textureSize);
 		ui[i]->SetAnchorPoint(Vector2(0.5f, 0.5f));
+		ui[i]->SetIsActive(false);
+
 	}
 }
 void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 3>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize) {
@@ -324,6 +328,8 @@ void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 3
 		ui[i]->SetCutOutSize(textureSize);
 		ui[i]->SetSize(textureSize);
 		ui[i]->SetAnchorPoint(Vector2(0.5f, 0.5f));
+		ui[i]->SetIsActive(false);
+
 	}
 }
 
