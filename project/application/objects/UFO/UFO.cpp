@@ -7,7 +7,7 @@
 
 #include "system/UFOBulletManager/UFOBulletManager.h"
 #include "system/DamagePieceManager/DamagePieceManager.h"
-
+#include "objects/player/Player.h"
 
 UFO::UFO() {
 }
@@ -133,6 +133,7 @@ void UFO::BreakUpdate() {
 	SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 	breakTimer_--;
 	if (breakTimer_ == 0) {
+		player_->GetScoreData().ufoNum_++;
 		isAlive_ = false;
 		SetIsDelete(true);
 	}
@@ -159,7 +160,13 @@ void UFO::SetDamagePieceManager(DamagePieceManager* damagePieceManager) {
 	damagePieceManager_ = damagePieceManager;
 }
 
+
 void UFO::KillMe() {
 	hp_ = 1;
 	behaviorRequest_ = Behavior::kDamage;
+
+void UFO::SetPlayer(Player* player)
+{
+	player_ = player;
+
 }

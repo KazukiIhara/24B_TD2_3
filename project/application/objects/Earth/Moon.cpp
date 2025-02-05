@@ -154,6 +154,11 @@ void Moon::OnCollision(Collider* other) {
 		Vector3 normal = Normalize(GetCollider()->GetWorldPosition() - other->GetWorldPosition());
 		Vector3 velocity = ComputeCollisionVelocity(earthMass, earthVelocity, fragmentMass, fragmentVelocity, 1.0f, normal);
 
+
+		//if (HitParticleTimer_ <= 0) {
+			EmitDust(normal, normal);
+		//	HitParticleTimer_ = 1;
+		//}
 	}
 	break;
 

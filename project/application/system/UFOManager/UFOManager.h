@@ -13,6 +13,7 @@ enum class UFOPopPlace {
 
 class UFOBulletManager;
 class DamagePieceManager;
+class Player;
 
 class UFOManager {
 public:
@@ -30,9 +31,13 @@ public:
 
 	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
 
+
 	void KillAll();
 
 	void SetIsPop(bool isPop);
+
+	void SetPlayer(Player* player);
+
 
 private:
 	// UFOリスト
@@ -60,4 +65,5 @@ private:
 private:
 	UFOBulletManager* ufoBulletManager_ = nullptr;
 	DamagePieceManager* damagePieceManager_ = nullptr;
+	Player* player_ = nullptr;
 };
