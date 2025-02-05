@@ -122,9 +122,8 @@ void UFOManager::KillAll() {
 
 void UFOManager::SetIsPop(bool isPop) {
 	isPop_ = isPop;
+}
 
-void UFOManager::SetPlayer(Player* player)
-{
+void UFOManager::SetPlayer(Player* player) {
 	player_ = player;
-
 }
