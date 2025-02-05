@@ -413,6 +413,14 @@ void GameScene::SceneStatePlayUpdate() {
 	// 地球の更新
 	moon_->Update();
 
+	if (!isBossFightStart_ && !isBossFight_) {
+		// 経過日数を加算
+		if (scoreTimer_ == moon_->GetAroundFrame() / 10.0f) {
+			currentDays_++;
+			scoreTimer_ = 0.0f;
+		}
+	}
+
 	if (player_->GetIsHit()) {
 		if (player_->GetHitLevel() == 1) {
 			sceneCamera_->Shake(15.0f, 0.5f);
@@ -447,13 +455,9 @@ void GameScene::SceneStatePlayUpdate() {
 	}
 
 
+
 	// 通常戦
 	if (!isBossFight_) {
-		// 経過日数を加算
-		if (scoreTimer_ == moon_->GetAroundFrame() / 10.0f) {
-			currentDays_++;
-			scoreTimer_ = 0.0f;
-		}
 
 		if (currentDays_ == 365) {
 			currentYears_++;
