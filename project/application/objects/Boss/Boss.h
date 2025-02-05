@@ -56,6 +56,12 @@ private:
 	uint32_t breakTimer_ = 0;
 	uint32_t breakTime_ = 30;
 
+	float time_ = 0.1f;
+
+	float amplitude_ = 10.0f;  // 揺れの大きさ
+	float frequency_ = 0.5f;  // 揺れの速さ
+
+
 	bool isBossKill_ = false;
 
 };
