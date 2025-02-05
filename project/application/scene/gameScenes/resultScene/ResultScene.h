@@ -8,7 +8,7 @@
 #include "3d/lineController/LineController.h"
 #include "objects/Skydome/Skydome.h"
 
-class ResultScene :public BaseScene {
+class ResultScene:public BaseScene {
 public:
 	ResultScene() = default;
 	~ResultScene() = default;
@@ -60,7 +60,7 @@ private:
 	std::unique_ptr<Object2DController> resultDay_;
 	// スコア(テキスト)
 	std::unique_ptr<Object2DController> resultScore_;
-	
+
 	// タイトル(テキスト)
 	std::unique_ptr<Object2DController> resultFragment_;
 	// 耐えた日(テキスト)
@@ -74,6 +74,16 @@ private:
 	std::array<std::unique_ptr<Object2DController>, 3> resultEqual_;
 	// ×(テキスト)
 	std::array<std::unique_ptr<Object2DController>, 4> resultMultiplication_;
+	
+
+	// 少佐
+	std::unique_ptr<Object2DController> moonMajar_;
+	// 少佐のテキストの座標
+	Vector2 moonMajarTextPosition_ = { 960.0f,951.0f };
+	// 少佐のテキストの切り取りサイズ
+	const Vector2 moonMajarTextCutSize_ = { 1025.0f,192.0f };
+	// 現在のページ
+	uint32_t currentPage_ = 0;
 
 
 private:
@@ -102,9 +112,6 @@ private:
 	Vector2 scorePosition_{ scoreXpos2 - 100 ,300.0f + (y * 4.0f) };
 	uint32_t score_ = 0;
 
-
-	
-
 	// 欠片スコア
 	std::array<std::unique_ptr<Object2DController>, 5> fragmentScoreUI_;
 	std::array<int32_t, 5> fragmentScoreNum_;
@@ -122,9 +129,6 @@ private:
 	std::array<int32_t, 5> ufoScoreNum_;
 	Vector2 ufoScorePosition_{ scoreXpos,300.0f + (y * 2.0f) };
 	uint32_t ufoScore_;
-
-
-
 
 	// 欠片スコア
 	std::array<std::unique_ptr<Object2DController>, 3> kFragmentScoreUI_;
@@ -186,7 +190,7 @@ private:
 	// 点
 	std::unique_ptr<Object2DController> pointUI_;
 	Vector2 pointPosition_{ scoreXpos3 - 24 ,300.0f + (y * 4.0f) };
-	
+
 	// 倍
 	std::unique_ptr<Object2DController> baiUI_;
 	Vector2 baiosition_{ scoreXpos3 + 48 ,300.0f + (y * 4.0f) };
