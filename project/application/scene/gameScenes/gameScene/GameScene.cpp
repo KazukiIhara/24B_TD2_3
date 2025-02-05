@@ -423,6 +423,13 @@ void GameScene::SceneStatePlayUpdate() {
 			meteoriteManager_->KillAll();
 			meteoriteManager_->SetIsPop(false);
 
+			ufoManager_->KillAll();
+			ufoManager_->SetIsPop(false);
+
+			ufoBulletManager_->KillAll();
+
+			
+
 		}
 
 		// たんこぶマネージャーの更新

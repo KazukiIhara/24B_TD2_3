@@ -18,6 +18,8 @@ public:
 	void MoveLimit();
 	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
 
+	void KillMe();
+
 private:
 	Vector3 velocity_ = {};
 	bool isAlive_ = true;

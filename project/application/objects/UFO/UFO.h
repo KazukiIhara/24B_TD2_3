@@ -44,6 +44,8 @@ public:
 
 	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
 
+	void KillMe();
+
 private:
 	// 
 	// パラメータ

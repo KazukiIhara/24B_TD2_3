@@ -19,6 +19,8 @@ public:
 	void SetPlayer(Player* player);
 	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
 
+	void KillAll();
+
 private:
 	std::list<std::unique_ptr<UFOBullet>> ufoBullets_;
 	uint32_t currentSerialNumber_ = 0;
