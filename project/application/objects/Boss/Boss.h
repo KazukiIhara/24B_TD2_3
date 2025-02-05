@@ -3,6 +3,9 @@
 #include "3d/entityController/EntityController.h"
 
 #include <optional>
+class UFOBulletManager;
+
+class Player;
 
 class Boss: public EntityController {
 	enum class Behavior {
@@ -41,6 +44,10 @@ public:
 	bool IsBossKill() const;
 
 	void AddColliderList();
+
+	void SetUFOBulletManager(UFOBulletManager* ufobulletManager);
+	void SetPlayer(Player* player);
+
 private:
 
 	int32_t hp_ = 3;
@@ -63,5 +70,12 @@ private:
 
 
 	bool isBossKill_ = false;
+
+	int32_t shotTimer_ = 0;
+	int32_t shotTime_ = 300;
+
+	UFOBulletManager* ufoBulletManager_ = nullptr;
+
+	Player* player_ = nullptr;
 
 };

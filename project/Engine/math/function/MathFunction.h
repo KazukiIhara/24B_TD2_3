@@ -31,8 +31,7 @@ float DegreesToRadians(const float& degrees);
 ///
 /// Vector3
 /// 
-static float Distance(const Vector3& point1, const Vector3& point2)
-{
+static float Distance(const Vector3& point1, const Vector3& point2) {
 	float dx = point1.x - point2.x;
 	float dy = point1.y - point2.y;
 	float dz = point1.z - point2.z;
@@ -72,6 +71,9 @@ Vector3 Cross(const Vector3& a, const Vector3& b);
 
 // トランスフォーム
 Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
+
+Vector3 RotateVectorZ(const Vector3& vec, float radians);
+
 
 ///
 /// Vector4

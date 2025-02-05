@@ -1,6 +1,8 @@
 #include "Boss.h"
 
 #include "framework/SUGER.h"
+#include "system/UFOBulletManager/UFOBulletManager.h"
+#include "objects/player/Player.h"
 
 Boss::Boss() {}
 
@@ -58,6 +60,21 @@ void Boss::Update() {
 			BreakUpdate();
 			break;
 	}
+
+
+	// Bossの現在位置
+	Vector3 bossPos = GetTranslate();
+
+	// Boss → プレイヤー への方向ベクトルを計算
+	Vector3 direction = Normalize(player_->GetTranslate() - bossPos);
+
+	// z軸回転角度を求める (ラジアン)
+	float rotationZ = std::atan2(direction.y, direction.x);
+
+	// Bossの回転を更新 (Z軸回転のみ適用)
+	SetRotateZ(rotationZ);
+
+
 }
 
 void Boss::OnCollision(Collider* other) {
@@ -104,7 +121,7 @@ void Boss::RequestRoot() {
 }
 
 void Boss::InInitialize() {
-
+	shotTimer_ = 0;
 }
 
 void Boss::InUpdate() {
@@ -117,6 +134,13 @@ void Boss::RootInitialize() {
 
 void Boss::RootUpdate() {
 	SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+
+	shotTimer_++;
+
+	if (shotTimer_ == shotTime_) {
+		ufoBulletManager_->AddBossBullet(GetTranslate(), 30.0f);
+		shotTimer_ = 0;
+	}
 
 	// 時間経過を取得
 	time_ += SUGER::kDeltaTime_;
@@ -167,4 +191,12 @@ void Boss::AddColliderList() {
 	if (behavior_ != Behavior::kNone && behavior_ != Behavior::kBreak) {
 		SUGER::AddColliderList(this);
 	}
+}
+
+void Boss::SetUFOBulletManager(UFOBulletManager* ufobulletManager) {
+	ufoBulletManager_ = ufobulletManager;
+}
+
+void Boss::SetPlayer(Player* player) {
+	player_ = player;
 }

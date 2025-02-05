@@ -14,12 +14,18 @@ public:
 	void Update();
 
 	void AddUFOBullet(const Vector3& translate);
+
+	void AddBossBullet(const Vector3& translate, float spreadAngle);
+
+	void AddSingleBullet(const Vector3& direction, const Vector3& translate);
+
 	void AddColliderList();
 
 	void SetPlayer(Player* player);
 	void SetDamagePieceManager(DamagePieceManager* damagePieceManager);
 
 	void KillAll();
+
 
 private:
 	std::list<std::unique_ptr<UFOBullet>> ufoBullets_;
@@ -28,4 +34,4 @@ private:
 private:
 	Player* player_ = nullptr;
 	DamagePieceManager* damagePieceManager_ = nullptr;
-};
+	};

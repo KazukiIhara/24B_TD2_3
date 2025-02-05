@@ -54,13 +54,6 @@ void GameScene::Initialize() {
 	player_->SetScale(2.0f);
 	player_->UpdateWorldTransform();
 
-	// ボスの初期化処理
-	boss_ = std::make_unique<Boss>();
-	boss_->Initialize(SUGER::CreateEntity("Boss", "Boss"));
-	boss_->CreateCollider(ColliderCategory::Boss, kSphere, 6.0f);
-	boss_->GetCollider()->SetMass(20000.0f);
-	boss_->SetTranslate(bossPopPosition_);
-	boss_->UpdateWorldTransform();
 
 	// 
 	// 月の初期化処理
@@ -141,6 +134,17 @@ void GameScene::Initialize() {
 	ufoManager_->Initialize(ufoBulletManager_.get());
 	ufoManager_->SetDamagePieceManager(damagePieceManager_.get());
 	ufoManager_->SetPlayer(player_.get());
+
+
+	// ボスの初期化処理
+	boss_ = std::make_unique<Boss>();
+	boss_->Initialize(SUGER::CreateEntity("Boss", "Boss"));
+	boss_->CreateCollider(ColliderCategory::Boss, kSphere, 6.0f);
+	boss_->GetCollider()->SetMass(20000.0f);
+	boss_->SetTranslate(bossPopPosition_);
+	boss_->UpdateWorldTransform();
+	boss_->SetUFOBulletManager(ufoBulletManager_.get());
+	boss_->SetPlayer(player_.get());
 
 	// 板ポリパーティクルの作成
 	SUGER::CreateParticle("dustParticle", ParticleType::kPlane, "circle.png");
@@ -428,7 +432,20 @@ void GameScene::SceneStatePlayUpdate() {
 		}
 		Vector3 bossPos = Lerp(bossPopPosition_, bossBattleBeginPosition_, bossFightStartTimer_ / bossFightStartTime_);
 		boss_->SetTranslate(bossPos);
+	} else {
+		// たんこぶマネージャーの更新
+		bumpManager_->Update();
+
+		// 隕石マネージャの更新
+		meteoriteManager_->Update();
+
+		// かけらマネージャの更新
+		fragmentManager_->Update();
+
+		// UFOマネージャの更新
+		ufoManager_->Update();
 	}
+
 
 	// 通常戦
 	if (!isBossFight_) {
@@ -458,22 +475,6 @@ void GameScene::SceneStatePlayUpdate() {
 			boss_->RequestIn();
 		}
 
-		// たんこぶマネージャーの更新
-		bumpManager_->Update();
-
-		// 隕石マネージャの更新
-		meteoriteManager_->Update();
-
-		// かけらマネージャの更新
-		fragmentManager_->Update();
-
-		// UFOマネージャの更新
-		ufoManager_->Update();
-
-		// UFOの弾マネージャの更新
-		ufoBulletManager_->Update();
-
-
 	}
 
 	// ダメージ破片の更新
@@ -490,7 +491,8 @@ void GameScene::SceneStatePlayUpdate() {
 	// ボスの更新処理
 	boss_->Update();
 
-
+	// UFOの弾マネージャの更新
+	ufoBulletManager_->Update();
 
 	// 天球の更新
 	skydome_->Update();

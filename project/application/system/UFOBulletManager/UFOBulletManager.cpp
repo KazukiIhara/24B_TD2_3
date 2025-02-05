@@ -45,6 +45,45 @@ void UFOBulletManager::AddUFOBullet(const Vector3& translate) {
 	currentSerialNumber_++;
 }
 
+void UFOBulletManager::AddBossBullet(const Vector3& translate, float spreadAngle) {
+	EulerTransform3D popTransform{};
+	popTransform.translate = translate;
+
+	Vector3 playerWorldPos = ExtractionWorldPos(player_->GetWorldTransformPtr()->worldMatrix_);
+	Vector3 bulletPos = translate;
+
+	// プレイヤーへの基準方向
+	Vector3 direction = Normalize(playerWorldPos - bulletPos);
+
+	// 基準の弾を生成
+	AddSingleBullet(direction, translate);
+
+	// ±spreadAngle 度の方向に弾を追加
+	Vector3 leftDirection = RotateVectorZ(direction, DegreesToRadians(spreadAngle));
+	Vector3 rightDirection = RotateVectorZ(direction, DegreesToRadians(-spreadAngle));
+
+	AddSingleBullet(leftDirection, translate);
+	AddSingleBullet(rightDirection, translate);
+}
+
+void UFOBulletManager::AddSingleBullet(const Vector3& direction, const Vector3& translate) {
+	Vector3 velocity = direction * speed_;
+
+	std::unique_ptr<UFOBullet> newBullet = std::make_unique<UFOBullet>();
+	newBullet->Initialize(SUGER::CreateEntity("UFOBullet", "UFO_Bullet", EulerTransform3D{ .translate = translate }));
+	newBullet->CreateCollider(ColliderCategory::UFOBullet, kSphere, 0.8f);
+	newBullet->SetVelocity(velocity);
+	newBullet->SetScale(0.8f);
+	newBullet->SetDamagePieceManager(damagePieceManager_);
+	newBullet->SetSerialNumber(currentSerialNumber_);
+	newBullet->SetPraticle(currentSerialNumber_);
+	newBullet->UpdateWorldTransform();
+
+	ufoBullets_.push_back(std::move(newBullet));
+	currentSerialNumber_++;
+}
+
+
 void UFOBulletManager::AddColliderList() {
 	for (auto& ufoBullet : ufoBullets_) {
 		if (ufoBullet->GetIsAlive()) {

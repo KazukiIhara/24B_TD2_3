@@ -18,7 +18,7 @@ float DegreesToRadians(const float& degrees) {
 }
 
 float Length(const Vector4& a) {
-	return std::sqrt(a.x * a.x + a.y * a.y + a.z * a.z+ a.w * a.w);
+	return std::sqrt(a.x * a.x + a.y * a.y + a.z * a.z + a.w * a.w);
 }
 float Length(const Vector3& a) {
 	return std::sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
@@ -162,6 +162,19 @@ Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix) {
 	result.z = temp.z / temp.w;
 
 	return result;
+}
+
+Vector3 RotateVectorZ(const Vector3& vec, float radians) {
+
+	float cosTheta = std::cos(radians);
+	float sinTheta = std::sin(radians);
+
+	// z軸回転行列を適用
+	return {
+		vec.x * cosTheta - vec.y * sinTheta,
+		vec.x * sinTheta + vec.y * cosTheta,
+		vec.z
+	};
 }
 
 Matrix4x4 MakeIdentityMatrix4x4() {
