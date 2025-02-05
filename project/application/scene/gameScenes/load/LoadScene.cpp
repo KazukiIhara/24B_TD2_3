@@ -108,6 +108,7 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	SUGER::LoadWaveSound("MeteoriteBreak.wav");  //隕石・UFOが壊れた時のSE
 	SUGER::LoadWaveSound("UFO_Attack.wav");  //UFOが攻撃する時のSE
 	
+	SUGER::LoadWaveSound("Warning.wav");  //ボスが登場する時のBGM
 	SUGER::LoadWaveSound("Boss_Attack.wav");  //ボスが攻撃する時のSE
 	
 	

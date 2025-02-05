@@ -52,7 +52,14 @@ void Particle::Update() {
 		// 移動
 		(*particleIterator).transform.translate += kDeltaTime * (*particleIterator).velocity;
 		// 透明度
-		float alpha = 1.0f - ((*particleIterator).currentTime / (*particleIterator).lifeTime);
+		float alpha{};
+		if ((*particleIterator).isAlpha) {
+			alpha = 1.0f - ((*particleIterator).currentTime / (*particleIterator).lifeTime);
+		}
+		else {
+			alpha = 1.0f;
+		}
+
 
 		if (instanceCount_ < kNumMaxInstance) {
 			// WVPマトリックスを求める
@@ -125,7 +132,7 @@ void Particle::AddNewParticle(const EmitParamater& emitSetting) {
 	particle.velocity = emitSetting.velocity;
 	// 色の設定
 	particle.color = emitSetting.color;
-
+	particle.isAlpha = emitSetting.isAlpha;
 	// 生存時間の設定
 	particle.lifeTime = emitSetting.lifeTime;
 	particle.currentTime = 0;

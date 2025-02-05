@@ -67,6 +67,9 @@ public:
 	void SetMinLifeTime(float minLifeTime);
 	void SetMaxLifeTime(float maxLifeTime);
 
+	void SetAlpha(float alpha);
+	void SetIsAlpha(bool alpha);
+
 	//
 	// Getter
 	//
