@@ -58,6 +58,7 @@ void GameScene::Initialize() {
 	boss_ = std::make_unique<Boss>();
 	boss_->Initialize(SUGER::CreateEntity("Boss", "Boss"));
 	boss_->CreateCollider(ColliderCategory::Boss, kSphere, 3.0f);
+	boss_->SetTranslate(bossPopPosition_);
 	boss_->UpdateWorldTransform();
 	boss_->SetIsActive(false);
 
@@ -399,23 +400,29 @@ void GameScene::SceneStatePlayUpdate() {
 		player_->SetIsHit(false);
 	}
 
+	// ボス登場時pr
 	if (isBossFightStart_) {
-		bossFightStartTimer_--;
-		if (bossFightStartTimer_ == 0) {
+		bossFightStartTimer_++;
+		if (bossFightStartTimer_ == bossFightStartTime_) {
 			isBossFight_ = true;
+			isBossFightStart_ = false;
 		}
+		Vector3 bossPos = Lerp(bossPopPosition_, bossBattleBeginPosition_, bossFightStartTimer_ / bossFightStartTime_);
+		boss_->SetTranslate(bossPos);
 	}
 
+	// 通常戦
 	if (!isBossFight_) {
 		// 経過日数を加算
 		if (scoreTimer_ == moon_->GetAroundFrame() / 10.0f) {
 			currentDays_++;
 			scoreTimer_ = 0.0f;
 		}
+
 		if (currentDays_ == 365) {
 			currentYears_++;
 			currentDays_ = 0;
-			bossFightStartTimer_ = bossFightStartTime_;
+			bossFightStartTimer_ = 0;
 			isBossFightStart_ = true;
 
 			fragmentManager_->KillAllFragment();
@@ -429,8 +436,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 			ufoBulletManager_->KillAll();
 
-			
-
+			boss_->SetIsActive(true);
 		}
 
 		// たんこぶマネージャーの更新
@@ -498,8 +504,6 @@ void GameScene::SceneStatePlayUpdate() {
 		earthHPUI_[3]->SetIsActive(false);
 	}
 
-
-
 	if (player_->GetHp() < 10.0f) {
 		earthHpNumUI_[1]->SetIsActive(false);
 	} else if (player_->GetHp() < 100.0f) {
@@ -548,6 +552,12 @@ void GameScene::SceneStatePlayUpdate() {
 		currentDaysNumUI_[2]->SetIsActive(false);
 	}
 
+	if (isBossFight_) {
+		currentDaysNumUI_[0]->SetIsActive(false);
+		currentDaysNumUI_[1]->SetIsActive(false);
+		currentDaysNumUI_[2]->SetIsActive(false);
+	}
+
 	// ポジションをセット
 	currentDaysNumUI_[0]->SetPosition(currentDaysPosition_ - Vector2(numGap_, 0.0f));
 	currentDaysNumUI_[1]->SetPosition(currentDaysPosition_);
@@ -580,6 +590,12 @@ void GameScene::SceneStatePlayUpdate() {
 			currentYearsNumUI_[2]->SetIsActive(true);
 		}
 	} else {
+		currentYearsNumUI_[0]->SetIsActive(false);
+		currentYearsNumUI_[1]->SetIsActive(false);
+		currentYearsNumUI_[2]->SetIsActive(false);
+	}
+
+	if (isBossFight_) {
 		currentYearsNumUI_[0]->SetIsActive(false);
 		currentYearsNumUI_[1]->SetIsActive(false);
 		currentYearsNumUI_[2]->SetIsActive(false);
