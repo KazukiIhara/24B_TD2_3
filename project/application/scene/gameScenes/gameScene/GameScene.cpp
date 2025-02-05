@@ -58,6 +58,7 @@ void GameScene::Initialize() {
 	boss_ = std::make_unique<Boss>();
 	boss_->Initialize(SUGER::CreateEntity("Boss", "Boss"));
 	boss_->CreateCollider(ColliderCategory::Boss, kSphere, 6.0f);
+	boss_->GetCollider()->SetMass(20000.0f);
 	boss_->SetTranslate(bossPopPosition_);
 	boss_->UpdateWorldTransform();
 	boss_->SetIsActive(false);
@@ -644,9 +645,7 @@ void GameScene::SceneStatePlayUpdate() {
 
 	SUGER::AddColliderList(player_.get());
 	SUGER::AddColliderList(moon_.get());
-	if (isBossFight_) {
-		SUGER::AddColliderList(boss_.get());
-	}
+	boss_->AddColliderList();
 	meteoriteManager_->AddColliderList();
 	fragmentManager_->AddColliderList();
 	bumpManager_->AddColliderList();
