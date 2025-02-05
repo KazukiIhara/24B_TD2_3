@@ -207,7 +207,6 @@ void Moon::OnCollision(Collider* other) {
 			EmitDamegePiece(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_, 2);
 
 
-
 		}
 		break;
 
