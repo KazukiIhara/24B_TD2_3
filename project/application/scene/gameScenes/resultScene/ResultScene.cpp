@@ -74,6 +74,16 @@ void ResultScene::Initialize() {
 	resultScore_->SetAnchorPoint(Vector2{ 0.5f,0.5f });
 	resultScore_->SetPosition(Vector2(1920 * 2 / 5, 700));
 
+
+	// ムーン少佐
+	moonMajar_ = std::make_unique<Object2DController>();
+	moonMajar_->Initialize(SUGER::Create2DObject("3_major", "MoonMajorText/MajorRank_x1025y192.png"));
+	moonMajar_->SetAnchorPoint(Vector2(0.5f, 0.5f));
+	moonMajar_->SetSize(moonMajarTextCutSize_);
+	moonMajar_->SetCutOutSize(moonMajarTextCutSize_);
+	moonMajar_->SetPosition(moonMajarTextPosition_);
+	moonMajar_->SetIsActive(false);
+
 	// イコール
 	InitializeUI(resultEqual_, "equalUI", "ResultText/ResultSymbol_x128y96.png", symbolTextureSize_);
 
@@ -131,7 +141,7 @@ void ResultScene::Initialize() {
 	// 耐えた日数
 	InitializeUI(dayUI_, "dayNum", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
 
-	
+
 	// 倍率(少数)
 	decimalPointUI_ = std::make_unique<Object2DController>();
 	decimalPointUI_->Initialize(SUGER::Create2DObject("decimalPoint", "ResultText/ResultNumber_x48y96.png"));
@@ -146,8 +156,8 @@ void ResultScene::Initialize() {
 	integerUI_->SetSize(numberTextureSize_);
 	integerUI_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	integerUI_->SetPosition(integerPosition_);
-	
-	
+
+
 	pointUI_ = std::make_unique<Object2DController>();
 	pointUI_->Initialize(SUGER::Create2DObject("decimalPoint", "ResultText/ResultSymbol_x128y96.png"));
 	pointUI_->SetCutOutSize(symbolTextureSize_);
@@ -155,7 +165,7 @@ void ResultScene::Initialize() {
 	pointUI_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	pointUI_->SetPosition(pointPosition_);
 	pointUI_->SetLeftTop({ symbolTextureSize_.x * 2.0f,0.0f });
-	
+
 	baiUI_ = std::make_unique<Object2DController>();
 	baiUI_->Initialize(SUGER::Create2DObject("decimalPoint", "ResultText/ResultSymbol_x128y96.png"));
 	baiUI_->SetCutOutSize(symbolTextureSize_);
@@ -163,7 +173,7 @@ void ResultScene::Initialize() {
 	baiUI_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	baiUI_->SetPosition(baiosition_);
 	baiUI_->SetLeftTop({ symbolTextureSize_.x * 3.0f,0.0f });
-	
+
 	bossUI_ = std::make_unique<Object2DController>();
 	bossUI_->Initialize(SUGER::Create2DObject("decimalPoint", "ResultText/ObjectIcoms_x128y128.png"));
 	bossUI_->SetCutOutSize(iconTextureSize_);
@@ -171,9 +181,6 @@ void ResultScene::Initialize() {
 	bossUI_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	bossUI_->SetPosition(bossPoition_);
 	bossUI_->SetLeftTop({ iconTextureSize_.x * 3.0f,0.0f });
-	
-	
-
 }
 
 void ResultScene::Finalize() {
@@ -182,22 +189,20 @@ void ResultScene::Finalize() {
 }
 
 
-void ResultScene::Operation()
-{
+void ResultScene::Operation() {
 	if (SUGER::IsGamepadConnected(0)) {
 		// パッド操作
 		direction_ = static_cast<float>(SUGER::GetLeftStickX(0));
 		if (direction_ > 0) {
 			moveScene_ = 1;
-		}
-		else if (direction_ < 0) {
+		} else if (direction_ < 0) {
 			moveScene_ = 0;
 		}
 	}
 	if (SUGER::PushKey(DIK_A)) {
 		moveScene_ = 0;
 	}
-	
+
 	if (SUGER::PushKey(DIK_D)) {
 		moveScene_ = 1;
 	}
@@ -210,8 +215,7 @@ void ResultScene::Operation()
 		if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
 			ChangeScene("GAME");
 		}
-	}
-	else {
+	} else {
 		resultRetry_->SetColor({ 1,1,1,1 });
 		resultTitle_->SetColor({ 1,1,0,1 });
 
@@ -257,8 +261,7 @@ void ResultScene::SceneStatePlayUpdate() {
 	if (GetGameData().bossDeath_) {
 		bossUI_->SetIsActive(true);
 		magnificationNum_ = (1.0f + float(GetGameData().years_) + float(float(GetGameData().days_) / float(365))) * 2;
-	}
-	else {
+	} else {
 		bossUI_->SetIsActive(false);
 		magnificationNum_ = (1.0f + float(GetGameData().years_) + float(float(GetGameData().days_) / float(365)));
 	}
@@ -269,11 +272,26 @@ void ResultScene::SceneStatePlayUpdate() {
 	GetGameData().totalScore_ = score_ * static_cast<int>(magnificationNum_);
 	totalScore_ = GetGameData().totalScore_;
 
-	decimalPointUI_->SetLeftTop({ numberTextureSize_.x * decimalPointNum_ ,0});
-	integerUI_->SetLeftTop({ numberTextureSize_.x * integerNum_,0});
-	
+	decimalPointUI_->SetLeftTop({ numberTextureSize_.x * decimalPointNum_ ,0 });
+	integerUI_->SetLeftTop({ numberTextureSize_.x * integerNum_,0 });
+
 	// UI関係更新
 	UpdateUI();
+	
+
+	if (totalScore_ > 45000) {
+		currentPage_ = 0;
+	} else if (totalScore_>30000) {
+		currentPage_ = 1;
+	} else if (totalScore_>10000) {
+		currentPage_ = 2;
+	} else {
+		currentPage_ = 3;
+	}
+
+
+	moonMajar_->SetIsActive(true);
+	moonMajar_->SetLeftTop(Vector2(0.0f, static_cast<float>(currentPage_) * moonMajarTextCutSize_.y));
 
 	Operation();
 
@@ -281,8 +299,7 @@ void ResultScene::SceneStatePlayUpdate() {
 	skydome_->Update();
 }
 
-void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize)
-{
+void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize) {
 	for (uint32_t i = 0; i < ui.size(); i++) {
 		ui[i] = std::make_unique<Object2DController>();
 		ui[i]->Initialize(SUGER::Create2DObject(name, filePath));
@@ -291,8 +308,7 @@ void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 5
 		ui[i]->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	}
 }
-void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 4>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize)
-{
+void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 4>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize) {
 	for (uint32_t i = 0; i < ui.size(); i++) {
 		ui[i] = std::make_unique<Object2DController>();
 		ui[i]->Initialize(SUGER::Create2DObject(name, filePath));
@@ -301,8 +317,7 @@ void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 4
 		ui[i]->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	}
 }
-void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 3>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize)
-{
+void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 3>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize) {
 	for (uint32_t i = 0; i < ui.size(); i++) {
 		ui[i] = std::make_unique<Object2DController>();
 		ui[i]->Initialize(SUGER::Create2DObject(name, filePath));
@@ -312,8 +327,7 @@ void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 3
 	}
 }
 
-void ResultScene::UpdateUI()
-{
+void ResultScene::UpdateUI() {
 	// 全体スコア
 	ActiveUI(allScoreUI_, allScoreNum_, allScorePosition_, totalScore_, numGap_);
 
@@ -361,8 +375,7 @@ void ResultScene::UpdateUI()
 #pragma region Digits
 
 
-std::array<int32_t, 3> ResultScene::SplitDigits3(int32_t number)
-{
+std::array<int32_t, 3> ResultScene::SplitDigits3(int32_t number) {
 	std::array<int32_t, 3> digits = { 0, 0, 0 };
 
 	if (number > 999) {
@@ -381,8 +394,7 @@ std::array<int32_t, 3> ResultScene::SplitDigits3(int32_t number)
 	return digits;
 }
 
-std::array<int32_t, 4> ResultScene::SplitDigits4(int32_t number)
-{
+std::array<int32_t, 4> ResultScene::SplitDigits4(int32_t number) {
 	std::array<int32_t, 4> digits = { 0, 0, 0,0 };
 
 	if (number > 9999) {
@@ -401,8 +413,7 @@ std::array<int32_t, 4> ResultScene::SplitDigits4(int32_t number)
 	return digits;
 }
 
-std::array<int32_t, 5> ResultScene::SplitDigits5(int32_t number)
-{
+std::array<int32_t, 5> ResultScene::SplitDigits5(int32_t number) {
 	std::array<int32_t, 5> digits = { 0, 0, 0,0,0 };
 
 	if (number > 99999) {
@@ -460,8 +471,7 @@ void ResultScene::SplitDecimalInteger(float num, int32_t& Decimal, int32_t& inte
 	num = integer + Decimal / 10.0f;
 }
 
-float ResultScene::formatNumber(float value)
-{
+float ResultScene::formatNumber(float value) {
 	if (value == 0.0f) return 0.0f; // 特例: 0 の場合はそのまま
 
 	bool isNegative = (value < 0); // 符号を保持
@@ -485,37 +495,32 @@ float ResultScene::formatNumber(float value)
 #pragma region UI
 
 
-void ResultScene::ActiveUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, std::array<int32_t, 5>& num, Vector2 position, int number, float numGap)
-{
+void ResultScene::ActiveUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, std::array<int32_t, 5>& num, Vector2 position, int number, float numGap) {
 	if (number < 10) {
 		ui[0]->SetIsActive(false);
 		ui[1]->SetIsActive(false);
 		ui[2]->SetIsActive(false);
 		ui[3]->SetIsActive(false);
 		ui[4]->SetIsActive(true);
-	}
-	else if (number < 100) {
+	} else if (number < 100) {
 		ui[0]->SetIsActive(false);
 		ui[1]->SetIsActive(false);
 		ui[2]->SetIsActive(false);
 		ui[3]->SetIsActive(true);
 		ui[4]->SetIsActive(true);
-	}
-	else if (number < 1000) {
+	} else if (number < 1000) {
 		ui[0]->SetIsActive(false);
 		ui[1]->SetIsActive(false);
 		ui[2]->SetIsActive(true);
 		ui[3]->SetIsActive(true);
 		ui[4]->SetIsActive(true);
-	}
-	else if (number < 10000) {
+	} else if (number < 10000) {
 		ui[0]->SetIsActive(false);
 		ui[1]->SetIsActive(true);
 		ui[2]->SetIsActive(true);
 		ui[3]->SetIsActive(true);
 		ui[4]->SetIsActive(true);
-	}
-	else {
+	} else {
 		ui[0]->SetIsActive(true);
 		ui[1]->SetIsActive(true);
 		ui[2]->SetIsActive(true);
@@ -537,8 +542,7 @@ void ResultScene::ActiveUI(std::array<std::unique_ptr<Object2DController>, 5>& u
 		ui[i]->SetLeftTop(Vector2(num[i] * numberTextureSize_.x, 0.0f));
 	}
 }
-void ResultScene::ActiveUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, std::array<float, 5>& num, Vector2 position, float number, float numGap)
-{
+void ResultScene::ActiveUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, std::array<float, 5>& num, Vector2 position, float number, float numGap) {
 	/*if (number < 10) {
 		ui[0]->SetIsActive(false);
 		ui[1]->SetIsActive(false);
@@ -590,19 +594,16 @@ void ResultScene::ActiveUI(std::array<std::unique_ptr<Object2DController>, 5>& u
 	}
 }
 
-void ResultScene::ActiveUI(std::array<std::unique_ptr<Object2DController>, 3>& ui, std::array<int32_t, 3>& num, Vector2 position, int number, float numGap)
-{
+void ResultScene::ActiveUI(std::array<std::unique_ptr<Object2DController>, 3>& ui, std::array<int32_t, 3>& num, Vector2 position, int number, float numGap) {
 	if (number < 10) {
 		ui[0]->SetIsActive(false);
 		ui[1]->SetIsActive(false);
 		ui[2]->SetIsActive(true);
-	}
-	else if (number < 100) {
+	} else if (number < 100) {
 		ui[0]->SetIsActive(false);
 		ui[1]->SetIsActive(true);
 		ui[2]->SetIsActive(true);
-	}
-	else {
+	} else {
 		ui[0]->SetIsActive(true);
 		ui[1]->SetIsActive(true);
 		ui[2]->SetIsActive(true);
