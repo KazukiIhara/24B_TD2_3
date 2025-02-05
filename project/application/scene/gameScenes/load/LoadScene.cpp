@@ -176,9 +176,6 @@ void LoadScene::LoadSceneStateFinishedUpdate() {
 	ImGui::Text("AllResources,Loaded");
 	ImGui::End();
 #endif // DEBUG
+	sceneStateRequest_ = SceneState::kFadeOut;
 
-	// ボタンでフェードアウト処理
-	if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
-		sceneStateRequest_ = SceneState::kFadeOut;
-	}
 }
