@@ -96,6 +96,9 @@ void ResultScene::Initialize() {
 	// 全体スコア
 	InitializeUI(allScoreUI_, "AllScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
 
+	// スコア
+	InitializeUI(scoreUI_, "score", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
+
 	// 欠片スコア
 	InitializeUI(fragmentScoreUI_, "fragmentScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_);
 
@@ -182,6 +185,14 @@ void ResultScene::Operation()
 			moveScene_ = 0;
 		}
 	}
+	if (SUGER::PushKey(DIK_A)) {
+		moveScene_ = 0;
+	}
+	
+	if (SUGER::PushKey(DIK_D)) {
+		moveScene_ = 1;
+	}
+
 	if (moveScene_ == 0) {
 		resultRetry_->SetColor({ 1,1,0,1 });
 		resultTitle_->SetColor({ 1,1,1,1 });
@@ -232,7 +243,7 @@ void ResultScene::SceneStatePlayUpdate() {
 	ufoNum_ = GetGameData().ufoNum_;
 
 
-	int score = fragmentScore_ + meteoriteScore_ + ufoScore_;
+	score_ = fragmentScore_ + meteoriteScore_ + ufoScore_;
 	dayNum_ = uint32_t((float(GetGameData().years_) * 365) + float(GetGameData().days_));
 	if (GetGameData().bossDeath_) {
 		magnificationNum_ = (1.0f + float(GetGameData().years_) + float(float(GetGameData().days_) / float(365))) * 2;
@@ -244,7 +255,7 @@ void ResultScene::SceneStatePlayUpdate() {
 	magnificationNum_ = formatNumber(magnificationNum_);
 
 
-	GetGameData().totalScore_ = score * static_cast<int>(magnificationNum_);
+	GetGameData().totalScore_ = score_ * static_cast<int>(magnificationNum_);
 	totalScore_ = GetGameData().totalScore_;
 
 	decimalPointUI_->SetLeftTop({ numberTextureSize_.x * decimalPointNum_ ,0});
@@ -294,6 +305,8 @@ void ResultScene::UpdateUI()
 {
 	// 全体スコア
 	ActiveUI(allScoreUI_, allScoreNum_, allScorePosition_, totalScore_, numGap_);
+
+	ActiveUI(scoreUI_, scoreNum_, scorePosition_, score_, numGap_);
 
 	// 欠片スコア
 	ActiveUI(fragmentScoreUI_, fragmentScoreNum_, fragmentScorePosition_, fragmentScore_, numGap_);

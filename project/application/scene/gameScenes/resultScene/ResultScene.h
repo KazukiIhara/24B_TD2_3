@@ -82,6 +82,8 @@ private:
 	float numGap_ = 48.0f;
 
 	float scoreXpos = (1980.0f * 3 / 5) + 100;
+	float scoreXpos2 = (1980.0f * 3 / 5) - 200;
+	float scoreXpos3 = (1980.0f * 3 / 5) - 100;
 	float kScoreXpos = 1980.0f * 8 / 17;
 	float numXpos = 1980.0f * 15 / 40;
 	float equalXpos = 1980.0f / 2;
@@ -94,6 +96,14 @@ private:
 	uint32_t totalScore_ = 0;
 
 	float y = 80;
+
+	std::array<std::unique_ptr<Object2DController>, 5> scoreUI_;
+	std::array<int32_t, 5> scoreNum_;
+	Vector2 scorePosition_{ scoreXpos2 - 100 ,300.0f + (y * 4.0f) };
+	uint32_t score_ = 0;
+
+
+	
 
 	// 欠片スコア
 	std::array<std::unique_ptr<Object2DController>, 5> fragmentScoreUI_;
@@ -169,21 +179,21 @@ private:
 
 	// 倍率小数点
 	std::unique_ptr<Object2DController> decimalPointUI_;
-	Vector2 decimalPointPosition_{ scoreXpos,300.0f + (y * 4.0f) };
+	Vector2 decimalPointPosition_{ scoreXpos3 ,300.0f + (y * 4.0f) };
 	int32_t decimalPointNum_;
 
 	// 倍率整数
 	std::unique_ptr<Object2DController> integerUI_;
-	Vector2 integerPosition_{ scoreXpos - 48 ,300.0f + (y * 4.0f) };
+	Vector2 integerPosition_{ scoreXpos3 - 48 ,300.0f + (y * 4.0f) };
 	int32_t integerNum_;
 
 	// 点
 	std::unique_ptr<Object2DController> pointUI_;
-	Vector2 pointPosition_{ scoreXpos - 24 ,300.0f + (y * 4.0f) };
+	Vector2 pointPosition_{ scoreXpos3 - 24 ,300.0f + (y * 4.0f) };
 	
 	// 倍
 	std::unique_ptr<Object2DController> baiUI_;
-	Vector2 baiosition_{ scoreXpos + 48 ,300.0f + (y * 4.0f) };
+	Vector2 baiosition_{ scoreXpos3 + 48 ,300.0f + (y * 4.0f) };
 
 private:
 	int moveScene_ = 0;
