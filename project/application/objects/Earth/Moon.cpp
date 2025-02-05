@@ -517,6 +517,8 @@ void Moon::EmitMoon() {
 		emitterMoon_->SetMaxPosition({ 0,0,0 });
 		emitterMoon_->SetMinPosition({ 0,0,0 });
 
+		emitterMoon_->SetAlpha(0.5f);
+
 		emitterMoon_->SetMaxColor({ 1,1,0 });
 		emitterMoon_->SetMinColor({ 1,1,0 });
 		if (Length(velocity_) > 20) {
