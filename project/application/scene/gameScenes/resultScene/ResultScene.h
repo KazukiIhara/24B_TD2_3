@@ -6,7 +6,7 @@
 #include "3d/entityController/EntityController.h"
 #include "VFX/particle/emitterController/EmitterController.h"
 #include "3d/lineController/LineController.h"
-
+#include "objects/Skydome/Skydome.h"
 
 class ResultScene :public BaseScene {
 public:
@@ -170,4 +170,7 @@ private:
 private:
 	int moveScene_ = 0;
 	float direction_;
+
+	// 天球
+	std::unique_ptr<Skydome> skydome_ = nullptr;
 };

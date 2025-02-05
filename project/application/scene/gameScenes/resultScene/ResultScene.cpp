@@ -6,6 +6,13 @@ void ResultScene::Initialize() {
 	// シーンの初期化(初期化処理の先頭)
 	BaseScene::Initialize();
 
+	// 天球
+	skydome_ = std::make_unique<Skydome>();
+	skydome_->Initialize(SUGER::CreateEntity("Skydome", "Skydome"));
+	skydome_->SetEnableLight(false);
+	skydome_->SetScale(100.0f);
+	skydome_->GetUVTransform().scale = { 10.0f,10.0f };
+
 	// バックグラウンド
 	resultBg_ = std::make_unique<Object2DController>();
 	resultBg_->Initialize(SUGER::Create2DObject("0_resultBg", "ResultText/ResultBg.png"));
@@ -146,22 +153,33 @@ void ResultScene::SceneStatePlayInitialize() {
 }
 
 void ResultScene::SceneStatePlayUpdate() {
-	ImGui::Begin("Result");
 
+#ifdef _DEBUG
+	ImGui::Begin("Result");
 	ImGui::Text("%u Years %u Days", GetGameData().years_, GetGameData().days_);
+	ImGui::Text("fragment %u Score %d", GetGameData().fragmentNum_, fragmentScore_);
+	ImGui::Text("meteorite %u Score %d", GetGameData().meteoriteNum_, meteoriteScore_);
+	ImGui::Text("ufo %u Score %d", GetGameData().ufoNum_, ufoScore_);
+	ImGui::Text("AllScore = (score * (1.0f + years + (days / 365))) * if(bossDeath){2}");
+	ImGui::Text("Score %d", GetGameData().totalScore_);
+	ImGui::End();
+
+#endif // _DEBUG
+
+	
+
+
 	fragmentScore_ = GetGameData().fragmentNum_ * 100;
 	fragmentNum_ = GetGameData().fragmentNum_;
-	ImGui::Text("fragment %u Score %d", GetGameData().fragmentNum_, fragmentScore_);
 	meteoriteScore_ = GetGameData().meteoriteNum_ * 500;
 	meteoriteNum_ = GetGameData().meteoriteNum_;
-	ImGui::Text("meteorite %u Score %d", GetGameData().meteoriteNum_, meteoriteScore_);
 	ufoScore_ = GetGameData().ufoNum_ * 200;
 	ufoNum_ = GetGameData().ufoNum_;
-	ImGui::Text("ufo %u Score %d", GetGameData().ufoNum_, ufoScore_);
+
+
 	int score = fragmentScore_ + meteoriteScore_ + ufoScore_;
 	int allScore = int(float(score) * (1.0f + float(GetGameData().years_) + float(float(GetGameData().days_) / float(365))));
 	dayNum_ = uint32_t((float(GetGameData().years_) * 365) + float(GetGameData().days_));
-
 	if (GetGameData().bossDeath_) {
 		GetGameData().totalScore_ = allScore * 2;
 		magnificationNum_ = (1.0f + float(GetGameData().years_) + float(float(GetGameData().days_) / float(365))) * 2;
@@ -171,9 +189,7 @@ void ResultScene::SceneStatePlayUpdate() {
 		magnificationNum_ = (1.0f + float(GetGameData().years_) + float(float(GetGameData().days_) / float(365)));
 	}
 	totalScore_ = GetGameData().totalScore_;
-	ImGui::Text("AllScore = (score * (1.0f + years + (days / 365))) * if(bossDeath){2}");
-	ImGui::Text("Score %d", GetGameData().totalScore_);
-	ImGui::End();
+	
 
 	SplitDecimalInteger(magnificationNum_, decimalPointNum_, integerNum_);
 
@@ -182,6 +198,9 @@ void ResultScene::SceneStatePlayUpdate() {
 	UpdateUI();
 
 	Operation();
+
+	// 天球の更新
+	skydome_->Update();
 }
 
 void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize)
