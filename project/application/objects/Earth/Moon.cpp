@@ -33,6 +33,11 @@ void Moon::Update() {
 	ImGui::End();
 #endif // _DEBUG
 
+	HitParticleTimer_ -= SUGER::kDeltaTime_;
+	if (HitParticleTimer_ < 0.0f) {
+		HitParticleTimer_ = 0.0f;
+	}
+
 	// ふるまい変更
 	if (behaviorRequest_) {
 		behavior_ = behaviorRequest_.value();
@@ -93,7 +98,6 @@ void Moon::OnCollision(Collider* other) {
 	float playerMass{};
 	float fragmentMass{};
 	float earthMass{};
-	HitParticleTimer_ -= SUGER::kDeltaTime_;
 	switch (category) {
 		case ColliderCategory::Player:
 		{
@@ -200,7 +204,10 @@ void Moon::OnCollision(Collider* other) {
 			returnMoveTimer_ = kReturnMoveTime_;
 
 
-			EmitDust(normal, normal);
+			if (HitParticleTimer_ <= 0) {
+				EmitDust(normal, normal);
+				HitParticleTimer_ = 1;
+			}
 
 			EmitDamegePiece(-other->GetWorldPosition() - normal, velocity_, damagePieceManager_, 2);
 
@@ -243,7 +250,10 @@ void Moon::OnCollision(Collider* other) {
 			velocity_ = velocity;
 			returnMoveTimer_ = kReturnMoveTime_;
 
-			EmitDust(normal, normal);
+			if (HitParticleTimer_ <= 0) {
+				EmitDust(normal, normal);
+				HitParticleTimer_ = 1;
+			}
 
 		}
 		break;
@@ -285,8 +295,10 @@ void Moon::OnCollision(Collider* other) {
 			velocity_ = velocity;
 			returnMoveTimer_ = kReturnMoveTime_;
 
-			EmitDust(normal, normal);
-
+			if (HitParticleTimer_ <= 0) {
+				EmitDust(normal, normal);
+				HitParticleTimer_ = 1;
+			}
 
 			break;
 	}

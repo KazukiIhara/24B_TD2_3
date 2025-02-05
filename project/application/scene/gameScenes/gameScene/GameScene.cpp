@@ -374,7 +374,22 @@ void GameScene::SceneStatePlayUpdate() {
 		GetGameData().fragmentNum_ = player_->GetScoreData().fragmentNum_;
 		GetGameData().meteoriteNum_ = player_->GetScoreData().meteoriteNum_;
 		GetGameData().ufoNum_ = player_->GetScoreData().ufoNum_;
-		GetGameData().bossDeath_ = player_->GetScoreData().bossDeath_;
+		GetGameData().bossDeath_ = false;
+
+
+		// フェードリクエスト
+		sceneStateRequest_ = SceneState::kFadeOut;
+	}
+
+	if (boss_->IsBossKill()) {
+		// スコアを保存
+		GetGameData().days_ = currentDays_;
+		GetGameData().years_ = currentYears_;
+		GetGameData().score_ = player_->GetScoreData().score_;
+		GetGameData().fragmentNum_ = player_->GetScoreData().fragmentNum_;
+		GetGameData().meteoriteNum_ = player_->GetScoreData().meteoriteNum_;
+		GetGameData().ufoNum_ = player_->GetScoreData().ufoNum_;
+		GetGameData().bossDeath_ = true;
 
 
 		// フェードリクエスト
@@ -472,6 +487,8 @@ void GameScene::SceneStatePlayUpdate() {
 
 	// ボスの更新処理
 	boss_->Update();
+
+
 
 	// 天球の更新
 	skydome_->Update();

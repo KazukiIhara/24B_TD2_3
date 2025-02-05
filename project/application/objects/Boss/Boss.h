@@ -10,6 +10,7 @@ class Boss: public EntityController {
 		kIn,
 		kRoot,
 		kDamage,
+		kBreak,
 	};
 public:
 	Boss();
@@ -17,6 +18,10 @@ public:
 
 	void Initialize(const std::string& name)override;
 	void Update()override;
+
+	// 衝突コールバック関数
+	void OnCollision([[maybe_unused]] Collider* other)override;
+
 
 	void RequestIn();
 	void RequestRoot();
@@ -30,6 +35,10 @@ public:
 	void DamageInitialize();
 	void DamageUpdate();
 
+	void BreakInitialize();
+	void BreakUpdate();
+
+	bool IsBossKill() const;
 
 	void AddColliderList();
 private:
@@ -44,5 +53,7 @@ private:
 	uint32_t damageTimer_ = 0;
 	uint32_t damageTime_ = 30;
 
+	uint32_t breakTimer_ = 0;
+	uint32_t breakTime_ = 30;
 
 };

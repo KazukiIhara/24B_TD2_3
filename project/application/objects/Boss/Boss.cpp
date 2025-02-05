@@ -24,6 +24,12 @@ void Boss::Update() {
 			case Boss::Behavior::kRoot:
 				RootInitialize();
 				break;
+			case Boss::Behavior::kDamage:
+				DamageInitialize();
+				break;
+			case Boss::Behavior::kBreak:
+				BreakInitialize();
+				break;
 		}
 		behaviorRequest_ = std::nullopt;
 	}
@@ -36,7 +42,48 @@ void Boss::Update() {
 		case Boss::Behavior::kRoot:
 			RootUpdate();
 			break;
+		case Boss::Behavior::kDamage:
+			DamageUpdate();
+			break;
+		case Boss::Behavior::kBreak:
+			BreakUpdate();
+			break;
 	}
+}
+
+void Boss::OnCollision(Collider* other) {
+	// 衝突相手のカテゴリーを取得
+	ColliderCategory category = other->GetColliderCategory();
+	switch (category) {
+		case ColliderCategory::None:
+			break;
+		case ColliderCategory::Player:
+			break;
+		case ColliderCategory::Moon:
+
+			if (behavior_ == Behavior::kRoot) {
+				behaviorRequest_ = Behavior::kDamage;
+			}
+
+			break;
+		case ColliderCategory::Fragment:
+			break;
+		case ColliderCategory::Meteorite:
+			break;
+		case ColliderCategory::Bump:
+			break;
+		case ColliderCategory::DamagePiece:
+			break;
+		case ColliderCategory::UFO:
+			break;
+		case ColliderCategory::UFOBullet:
+			break;
+		case ColliderCategory::Boss:
+			break;
+		default:
+			break;
+	}
+
 }
 
 void Boss::RequestIn() {
@@ -59,7 +106,9 @@ void Boss::RootInitialize() {
 
 }
 
-void Boss::RootUpdate() {}
+void Boss::RootUpdate() {
+	SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+}
 
 void Boss::DamageInitialize() {
 	hp_--;
@@ -68,14 +117,33 @@ void Boss::DamageInitialize() {
 
 void Boss::DamageUpdate() {
 	damageTimer_++;
-
+	SetColor(Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+	if (hp_ == 0) {
+		behaviorRequest_ = Behavior::kBreak;
+	}
 	if (damageTimer_ == damageTime_) {
 		behaviorRequest_ = Behavior::kRoot;
 	}
 }
 
+void Boss::BreakInitialize() {
+	breakTimer_ = 0;
+}
+
+void Boss::BreakUpdate() {
+	breakTimer_++;
+	SetColor(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+	if (breakTimer_ == breakTime_) {
+		SetIsActive(false);
+	}
+}
+
+bool Boss::IsBossKill() const {
+	return behavior_ == Behavior::kBreak;
+}
+
 void Boss::AddColliderList() {
-	if (behavior_ != Behavior::kNone) {
+	if (behavior_ != Behavior::kNone && behavior_ != Behavior::kBreak) {
 		SUGER::AddColliderList(this);
 	}
 }
