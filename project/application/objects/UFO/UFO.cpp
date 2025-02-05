@@ -317,7 +317,7 @@ void UFO::ShotEmit() {
 
 		// パーティクルを発射
 		emitterShotDust_->SetMaxVelocity(velocity);
-		emitterShotDust_->SetMinVelocity(velocity * 0.95f);
+		emitterShotDust_->SetMinVelocity(velocity);
 		emitterShotDust_->Emit();
 	}
 }
