@@ -146,6 +146,8 @@ void Boss::RootUpdate() {
 
 		ufoBulletManager_->AddBossBullet(GetTranslate() + (direction * 5.0f) - Vector3(0.0f, 2.0f, 0.0f), 30.0f);
 		shotTimer_ = 0;
+
+		SUGER::PlayWaveSound("Boss_Attack.wav");
 	}
 
 	// 時間経過を取得

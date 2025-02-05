@@ -198,6 +198,8 @@ void Player::OnCollision(Collider* other) {
 			Vector3 velocity = ComputeCollisionVelocity(playerMass, playerVelocity, earthMass, earthVelocity, 1.0f, normal);
 			velocity_ = velocity;
 			earthHitTimer_ = kNoneHitTime_;
+
+			SUGER::PlayWaveSound("EarthToFragmentDamage.wav");
 		}
 		break;
 		case::ColliderCategory::Meteorite:
@@ -249,6 +251,8 @@ void Player::OnCollision(Collider* other) {
 
 			meteoriteHitTimer_ = kNoneHitTime_;
 			HP_ -= 25;
+
+			SUGER::PlayWaveSound("EarthHitDamage.wav");
 		}
 		break;
 		case ColliderCategory::Fragment:
@@ -257,6 +261,7 @@ void Player::OnCollision(Collider* other) {
 
 			isObjectHit = true;
 			objectHitLevel = 1;
+			SUGER::PlayWaveSound("EarthToFragmentDamage.wav");
 		}
 		break;
 		case ColliderCategory::UFOBullet:
@@ -265,6 +270,7 @@ void Player::OnCollision(Collider* other) {
 
 			isObjectHit = true;
 			objectHitLevel = 1;
+			SUGER::PlayWaveSound("EarthToFragmentDamage.wav");
 		}
 		break;
 
@@ -298,6 +304,8 @@ void Player::OnCollision(Collider* other) {
 			objectHitLevel = 2;
 
 			HP_ -= 10;
+
+			SUGER::PlayWaveSound("EarthHitDamage.wav");
 		}
 		break;
 
@@ -332,6 +340,7 @@ void Player::OnCollision(Collider* other) {
 
 			HP_ -= 20;
 
+			SUGER::PlayWaveSound("EarthHitDamage.wav");
 
 			break;
 	}

@@ -89,6 +89,7 @@ void UFO::RootUpdate() {
 		ShotEllipseEmit();
 		ufoBulletManager_->AddUFOBullet(GetTranslate());
 		shotTimer_ = shotInterval_;
+		SUGER::PlayWaveSound("UFO_Attack.wav");
 	}
 
 	// 時間経過を取得
@@ -129,6 +130,7 @@ void UFO::DamageUpdate() {
 
 void UFO::BreakInitialize() {
 	breakTimer_ = kBreakTime_;
+	SUGER::PlayWaveSound("MeteoriteBreak.wav");
 }
 
 void UFO::BreakUpdate() {
