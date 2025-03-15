@@ -91,6 +91,10 @@ private:
 	// スプライト
 	//
 
+	// Warningスプライト
+	std::unique_ptr<Object2DController> warningSprite_ = nullptr;
+	Vector2 warningSpritePosition_{};
+
 	// ムーン少佐
 	std::unique_ptr<Object2DController> moonMajarSprite_ = nullptr;
 	Vector2 moonMajarPosition_ = { 960.0f,951.0f };

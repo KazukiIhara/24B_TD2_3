@@ -487,6 +487,9 @@ void GameScene::SceneStatePlayUpdate() {
 		// ボス登場時pr
 		if (isBossFightStart_) {
 			bossFightStartTimer_++;
+
+			// ボス登場シーン
+
 			if (bossFightStartTimer_ == bossFightStartTime_) {
 				isBossFight_ = true;
 				isBossFightStart_ = false;
