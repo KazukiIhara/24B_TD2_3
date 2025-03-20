@@ -91,10 +91,21 @@ private:
 	int scoreCountM_ = 0;
 	int scoreCountU_ = 0;
 
+
+
 	int scoreTimer_ = 0;
 	int MaxScoreTimer_ = 60;
 
-	bool isScore_ = false;
+	bool isScore_[5];
+	int count = 0;
+
+
+	bool isScene_ = false;
+	bool isMoon_ = false;
+	bool isSound_ = true;
+	int sceneCount = 0;
+	int maxSceneCount = 30;
+
 
 private:
 	Vector2 iconTextureSize_ = { 128.0f,128.0f };

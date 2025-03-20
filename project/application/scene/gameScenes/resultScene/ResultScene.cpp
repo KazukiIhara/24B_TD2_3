@@ -208,33 +208,36 @@ void ResultScene::Operation() {
 			SUGER::PlayWaveSound("Selection.wav");
 		}
 	}
-	if (SUGER::PushKey(DIK_A)) {
+	if (SUGER::TriggerKey(DIK_A)) {
 		moveScene_ = 0;
 		SUGER::PlayWaveSound("Selection.wav");
 	}
 
-	if (SUGER::PushKey(DIK_D)) {
+	if (SUGER::TriggerKey(DIK_D)) {
 		moveScene_ = 1;
 		SUGER::PlayWaveSound("Selection.wav");
 	}
 
-	if (moveScene_ == 0) {
-		resultRetry_->SetColor({ 1,1,0,1 });
-		resultTitle_->SetColor({ 1,1,1,1 });
+	if (isScene_) {
+		if (moveScene_ == 0) {
+			resultRetry_->SetColor({ 1,1,0,1 });
+			resultTitle_->SetColor({ 1,1,1,1 });
 
 
-		if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
-			SUGER::PlayWaveSound("Decision.wav");
-			ChangeScene("GAME");
+			if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
+				SUGER::PlayWaveSound("Decision.wav");
+				ChangeScene("GAME");
+			}
 		}
-	} else {
-		resultRetry_->SetColor({ 1,1,1,1 });
-		resultTitle_->SetColor({ 1,1,0,1 });
+		else {
+			resultRetry_->SetColor({ 1,1,1,1 });
+			resultTitle_->SetColor({ 1,1,0,1 });
 
 
-		if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
-			SUGER::PlayWaveSound("Decision.wav");
-			ChangeScene("TITLE");
+			if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
+				SUGER::PlayWaveSound("Decision.wav");
+				ChangeScene("TITLE");
+			}
 		}
 	}
 }
@@ -302,8 +305,15 @@ void ResultScene::SceneStatePlayUpdate() {
 		currentPage_ = 3;
 	}
 
-
-	moonMajar_->SetIsActive(true);
+	if (isMoon_) {
+		moonMajar_->SetIsActive(true);
+	}
+	else {
+		moonMajar_->SetIsActive(false);
+	}
+	
+	
+	
 	moonMajar_->SetLeftTop(Vector2(0.0f, static_cast<float>(currentPage_) * moonMajarTextCutSize_.y));
 
 	Operation();
@@ -352,50 +362,89 @@ void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 3
 void ResultScene::UpdateUI() {
 	
 	
+	if (count <= 4) {
+		scoreTimer_++;
+	}
 	
-	
-	if (++scoreTimer_ >= MaxScoreTimer_) {
+	if ((scoreTimer_ >= MaxScoreTimer_) || SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
 		scoreTimer_ = 0;
-		isScore_ = true;
+		isScore_[count] = true;
+		count++;
+		if (count > 4) {
+			count = 4;
+			isSound_ = false;
+		}
+		if (isSound_) {
+			SUGER::PlayWaveSound("Selection.wav");
+		}
+		else if (SUGER::TriggerKey(DIK_SPACE) || SUGER::TriggerButton(0, ButtonA)) {
+			SUGER::PlayWaveSound("Selection.wav");
+		}
 	}
 
-	if (isScore_) {
-		// 全体スコア
-		ActiveUI(allScoreUI_, allScoreNum_, allScorePosition_, totalScore_, numGap_);
+	if (isScore_[4]) {
+		isMoon_ = true;
+		sceneCount++;
+	}
 
-		ActiveUI(scoreUI_, scoreNum_, scorePosition_, score_, numGap_);
+	if (sceneCount >= maxSceneCount) {
+		isScene_ = true;
+	}
 
 
+	// 破片
+	if (isScore_[0]) {
 		// 欠片スコア
 		ActiveUI(fragmentScoreUI_, fragmentScoreNum_, fragmentScorePosition_, fragmentScore_, numGap_);
+	}
+	else {
+		scoreCountF_ = Random::GenerateUint32_t(0, 99999);
+		// 欠片スコア
+		ActiveUI(fragmentScoreUI_, fragmentScoreNum_, fragmentScorePosition_, scoreCountF_, numGap_);
+	}
 
+	// 隕石
+	if (isScore_[1]) {
 		// 隕石スコア
 		ActiveUI(meteoriteScoreUI_, meteoriteScoreNum_, meteoriteScorePosition_, meteoriteScore_, numGap_);
+	}
+	else {
+		scoreCountM_ = Random::GenerateUint32_t(0, 99999);
+		// 隕石スコア
+		ActiveUI(meteoriteScoreUI_, meteoriteScoreNum_, meteoriteScorePosition_, scoreCountM_, numGap_);
+	}
 
+	// UFO
+	if (isScore_[2]) {
 		// UFOスコア
 		ActiveUI(ufoScoreUI_, ufoScoreNum_, ufoScorePosition_, ufoScore_, numGap_);
 	}
 	else {
-		scoreCount_ = Random::GenerateUint32_t(0 ,99999);
-		scoreCountA_ = Random::GenerateUint32_t(0 ,99999);
-		scoreCountF_ = Random::GenerateUint32_t(0 ,99999);
-		scoreCountM_ = Random::GenerateUint32_t(0 ,99999);
-		scoreCountU_ = Random::GenerateUint32_t(0 ,99999);
-		
-		// 全体スコア
-		ActiveUI(allScoreUI_, allScoreNum_, allScorePosition_, scoreCountA_, numGap_);
-
-		ActiveUI(scoreUI_, scoreNum_, scorePosition_, scoreCount_, numGap_);
-
-
-		// 欠片スコア
-		ActiveUI(fragmentScoreUI_, fragmentScoreNum_, fragmentScorePosition_, scoreCountF_, numGap_);
-
-		// 隕石スコア
-		ActiveUI(meteoriteScoreUI_, meteoriteScoreNum_, meteoriteScorePosition_, scoreCountM_, numGap_);
-
+		scoreCountU_ = Random::GenerateUint32_t(0, 99999);
 		// UFOスコア
 		ActiveUI(ufoScoreUI_, ufoScoreNum_, ufoScorePosition_, scoreCountU_, numGap_);
+	}
+
+	// スコア
+	if (isScore_[3]) {
+		// スコア
+		ActiveUI(scoreUI_, scoreNum_, scorePosition_, score_, numGap_);
+	}
+	else {
+		scoreCount_ = Random::GenerateUint32_t(0, 99999);
+		ActiveUI(scoreUI_, scoreNum_, scorePosition_, scoreCount_, numGap_);
+	}
+
+
+	// 全体
+	if (isScore_[4]) {
+		// 全体スコア
+		ActiveUI(allScoreUI_, allScoreNum_, allScorePosition_, totalScore_, numGap_);
+	}
+	else {
+		scoreCountA_ = Random::GenerateUint32_t(0 ,99999);	
+		// 全体スコア
+		ActiveUI(allScoreUI_, allScoreNum_, allScorePosition_, scoreCountA_, numGap_);		
 	}
 
 
