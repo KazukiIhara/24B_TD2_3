@@ -17,7 +17,7 @@ void Sprite::Initialize(const std::string& texturename, const std::string& direc
 	worldTransform_.Initialize();
 	// マテリアルを初期化
 	material_.color = { 1.0f,1.0f,1.0f,1.0f };
-	material_.uvTransformMatrix = MakeIdentityMatrix4x4();
+	material_.uvTransformMatrix = MakeUVMatrix(uvTransform.scale, uvTransform.rotateZ, uvTransform.translate);
 	// テクスチャ左上座標
 	textureLeftTop = { 0.0f,0.0f };
 	// テクスチャ切り出しサイズ

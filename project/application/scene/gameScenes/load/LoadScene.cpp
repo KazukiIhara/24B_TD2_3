@@ -131,6 +131,8 @@ void LoadScene::LoadSceneStateLoadingInitialize() {
 	SUGER::LoadTexture(textureDirectoryPath + "TutorialImages/TutorialImage_02.png");
 	SUGER::LoadTexture(textureDirectoryPath + "TutorialImages/TutorialImage_03.png");
 	SUGER::LoadTexture(textureDirectoryPath + "TutorialImages/TutorialImage_04.png");
+	SUGER::LoadTexture(textureDirectoryPath + "Warning/Warning_Bar.png");
+	SUGER::LoadTexture(textureDirectoryPath + "Warning/Warning_Text.png");
 
 
 	// モデル読み込み
