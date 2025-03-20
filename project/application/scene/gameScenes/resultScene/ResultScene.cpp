@@ -2,6 +2,8 @@
 
 #include "framework/SUGER.h"
 
+#include "random/Random.h"
+
 void ResultScene::Initialize() {
 	// シーンの初期化(初期化処理の先頭)
 	BaseScene::Initialize();
@@ -109,6 +111,8 @@ void ResultScene::Initialize() {
 	// スコア
 	InitializeUI(scoreUI_, "score", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,scorePosition_);
 
+	
+	
 	// 欠片スコア
 	InitializeUI(fragmentScoreUI_, "fragmentScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,fragmentScorePosition_);
 
@@ -117,6 +121,8 @@ void ResultScene::Initialize() {
 
 	// UFOスコア
 	InitializeUI(ufoScoreUI_, "ufoScore", "ResultText/ResultNumber_x48y96.png", numberTextureSize_,ufoScorePosition_);
+
+
 
 
 	// 欠片スコア
@@ -344,20 +350,53 @@ void ResultScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 3
 }
 
 void ResultScene::UpdateUI() {
-	// 全体スコア
-	ActiveUI(allScoreUI_, allScoreNum_, allScorePosition_, totalScore_, numGap_);
+	
+	
+	
+	
+	if (++scoreTimer_ >= MaxScoreTimer_) {
+		scoreTimer_ = 0;
+		isScore_ = true;
+	}
 
-	ActiveUI(scoreUI_, scoreNum_, scorePosition_, score_, numGap_);
+	if (isScore_) {
+		// 全体スコア
+		ActiveUI(allScoreUI_, allScoreNum_, allScorePosition_, totalScore_, numGap_);
 
-	// 欠片スコア
-	ActiveUI(fragmentScoreUI_, fragmentScoreNum_, fragmentScorePosition_, fragmentScore_, numGap_);
+		ActiveUI(scoreUI_, scoreNum_, scorePosition_, score_, numGap_);
 
-	// 隕石スコア
-	ActiveUI(meteoriteScoreUI_, meteoriteScoreNum_, meteoriteScorePosition_, meteoriteScore_, numGap_);
 
-	// UFOスコア
-	ActiveUI(ufoScoreUI_, ufoScoreNum_, ufoScorePosition_, ufoScore_, numGap_);
+		// 欠片スコア
+		ActiveUI(fragmentScoreUI_, fragmentScoreNum_, fragmentScorePosition_, fragmentScore_, numGap_);
 
+		// 隕石スコア
+		ActiveUI(meteoriteScoreUI_, meteoriteScoreNum_, meteoriteScorePosition_, meteoriteScore_, numGap_);
+
+		// UFOスコア
+		ActiveUI(ufoScoreUI_, ufoScoreNum_, ufoScorePosition_, ufoScore_, numGap_);
+	}
+	else {
+		scoreCount_ = Random::GenerateUint32_t(0 ,99999);
+		scoreCountA_ = Random::GenerateUint32_t(0 ,99999);
+		scoreCountF_ = Random::GenerateUint32_t(0 ,99999);
+		scoreCountM_ = Random::GenerateUint32_t(0 ,99999);
+		scoreCountU_ = Random::GenerateUint32_t(0 ,99999);
+		
+		// 全体スコア
+		ActiveUI(allScoreUI_, allScoreNum_, allScorePosition_, scoreCountA_, numGap_);
+
+		ActiveUI(scoreUI_, scoreNum_, scorePosition_, scoreCount_, numGap_);
+
+
+		// 欠片スコア
+		ActiveUI(fragmentScoreUI_, fragmentScoreNum_, fragmentScorePosition_, scoreCountF_, numGap_);
+
+		// 隕石スコア
+		ActiveUI(meteoriteScoreUI_, meteoriteScoreNum_, meteoriteScorePosition_, scoreCountM_, numGap_);
+
+		// UFOスコア
+		ActiveUI(ufoScoreUI_, ufoScoreNum_, ufoScorePosition_, scoreCountU_, numGap_);
+	}
 
 
 

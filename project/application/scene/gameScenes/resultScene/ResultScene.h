@@ -84,7 +84,17 @@ private:
 	const Vector2 moonMajarTextCutSize_ = { 1025.0f,192.0f };
 	// 現在のページ
 	uint32_t currentPage_ = 0;
+private:
+	int scoreCount_ = 0;
+	int scoreCountA_ = 0;
+	int scoreCountF_ = 0;
+	int scoreCountM_ = 0;
+	int scoreCountU_ = 0;
 
+	int scoreTimer_ = 0;
+	int MaxScoreTimer_ = 60;
+
+	bool isScore_ = false;
 
 private:
 	Vector2 iconTextureSize_ = { 128.0f,128.0f };
