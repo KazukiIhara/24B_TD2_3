@@ -164,6 +164,26 @@ void GameScene::Initialize() {
 	// スプライトの初期化処理
 	//
 
+	// ボス出現前演出
+	warningSprite_ = std::make_unique<Object2DController>();
+	warningSprite_->Initialize(SUGER::Create2DObject("Warning_Bar", "Warning/Warning_Bar.png"));
+	warningSprite_->SetIsActive(false);
+
+	warningSprite2_ = std::make_unique<Object2DController>();
+	warningSprite2_->Initialize(SUGER::Create2DObject("Warning_Bar2", "Warning/Warning_Bar.png"));
+	warningSprite2_->SetPosition(Vector2(0.0f, 1080.0f - 192.0f));
+	warningSprite2_->SetIsActive(false);
+
+	warningTex_ = std::make_unique<Object2DController>();
+	warningTex_->Initialize(SUGER::Create2DObject("Warning_Tex", "Warning/Warning_Text.png"));
+	warningTex_->SetIsActive(false);
+
+	warningTex2_ = std::make_unique<Object2DController>();
+	warningTex2_->Initialize(SUGER::Create2DObject("Warning_Tex2", "Warning/Warning_Text.png"));
+	warningTex2_->SetPosition(Vector2(0.0f, 1080.0f - 192.0f));
+	warningTex2_->SetIsActive(false);
+
+
 	for (uint32_t i = 0; i < 4; i++) {
 		earthHPUI_[i] = std::make_unique<Object2DController>();
 	}
@@ -487,6 +507,27 @@ void GameScene::SceneStatePlayUpdate() {
 		// ボス登場時pr
 		if (isBossFightStart_) {
 			bossFightStartTimer_++;
+
+			// ボス登場シーン
+			warningSprite_->SetIsActive(true);
+			UVTransform uvTransform = warningSprite_->GetUVTransform();
+			uvTransform.translate.x += 0.001f;
+			warningSprite_->SetUVTransform(uvTransform);
+
+
+			warningSprite2_->SetIsActive(true);
+			UVTransform uvTransform2 = warningSprite2_->GetUVTransform();
+			uvTransform2.translate.x -= 0.001f;
+			warningSprite2_->SetUVTransform(uvTransform2);
+
+			warningTex_->SetIsActive(true);
+			warningTex_->SetUVTransform(uvTransform2);
+
+
+			warningTex2_->SetIsActive(true);
+			warningTex2_->SetUVTransform(uvTransform);
+
+
 			if (bossFightStartTimer_ == bossFightStartTime_) {
 				isBossFight_ = true;
 				isBossFightStart_ = false;
@@ -547,6 +588,11 @@ void GameScene::SceneStatePlayUpdate() {
 
 		// ボス戦固有の処理
 		if (isBossFight_) {
+			warningSprite_->SetIsActive(false);
+			warningSprite2_->SetIsActive(false);
+			warningTex_->SetIsActive(false);
+			warningTex2_->SetIsActive(false);
+
 			bossBattleframeCount_++;
 			if (bossBattleframeCount_ == 60) {
 				bossBattleTimer_--;
@@ -808,8 +854,7 @@ std::array<int32_t, 3> GameScene::SplitDigits(int32_t number) {
 	return digits;
 }
 
-void GameScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize)
-{
+void GameScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, const std::string& name, const std::string& filePath, Vector2 textureSize) {
 	for (uint32_t i = 0; i < ui.size(); i++) {
 		ui[i] = std::make_unique<Object2DController>();
 		ui[i]->Initialize(SUGER::Create2DObject(name, filePath));
@@ -819,8 +864,7 @@ void GameScene::InitializeUI(std::array<std::unique_ptr<Object2DController>, 5>&
 	}
 }
 
-std::array<int32_t, 5> GameScene::SplitDigits5(int32_t number)
-{
+std::array<int32_t, 5> GameScene::SplitDigits5(int32_t number) {
 	std::array<int32_t, 5> digits = { 0, 0, 0,0,0 };
 
 	if (number > 99999) {
@@ -839,37 +883,32 @@ std::array<int32_t, 5> GameScene::SplitDigits5(int32_t number)
 	return digits;
 }
 
-void GameScene::ActiveUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, std::array<int32_t, 5>& num, Vector2 position, int number, float numGap)
-{
+void GameScene::ActiveUI(std::array<std::unique_ptr<Object2DController>, 5>& ui, std::array<int32_t, 5>& num, Vector2 position, int number, float numGap) {
 	if (number < 10) {
 		ui[0]->SetIsActive(false);
 		ui[1]->SetIsActive(false);
 		ui[2]->SetIsActive(false);
 		ui[3]->SetIsActive(false);
 		ui[4]->SetIsActive(true);
-	}
-	else if (number < 100) {
+	} else if (number < 100) {
 		ui[0]->SetIsActive(false);
 		ui[1]->SetIsActive(false);
 		ui[2]->SetIsActive(false);
 		ui[3]->SetIsActive(true);
 		ui[4]->SetIsActive(true);
-	}
-	else if (number < 1000) {
+	} else if (number < 1000) {
 		ui[0]->SetIsActive(false);
 		ui[1]->SetIsActive(false);
 		ui[2]->SetIsActive(true);
 		ui[3]->SetIsActive(true);
 		ui[4]->SetIsActive(true);
-	}
-	else if (number < 10000) {
+	} else if (number < 10000) {
 		ui[0]->SetIsActive(false);
 		ui[1]->SetIsActive(true);
 		ui[2]->SetIsActive(true);
 		ui[3]->SetIsActive(true);
 		ui[4]->SetIsActive(true);
-	}
-	else {
+	} else {
 		ui[0]->SetIsActive(true);
 		ui[1]->SetIsActive(true);
 		ui[2]->SetIsActive(true);
