@@ -21,7 +21,7 @@
 #include "system/UFOBulletManager/UFOBulletManager.h"
 
 
-class GameScene:public BaseScene {
+class GameScene :public BaseScene {
 public:
 	GameScene() = default;
 	~GameScene() = default;
@@ -133,6 +133,10 @@ private:
 	Vector2 yearPosition_ = { 0.0f,0.0f };
 	Vector2	daysPosition_ = { 0.0f,0.0f };
 
+	// パーセントUI 
+	std::unique_ptr<Object2DController> parsentUI_ = nullptr;
+	Vector2 parsentPosition_ = { 1730.0f,850.0f };
+
 	// シンボル
 	std::unique_ptr<Object2DController> buttomUI_;
 	Vector2 buttomUIPosition_ = { 512.0f / 2 ,990.0f };
@@ -169,12 +173,12 @@ private:
 	Vector2 numberTextureSize2_ = { 48.0f,96.0f };
 	std::array<std::unique_ptr<Object2DController>, 5> scoreUI_;
 	std::array<int32_t, 5> scoreNum_;
-	Vector2 scorePosition_{1700 - 32,30 + 32};
+	Vector2 scorePosition_{ 1700 - 32,30 + 32 };
 	uint32_t score_ = 0;
 
 	//
 	// スコア(テキスト)
 	std::unique_ptr<Object2DController> resultScore_;
-	Vector2 resultScorePos_{ 1820 - 32,30 +32 };
+	Vector2 resultScorePos_{ 1820 - 32,30 + 32 };
 	Vector2 scoreSize{ 256,96 };
 };
