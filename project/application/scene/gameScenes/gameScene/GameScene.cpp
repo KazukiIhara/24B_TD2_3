@@ -166,20 +166,20 @@ void GameScene::Initialize() {
 
 	// ボス出現前演出
 	warningSprite_ = std::make_unique<Object2DController>();
-	warningSprite_->Initialize(SUGER::Create2DObject("Warning_Bar", "Warning/Warning_Bar.png"));
+	warningSprite_->Initialize(SUGER::Create2DObject("3_Warning_Bar", "Warning/Warning_Bar.png"));
 	warningSprite_->SetIsActive(false);
 
 	warningSprite2_ = std::make_unique<Object2DController>();
-	warningSprite2_->Initialize(SUGER::Create2DObject("Warning_Bar2", "Warning/Warning_Bar.png"));
+	warningSprite2_->Initialize(SUGER::Create2DObject("4_Warning_Bar2", "Warning/Warning_Bar.png"));
 	warningSprite2_->SetPosition(Vector2(0.0f, 1080.0f - 192.0f));
 	warningSprite2_->SetIsActive(false);
 
 	warningTex_ = std::make_unique<Object2DController>();
-	warningTex_->Initialize(SUGER::Create2DObject("Warning_Tex", "Warning/Warning_Text.png"));
+	warningTex_->Initialize(SUGER::Create2DObject("4_Warning_Tex", "Warning/Warning_Text.png"));
 	warningTex_->SetIsActive(false);
 
 	warningTex2_ = std::make_unique<Object2DController>();
-	warningTex2_->Initialize(SUGER::Create2DObject("Warning_Tex2", "Warning/Warning_Text.png"));
+	warningTex2_->Initialize(SUGER::Create2DObject("4_Warning_Tex2", "Warning/Warning_Text.png"));
 	warningTex2_->SetPosition(Vector2(0.0f, 1080.0f - 192.0f));
 	warningTex2_->SetIsActive(false);
 
@@ -320,6 +320,16 @@ void GameScene::Initialize() {
 	symbolUI_[1]->SetIsActive(false);
 
 
+	//
+	// %UI
+	//
+
+	parsentUI_ = std::make_unique<Object2DController>();
+	parsentUI_->Initialize(SUGER::Create2DObject("4_Parsent", "Number/Symbol_x128y192.png"));
+	parsentUI_->SetCutOutSize(numberTextureSize_);
+	parsentUI_->SetSize(numberTextureSize_ / 2.0f);
+	parsentUI_->SetLeftTop(Vector2(3 * numberTextureSize_.x, 0.0f));
+	parsentUI_->SetPosition(parsentPosition_);
 
 	//
 	// ムーン少佐
@@ -402,6 +412,10 @@ void GameScene::SceneStatePlayUpdate() {
 	currentYearsPosition_.x = SUGER::GetGrobalDataValueFloat("UI", "CurrentYearsNumPosX");
 	currentYearsPosition_.y = SUGER::GetGrobalDataValueFloat("UI", "CurrentYearsNumPosY");
 
+	ImGui::Begin("Parsent");
+	ImGui::DragFloat2("ParsentPos", &parsentPosition_.x, 0.01f);
+	ImGui::End();
+
 #endif // DEBUG
 
 #ifdef _DEBUG
@@ -427,6 +441,8 @@ void GameScene::SceneStatePlayUpdate() {
 	ImGui::End();
 
 #endif // _DEBUG
+
+	parsentUI_->SetPosition(parsentPosition_);
 
 
 	// ゲームオーバー確認処理
